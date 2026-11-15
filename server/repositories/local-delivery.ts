@@ -94,6 +94,33 @@ async function load(dir: string): Promise<FireSource> {
     return coarse;
   };
 
+  /** (year*12+month) → h3 → harm, built lazily per index; coarse parents sum their children. */
+  const monthIndexes = new Map<Map<string, Row[]>, Map<number, Map<string, number>>>();
+  const monthIndex = (index: Map<string, Row[]>) => {
+    let byMonth = monthIndexes.get(index);
+    if (byMonth) return byMonth;
+    byMonth = new Map();
+    for (const [cell, rows] of index) {
+      for (const row of rows) {
+        const key = row.year * 12 + row.month;
+        const cells = byMonth.get(key) ?? new Map<string, number>();
+        cells.set(cell, (cells.get(cell) ?? 0) + row.harm);
+        byMonth.set(key, cells);
+      }
+    }
+    monthIndexes.set(index, byMonth);
+    return byMonth;
+  };
+  const pick = (byCell: Map<string, number> | undefined, cells: Iterable<string>) => {
+    const out: { h3: string; harm: number }[] = [];
+    if (!byCell) return out;
+    for (const h3 of cells) {
+      const harm = byCell.get(h3);
+      if (harm !== undefined) out.push({ h3, harm });
+    }
+    return out;
+  };
+
   const geo = RegionsSchema.parse(
     JSON.parse(await readFile(path.join(dir, 'regions.geojson'), 'utf8')),
   );
@@ -114,6 +141,7 @@ async function load(dir: string): Promise<FireSource> {
       nameEn: f.properties.name_en,
       bbox: [bbox[0]!, bbox[1]!, bbox[2]!, bbox[3]!] as const,
       cellsCount: cells.length,
+      cells,
       monthly: sumCells(fine, cells),
     };
   });
@@ -134,6 +162,15 @@ async function load(dir: string): Promise<FireSource> {
     },
     async aoiMonthly(cells, resolution) {
       return sumCells(resolution === 4 ? coarseIndex() : fine, cells);
+    },
+    async monthCells(target, year, month) {
+      const key = year * 12 + month;
+      if (target.kind === 'region') {
+        const r = regions.find((x) => x.iso3 === target.iso3);
+        return r ? pick(monthIndex(fine).get(key), r.cells) : [];
+      }
+      const index = target.resolution === 4 ? coarseIndex() : fine;
+      return pick(monthIndex(index).get(key), new Set(target.cells));
     },
   };
 }

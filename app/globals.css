@@ -1,26 +1,139 @@
 @import 'tailwindcss';
 
-/* Dark "scientific instrument" theme. Ember is the single accent. */
-@theme {
-  --color-ink: #0b0d10;
-  --color-panel: #12161b;
-  --color-line: #232a32;
-  --color-muted: #8b96a3;
-  --color-text: #e6eaef;
-  --color-ember: #ff6a2b;
-  --color-no-data: #2a2f36;
+/*
+ * Two themes, one set of tokens. Light = warm paper, dark = warm charcoal.
+ * Components only use these tokens (never raw hex), so both themes stay in step.
+ * The data colours of the calendar (inferno / cividis / blue↔orange) are identical in both themes.
+ */
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
 
-  --font-display: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+@theme inline {
+  --color-ink: var(--t-bg);
+  --color-panel: var(--t-panel);
+  --color-panel-2: var(--t-panel-2);
+  --color-line: var(--t-line);
+  --color-line-strong: var(--t-line-strong);
+  --color-muted: var(--t-muted);
+  --color-text: var(--t-text);
+  --color-ember: var(--t-ember);
+  --color-ember-text: var(--t-ember-text);
+  --color-on-ember: var(--t-on-ember);
+  --color-cool: var(--t-cool);
+  --color-warn: var(--t-warn);
+  --color-no-data: var(--t-nodata-bg);
+
+  --font-display: var(--font-serif), ui-serif, Georgia, serif;
+  --font-sans: var(--font-plex), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
 }
 
 :root {
+  color-scheme: light;
+  --t-bg: #f5f2ec;
+  --t-panel: #ffffff;
+  --t-panel-2: #ece8e0;
+  --t-line: #e0dad0;
+  --t-line-strong: #c9c2b5;
+  --t-text: #1d1c1a;
+  --t-muted: #5d5850;
+  --t-ember: #e0561c;
+  --t-ember-text: #b13f0d;
+  --t-on-ember: #ffffff;
+  --t-cool: #2c64a0;
+  --t-warn: #9a5a00;
+  --t-nodata-bg: #d6d1c7;
+  --t-nodata-line: #9c958a;
+  --t-future-line: #c4bdb0;
+  --t-no-ratio: #f1eee8;
+  --t-bar: #8a8378;
+  --t-focus: #1d1c1a;
+  --t-shadow: 0 1px 2px rgb(40 30 10 / 0.06), 0 4px 16px rgb(40 30 10 / 0.05);
+}
+
+:root[data-theme='dark'] {
   color-scheme: dark;
+  --t-bg: #12110f;
+  --t-panel: #1b1a17;
+  --t-panel-2: #24221e;
+  --t-line: #2f2c27;
+  --t-line-strong: #45413a;
+  --t-text: #eeebe4;
+  --t-muted: #a8a297;
+  --t-ember: #ff7136;
+  --t-ember-text: #ff9061;
+  --t-on-ember: #1a0c04;
+  --t-cool: #7eaadf;
+  --t-warn: #f0b05a;
+  --t-nodata-bg: #2c2a26;
+  --t-nodata-line: #57524a;
+  --t-future-line: #403c35;
+  --t-no-ratio: #191815;
+  --t-bar: #8f897e;
+  --t-focus: #ffffff;
+  --t-shadow: 0 1px 2px rgb(0 0 0 / 0.3);
+}
+
+html {
+  background: var(--t-bg);
 }
 
 body {
-  background: var(--color-ink);
-  color: var(--color-text);
+  background: var(--t-bg);
+  color: var(--t-text);
   font-family: var(--font-sans);
+  transition:
+    background-color 0.2s,
+    color 0.2s;
+}
+
+:focus-visible {
+  outline: 2px solid var(--t-focus);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.card {
+  background: var(--t-panel);
+  border: 1px solid var(--t-line);
+  border-radius: 14px;
+  box-shadow: var(--t-shadow);
+}
+
+/* Numbered step badge used by the page sections ("1 Choose a place"). */
+.step {
+  display: inline-grid;
+  place-items: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 999px;
+  font:
+    600 0.8rem/1 var(--font-plex-mono),
+    monospace;
+  background: var(--t-text);
+  color: var(--t-bg);
+  flex-shrink: 0;
+}
+
+/* MapLibre controls follow the theme. */
+.maplibregl-ctrl-group {
+  background: var(--t-panel) !important;
+  border: 1px solid var(--t-line);
+}
+.maplibregl-ctrl-group button + button {
+  border-top-color: var(--t-line) !important;
+}
+[data-theme='dark'] .maplibregl-ctrl-icon {
+  filter: invert(1);
+}
+.maplibregl-ctrl-attrib {
+  font-size: 10px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
 }

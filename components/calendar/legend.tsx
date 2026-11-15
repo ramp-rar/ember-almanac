@@ -22,11 +22,11 @@ const PATTERNS = (
       patternUnits="userSpaceOnUse"
       patternTransform="rotate(45)"
     >
-      <line x1="0" y1="0" x2="0" y2="5" stroke="#ffffff" strokeOpacity="0.35" strokeWidth="1.6" />
+      <line x1="0" y1="0" x2="0" y2="5" stroke="#ffffff" strokeOpacity="0.5" strokeWidth="1.6" />
     </pattern>
     <pattern id="lg-nodata" width="6" height="6" patternUnits="userSpaceOnUse">
-      <rect width="6" height="6" fill="#2a2f36" />
-      <path d="M0 0L6 6M6 0L0 6" stroke="#4b535d" strokeWidth="0.8" />
+      <rect width="6" height="6" style={{ fill: 'var(--t-nodata-bg)' }} />
+      <path d="M0 0L6 6M6 0L0 6" style={{ stroke: 'var(--t-nodata-line)' }} strokeWidth="0.8" />
     </pattern>
   </defs>
 );
@@ -86,8 +86,7 @@ export function Legend({
                 width="25"
                 height="15"
                 rx="2"
-                fill="#14181d"
-                stroke="#4b535d"
+                style={{ fill: 'var(--t-no-ratio)', stroke: 'var(--t-nodata-line)' }}
                 strokeDasharray="2 2"
               />
             </Swatch>
@@ -127,11 +126,19 @@ export function Legend({
             <rect width="26" height="16" rx="2" fill="url(#lg-nodata)" />
           </Swatch>
           <Swatch label={`${STATUS_LABEL.future} — ${STATUS_HELP.future}`}>
-            <rect x="0.5" y="0.5" width="25" height="15" rx="2" fill="none" stroke="#3a424c" />
+            <rect
+              x="0.5"
+              y="0.5"
+              width="25"
+              height="15"
+              rx="2"
+              fill="none"
+              style={{ stroke: 'var(--t-future-line)' }}
+            />
           </Swatch>
           <Swatch label="partly observed month — no ratio, not comparable with full months">
             <rect width="26" height="16" rx="2" fill={colours[3]} />
-            <path d="M18 0 h6 a2 2 0 0 1 2 2 v6 z" fill="#e6eaef" />
+            <path d="M18 0 h6 a2 2 0 0 1 2 2 v6 z" fill="#ffffff" />
           </Swatch>
         </ul>
       </div>

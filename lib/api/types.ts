@@ -51,6 +51,23 @@ export interface AoiCreated {
   readonly coarse: boolean;
 }
 
+/**
+ * Where fire activity was in one month (3D globe). One point per H3 cell centroid with
+ * harm > 0, strongest first. `no_data` and `future` months have no points (never zeros).
+ */
+export interface HotspotsResponse {
+  readonly y: number;
+  readonly m: number;
+  readonly status: 'final' | 'estimate' | 'preliminary' | 'no_data' | 'future';
+  readonly unit: 'fire_days_harm';
+  /** H3 resolution of the cells behind the points (6, or 4 for coarse AOIs). */
+  readonly resolution: number;
+  readonly points: readonly (readonly [lon: number, lat: number, harm: number])[];
+  /** True when more cells had activity than the point cap; the weakest were left out. */
+  readonly truncated: boolean;
+  readonly maxHarm: number | null;
+}
+
 export interface ApiError {
   readonly error: string;
   readonly message: string;

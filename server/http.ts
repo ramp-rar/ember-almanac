@@ -1,3 +1,4 @@
+import { z } from 'zod';
 import {
   InvalidAreaError,
   NoDatasetError,
@@ -24,6 +25,35 @@ export function handleError(scope: string, error: unknown): Response {
     );
   }
   return jsonError(500, 'internal', 'Something went wrong while computing this calendar.');
+}
+
+const intParam = z
+  .string()
+  .regex(/^\d{1,4}$/)
+  .transform(Number);
+
+/**
+ * Validates `?y=YYYY&m=M` (y in 2000..current year + 1, m in 1..12).
+ * Returns the parsed month, or a 400 Response in the ApiError shape.
+ */
+export function parseYearMonth(
+  params: URLSearchParams,
+  today: string,
+): { y: number; m: number } | Response {
+  const maxYear = Number(today.slice(0, 4)) + 1;
+  const Query = z.object({
+    y: intParam.pipe(z.number().int().min(2000).max(maxYear)),
+    m: intParam.pipe(z.number().int().min(1).max(12)),
+  });
+  const parsed = Query.safeParse({ y: params.get('y') ?? undefined, m: params.get('m') ?? undefined });
+  if (!parsed.success) {
+    return jsonError(
+      400,
+      'bad_request',
+      `y must be a year from 2000 to ${maxYear} and m a month from 1 to 12.`,
+    );
+  }
+  return parsed.data;
 }
 
 /** Responses change when a new dataset is activated or a day passes. */

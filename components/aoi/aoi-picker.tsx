@@ -33,7 +33,7 @@ export function AoiPicker() {
     { key: 'draw', label: 'Draw' },
   ];
   return (
-    <section aria-labelledby={`${id}-h`} className="border-line bg-panel rounded-lg border p-4">
+    <section aria-labelledby={`${id}-h`} className="card p-4 sm:p-5">
       <h2 id={`${id}-h`} className="font-display text-sm font-medium">
         Area of interest
       </h2>
@@ -91,10 +91,10 @@ function RegionSearch() {
         onChange={(e) => setQ(e.target.value)}
         placeholder="e.g. Central"
         autoComplete="off"
-        className="border-line mt-1 w-full rounded-md border bg-[var(--color-ink)] px-2.5 py-1.5 text-sm outline-none focus:border-[var(--color-ember)]"
+        className="border-line bg-ink focus:border-ember mt-1 w-full rounded-lg border px-3 py-2 text-sm outline-none"
         aria-controls={listId}
       />
-      {isError && <p className="mt-2 text-xs text-[#f6ad55]">{(error as Error).message}</p>}
+      {isError && <p className="text-warn mt-2 text-xs">{(error as Error).message}</p>}
       <ul
         id={listId}
         className="mt-2 max-h-48 space-y-0.5 overflow-auto text-sm"
@@ -105,7 +105,7 @@ function RegionSearch() {
             <button
               type="button"
               onClick={() => router.push(`/r/${r.iso3}`)}
-              className="flex w-full items-center justify-between rounded px-2 py-1 text-left hover:bg-[var(--color-line)]"
+              className="hover:bg-panel-2 flex w-full items-center justify-between rounded px-2 py-1 text-left"
             >
               <span>{r.nameEn}</span>
               <span className="text-muted font-mono text-xs">{r.iso3}</span>
@@ -166,7 +166,7 @@ function CoordinatesForm({ draft }: { draft: { lat: number; lon: number } | null
         inputMode="decimal"
         value={f[key]}
         onChange={(e) => setF({ ...f, [key]: e.target.value })}
-        className="border-line mt-1 w-full rounded-md border bg-[var(--color-ink)] px-2 py-1.5 font-mono text-sm outline-none focus:border-[var(--color-ember)]"
+        className="border-line bg-ink focus:border-ember mt-1 w-full rounded-lg border px-2 py-2 font-mono text-sm outline-none"
         aria-describedby={hint ? `${id}-${key}` : undefined}
       />
       {hint && (
@@ -188,7 +188,7 @@ function CoordinatesForm({ draft }: { draft: { lat: number; lon: number } | null
               name={`${id}-kind`}
               checked={kind === k}
               onChange={() => setKind(k)}
-              className="accent-[var(--color-ember)]"
+              className="accent-[var(--t-ember)]"
             />
             {k === 'point' ? 'Point + radius' : 'Bounding box'}
           </label>
@@ -209,7 +209,7 @@ function CoordinatesForm({ draft }: { draft: { lat: number; lon: number } | null
         </div>
       )}
       {errors.length > 0 && (
-        <ul role="alert" className="space-y-0.5 text-xs text-[#f6ad55]">
+        <ul role="alert" className="text-warn space-y-0.5 text-xs">
           {errors.map((er) => (
             <li key={er}>{er}</li>
           ))}
@@ -218,7 +218,7 @@ function CoordinatesForm({ draft }: { draft: { lat: number; lon: number } | null
       <button
         type="submit"
         disabled={busy}
-        className="bg-ember text-ink w-full rounded-md px-3 py-1.5 text-sm font-medium disabled:opacity-60"
+        className="bg-ember text-on-ember min-h-11 w-full rounded-full px-4 text-sm font-semibold disabled:opacity-60"
       >
         {busy ? 'Computing cells…' : 'Show calendar'}
       </button>

@@ -4,7 +4,7 @@ import type { AoiRef } from '@/lib/api/types';
 export function ExportPanel({ aoi }: { aoi: AoiRef }) {
   const param = aoi.kind === 'region' ? `r:${aoi.iso3}` : `a:${aoi.id}`;
   return (
-    <section aria-labelledby="export-h" className="border-line bg-panel rounded-lg border p-4">
+    <section aria-labelledby="export-h" className="card p-4 sm:p-5">
       <h2 id="export-h" className="font-display text-sm font-medium">
         Export
       </h2>
@@ -13,7 +13,7 @@ export function ExportPanel({ aoi }: { aoi: AoiRef }) {
           <a
             href={`/api/export/summary?aoi=${encodeURIComponent(param)}`}
             download
-            className="border-line flex items-center justify-between rounded-md border px-3 py-2 hover:border-[var(--color-ember)]"
+            className="border-line hover:border-ember flex items-center justify-between rounded-lg border px-3 py-2.5"
           >
             <span>summary.csv</span>
             <span className="text-muted font-mono text-xs">monthly · with status</span>
@@ -23,7 +23,7 @@ export function ExportPanel({ aoi }: { aoi: AoiRef }) {
           <a
             href={`/api/export/metadata?aoi=${encodeURIComponent(param)}`}
             download
-            className="border-line flex items-center justify-between rounded-md border px-3 py-2 hover:border-[var(--color-ember)]"
+            className="border-line hover:border-ember flex items-center justify-between rounded-lg border px-3 py-2.5"
           >
             <span>metadata.json</span>
             <span className="text-muted font-mono text-xs">method · AOI · version</span>

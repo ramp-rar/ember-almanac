@@ -61,9 +61,20 @@ export const STATUS_LABEL = {
 } as const;
 
 export const STATUS_HELP = {
-  final: 'Standard-processed data.',
-  estimate: 'MODIS-only year, scaled into VIIRS-equivalent units.',
-  preliminary: 'Near real-time data; replaced by standard processing later.',
-  no_data: 'No observations. Never shown as zero.',
-  future: 'This month has not happened yet.',
+  final: 'checked data: NASA has finished standard processing, it will not change.',
+  estimate:
+    'before the newer VIIRS satellite, only MODIS saw fires; its counts are scaled to VIIRS units. Close, but less certain.',
+  preliminary:
+    'quick (near real-time) data. NASA re-checks it a few months later, so the number may still change a little.',
+  no_data: 'no satellite observations. This is not zero: we simply do not know.',
+  future: 'this month has not happened yet.',
+} as const;
+
+/** One-line, everyday titles for the five statuses (the technical name stays alongside). */
+export const STATUS_TITLE = {
+  final: 'Checked',
+  estimate: 'Estimate (older satellite)',
+  preliminary: 'Preliminary',
+  no_data: 'No data',
+  future: 'Not yet',
 } as const;

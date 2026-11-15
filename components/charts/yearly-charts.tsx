@@ -5,6 +5,7 @@ import { GridComponent, MarkLineComponent, TooltipComponent } from 'echarts/comp
 import * as echarts from 'echarts/core';
 import { SVGRenderer } from 'echarts/renderers';
 import { useEffect, useRef } from 'react';
+import { useTheme } from '@/components/theme';
 import type { CalendarData } from '@/lib/domain/calendar';
 import { STATUS_LABEL, fmt, fmtSigned } from '@/lib/format';
 
@@ -15,7 +16,7 @@ const HATCH = {
   rotation: Math.PI / 4,
   dashArrayX: [1, 0],
   dashArrayY: [2, 4],
-  color: 'rgba(255,255,255,0.35)',
+  color: 'rgba(255,255,255,0.55)',
 };
 const DOTS = {
   symbol: 'circle',
@@ -24,11 +25,41 @@ const DOTS = {
   dashArrayY: [2, 4],
   color: 'rgba(255,255,255,0.6)',
 };
-const AXIS = {
-  axisLine: { lineStyle: { color: '#3a424c' } },
-  axisLabel: { color: '#8b96a3', fontSize: 10 },
-  splitLine: { lineStyle: { color: '#1c2229' } },
-};
+const PALETTE = {
+  light: {
+    axis: '#c9c2b5',
+    label: '#5d5850',
+    grid: '#ece8e0',
+    bar: '#8a8378',
+    barOff: '#cfc9bd',
+    tipBg: '#ffffff',
+    tipLine: '#e0dad0',
+    tipText: '#1d1c1a',
+    ember: '#e0561c',
+    warm: '#e0561c',
+    cool: '#2c64a0',
+    sel: '#1d1c1a',
+  },
+  dark: {
+    axis: '#45413a',
+    label: '#a8a297',
+    grid: '#24221e',
+    bar: '#8f897e',
+    barOff: '#45413a',
+    tipBg: '#1b1a17',
+    tipLine: '#2f2c27',
+    tipText: '#eeebe4',
+    ember: '#ff7136',
+    warm: '#ed7b2b',
+    cool: '#7eaadf',
+    sel: '#ffffff',
+  },
+} as const;
+const axisOf = (c: (typeof PALETTE)['light'] | (typeof PALETTE)['dark']) => ({
+  axisLine: { lineStyle: { color: c.axis } },
+  axisLabel: { color: c.label, fontSize: 11 },
+  splitLine: { lineStyle: { color: c.grid } },
+});
 
 function useChart(
   build: () => echarts.EChartsCoreOption,
@@ -73,6 +104,9 @@ export default function YearlyCharts({
   selectedYear: number | null;
   onSelectYear: (year: number) => void;
 }) {
+  const theme = useTheme();
+  const c = PALETTE[theme];
+  const AXIS = axisOf(c);
   const years = series.years.map((y) => String(y.y));
   const withheld = series.years
     .filter((p) => p.total === null)
@@ -80,8 +114,8 @@ export default function YearlyCharts({
   const withheldBands = {
     silent: true,
     itemStyle: {
-      color: 'rgba(75,83,93,0.35)',
-      borderColor: '#4b535d',
+      color: 'rgba(138,131,120,0.25)',
+      borderColor: c.axis,
       borderType: 'dashed',
       borderWidth: 1,
     },
@@ -96,9 +130,9 @@ export default function YearlyCharts({
       grid: { left: 44, right: 12, top: 16, bottom: 28 },
       tooltip: {
         trigger: 'axis',
-        backgroundColor: '#12161b',
-        borderColor: '#232a32',
-        textStyle: { color: '#e6eaef', fontSize: 11 },
+        backgroundColor: c.tipBg,
+        borderColor: c.tipLine,
+        textStyle: { color: c.tipText, fontSize: 12 },
         formatter: (ps: { dataIndex: number }[]) => {
           const p = series.years[ps[0]!.dataIndex]!;
           return p.total === null
@@ -119,9 +153,9 @@ export default function YearlyCharts({
           data: series.years.map((p) => ({
             value: p.total,
             itemStyle: {
-              color: p.complete ? '#8b96a3' : '#4b535d',
+              color: p.complete ? c.bar : c.barOff,
               decal: decalOf(p.s),
-              borderColor: p.y === selectedYear ? '#ff6a2b' : undefined,
+              borderColor: p.y === selectedYear ? c.ember : undefined,
               borderWidth: p.y === selectedYear ? 2 : 0,
             },
           })),
@@ -134,8 +168,8 @@ export default function YearlyCharts({
                 showSymbol: false,
                 // Solid ember only when Mann–Kendall finds a trend; otherwise a dashed grey line.
                 lineStyle: series.trend.significant
-                  ? { color: '#ff6a2b', width: 2 }
-                  : { color: '#8b96a3', width: 1.5, type: 'dashed' },
+                  ? { color: c.ember, width: 2 }
+                  : { color: c.bar, width: 1.5, type: 'dashed' },
                 data: series.years.map((p) =>
                   p.y >= series.trend!.from && p.y <= series.trend!.to
                     ? series.trend!.intercept + series.trend!.slope * p.y
@@ -147,7 +181,7 @@ export default function YearlyCharts({
           : []),
       ],
     }),
-    [series, selectedYear],
+    [series, selectedYear, theme],
     onSelectYear,
   );
 
@@ -156,9 +190,9 @@ export default function YearlyCharts({
       grid: { left: 44, right: 12, top: 16, bottom: 28 },
       tooltip: {
         trigger: 'axis',
-        backgroundColor: '#12161b',
-        borderColor: '#232a32',
-        textStyle: { color: '#e6eaef', fontSize: 11 },
+        backgroundColor: c.tipBg,
+        borderColor: c.tipLine,
+        textStyle: { color: c.tipText, fontSize: 12 },
         formatter: (ps: { dataIndex: number }[]) => {
           const p = series.years[ps[0]!.dataIndex]!;
           return `${p.y}: ${p.anomaly === null ? 'incomplete year' : `${fmtSigned(p.anomaly)} fire-days vs mean`}`;
@@ -177,9 +211,9 @@ export default function YearlyCharts({
           data: series.years.map((p) => ({
             value: p.anomaly,
             itemStyle: {
-              color: (p.anomaly ?? 0) >= 0 ? '#ed7b2b' : '#2b6cb0',
+              color: (p.anomaly ?? 0) >= 0 ? c.warm : c.cool,
               decal: decalOf(p.s),
-              borderColor: p.y === selectedYear ? '#e6eaef' : undefined,
+              borderColor: p.y === selectedYear ? c.sel : undefined,
               borderWidth: p.y === selectedYear ? 2 : 0,
             },
           })),
@@ -187,21 +221,21 @@ export default function YearlyCharts({
             silent: true,
             symbol: 'none',
             data: [{ yAxis: 0 }],
-            lineStyle: { color: '#8b96a3' },
+            lineStyle: { color: c.bar },
             label: { show: false },
           },
           markArea: withheldBands,
         },
       ],
     }),
-    [series, selectedYear],
+    [series, selectedYear, theme],
     onSelectYear,
   );
 
   return (
     <div className="grid gap-6 lg:grid-cols-2">
       <figure>
-        <figcaption className="font-display text-sm font-medium">Year totals and trend</figcaption>
+        <figcaption className="text-base font-semibold">Year totals and trend</figcaption>
         <div
           ref={totals}
           className="mt-2 h-56 w-full"
@@ -210,7 +244,7 @@ export default function YearlyCharts({
         />
       </figure>
       <figure>
-        <figcaption className="font-display text-sm font-medium">
+        <figcaption className="text-base font-semibold">
           Anomalies{' '}
           {series.anomalyBase && (
             <span className="text-muted font-normal">

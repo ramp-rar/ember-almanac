@@ -23,6 +23,17 @@ export interface FireSource {
   regionMonthly(iso3: string): Promise<AoiMonthRow[]>;
   /** Totals over a set of H3 cells (hex) at the given resolution, sparse. */
   aoiMonthly(cells: readonly string[], resolution: number): Promise<AoiMonthRow[]>;
+  /** Per-cell harm (h3 as hex) for one month, sparse: only rows that exist. */
+  monthCells(target: MonthCellTarget, year: number, month: number): Promise<MonthCell[]>;
+}
+
+export type MonthCellTarget =
+  | { readonly kind: 'region'; readonly iso3: string }
+  | { readonly kind: 'cells'; readonly cells: readonly string[]; readonly resolution: number };
+
+export interface MonthCell {
+  readonly h3: string;
+  readonly harm: number;
 }
 
 export interface ActiveSource {
@@ -32,6 +43,7 @@ export interface ActiveSource {
 }
 
 const h3ToDb = (hex: string) => BigInt(`0x${hex}`).toString();
+const dbToH3 = (value: bigint) => value.toString(16);
 
 function postgresSource(version: string): FireSource {
   const db = getDb();
@@ -96,6 +108,40 @@ function postgresSource(version: string): FireSource {
           and(eq(t.versionId, version), sql`${t.h3} = any(string_to_array(${csv}, ',')::bigint[])`),
         )
         .groupBy(t.year, t.month);
+    },
+    async monthCells(target, year, month) {
+      if (target.kind === 'region') {
+        // region_cell (PK iso3, h3) drives PK lookups into cell_month (version, h3, year, month).
+        const rows = await db
+          .select({ h3: cellMonth.h3, harm: cellMonth.harm })
+          .from(regionCell)
+          .innerJoin(
+            cellMonth,
+            and(
+              eq(cellMonth.h3, regionCell.h3),
+              eq(cellMonth.versionId, version),
+              eq(cellMonth.year, year),
+              eq(cellMonth.month, month),
+            ),
+          )
+          .where(eq(regionCell.iso3, target.iso3));
+        return rows.map((r) => ({ h3: dbToH3(r.h3), harm: r.harm }));
+      }
+      if (target.cells.length === 0) return [];
+      const t = target.resolution === 4 ? cellMonthR4 : cellMonth;
+      const csv = target.cells.map(h3ToDb).join(',');
+      const rows = await db
+        .select({ h3: t.h3, harm: t.harm })
+        .from(t)
+        .where(
+          and(
+            eq(t.versionId, version),
+            eq(t.year, year),
+            eq(t.month, month),
+            sql`${t.h3} = any(string_to_array(${csv}, ',')::bigint[])`,
+          ),
+        );
+      return rows.map((r) => ({ h3: dbToH3(r.h3), harm: r.harm }));
     },
   };
 }

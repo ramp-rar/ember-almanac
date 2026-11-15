@@ -47,11 +47,11 @@ function Patterns() {
         patternUnits="userSpaceOnUse"
         patternTransform="rotate(45)"
       >
-        <line x1="0" y1="0" x2="0" y2="5" stroke="#ffffff" strokeOpacity="0.35" strokeWidth="1.6" />
+        <line x1="0" y1="0" x2="0" y2="5" stroke="#ffffff" strokeOpacity="0.5" strokeWidth="1.6" />
       </pattern>
       <pattern id="ft-nodata" width="6" height="6" patternUnits="userSpaceOnUse">
-        <rect width="6" height="6" fill="#2a2f36" />
-        <path d="M0 0L6 6M6 0L0 6" stroke="#4b535d" strokeWidth="0.8" />
+        <rect width="6" height="6" style={{ fill: 'var(--t-nodata-bg)' }} />
+        <path d="M0 0L6 6M6 0L0 6" style={{ stroke: 'var(--t-nodata-line)' }} strokeWidth="0.8" />
       </pattern>
     </defs>
   );
@@ -83,13 +83,13 @@ const CellsLayer = memo(function CellsLayer({ cells, years, mode, palette, break
                   : look.kind === 'no_data'
                     ? 'url(#ft-nodata)'
                     : look.kind === 'no_ratio'
-                      ? '#14181d'
+                      ? 'var(--t-no-ratio)'
                       : 'transparent';
               const stroke =
                 look.kind === 'future'
-                  ? '#3a424c'
+                  ? 'var(--t-future-line)'
                   : look.kind === 'no_ratio'
-                    ? '#4b535d'
+                    ? 'var(--t-nodata-line)'
                     : undefined;
               return (
                 <g
@@ -136,7 +136,10 @@ const CellsLayer = memo(function CellsLayer({ cells, years, mode, palette, break
                   {c.h !== null && c.cov[0] < c.cov[1] && (
                     <path
                       d={`M${x + CW - 8} ${top} h6 a2 2 0 0 1 2 2 v6 z`}
-                      fill="#e6eaef"
+                      fill="#ffffff"
+                      stroke="#000000"
+                      strokeOpacity="0.55"
+                      strokeWidth="0.6"
                       pointerEvents="none"
                     />
                   )}
@@ -309,7 +312,7 @@ export function BurningCalendar({
             x={LEFT + i * (CW + GAP) + CW / 2}
             y={TOP - 7}
             textAnchor="middle"
-            className="fill-[var(--color-muted)] font-mono text-[9px]"
+            className="fill-[var(--t-muted)] font-mono text-[9px]"
           >
             {label}
           </text>
@@ -325,14 +328,14 @@ export function BurningCalendar({
                 y={TOP + row * (CH + GAP)}
                 width={4}
                 height={CH + GAP}
-                fill={modisOnly ? '#4b535d' : '#ff6a2b'}
+                fill={modisOnly ? 'var(--t-nodata-line)' : 'var(--t-ember)'}
                 fillOpacity={modisOnly ? 1 : 0.7}
               />
               <text
                 x={LEFT - 8}
                 y={TOP + row * (CH + GAP) + CH / 2 + 3}
                 textAnchor="end"
-                className="fill-[var(--color-text)] font-mono text-[9.5px]"
+                className="fill-[var(--t-text)] font-mono text-[9.5px]"
               >
                 {y}
               </text>
@@ -346,7 +349,7 @@ export function BurningCalendar({
           return (
             <g key={mk.label}>
               <title>{`${mk.label}: ${mk.date}`}</title>
-              <path d={`M7 ${top} l5 -3 v6 z`} fill="#e6eaef" />
+              <path d={`M7 ${top} l5 -3 v6 z`} fill="var(--t-text)" />
             </g>
           );
         })}
@@ -360,17 +363,33 @@ export function BurningCalendar({
         />
 
         {/* selection, hover/focus overlay */}
+        {/* Selection: a double ring (page colour + text colour) stays visible on any cell colour. */}
         {selected && rowOf.has(selected.y) && (
-          <rect
-            {...place(selected.y, selected.m)}
-            width={CW}
-            height={CH}
-            rx={2}
-            fill="none"
-            stroke="#ff6a2b"
-            strokeWidth={2}
+          <g
             pointerEvents="none"
-          />
+            transform={`translate(${place(selected.y, selected.m).x} ${place(selected.y, selected.m).y})`}
+          >
+            <rect
+              x={-1}
+              y={-1}
+              width={CW + 2}
+              height={CH + 2}
+              rx={3}
+              fill="none"
+              stroke="var(--t-bg)"
+              strokeWidth={3}
+            />
+            <rect
+              x={-2.5}
+              y={-2.5}
+              width={CW + 5}
+              height={CH + 5}
+              rx={4}
+              fill="none"
+              stroke="var(--t-text)"
+              strokeWidth={2}
+            />
+          </g>
         )}
         <rect
           ref={overlay}
@@ -378,7 +397,7 @@ export function BurningCalendar({
           height={CH}
           rx={2}
           fill="none"
-          stroke="#ffffff"
+          stroke="var(--t-text)"
           strokeWidth={focused ? 2 : 1.4}
           visibility="hidden"
           pointerEvents="none"
@@ -405,7 +424,7 @@ export function BurningCalendar({
                 />
               ) : (
                 <>
-                  <rect x={x0} y={top + 3} width={w} height={CH - 6} fill="#8b96a3" />
+                  <rect x={x0} y={top + 3} width={w} height={CH - 6} fill="var(--t-bar)" />
                   {v.s === 'preliminary' && (
                     <rect x={x0} y={top + 3} width={w} height={CH - 6} fill="url(#ft-hatch)" />
                   )}
@@ -414,7 +433,7 @@ export function BurningCalendar({
               <text
                 x={x0 + BAR_W + 4}
                 y={top + CH / 2 + 3}
-                className="fill-[var(--color-muted)] font-mono text-[9px]"
+                className="fill-[var(--t-muted)] font-mono text-[9px]"
               >
                 {v.v === null ? '—' : fmt(v.v)}
               </text>
@@ -424,7 +443,7 @@ export function BurningCalendar({
         <text
           x={LEFT + gridW + BAR_GAP}
           y={TOP - 7}
-          className="fill-[var(--color-muted)] font-mono text-[9px]"
+          className="fill-[var(--t-muted)] font-mono text-[9px]"
         >
           {mode === 'raw' ? 'year total (raw)' : 'year total'}
         </text>
@@ -440,13 +459,13 @@ export function BurningCalendar({
               {md.harm.v === null ? (
                 <rect x={x + 4} y={base - 6} width={CW - 8} height={6} fill="url(#ft-nodata)" />
               ) : (
-                <rect x={x + 4} y={base - h} width={CW - 8} height={h} fill="#8b96a3" />
+                <rect x={x + 4} y={base - h} width={CW - 8} height={h} fill="var(--t-bar)" />
               )}
               <text
                 x={x + CW / 2}
                 y={base + 11}
                 textAnchor="middle"
-                className="fill-[var(--color-muted)] font-mono text-[8px]"
+                className="fill-[var(--t-muted)] font-mono text-[8px]"
               >
                 {fmt(md.harm.v)}
               </text>
@@ -457,7 +476,7 @@ export function BurningCalendar({
           x={LEFT - 8}
           y={TOP + gridH + MED_GAP + MED_H - 2}
           textAnchor="end"
-          className="fill-[var(--color-muted)] font-mono text-[8.5px]"
+          className="fill-[var(--t-muted)] font-mono text-[8.5px]"
         >
           {mode === 'raw' ? 'harm. median' : 'median'}
         </text>
