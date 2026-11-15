@@ -1,6 +1,7 @@
 import fc from 'fast-check';
 import { describe, expect, it } from 'vitest';
 import {
+  baselineNote,
   median,
   percentile,
   percentileRank,
@@ -213,5 +214,57 @@ describe('ratioCopy()', () => {
     expect(ratioCopy(few, 'Novembers')).toBe('insufficient baseline (0 of 10 years needed)');
     const missing = ratioToMedian(novembers(point(2026, 11, null, 'no_data')), 2026, 11, BASELINE);
     expect(ratioCopy(missing, 'Novembers')).toBe('no data');
+  });
+});
+
+describe('ratioToMedian() — review fixes (2026-11-15 science review)', () => {
+  it('B2: refuses a ratio for a partly observed target month', () => {
+    const target = { ...point(2026, 11, 6, 'preliminary'), coverage: { observed: 14, total: 30 } };
+    const r = ratioToMedian(novembers(target), 2026, 11, BASELINE);
+    expect(r.kind).toBe('partial_month');
+    expect(r.ratio).toMatchObject({
+      value: null,
+      status: 'preliminary',
+      note: 'partial month: 14 of 30 days observed',
+    });
+    expect(r.percentile).toBeNull();
+    expect(ratioCopy(r, 'Novembers')).toBe('partial month: 14 of 30 days observed');
+  });
+
+  it('B2/M1: partly observed months stay out of the baseline', () => {
+    const series = novembers(point(2026, 11, 12, 'final')).map((p) =>
+      p.month === 11 && p.year === 2014 ? { ...p, coverage: { observed: 1, total: 30 } } : p,
+    );
+    const r = ratioToMedian(series, 2026, 11, BASELINE);
+    expect(r.n).toBe(22);
+  });
+
+  it('a fully observed month with coverage given behaves as before', () => {
+    const target = { ...point(2026, 11, 21.6, 'final'), coverage: { observed: 30, total: 30 } };
+    expect(ratioToMedian(novembers(target), 2026, 11, BASELINE).ratio.value).toBe(1.8);
+  });
+
+  it('M3: discloses MODIS-only estimate years in the baseline', () => {
+    const r = ratioToMedian(novembers(point(2026, 11, 21.6, 'final')), 2026, 11, BASELINE);
+    expect(baselineNote(r)).toBe('baseline includes 9 MODIS-only estimate years of 23');
+    const few = ratioToMedian([point(2026, 11, 4, 'final')], 2026, 11, BASELINE);
+    expect(baselineNote(few)).toBeNull();
+  });
+
+  it('m5: the median is taken after aggregating cells, not summed from per-cell medians', () => {
+    // Three cells burning in rotation: every cell's own median is 0, the AOI total is always 10.
+    const cells: number[][] = [[], [], []];
+    const series: MonthPoint[] = [];
+    for (let y = 2003; y <= 2025; y++) {
+      const perCell = [0, 1, 2].map((c) => (y % 3 === c ? 10 : 0));
+      perCell.forEach((v, c) => cells[c]!.push(v));
+      series.push(point(y, 11, perCell[0]! + perCell[1]! + perCell[2]!, 'final'));
+    }
+    series.push(point(2026, 11, 20, 'final'));
+    const sumOfCellMedians = cells.reduce((sum, c) => sum + median(c)!, 0);
+    const r = ratioToMedian(series, 2026, 11, BASELINE);
+    expect(sumOfCellMedians).toBe(0);
+    expect(r.median).toBe(10);
+    expect(r.ratio.value).toBe(2);
   });
 });

@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { STATUSES } from '@/lib/domain/honest-value';
 import { daysInMonth, daysOfMonth, monthEnd, monthStart } from '@/lib/domain/iso-date';
 import { DatasetMetaSchema } from '@/lib/domain/meta';
-import { statusOf } from '@/lib/domain/status';
+import { monthCoverage, statusOf } from '@/lib/domain/status';
 import { TODAY, contractMeta, metaWithMissingMonth, rawContractMeta } from '../fixtures/meta';
 
 describe('iso-date helpers', () => {
@@ -130,5 +130,47 @@ describe('statusOf() rule order and data-driven dates', () => {
         },
       ),
     );
+  });
+});
+
+describe('statusOf() — review fixes (2026-11-15 science review)', () => {
+  it('B1: a past month after nrt_through is no_data (not yet delivered), never a preliminary zero', () => {
+    const meta = DatasetMetaSchema.parse({ ...rawContractMeta, nrt_through: '2026-10-20' });
+    expect(statusOf(2026, 11, meta, TODAY)).toBe('no_data');
+    expect(statusOf(2026, 10, meta, TODAY)).toBe('preliminary');
+    expect(statusOf(2026, 12, meta, '2026-12-01')).toBe('no_data');
+    expect(statusOf(2027, 1, meta, '2026-12-01')).toBe('future');
+  });
+
+  it('M2: a month straddling the SP date is preliminary', () => {
+    const meta = DatasetMetaSchema.parse({
+      ...rawContractMeta,
+      standard_processing_through: '2026-06-15',
+    });
+    expect(statusOf(2026, 6, meta, TODAY)).toBe('preliminary');
+    expect(statusOf(2026, 5, meta, TODAY)).toBe('final');
+  });
+});
+
+describe('monthCoverage()', () => {
+  it('counts days seen by at least one platform, up to nrt_through and today', () => {
+    expect(monthCoverage(2026, 11, contractMeta, TODAY)).toEqual({ observed: 14, total: 30 });
+    expect(monthCoverage(2026, 10, contractMeta, TODAY)).toEqual({ observed: 31, total: 31 });
+    expect(monthCoverage(2026, 11, contractMeta, '2026-11-05')).toEqual({ observed: 5, total: 30 });
+    expect(monthCoverage(2000, 10, contractMeta, TODAY)).toEqual({ observed: 0, total: 31 });
+    expect(monthCoverage(2026, 12, contractMeta, TODAY)).toEqual({ observed: 0, total: 31 });
+  });
+
+  it('a day missing on one platform but seen by another still counts', () => {
+    expect(monthCoverage(2016, 2, contractMeta, TODAY)).toEqual({ observed: 29, total: 29 });
+  });
+
+  it('a month missing on all platforms but one day is 1 of N', () => {
+    const meta = metaWithMissingMonth(2014, 3, ['MODIS', 'VIIRS_SNPP']);
+    const patched = DatasetMetaSchema.parse({
+      ...meta,
+      missing_days: meta.missing_days.filter((d) => d.date !== '2014-03-31'),
+    });
+    expect(monthCoverage(2014, 3, patched, TODAY)).toEqual({ observed: 1, total: 31 });
   });
 });
