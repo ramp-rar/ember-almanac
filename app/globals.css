@@ -1,0 +1,26 @@
+@import 'tailwindcss';
+
+/* Dark "scientific instrument" theme. Ember is the single accent. */
+@theme {
+  --color-ink: #0b0d10;
+  --color-panel: #12161b;
+  --color-line: #232a32;
+  --color-muted: #8b96a3;
+  --color-text: #e6eaef;
+  --color-ember: #ff6a2b;
+  --color-no-data: #2a2f36;
+
+  --font-display: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  background: var(--color-ink);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+}
