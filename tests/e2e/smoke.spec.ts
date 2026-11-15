@@ -21,14 +21,21 @@ test('meta endpoint returns dataset dates or a readable 503', async ({ request }
   }
 });
 
-test('home page renders, explains all five statuses and flags mock data', async ({
+test('home shows the calendar, explains all five statuses and flags mock data', async ({
   page,
   request,
 }) => {
   await page.goto('/');
-  await expect(page.getByRole('heading', { level: 1 })).toContainText('FIRE');
-  for (const status of ['final', 'estimate', 'preliminary', 'no_data', 'future']) {
-    await expect(page.getByText(status, { exact: true })).toBeVisible();
+  await expect(page.getByRole('grid')).toBeVisible();
+  const legend = page.getByLabel('Legend');
+  for (const label of [
+    'final —',
+    'estimate —',
+    'preliminary —',
+    'no data —',
+    'not yet observed —',
+  ]) {
+    await expect(legend.getByText(label)).toBeVisible();
   }
   const meta = await request.get('/api/meta');
   if (meta.status() === 200 && (await meta.json()).is_mock) {

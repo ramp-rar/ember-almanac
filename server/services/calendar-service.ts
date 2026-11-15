@@ -69,6 +69,7 @@ export async function getCalendar(ref: AoiRef, today: string): Promise<CalendarR
       baselineYears: meta.harmonization.baseline_years,
       estimateBeforeYear: meta.estimate_before_year,
       method: meta.harmonization.method,
+      coverage: meta.coverage,
     },
     today,
     calendar: buildCalendar(rows, meta, today),

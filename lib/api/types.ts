@@ -28,6 +28,10 @@ export interface CalendarResponse {
     readonly baselineYears: readonly [number, number];
     readonly estimateBeforeYear: number;
     readonly method: string;
+    /** Sensor coverage from meta.json, for the era rail. */
+    readonly coverage: Readonly<
+      Record<string, { readonly start: string; readonly end: string | null }>
+    >;
   };
   readonly today: string;
   readonly calendar: CalendarData;
