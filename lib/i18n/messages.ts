@@ -41,6 +41,7 @@ const en = {
     autoTitle: 'Follow the device setting',
     themeTitle: (name: S) => `${name} theme`,
     language: 'Language',
+    sections: 'Sections',
     tagline: 'Did Earth burn more — or did our satellites just get better at seeing it?',
   },
   banner: {
@@ -280,12 +281,38 @@ const en = {
     tipAnomaly: (y: number, v: S | null) =>
       `${y}: ${v === null ? 'incomplete year' : `${v} fire-days vs mean`}`,
   },
+  place: {
+    point: (r: number, lat: S, lon: S) => `${r} km around ${lat}°, ${lon}°`,
+    bbox: (w: S, e: S, s: S, n: S) => `${w}° to ${e}° E, ${s}° to ${n}° N`,
+    eraStart: (p: S) => `${p} starts`,
+    eraEnd: (p: S) => `${p} ends`,
+  },
   map: {
     aria: (label: S) =>
       `3D satellite map of ${label}. Click the map to propose a point for a custom area.`,
     to3d: 'Switch to 3D',
     toFlat: '3D relief on · switch to flat',
+    controls: {
+      'Map.Title': 'Map',
+      'NavigationControl.ZoomIn': 'Zoom in',
+      'NavigationControl.ZoomOut': 'Zoom out',
+      'NavigationControl.ResetBearing': 'Reset view to north',
+      'AttributionControl.ToggleAttribution': 'Show data sources',
+    } as Record<S, S>,
   },
+  errors: {
+    no_coverage:
+      'There is no fire data for this place in this version. Pick Kazakhstan or Texas from the country list.',
+    not_found: 'This place was not found.',
+    invalid_area:
+      'This area cannot be computed. Try a smaller area or move it away from the poles.',
+    bad_request: 'The request was not understood.',
+    unavailable: 'The data service is temporarily unavailable. Please retry.',
+    no_active_dataset: 'No dataset is loaded yet.',
+    internal: 'Something went wrong. Please retry.',
+  } as Record<S, S>,
+  paletteName: { inferno: 'warm', cividis: 'blue–yellow' } as Record<S, S>,
+  pageTitle: (place: S) => `${place} — burning calendar`,
 };
 
 export type Messages = typeof en;
@@ -317,6 +344,7 @@ const ru: Messages = {
     autoTitle: 'Как в настройках устройства',
     themeTitle: (name) => `${name} тема`,
     language: 'Язык',
+    sections: 'Разделы',
     tagline: 'Земля стала гореть больше — или спутники стали лучше видеть?',
   },
   banner: {
@@ -550,12 +578,37 @@ const ru: Messages = {
       `${y}: ${v} пожарных дней<br/>${s}${inTrend ? '' : ' · не в тренде'}`,
     tipAnomaly: (y, v) => `${y}: ${v === null ? 'неполный год' : `${v} пожарных дней от среднего`}`,
   },
+  place: {
+    point: (r, lat, lon) => `${r} км вокруг ${lat}°, ${lon}°`,
+    bbox: (w, e, s, n) => `от ${w}° до ${e}° в. д., от ${s}° до ${n}° с. ш.`,
+    eraStart: (p) => `${p}: начало`,
+    eraEnd: (p) => `${p}: конец`,
+  },
   map: {
     aria: (label) =>
       `3D-карта со спутниковым снимком: ${label}. Нажмите на карту, чтобы предложить точку для своей области.`,
     to3d: 'Включить 3D',
     toFlat: '3D-рельеф включён · сделать плоской',
+    controls: {
+      'Map.Title': 'Карта',
+      'NavigationControl.ZoomIn': 'Приблизить',
+      'NavigationControl.ZoomOut': 'Отдалить',
+      'NavigationControl.ResetBearing': 'Повернуть на север',
+      'AttributionControl.ToggleAttribution': 'Показать источники данных',
+    },
   },
+  errors: {
+    no_coverage:
+      'Для этого места в этой версии нет данных о пожарах. Выберите Казахстан или Техас в списке стран.',
+    not_found: 'Это место не найдено.',
+    invalid_area: 'Эту область нельзя посчитать. Уменьшите её или отодвиньте от полюсов.',
+    bad_request: 'Запрос не распознан.',
+    unavailable: 'Сервис данных временно недоступен. Повторите попытку.',
+    no_active_dataset: 'Данные ещё не загружены.',
+    internal: 'Что-то пошло не так. Повторите попытку.',
+  },
+  paletteName: { inferno: 'тёплая', cividis: 'сине-жёлтая' },
+  pageTitle: (place) => `${place} — календарь пожаров`,
 };
 
 const tg: Messages = {
@@ -585,6 +638,7 @@ const tg: Messages = {
     autoTitle: 'Мисли танзимоти дастгоҳ',
     themeTitle: (name) => `Мавзӯи ${name}`,
     language: 'Забон',
+    sections: 'Бахшҳо',
     tagline: 'Оё Замин бештар месӯзад — ё моҳвораҳо беҳтар мебинанд?',
   },
   banner: {
@@ -824,12 +878,38 @@ const tg: Messages = {
       `${y}: ${v} рӯзи сӯхтор<br/>${s}${inTrend ? '' : ' · дар тамоюл нест'}`,
     tipAnomaly: (y, v) => `${y}: ${v === null ? 'соли нопурра' : `${v} рӯзи сӯхтор аз миёна`}`,
   },
+  place: {
+    point: (r, lat, lon) => `${r} км атрофи ${lat}°, ${lon}°`,
+    bbox: (w, e, s, n) => `аз ${w}° то ${e}° т. ш., аз ${s}° то ${n}° а. ш.`,
+    eraStart: (p) => `${p}: оғоз`,
+    eraEnd: (p) => `${p}: анҷом`,
+  },
   map: {
     aria: (label) =>
       `Харитаи 3D бо тасвири моҳвораӣ: ${label}. Барои пешниҳоди нуқта барои минтақаи худ харитаро пахш кунед.`,
     to3d: 'Фаъол кардани 3D',
     toFlat: 'Релефи 3D фаъол аст · ҳамвор кардан',
+    controls: {
+      'Map.Title': 'Харита',
+      'NavigationControl.ZoomIn': 'Калон кардан',
+      'NavigationControl.ZoomOut': 'Хурд кардан',
+      'NavigationControl.ResetBearing': 'Ба шимол гардондан',
+      'AttributionControl.ToggleAttribution': 'Нишон додани манбаъҳо',
+    },
   },
+  errors: {
+    no_coverage:
+      'Барои ин ҷой дар ин версия маълумоти сӯхтор нест. Аз рӯйхати кишварҳо Қазоқистон ё Техасро интихоб кунед.',
+    not_found: 'Ин ҷой ёфт нашуд.',
+    invalid_area:
+      'Ин минтақаро ҳисоб кардан ғайриимкон аст. Онро хурдтар кунед ё аз қутбҳо дур гузоред.',
+    bad_request: 'Дархост фаҳмида нашуд.',
+    unavailable: 'Хидмати маълумот муваққатан дастнорас аст. Такрор кунед.',
+    no_active_dataset: 'Маълумот ҳанӯз бор нашудааст.',
+    internal: 'Хатогӣ рух дод. Такрор кунед.',
+  },
+  paletteName: { inferno: 'гарм', cividis: 'кабуд–зард' },
+  pageTitle: (place) => `${place} — тақвими сӯхтор`,
 };
 
 export const MESSAGES: Record<Locale, Messages> = { en, ru, tg };

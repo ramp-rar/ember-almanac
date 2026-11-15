@@ -6,6 +6,7 @@ import { useId, useState, type FormEvent } from 'react';
 import { useUi } from '@/components/ui-store';
 import type { AoiCreated, ApiError, RegionItem } from '@/lib/api/types';
 import { MAX_RADIUS_KM, MIN_RADIUS_KM, validateAoi, type AoiInput } from '@/lib/h3/aoi-id';
+import { regionName } from '@/lib/i18n/places';
 import { useI18n } from '@/lib/i18n/use-locale';
 
 type Tab = 'region' | 'coords' | 'draw';
@@ -72,7 +73,8 @@ export function AoiPicker() {
 }
 
 function RegionSearch() {
-  const P = useI18n().t.picker;
+  const { t, locale } = useI18n();
+  const P = t.picker;
   const router = useRouter();
   const [q, setQ] = useState('');
   const listId = useId();
@@ -108,8 +110,10 @@ function RegionSearch() {
               onClick={() => router.push(`/r/${r.iso3}`)}
               className="hover:bg-panel-2 flex w-full items-center justify-between rounded px-2 py-1 text-left"
             >
-              <span>{r.nameEn}</span>
-              <span className="text-muted font-mono text-xs">{r.iso3}</span>
+              <span>{regionName(r.iso3, r.nameEn, locale)}</span>
+              {r.iso3.length === 3 && (
+                <span className="text-muted font-mono text-xs">{r.iso3}</span>
+              )}
             </button>
           </li>
         ))}

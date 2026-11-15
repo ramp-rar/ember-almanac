@@ -13,6 +13,7 @@ import {
   RegionSchema,
   toForecast,
   deriveMeta,
+  matchesRegion,
   summary,
   toRows,
   type ApiRegion,
@@ -55,10 +56,7 @@ export function snapshotSource(): FireSource {
       return forecastById[iso3.toLowerCase()] ?? null;
     },
     async listRegions(query) {
-      const q = query.trim().toLowerCase();
-      return regions
-        .filter((r) => !q || r.name.toLowerCase().includes(q) || r.id.includes(q))
-        .map(summary);
+      return regions.filter((r) => matchesRegion(r, query)).map(summary);
     },
     async region(iso3) {
       const r = regions.find((x) => x.id === iso3.toLowerCase());

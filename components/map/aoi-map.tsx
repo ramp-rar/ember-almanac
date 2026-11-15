@@ -71,9 +71,12 @@ const EMPTY_FC = { type: 'FeatureCollection' as const, features: [] };
 /** 3D map with terrain. Shows the area outline; a click proposes a point for the area form. */
 export default function AoiMap({
   aoi,
+  label,
   hotspots,
 }: {
   aoi: CalendarResponse['aoi'];
+  /** Area name in the current language. */
+  label: string;
   /** [lon, lat, weight] points for the selected month (optional). */
   hotspots?: readonly (readonly [number, number, number])[];
 }) {
@@ -110,6 +113,7 @@ export default function AoiMap({
       pitch: 55,
       maxPitch: 80,
       attributionControl: { compact: true },
+      locale: M.controls,
     });
     m.addControl(new NavigationControl({ visualizePitch: true }), 'top-right');
     m.on('load', () => {
@@ -197,7 +201,7 @@ export default function AoiMap({
         ref={container}
         className="border-line h-[26rem] w-full overflow-hidden rounded-xl border lg:h-[32rem]"
         role="region"
-        aria-label={M.aria(aoi.label)}
+        aria-label={M.aria(label)}
       />
       <button
         type="button"

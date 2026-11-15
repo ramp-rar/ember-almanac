@@ -116,3 +116,79 @@ Not recommended: a 3D globe, prediction, chatbot (forbidden by docs/PROJECT_RULE
 - "Any area on Earth" is not true until the data team delivers more than two regions. Label the UI honestly ("regions delivered").
 - The team's baseline includes the target year; ours excludes it. Align in DATA_CONTRACT or recompute server-side from `cell_month`.
 - FireScope's honesty bar is high. We must not claim better honesty on copy alone; the differentiator is the per-value status, the range 2000–2026 and the headline ratio.
+
+
+## 7. Kiln-watch (https://kiln-watch-seven.vercel.app/)
+
+Method: `curl` on the HTML, the Vite bundles (`index-7kKvbekD.js` 524 KB, lazy chunks `Home` 800 KB incl. three.js, `Map` 13 KB, `PlaceRisk` 19 KB, `Warning` 28 KB, `maplibre-gl`, CSS 71 KB) and nine public JSON endpoints, read 2026-11-15. The site is a client-rendered React SPA. Findings come from bundle strings and API responses, not from a browser session: I did NOT see rendered screens, so layout, motion and pixel-level interaction claims are marked "from code" or "not verified".
+
+### 7.1 What it is
+"Kiln Watch" (team "Off the Binary", GitHub `Aalvee-Aarham/nasaspaceappschallenge-2026-team-off-the-binary`) answers the same challenge as ours (MODIS x VIIRS harmonization) but as a broad product: harmonized record, early warning, place-risk check, AI analyst, MCP server, email alerts. Its `og:description` claims "an early warning and a 35-tool MCP server" (a meta-tag claim; `/mcp` answers 406 to a plain GET, so I could not list the tools). Origin story: Dhaka brick-kiln belt and Boro-harvest farmers, but the product is global.
+
+### 7.2 Pages, features and interactions found
+| Area | Evidence | What it does |
+|---|---|---|
+| Home | `Home` chunk strings | Hero + persona cards (fire services/NGOs/farmers, researchers, developers). Uses three.js with "NASA 3D Resources" satellite models and "NASA Blue Marble" Earth (an "anatomy" 3D section, `--anatomy-*` dark tokens). This 3D scene is what our docs/PROJECT_RULES.md forbids. |
+| Calendars | string "Fire activity by ISO week and year. Arrow keys move, Enter opens." | Month and ISO-week x year grid; colour + label = period vs median of same month; a "recency-weighted" variant (each year counts half as much as one 10 years newer); percentile toggle "all other years" vs "recent years"; `role=grid` present; click/Enter opens "what's behind it" (daily chart stacked by satellite, map fly-to, news). |
+| Map | `Map` chunk, MapLibre | Basemap `tiles.openfreemap.org/styles/dark`, NASA GIBS WMS tiles by date, globe projection switch (`setProjection`), popups "Nth percentile of the same days", table row click flies to the cell, caveat "coordinates are pixel centres, not exact fire locations". No terrain/hillshade/raster-dem found in the bundle: no 3D terrain map. |
+| Early warning | `Warning` chunk, `/api/warnings`, `/api/outlook` | Levels `quiet / normal / watch / insufficient` per region from the percentile of "month so far" vs the same days in earlier years; headline sentence ("higher than 23 of the previous 26 Novembers over the same days"); `next_4_weeks_median`; 12-week bar chart with median tick, top-tenth orange, top-quarter gold, bottom-tenth blue, dashed in-progress week; world "outlook" list of half-degree cell groups with `last_30`, `usual_last_30`, `usual_next_30`; email subscription (live `/api/health` says `email:false`) and an n8n workflow download. |
+| Backtest | `/api/warnings` | Each alert carries `backtest {pod, far, pss, n}` (e.g. N. California pod 0.65, far 0.235, pss 0.592, n 178); `insufficient` with null backtest for Dhaka and La Rioja; copy admits the score "is generous" because the month total includes days the rule already saw. |
+| Is fire near you? | `PlaceRisk` chunk, `/api/place-risk`, Nominatim, geolocation | Type a town/school/address or share location: fire seen within 1-25 km this week, usual fire months, outlook, and nearby schools, hospitals, clinics, care homes, fire stations (OpenStreetMap). Plain yes/no sentences. |
+| Farm check | `/api/farm-check` | Dhaka kilns within 1 km, estimated smoke, fire before Boro harvest; "email or print it for the agriculture office". |
+| Casebook / news | `/api/casebook`, `/api/events` | Unusual months matched to NASA EONET events and GDELT news (2017+), each case labelled `corroborated / reported / satellite_only / agency_only / abstained / insufficient`; Gemini filters off-topic headlines; GDELT limited to 1 request per 5 s. Per-area exposure (population, hospitals, schools, roads, cropland km2; WorldPop/OSM). |
+| Download | `/api/export/options` | CSV/TSV/JSON; month or week granularity; column groups: harmonized Aqua-scale hotspots + `ci95_lo/hi`, VIIRS scale + `viirs_scale_modelled` flag, fire cell-days, history (`median_same_period, ratio_to_median, percentile, rank, of_years`), satellites used + per-satellite coverage, raw counts ("do not trend them"). CSV starts with `#` comment lines (unit, source, code version). Detections file: up to 366 days with static-source flag and "used in calendar" flag. No key, no sign-up. |
+| Methodology / proof | strings | Sensor-denial rehearsal ("what if MODIS had ended in 2016?"), geographic hold-out, FRP quantile mapping (W2 distance), seasonal Mann-Kendall (harmonized slope should match Aqua-only), yearly totals indexed to 2003-2011 = 100 on log scale, "95% intervals contained the observed value in N%" (calibrated on earlier years, scored on later), chain-of-links error added to the interval, MODIS calibration stops at 2020 (Terra/Aqua overpass drift; chart "Aqua MODIS local overpass hour by year"), "Aqua itself drifts after about 2021, so the 2024 comparison is weaker". NRT versions flagged provisional. |
+| Build your own area | `/api/aoi` | Any box up to 4 x 4 deg; "plan on 5 to 10 minutes" background build with progress screen. Only 9 preset areas: Alberta, Dhaka kilns, La Rioja, N. California, Niger Delta, Parana Delta, Punjab, Rondonia, SE Australia. |
+| AI analyst | `/api/agent`, `/api/personas` | Chat with personas (e.g. "Ember", fire operations officer), tool calls listed; "charts are drawn from the pipeline, never by the model". UI text says Google Gemini free tier; live `/api/health` reports `groq/openai/gpt-oss-120b`: copy and server disagree. |
+| Other | strings | "What teams asked NASA, and our answers", feedback to GitHub issues, "Copy a link to this exact view" (hash-state URLs), locales `en` + `bn` (Bengali) only: no Russian or Tajik. |
+
+### 7.3 Data sources and claims
+- FIRMS MODIS C6.1 + VIIRS 375 m via the Portolan GeoParquet mirror on source.coop (CC0), data through 2026-11-14 (`/api/health`), regions built 2026-11-15: fresh to the day.
+- Primary unit "harmonized hotspots on the Aqua MODIS scale" with 95% interval; secondary fire cell-days. Explicit: "A calendar value is hotspots a reference satellite would have recorded, not a count of fires." Static sources (kilns, flares) separated by a flag.
+- Cites Giglio and others (DOIs in bundle), a 2026 GMD paper and an arXiv PDF: verified only that the links exist.
+- Not verified: interval coverage percentages, the "35 tools" count, numeric calibration results (Methodology page is client-rendered; not parsed).
+
+### 7.4 Design (from code)
+- Dark-first near-black navy (`--night #030508`, `--raised #0A0E15`, `--line #1C232F`, text `#F1F4F8`, muted `#97A3B3`), ember orange accent `#EA7329`/`#FF9A5A`, gold `#F6C64F`, cold blue `#7FB2EC`, focus `#00A1FF`, green `#3DDC97`. Light values exist (`#f3f4f6`, `#111827`) but the CSS has 1 `prefers-reduced-motion` and 0 `prefers-color-scheme` rules.
+- Typography: Instrument Serif (display) + Inter / Inter Tight (UI).
+- Level colours orange/gold/green/blue always paired with a text label; CVD safety not verified.
+- Motion: not verified (three.js scene, view transitions referenced).
+- A11y signals: 98 `aria-label`, 4 grid roles, arrow-key navigation copy. Not tested by me.
+
+### 7.5 Strengths (evidence)
+1. Breadth with a believable "so what": place check with schools/hospitals, alerts, farm check, API, MCP, n8n.
+2. Candid copy ("Aqua itself drifts after about 2021"; "that score is generous"; "detections are not fires"; "an outlook, not a forecast").
+3. Uncertainty shipped: 95% intervals in export, per-alert backtest, `insufficient` instead of a fake level.
+4. Provenance in every file (unit, source, code version, `viirs_scale_modelled`, NRT share).
+5. Fresh data, open unauthenticated endpoints, no key.
+6. Six corroboration classes keep news from overstating the satellite signal.
+
+### 7.6 Weaknesses (evidence)
+1. Only 9 preset regions; any other area is a 5-10 min build limited to 4 x 4 deg (`/api/aoi` copy).
+2. Baseline is recency-weighted or includes the target period; no minimum-years rule or n visible in what I found. Ours (exclude target year, n >= 10, median 0 rule) is stricter.
+3. No five-state status per value: provisional is a period flag, pre-2012 is a `viirs_scale_modelled` column; I found no `no_data` hatch and no `future` state.
+4. Performance: Home chunk 800 KB (three.js) + 524 KB main; API `Cache-Control: public, max-age=0, must-revalidate`, `X-Vercel-Cache: MISS`; FastAPI backend on Azure Japan East (`kiln-watch-jp...japaneast.azurecontainerapps.io`); UI ships "it may be busy or waking up" copy.
+5. Copy vs server mismatch (Gemini vs Groq); `email:false` on the live server although email alerts are advertised.
+6. Scope creep (3D scene, AI chat, alert levels); alert backtest admittedly partly scored on days the rule already saw.
+7. Two languages (en, bn), no ru/tg; no OS dark-mode following.
+8. SPA with empty `<div id="root">` and hash URLs: no SSR, weak link previews.
+9. Backtest n about 130-180 per region without intervals; independence of overlapping windows not stated (not verified how handled).
+
+### 7.7 What to adopt (better than theirs)
+1. **Interval and provenance in tooltip and export.** Build: if the data team delivers `harm_lo/harm_hi`, tooltip "x1.8 (1.4-2.3)" and `ci95_lo/ci95_hi` columns; CSV header `#` block with unit, source, dataset version and a `status` column per row. Better: status per row, typed via `HonestValue`, not just extra columns. Honesty: only if computed by the science team, else "no interval available". Effort M.
+2. **Check-against-reports labels on unusual months.** Build: for months in the top 10%, server job queries NASA EONET (free) and shows linked events with an enum label (corroborated / reported / satellite_only / none found). Better: links only, no LLM summarising of news. Honesty: show counts and links, never "confirmed fire". Effort M.
+3. **"Insufficient" with a stated reason.** Build: headline copy per rule: `fewer than 10 valid years (n=7)`, `median is 0: no usual activity`, `coverage too low`. Better: theirs returns `insufficient` without a visible reason in the data I saw. Honesty: pure rules. Effort S.
+4. **Backtest panel for our 6-month expected range.** Build: "How reliable was this?" showing the share of past months where the observed value fell inside the range, with n and the overlap caveat, computed by script from our data; hide the range if not validated. Better: coverage in plain words instead of POD/FAR/PSS. Honesty: computed, with n; else "not validated". Effort M.
+5. **"Is fire near you?" address check inside the calendar frame.** Build: one input (place or point + radius from our AOI tool): detections this week within 5-25 km and "usual for this month" with status, at a shareable URL. Skip facility lists in phase 1. Better: same status/ratio rules and SSR-able URL. Honesty: "detections, not fires; none seen is not none occurred", show last overpass time. Effort M.
+6. **Seam/sensor-denial figure next to the calendar.** Build: raw vs harmonized annual lines with the 2012 and 2020 seams marked and caption "a step in the raw line that the Aqua-only line does not share is the satellite fleet changing, not fire", plus the data team's rehearsal figure if delivered. Better: on the main flow, theirs is on a separate page. Honesty: only figures from the science team, cite file/version. Effort S-M.
+7. **ISO-week calendar mode.** Build: `granularity=week` in the API and a 53 x 27 SVG grid with the same status rules and arrow-key/Enter navigation. Better: median excludes target year, no silent recency weighting. Honesty: show "too few detections" below a threshold instead of noisy ratios. Effort M.
+8. **Per-satellite coverage strip under the calendar.** Build: thin row per month (Terra, Aqua, SNPP, NOAA-20/21) with share of days in the tooltip, pattern + text. Better: visible on the home screen, theirs is a download column. Honesty: derive from days with detections and state that method (theirs: "observing on any day it delivered detections anywhere on Earth"). Effort M.
+9. **EN/RU/TJ with OS-aware theme.** Build: `prefers-color-scheme` plus explicit toggle, `lang` per route, translated status labels reviewed by a native speaker. Better: they ship en/bn and no `prefers-color-scheme`. Honesty: glossary entries for methodology terms, no machine-only copy. Effort M.
+10. **SSR + CDN-cached calendar, path URLs.** Build: SSR of the 324 cells, `s-maxage` + `stale-while-revalidate` on calendar API keyed by dataset version, OG image per area. Better: theirs is a CSR shell, `max-age=0`, hash URLs. Honesty: stale data labelled with `data_through`. Effort M.
+11. **Data-through line.** Build: calendar footer "Data through <date>, last standard-processing <date>, NRT share x% of this month" from `meta.json`, linked to `preliminary` cells. Better: tied to the cell status, not a table column. Honesty: all from `meta.json`. Effort S.
+12. **Permanent "what this is not" strip.** Build: "Detections are not fires or burned area; the range is a climatological outlook, not a forecast" next to the headline and in every export header, linking to the glossary. Better: attached to each number's status copy, not a footer. Honesty: wording only. Effort S.
+
+Do not copy: 3D globe/satellite scene, AI chat/personas, email alert levels (docs/PROJECT_RULES.md "Do not"; their own copy calls the backtest "generous"). MCP/n8n only after our public API and OpenAPI exist.
+
+### 7.8 Not verified
+Rendered visuals and motion; Methodology page figures and percentages; MCP tool list; email delivery; any HTML table fallback; behaviour at 400 px; AI analyst accuracy; repo licence.

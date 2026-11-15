@@ -20,6 +20,8 @@ const MED_H = 34;
 
 export interface CalendarProps {
   readonly data: CalendarResponse;
+  /** Area name in the current language. */
+  readonly label: string;
   readonly mode: Mode;
   readonly palette: PaletteName;
   readonly newestFirst: boolean;
@@ -152,6 +154,7 @@ const CellsLayer = memo(function CellsLayer({
 
 export function BurningCalendar({
   data,
+  label,
   mode,
   palette,
   newestFirst,
@@ -256,8 +259,8 @@ export function BurningCalendar({
   const eraMarkers = Object.entries(dataset.coverage)
     .filter(([platform]) => platform !== 'MODIS')
     .flatMap(([platform, c]) => [
-      { date: c.start, label: `${platform.replace('VIIRS_', '')} start` },
-      ...(c.end ? [{ date: c.end, label: `${platform.replace('VIIRS_', '')} end` }] : []),
+      { date: c.start, label: tr.t.place.eraStart(platform.replace('_', ' ')) },
+      ...(c.end ? [{ date: c.end, label: tr.t.place.eraEnd(platform.replace('_', ' ')) }] : []),
     ])
     .filter((mk) => rowOf.has(Number(mk.date.slice(0, 4))));
 
@@ -271,7 +274,7 @@ export function BurningCalendar({
         viewBox={`0 0 ${width} ${height}`}
         className="h-auto w-full touch-manipulation outline-none select-none"
         role="grid"
-        aria-label={K.gridAria(data.aoi.label)}
+        aria-label={K.gridAria(label)}
         aria-activedescendant={focused ? activeId : undefined}
         tabIndex={0}
         onKeyDown={onKey}

@@ -3,6 +3,7 @@ import { z } from 'zod';
 import type { AoiMonthRow } from '@/lib/domain/calendar';
 import { DatasetMetaSchema, type DatasetMeta } from '@/lib/domain/meta';
 import type { ForecastMonth } from '@/lib/api/types';
+import { REGION_NAMES } from '@/lib/i18n/places';
 import type { Bbox, FireSource, RegionSummary } from './fire-source';
 
 /**
@@ -198,6 +199,14 @@ async function regionRows(base: string, id: string): Promise<ApiRow[]> {
   );
 }
 
+/** Search across the API name, the id and our names in every UI language. */
+export function matchesRegion(r: ApiRegion, query: string): boolean {
+  const q = query.trim().toLowerCase();
+  if (!q) return true;
+  const names = [r.name, r.id, ...Object.values(REGION_NAMES[r.id.toUpperCase()] ?? {})];
+  return names.some((n) => n.toLowerCase().includes(q));
+}
+
 export const summary = (r: ApiRegion): RegionSummary => ({
   iso3: r.id.toUpperCase(),
   nameEn: r.name,
@@ -240,10 +249,7 @@ export function remoteApiSource(base: string): FireSource {
       }
     },
     async listRegions(query) {
-      const q = query.trim().toLowerCase();
-      return (await listApiRegions(base))
-        .filter((r) => !q || r.name.toLowerCase().includes(q) || r.id.includes(q))
-        .map(summary);
+      return (await listApiRegions(base)).filter((r) => matchesRegion(r, query)).map(summary);
     },
     async region(iso3) {
       const r = (await listApiRegions(base)).find((x) => x.id === iso3.toLowerCase());

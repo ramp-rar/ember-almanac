@@ -21,6 +21,8 @@ import {
   type RegionItem,
 } from '@/lib/api/types';
 import { pText, trendText } from '@/lib/i18n/copy';
+import { APP_NAME } from '@/lib/brand';
+import { placeName } from '@/lib/i18n/places';
 import { useI18n } from '@/lib/i18n/use-locale';
 
 const AoiMap = dynamic(() => import('@/components/map/aoi-map'), {
@@ -34,10 +36,22 @@ const YearlyCharts = dynamic(() => import('@/components/charts/yearly-charts'), 
 
 const MODES = ['harm', 'raw', 'ratio'] as const;
 
+/** An API error that keeps its machine code, so the UI can explain it in the user's language. */
+class ApiRequestError extends Error {
+  constructor(
+    readonly code: string,
+    message: string,
+  ) {
+    super(message);
+  }
+}
+
 async function fetchJson<T>(url: string): Promise<T> {
   const res = await fetch(url);
-  const body = await res.json().catch(() => ({}));
-  if (!res.ok) throw new Error((body as ApiError).message ?? `Request failed (${res.status})`);
+  const body = (await res.json().catch(() => ({}))) as Partial<ApiError>;
+  if (!res.ok) {
+    throw new ApiRequestError(body.error ?? 'internal', body.message ?? `HTTP ${res.status}`);
+  }
   return body as T;
 }
 
@@ -86,13 +100,23 @@ export function Explorer({ aoi }: { aoi: AoiRef | null }) {
       ? (data.calendar.cells.find((c) => c.y === selected.y && c.m === selected.m) ?? null)
       : null;
 
+  // The browser tab names the place in the reader's language.
+  useEffect(() => {
+    if (!data || !aoi) return;
+    document.title = `${t.pageTitle(placeName(aoi, data.aoi.label, i))} · ${APP_NAME}`;
+  }, [data, aoi, i, t]);
+
   const error = aoi === null ? first.error : query.error;
   if (error) {
     return (
       <Shell>
         <div role="alert" className="card p-6">
           <p className="font-display text-lg">{t.explorer.loadError}</p>
-          <p className="text-muted mt-1 text-sm">{(error as Error).message}</p>
+          <p className="text-muted mt-1 text-sm">
+            {error instanceof ApiRequestError
+              ? (t.errors[error.code] ?? t.errors.internal)
+              : t.errors.internal}
+          </p>
           <button
             type="button"
             onClick={() => (aoi === null ? first.refetch() : query.refetch())}
@@ -124,6 +148,7 @@ export function Explorer({ aoi }: { aoi: AoiRef | null }) {
   const trend = calendar.series.trend;
   const finalOnly = calendar.series.finalOnly;
   const ex = t.explorer;
+  const label = placeName(aoi, data.aoi.label, i);
 
   return (
     <Shell>
@@ -132,7 +157,7 @@ export function Explorer({ aoi }: { aoi: AoiRef | null }) {
           <p className="text-muted font-mono text-xs tracking-wide uppercase">
             {aoi.kind === 'region' ? ex.kindRegion : ex.kindAoi}
           </p>
-          <h1 className="font-display text-3xl tracking-tight sm:text-4xl">{data.aoi.label}</h1>
+          <h1 className="font-display text-3xl tracking-tight sm:text-4xl">{label}</h1>
           <p className="text-muted mt-1 text-sm">
             {data.aoi.areaKm2 !== null && `${ex.area(i.n(Math.round(data.aoi.areaKm2)))} · `}
             {ex.cells(i.n(data.aoi.cellsCount))}
@@ -180,7 +205,7 @@ export function Explorer({ aoi }: { aoi: AoiRef | null }) {
                 type="button"
                 onClick={() => setPalette(palette === 'inferno' ? 'cividis' : 'inferno')}
                 className="border-line text-muted hover:text-text min-h-9 rounded-full border px-3"
-                aria-label={ex.colourAria(palette)}
+                aria-label={ex.colourAria(t.paletteName[palette] ?? palette)}
               >
                 {ex.colours(palette === 'inferno')}
               </button>
@@ -207,6 +232,7 @@ export function Explorer({ aoi }: { aoi: AoiRef | null }) {
           <div className="mt-4">
             <BurningCalendar
               data={data}
+              label={label}
               mode={mode}
               palette={palette}
               newestFirst={newestFirst}
@@ -230,7 +256,7 @@ export function Explorer({ aoi }: { aoi: AoiRef | null }) {
               <span className="step">2</span> {ex.mapTitle}
             </h2>
             <p className="text-muted mt-1 mb-3 text-sm">{ex.mapDesc}</p>
-            <AoiMap aoi={data.aoi} />
+            <AoiMap key={i.locale} aoi={data.aoi} label={label} />
           </section>
           <AoiPicker />
           <ExportPanel aoi={aoi} />

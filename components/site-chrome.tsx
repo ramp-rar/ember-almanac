@@ -27,7 +27,7 @@ export function HeaderControls() {
   const { t, locale } = useI18n();
   return (
     <>
-      <nav aria-label="Page" className="ml-auto flex items-center gap-1 text-sm">
+      <nav aria-label={t.nav.sections} className="ml-auto flex items-center gap-1 text-sm">
         <a
           href="#how"
           className="text-muted hover:text-text hidden rounded-full px-3 py-1.5 md:block"
