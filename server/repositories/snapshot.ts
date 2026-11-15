@@ -1,80 +1,86 @@
+import { readFile } from 'node:fs/promises';
+import path from 'node:path';
 import { z } from 'zod';
 import type { DatasetMeta } from '@/lib/domain/meta';
-import kazakhstan from '@/data/snapshot/kazakhstan.json';
-import regionsFile from '@/data/snapshot/regions.json';
-import texas from '@/data/snapshot/texas.json';
-import forecastKz from '@/data/snapshot/forecast-kazakhstan.json';
-import forecastTx from '@/data/snapshot/forecast-texas.json';
-import anomaliesKz from '@/data/snapshot/anomalies-kazakhstan.json';
-import anomaliesTx from '@/data/snapshot/anomalies-texas.json';
 import type { FireSource } from './fire-source';
 import {
   CalendarRowSchema,
   CorridorRowSchema,
-  OutsideCoverageError,
   ForecastRowSchema,
-  RegionSchema,
+  OutsideCoverageError,
   toForecast,
-  deriveMeta,
-  matchesRegion,
-  summary,
   toRows,
-  type ApiRegion,
-  type ApiRow,
 } from './remote-api';
+import { SNAPSHOT_DIR, matchesQuery, snapshotIndex } from './snapshot-index';
 
 /**
- * Real monthly data of the data team's Fire Calendar API, bundled with the app
- * (data/snapshot, exported from the API's /regions and /regions/{id}/calendar). It lets the app run anywhere — Vercel included —
- * without reaching the live service. Whole regions only: custom areas need the live service.
+ * Real data of the data team's Fire Calendar API exported into data/snapshot by `pnpm snapshot`,
+ * so the app runs anywhere — Vercel included — without the live service. Whole regions only;
+ * custom areas need the live service. Region files are read on demand and kept in memory.
  */
-const SnapshotSchema = z.object({
-  generated_at: z.string(),
-  source: z.string(),
-  regions: z.array(RegionSchema),
+const RegionFileSchema = z.object({
+  calendar: z.array(CalendarRowSchema),
+  forecast: z.array(ForecastRowSchema).nullable(),
+  anomalies: z.array(CorridorRowSchema).nullable(),
 });
-const parsed = SnapshotSchema.parse(regionsFile);
-const rowsById: Record<string, readonly ApiRow[]> = {
-  kazakhstan: z.array(CalendarRowSchema).parse(kazakhstan),
-  texas: z.array(CalendarRowSchema).parse(texas),
-};
-const forecastById: Record<string, ReturnType<typeof toForecast>> = {
-  kazakhstan: toForecast(z.array(ForecastRowSchema).parse(forecastKz)),
-  texas: toForecast(z.array(ForecastRowSchema).parse(forecastTx)),
-};
-const corridorById: Record<string, z.infer<typeof CorridorRowSchema>[]> = {
-  kazakhstan: z.array(CorridorRowSchema).parse(anomaliesKz),
-  texas: z.array(CorridorRowSchema).parse(anomaliesTx),
-};
-const regions: readonly ApiRegion[] = parsed.regions.filter((r) => rowsById[r.id] !== undefined);
+type RegionFile = z.infer<typeof RegionFileSchema>;
 
-export const SNAPSHOT_GENERATED_AT = parsed.generated_at;
+const files = new Map<string, Promise<RegionFile | null>>();
 
-export function snapshotMeta(): Promise<DatasetMeta> {
-  return deriveMeta(regions, async (id) => rowsById[id] ?? [], 'snapshot');
+function regionFile(id: string): Promise<RegionFile | null> {
+  if (!/^[a-z0-9_]{1,60}$/.test(id)) return Promise.resolve(null); // never a path from the URL
+  let p = files.get(id);
+  if (!p) {
+    p = readFile(path.join(SNAPSHOT_DIR, 'regions', `${id}.json`), 'utf8')
+      .then((raw) => RegionFileSchema.parse(JSON.parse(raw)))
+      .catch((error: unknown) => {
+        files.delete(id);
+        if ((error as NodeJS.ErrnoException).code === 'ENOENT') return null;
+        throw error;
+      });
+    files.set(id, p);
+  }
+  return p;
+}
+
+export async function snapshotMeta(): Promise<DatasetMeta | null> {
+  return (await snapshotIndex())?.meta ?? null;
 }
 
 export function snapshotSource(): FireSource {
+  const find = async (iso3: string) =>
+    (await snapshotIndex())?.regions.find((r) => r.id === iso3.toLowerCase()) ?? null;
+  const summary = (r: NonNullable<Awaited<ReturnType<typeof find>>>) => ({
+    iso3: r.id.toUpperCase(),
+    nameEn: r.names.en,
+    names: { en: r.names.en, ru: r.names.ru, tg: r.names.tg },
+    bbox: r.bbox,
+  });
   return {
     async monthCells() {
       return [];
     },
     async corridorHistory(iso3) {
-      return corridorById[iso3.toLowerCase()] ?? null;
+      return (await regionFile(iso3.toLowerCase()))?.anomalies ?? null;
     },
     async forecast(iso3) {
-      return forecastById[iso3.toLowerCase()] ?? null;
+      const f = (await regionFile(iso3.toLowerCase()))?.forecast;
+      return f ? toForecast(f) : null;
     },
     async listRegions(query) {
-      return regions.filter((r) => matchesRegion(r, query)).map(summary);
+      const index = await snapshotIndex();
+      return (index?.regions ?? [])
+        .filter((r) => matchesQuery(query, r.id, r.name, r.names))
+        .map(summary)
+        .sort((a, b) => a.nameEn.localeCompare(b.nameEn));
     },
     async region(iso3) {
-      const r = regions.find((x) => x.id === iso3.toLowerCase());
+      const r = await find(iso3);
       return r ? { ...summary(r), cellsCount: r.hexes_r5 ?? 0 } : null;
     },
     async regionMonthly(iso3) {
-      const r = regions.find((x) => x.id === iso3.toLowerCase());
-      return r ? toRows(rowsById[r.id] ?? []) : [];
+      const f = await regionFile(iso3.toLowerCase());
+      return f ? toRows(f.calendar) : [];
     },
     async aoiMonthly() {
       throw new OutsideCoverageError(

@@ -6,7 +6,7 @@ import { useId, useState, type FormEvent } from 'react';
 import { useUi } from '@/components/ui-store';
 import type { AoiCreated, ApiError, RegionItem } from '@/lib/api/types';
 import { MAX_RADIUS_KM, MIN_RADIUS_KM, validateAoi, type AoiInput } from '@/lib/h3/aoi-id';
-import { regionName } from '@/lib/i18n/places';
+import { regionLabel } from '@/lib/i18n/places';
 import { useI18n } from '@/lib/i18n/use-locale';
 
 type Tab = 'region' | 'coords' | 'draw';
@@ -114,7 +114,7 @@ function LocateMe() {
           setState('idle');
         } else
           setState(
-            P.notCovered(regions.map((r) => regionName(r.iso3, r.nameEn, locale)).join(', ')),
+            P.notCovered(regions.map((r) => regionLabel(r.names, r.nameEn, locale)).join(', ')),
           );
       },
       () => setState(P.locateFailed),
@@ -146,13 +146,13 @@ function LocateMe() {
       </button>
       {hit && (
         <div role="status" className="mt-2 text-xs">
-          <p>{P.near(regionName(hit.iso3, hit.nameEn, locale))}</p>
+          <p>{P.near(regionLabel(hit.names, hit.nameEn, locale))}</p>
           <button
             type="button"
             onClick={() => router.push(`/r/${hit.iso3}`)}
             className="text-ember-text mt-1 font-semibold underline underline-offset-2"
           >
-            {P.open(regionName(hit.iso3, hit.nameEn, locale))}
+            {P.open(regionLabel(hit.names, hit.nameEn, locale))}
           </button>
         </div>
       )}
@@ -203,7 +203,7 @@ function RegionSearch() {
               onClick={() => router.push(`/r/${r.iso3}`)}
               className="hover:bg-panel-2 flex w-full items-center justify-between rounded px-2 py-1 text-left"
             >
-              <span>{regionName(r.iso3, r.nameEn, locale)}</span>
+              <span>{regionLabel(r.names, r.nameEn, locale)}</span>
               {r.iso3.length === 3 && (
                 <span className="text-muted font-mono text-xs">{r.iso3}</span>
               )}

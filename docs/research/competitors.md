@@ -192,3 +192,141 @@ Do not copy: 3D globe/satellite scene, AI chat/personas, email alert levels (doc
 
 ### 7.8 Not verified
 Rendered visuals and motion; Methodology page figures and percentages; MCP tool list; email delivery; any HTML table fallback; behaviour at 400 px; AI analyst accuracy; repo licence.
+
+
+## 8. FireLens, mikuuloves, BurnCal, Terrascope
+
+Method (read 2026-11-15): `curl` on the HTML, the Vite JS bundles (FireLens 237 KB plus separate maplibre/react chunks; Ember Atlas 598 KB; BurnCal 1.84 MB; Terrascope 1.46 MB plus 5 lazy chunks) and the public data files and endpoints the bundles point to. WebFetch was not used. No browser session: layout, motion and pixel details were NOT seen. "From code" means from bundle strings or file bytes. All model scores quoted below are the sites' own claims, not re-checked by me.
+
+| Site | Verified | Not verified |
+|---|---|---|
+| firelens.tech | Bundle, MapLibre layer definitions, a live `fires/global` response, the CDN `index.json`, the Tajikistan report JSON (size, headers, fields) | Rendered UI, calendar look, Cloud Run API cache headers (GET on POST endpoints gave 405), language list, accessibility |
+| nasa.mikuuloves.coffee ("Ember Atlas") | HTML shell, bundle, `meta.json`, `forecast.json`, `admin1.json`, headers and size of `history.bin` (full download measured), URL scheme (`mode`, `area`) | The "Fire Calendar" tab internals (not extracted), rendered globe, forecast accuracy |
+| burncal-hackathon.vercel.app | HTML shell, bundle (React + Recharts + d3-geo + SheetJS), the FIRMS calls, UI state names and strings | What `mode=map` (flat map) renders with, any history beyond the NRT window (none found), rendered UI |
+| terrascope.space | HTML shell, bundle, 5 lazy chunk names, i18n chunk, `countries.json`, MapLibre style construction | `view=simple` vs other views, what `TJK` shows on screen, the data endpoints (a probe of `/api/forecast/map.png` with only `variable=t2m` returned 500, which says nothing about the live app) |
+
+### 8.1 FireLens (https://firelens.tech/)
+
+**What it does.** "MODIS x VIIRS Fire Intelligence", same challenge as ours. Vite + React SPA (empty `#root`, no SSR), MapLibre in its own preloaded chunk, API on Google Cloud Run in `asia-south1` (`/api/v1`), per-area reports on Cloudflare R2. Endpoints from the bundle's own API table: `/calendar/range|generate|anomalies|report`, `/harmonize/calculate|model`, `/fires/live` (POST, raw NRT MODIS+VIIRS for a bbox), `/fires/global` (today's worldwide VIIRS on a grid), `/archive/grid` (one year, harmonized/MODIS/VIIRS), `/hotspots/search|history|csv`, `/alerts/subscribe`. Features by strings: area search through Nominatim polygons, GPS, a "Compared with the median" headline, anomalies (early/late onset, surge, suppression), an outlook, a calibration table, JSON/CSV download "with the source fields behind it", ArcGIS satellite basemap with a labels overlay, `localStorage`.
+
+**Fire location and loading (from code and bytes).**
+- Global layer: the server pre-aggregates to 0.5 degree cells. `GET /fires/global?days=1` returned `cells:[[lat,lon,count,frp],...]` built from 33,868 VIIRS NOAA-20 NRT detections, in 74.8 KB of JSON. The client turns each cell into a GeoJSON Point with weight `w` and calls `getSource("fires").setData`.
+- MapLibre layers: a `heatmap` with `maxzoom:7` (weight `w`, radius 5/12/22 px at zoom 0/3/6, ramp red to pale yellow, opacity 0.95 at z4 fading to 0 at z7), then a `circle` layer from `minzoom:3.5` (radius grows with `w`, colour by `w`, opacity 0 at z3.5 to 0.95 at z5). That is a heat-to-point crossfade by zoom. Also an `aoi` fill + line layer and a countries GeoJSON source from jsDelivr.
+- Per-area reports: `index.json` (234 entries: 230 countries plus Global, Amazon, California, SE Australia; `through: 2026-11-15`) and `reports/<slug>.json?v=<through>`. Tajikistan report: 26.7 KB gzip, `Cache-Control: public, max-age=3600, stale-while-revalidate=86400`; `index.json` is `max-age=300`. Cache is busted by the `?v=` data date. This is the fast path and the one thing to copy outright.
+- No vector tiles, no PMTiles, no clustering and no worker code of their own found in the bundle strings (MapLibre's own geojson worker is the only worker).
+- An `offline` flag when the API fails: the page keeps working on bundled demo data (from code).
+
+**Calendar and timeline.** The report holds `calendar` = 27 years x weeks. Each week: `modis_raw, viirs_raw, harmonized_count, total_frp, status, z_score, percentile, quality`. Before Nov 2000 the status is `NO_DATA` with `harmonized_count: null` (matches our no_data rule). A parallel `monthly` list (314 rows) carries `harmonized, median, x_median, percentile, complete`. `summary` has this week, 2-week, YTD vs baseline, `percentile`, `status` (`NORMAL`), `z_score`, `season` (`Waning`), `peak_week`, `onset_median_week`, `provisional: true`. Week granularity is their primary calendar. A bundle template reads "Harmonized burning 5.4x the 2003-2025 mean - the highest of all 27 years"; the report field calls the baseline a median, so which one is rendered is not verified.
+
+**Tajikistan / Central Asia.** A report exists: `bbox {west 67.5, south 37.0, east 74.25, north 41.0}`, `coverage 1.0`, `clipped_to_geometry: false`. Kazakhstan, Kyrgyzstan, Uzbekistan and Afghanistan reports also exist. No Tajik-specific features or copy found.
+
+**Strengths (evidence).**
+1. Fastest first paint of the four: a 26.7 KB gzip CDN JSON per country with `stale-while-revalidate`.
+2. Heat-to-point zoom crossfade on a pre-aggregated grid keeps the map light at world zoom.
+3. 2000-2026 weekly calendar with an explicit `NO_DATA` status and a `provisional` flag, the same idea as ours.
+4. Its CSS has `prefers-color-scheme` rules (6) and `prefers-reduced-motion` (3). Note: section 1.3 #10 is about FireScope, a different site.
+
+**Weaknesses (evidence).**
+1. A "country" is a bounding box, not the country shape (`clipped_to_geometry:false`). Tajikistan's box 67.5-74.25 E, 37-41 N includes parts of neighbouring countries, so the numbers are not the country's.
+2. No `estimate` state in the fields seen: only `NO_DATA` and `provisional`.
+3. Weekly cells in small areas are noisy (Tajikistan current week: harmonized 0.0 vs baseline 2.9).
+4. SPA without SSR; runtime dependency on an unpinned `cdn.jsdelivr.net/gh/.../react-globe.gl@master/...` countries GeoJSON and on Nominatim.
+5. The map reads only today (`days=1`) or one archived year per call; I found no animated month scrub in strings (not verified in the UI).
+
+### 8.2 mikuuloves, "Ember Atlas" (https://nasa.mikuuloves.coffee/)
+
+**What it does.** Meta description: "25 years of MODIS and VIIRS fire detections unified into one consistent record, live fires, and an AI fire-risk forecast on a 3D globe". Four tabs in the HTML: History, Fire Calendar, Live, AI Forecast. URL state in the query string: `mode=forecast&area=province:TJ-DU|Dushanbe` (country, province or a box, written by `searchParams.set("area", ...)`). A raw `<canvas id="globe">`, three.js (WebGLRenderer, InstancedMesh, Blue Marble texture), no MapLibre.
+
+**Fire location and loading (measured).**
+- History: one binary `data/history.bin`, 50.3 MB raw, **14.7 MB gzip, downloaded whole before anything is drawn** (a "Loading 25 years of fire data..." loader with a progress callback; my download took 65 s). Layout from the parser: `uint32 N`, `N+1` offsets (a CSR index by month), delta-coded `uint32` cell ids, then three `uint16` columns `harm, modis, viirs`. Cell ids are on a 0.01 degree grid (index = row x 36000 + col, about 1 km). A clever columnar format, but the single file is the weakness.
+- Per-cell detail on click: `data/tiles/<lat10>_<lon10>.json` (10 x 10 degree JSON lookups, fetched once and kept in a Map).
+- Live: raw FIRMS CSVs (VIIRS NOAA-21, and other VIIRS/MODIS sources) fetched through the site's own nginx `/firms/...` path and parsed in the browser; each detection is tested against a static-source mask (`static_mask.bin`, `kinds`, `industrial` flag).
+- Caching: `meta.json` is `no-cache`; `history.bin`, `static_mask.bin`, `forecast.json`, `admin1.json` are `max-age=604800` with a `?v=<version>` suffix (version `20261115013126`).
+- `meta.json` (50 KB): 302 months from 200011, yearly totals 2001-2025 for 234 countries, `calibration {fit_period 2012-2018, test_period 2019-2025, block_month_r2_log_regional 0.812, raw_modis 0.504, global_monthly_mape_regional 0.074, raw_modis 0.76}` and `stats.detections 392,568,931` (their numbers).
+
+**Forecast (AI).** `forecast.json` (219 KB decoded): gradient-boosted model (949 trees, 40 features incl. weather, fuel history, forest, land cover), "chance of >=30 detections per 1 degree cell" for 2 months, `metrics.auc 0.954` vs `baseline_auc 0.936`, trained 2002-2022, tested 2023-2025 (self-reported). A prediction product, excluded by our docs/PROJECT_RULES.md. Not copied.
+
+**Calendar.** A "Fire Calendar" tab exists; I did not extract its logic (not verified). `meta.json` has months and years only.
+
+**Tajikistan / Central Asia.** `admin1.json` is a TopoJSON of first-level regions with ISO 3166-2 codes; I verified `Dushanbe` (`TJ-DU`, "Independent City", admin Tajikistan) in it. So an admin-1 area is selectable by code in the URL, which is how the link you gave works. Whether the other Tajik regions are in the file was not checked.
+
+**Strengths.** Admin-1 URLs with ISO codes; static (industrial) mask applied to live data; per-10-degree lookups; versioned `?v=` caching with 7-day max-age; a held-out calibration summary (raw vs harmonized); fresh to the day.
+
+**Weaknesses (evidence).**
+1. A mandatory 14.7 MB gzip (50.3 MB decoded) download and in-browser decode before the first useful paint; poor fit for weak mobile networks.
+2. 3D globe + three.js and an AI-risk story: contradicts our "no 3D globe, no prediction" rules.
+3. The browser parses raw FIRMS CSV. It works because they run a proxy (key handling not visible); copying it would break our rule "do not call FIRMS from the browser".
+4. No `estimate`/`preliminary`/`no_data` statuses in `meta.json`; years start at 2001, months at 2000-11.
+5. Forecast quality claims cannot be reproduced from what I fetched.
+
+### 8.3 BurnCal (https://burncal-hackathon.vercel.app/)
+
+**What it does.** React + Recharts + d3-geo (orthographic globe, SVG or canvas renderer prop) + SheetJS, one 1.84 MB JS chunk, no SSR, no routes found. URL state: `period`, `source` (`both|MODIS|VIIRS`), `mode` (`globe` or map). Component state: points/heatmap toggle, count metric, time-of-day window `08:00-18:00`, location search (Nominatim, Photon), geolocation, "Copy Report", alert text "extreme fires (FRP > 100 MW) within 75 km of your location", exports `BurnCal_Fires / RawData / Summary / TopFires` (Excel via SheetJS).
+
+**Fire location and loading.** The browser calls the FIRMS Area API directly, per country bbox, for `MODIS_NRT` and `VIIRS_NOAA20_NRT`, parses CSV, then filters points inside the country polygon with d3-geo. No tiles, no PMTiles, no aggregation, no worker. A FIRMS MAP_KEY is hard-coded in the public bundle (not reproduced here); our rule "do not call FIRMS from the browser, no secrets" exists for exactly this. Area selection is by clicking a country on the globe.
+
+**Harmonization.** The loader says "Harmonizing MODIS & VIIRS sensors". In the code the only normalisation found is VIIRS confidence `low/nominal/high` mapped to 30/60/90 next to MODIS numeric confidence, and `bright_ti4` vs `brightness`. I found no calibration, no scale factor and no history beyond the NRT window (from code, not exhaustive). The word is a label, not the challenge's method.
+
+**Calendar/timeline.** None found: a recent `period` and a "Peak Day" stat. Not a multi-year view.
+
+**Tajikistan.** Country list includes Tajikistan (Natural Earth shapes); nothing specific.
+
+**Strengths.** Immediate "what burns this week" answer without a backend; Top Fires table, Excel export and report copy; a stated alert threshold.
+
+**Weaknesses.** Key exposed and a live FIRMS dependency (rate limits, single point of failure); 1.84 MB single chunk; no harmonization, baseline or statuses; no i18n found.
+
+### 8.4 Terrascope (https://terrascope.space/)
+
+**What it does.** Not a fire tool. "Earth system trends from NASA data": temperature (`t2m`), precipitation, NDVI/EVI and more, credited to NASA MERRA-2, GPM IMERG, CERES/MODIS via NASA POWER, MODIS, GLDAS, AIRS, OMI. Regions by code (`r=TJK`), `view=simple`, `globe=1`. Lazy routes: `Report`, `CompareReport`, `ForecastPage`, `LinksPage`, `AdminPage`. Endpoints seen: `/countries.json` (917 KB GeoJSON), `/api/ai/ask`, `/api/visit` (POST on visit), `/api/forecast/map.png`. No fire, FIRMS or VIIRS string in its app code.
+
+**Map technique worth noting.** MapLibre with `setProjection` (globe) and a style with no basemap tile source: a `geojson` source `countries` drawn as `fill` (land) and `line` (borders), plus `outline`, `compare` and `point` sources updated by `setData`. The map needs no tile requests and is ready when `countries.json` is. Assets are `max-age=31536000, immutable`, gzip.
+
+**Honesty ideas (from i18n strings).** "Season and trend are removed from both, and only the swings are compared"; "No outlook for {where}: in its climate zone continuing the trend did not pass the check on the past"; "Find robust trends"; 80% and 95% bands on projections. A refuse-when-unvalidated pattern, like our n >= 10 rule.
+
+**Language.** `en` and `ru` blocks in the i18n chunk (about 16,700 Cyrillic characters); no Tajik text found.
+
+**Weaknesses.** Off-topic for fire; 1.46 MB main chunk with MapLibre inlined; a per-visit analytics POST with no consent UI seen (consent UI not verified); an AI ask endpoint, which our docs/PROJECT_RULES.md forbids; I could not see the default `TJK` screen.
+
+### 8.5 Tajikistan / Central Asia summary
+
+| Site | What exists for TJ | Level |
+|---|---|---|
+| FireLens | Country report `tajikistan` (also KZ, KG, UZ, AF), weekly 27-year calendar, bbox not shape | Complete but bbox |
+| Ember Atlas | `TJ-DU` Dushanbe admin-1 polygon selectable; country yearly totals in `meta.json` | Admin-1, depth not checked |
+| BurnCal | Country list only, recent days only | Minimal |
+| Terrascope | `r=TJK` climate region; no fire | Off-topic |
+| Languages | en everywhere; ru in Terrascope; tg nowhere found | Gap |
+
+### 8.6 Map: what to copy for speed and fire location
+
+None of the four uses vector tiles, PMTiles or clustering (no `pmtiles`, `.pbf` or `{z}/{x}/{y}` vector source in the bundles I grepped; FireLens has raster ArcGIS tiles for imagery only). The fast ones win by pre-aggregation and by not blocking on the map. Recipe for our MapLibre map:
+
+1. **Paint the calendar first, load the map after.** Calendar from a per-AOI JSON on the CDN (FireLens model: about 27 KB gzip per country, `Cache-Control: public, max-age=3600, stale-while-revalidate=86400`, URL suffix `?v=<dataset version>`). `import("maplibre-gl")` only after the calendar's first paint (FireLens ships MapLibre as its own preloaded chunk). Keep `meta.json` `no-cache`, everything else versioned.
+2. **No basemap blocking the first frame.** Option A (Terrascope): a country/admin-1 GeoJSON fill + line style with no tile source, ready at once. Option B: a light/dark vector basemap loaded after. Hillshade only on user request (relief matters in Tajikistan but costs tiles).
+3. **Show where fires are with H3 hexes, not raw points, at region zoom.** Pre-bake hex cells (H3 res 4-6 by zoom band) from the science team's `cell_month`. Deliver as per-year vector tiles or small static JSON per AOI (a design, not benchmarked; measure against the perf budget). One feature per hex carrying the 12 monthly values of the selected year as an array, coloured by expression (`["at", month, ["get","v"]]`), so a calendar month click only changes an expression with no refetch. Inferno/cividis colours; `no_data`, `estimate`, `preliminary` as separate hatch/outline styles, never value 0. `promoteId` + `feature-state` for hover.
+4. **Zoom crossfade for daily/live detections (FireLens values).** Heatmap with `maxzoom:7` (weight from FRP, radius 5/12/22 at z0/3/6, opacity 0.95 at z4 to 0 at z7), `circle` layer from `minzoom:3.5` (opacity 0 to 0.95 by z5). Source = server-aggregated 0.5 degree grid for the world (their real figure: 33,868 detections in 74.8 KB), raw detections only inside the current bbox at z >= 8, capped; above the cap use the native `cluster:true` GeoJSON source (runs in MapLibre's worker).
+5. **Exact-location honesty.** A hex or 0.5 degree cell means "somewhere inside this area"; a detection is a 375 m / 1 km footprint, not a fire. Tooltip: sensor, date/time UTC, FRP, `static source` flag if masked, status. Show masked industrial/flare detections as hollow markers with a count instead of dropping them silently (Ember Atlas flags them).
+6. **Click a hex, get its calendar.** Ember Atlas fetches 10 x 10 degree lookup files on demand and caches them. For us: `GET /api/cell/<h3>` returns the 27 x 12 `HonestValue` grid (a few KB), CDN-cached by dataset version.
+7. **Workers.** `h3-js` (AOI polygon to cell list, hex boundaries) in a Web Worker as planned; no polygon work on the main thread.
+8. **Never** ship one big blob (Ember Atlas: 14.7 MB gzip before first paint), call FIRMS from the browser or embed a MAP_KEY (BurnCal), or depend on an unpinned `@master` CDN URL (FireLens). Pin and self-host country/admin-1 geometry.
+9. No 3D globe (docs/PROJECT_RULES.md). Terrascope shows `setProjection` is only a style switch, so a world view does not need a separate globe engine.
+
+### 8.7 Top 10 to adopt
+
+| # | What to adopt | Source | Build note | Effort | Honesty check |
+|---|---|---|---|---|---|
+| 1 | Precomputed per-AOI report JSON on the CDN with `?v=<through>` and stale-while-revalidate | FireLens (`reports/<slug>.json`, 26.7 KB gzip for Tajikistan) | Build at ingest per delivered AOI; `index.json` lists AOIs and the `through` date. Calendar paints from it before the map loads | S-M | yes: footer "data through <date>" from `meta.json`; if an AOI is not delivered, say so instead of showing a bbox stand-in |
+| 2 | Heat-to-point zoom crossfade on a pre-aggregated grid for the live/daily layer | FireLens (layer definitions) | Their zoom stops, server 0.5 degree grid, raw points only in bbox at z >= 8 | S | yes: legend "detections aggregated to 0.5 degree cells, not fires"; empty means "no detection", not "no fire" |
+| 3 | Admin-1 areas with ISO 3166-2 in the URL (`area=province:TJ-DU`) | Ember Atlas (`admin1.json`, `area` param) | Bundle admin-1 geometry (licence to check); aggregate by polygon, not bbox. Only Dushanbe verified in their file | M | yes, and better than FireLens bbox; offer admin-1 only for AOIs the science team delivered |
+| 4 | Click a map cell, get its calendar | Ember Atlas (10 x 10 degree lookup JSON) | `GET /api/cell/<h3>` returns 27 x 12 `HonestValue`s, cached per dataset version | M | yes: same status rules, n >= 10 baseline, "no usual activity" when median = 0 |
+| 5 | Static-source (industrial/flare) detections shown hollow with a count | Ember Atlas (`static_mask.bin`, `industrial` flag) | Use the science team's mask; toggle "include static sources"; count in tooltip | M | yes if the mask comes from the team; show "N masked", never hide silently |
+| 6 | "Top most intense days/cells" list that flies the map to the hex | BurnCal (`TopFires`), FireLens (top cell-days) | Top 10 by summed FRP for the selected month; row click selects the hex and its calendar | S | yes: label "intensity by FRP (MW)", status per row, preliminary flag |
+| 7 | Year-to-date vs baseline plus percentile tile | FireLens (`summary.ytd_*`, `percentile`, `status`) | Server-computed from `cell_month`, target year excluded, n >= 10; one line next to the ratio headline | S | yes: show n and "preliminary" after the last SP date; no z-score wording that implies a tested distribution |
+| 8 | One-line validation strip from delivered files | Ember Atlas (`calibration` block), Terrascope ("did not pass the check on the past") | Read fit/test period and error figures from the team's `meta.json`; if absent show "validation not delivered"; hide any outlook without a backtest | S | yes: cite as the team's numbers with the file version; never compute our own "confidence %" |
+| 9 | Fast first paint: tile-free basemap option, lazy MapLibre, immutable hashed assets, split routes | Terrascope (GeoJSON fill style, `immutable` assets, lazy routes), FireLens (separate maplibre chunk) | Budget in `perf-budget`; measure LCP on a throttled 4G profile | S | n/a (performance), but the map must never delay the calendar that carries the honest statuses |
+| 10 | Russian first, Tajik second, with reviewed status labels | Terrascope (en + ru found); no site ships tg | `lang` per route; native-speaker review of the five status words and the "detections are not fires" line | M | yes: no machine-only status labels; if tg is unreviewed, ship ru + en and say tg is pending |
+
+Not copied, with reason: AI/prediction pages (Ember Atlas forecast, Terrascope `/api/ai/ask`) and 3D globes (docs/PROJECT_RULES.md "Do not"); live FIRMS from the browser or a key in the bundle (BurnCal); a monolithic history download (Ember Atlas, 14.7 MB gzip); unpinned `@master` CDN data (FireLens); per-visit tracking without a visible consent step (Terrascope `/api/visit`, consent UI not verified). FireLens's bbox-as-country is the most exploitable weakness for a Tajikistan demo: an area clipped to the border, with a real status per cell, is something none of the four shows.
+
+### 8.8 Not verified (this section)
+Rendered screens and motion on all four; Ember Atlas "Fire Calendar" tab internals and forecast accuracy; FireLens language list, API cache headers and weekly-calendar UX; BurnCal flat-map renderer and `period` units; Terrascope default `TJK` view and its data endpoints; accessibility of any of the four; licences and repos of any team.

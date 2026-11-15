@@ -4,6 +4,7 @@ import { cellMonth, cellMonthR4, region, regionCell, regionMonth } from '@/db/sc
 import type { ForecastMonth } from '@/lib/api/types';
 import type { AoiMonthRow } from '@/lib/domain/calendar';
 import type { CorridorRow } from '@/lib/domain/corridor';
+import type { RegionNames } from './snapshot-index';
 import type { DatasetMeta } from '@/lib/domain/meta';
 import { getDb } from '@/server/db/client';
 import { getActiveDataset, localDeliveryDir, type MetaSource } from './dataset-repository';
@@ -16,6 +17,8 @@ export type Bbox = readonly [number, number, number, number];
 export interface RegionSummary {
   readonly iso3: string;
   readonly nameEn: string;
+  /** Names in every UI language, when known (data/snapshot/index.json). */
+  readonly names?: RegionNames | null;
   readonly bbox: Bbox;
 }
 

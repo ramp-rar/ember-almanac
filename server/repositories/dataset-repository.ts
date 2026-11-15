@@ -72,7 +72,10 @@ export async function getActiveDataset(): Promise<ActiveDataset | null> {
     return meta ? { meta, source: 'database' } : null;
   }
   // Real bundled data first; generated mock fixtures only when explicitly asked (FIRE_DATA=mock).
-  if (process.env.FIRE_DATA !== 'mock') return { meta: await snapshotMeta(), source: 'snapshot' };
+  if (process.env.FIRE_DATA !== 'mock') {
+    const meta = await snapshotMeta();
+    if (meta) return { meta, source: 'snapshot' };
+  }
   if (process.env.VERCEL) return null;
   const meta = await activeFromLocalFixture();
   return meta ? { meta, source: 'local_fixture' } : null;

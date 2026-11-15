@@ -3,7 +3,7 @@ import { z } from 'zod';
 import type { AoiMonthRow } from '@/lib/domain/calendar';
 import { DatasetMetaSchema, type DatasetMeta } from '@/lib/domain/meta';
 import type { ForecastMonth } from '@/lib/api/types';
-import { REGION_NAMES } from '@/lib/i18n/places';
+import { matchesQuery, namesOf } from './snapshot-index';
 import type { Bbox, FireSource, RegionSummary } from './fire-source';
 
 /**
@@ -208,14 +208,6 @@ async function regionRows(base: string, id: string): Promise<ApiRow[]> {
   );
 }
 
-/** Search across the API name, the id and our names in every UI language. */
-export function matchesRegion(r: ApiRegion, query: string): boolean {
-  const q = query.trim().toLowerCase();
-  if (!q) return true;
-  const names = [r.name, r.id, ...Object.values(REGION_NAMES[r.id.toUpperCase()] ?? {})];
-  return names.some((n) => n.toLowerCase().includes(q));
-}
-
 export const summary = (r: ApiRegion): RegionSummary => ({
   iso3: r.id.toUpperCase(),
   nameEn: r.name,
@@ -274,11 +266,20 @@ export function remoteApiSource(base: string): FireSource {
       }
     },
     async listRegions(query) {
-      return (await listApiRegions(base)).filter((r) => matchesRegion(r, query)).map(summary);
+      const out: RegionSummary[] = [];
+      for (const r of await listApiRegions(base)) {
+        const names = await namesOf(r.id);
+        if (matchesQuery(query, r.id, r.name, names)) {
+          out.push({ ...summary(r), names, nameEn: names?.en ?? r.name });
+        }
+      }
+      return out.sort((a, b) => a.nameEn.localeCompare(b.nameEn));
     },
     async region(iso3) {
       const r = (await listApiRegions(base)).find((x) => x.id === iso3.toLowerCase());
-      return r ? { ...summary(r), cellsCount: r.hexes_r5 ?? 0 } : null;
+      if (!r) return null;
+      const names = await namesOf(r.id);
+      return { ...summary(r), names, nameEn: names?.en ?? r.name, cellsCount: r.hexes_r5 ?? 0 };
     },
     async regionMonthly(iso3) {
       const r = (await listApiRegions(base)).find((x) => x.id === iso3.toLowerCase());

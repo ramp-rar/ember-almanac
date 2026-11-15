@@ -12,6 +12,8 @@ export interface CalendarResponse {
     readonly kind: 'region' | 'aoi';
     readonly id: string;
     readonly label: string;
+    /** Region names in every UI language (null for custom areas or unknown regions). */
+    readonly names: { readonly en: string; readonly ru: string; readonly tg: string } | null;
     readonly bbox: readonly [number, number, number, number];
     /** Outline for the map ([lon, lat]); regions served from the database have only a bbox. */
     readonly ring: readonly (readonly [number, number])[] | null;
@@ -61,6 +63,7 @@ export interface ForecastMonth {
 export interface RegionItem {
   readonly iso3: string;
   readonly nameEn: string;
+  readonly names?: { readonly en: string; readonly ru: string; readonly tg: string } | null;
   readonly bbox: readonly [number, number, number, number];
 }
 

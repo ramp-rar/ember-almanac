@@ -21,6 +21,8 @@
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "fixtures": "tsx scripts/make-fixtures.ts",
+    "snapshot": "tsx scripts/export-snapshot.mts",
+    "snapshot:geo": ".venv-fire-api/Scripts/python.exe scripts/export_geo.py",
     "contract:validate": "tsx scripts/validate-contract.ts",
     "ingest": "tsx scripts/ingest.ts",
     "bench": "tsx scripts/bench.ts"

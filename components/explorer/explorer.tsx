@@ -4,13 +4,14 @@ import { useQuery } from '@tanstack/react-query';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
 import { parseAsInteger, parseAsStringLiteral, useQueryStates } from 'nuqs';
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { AoiPicker } from '@/components/aoi/aoi-picker';
 import { BurningCalendar } from '@/components/calendar/burning-calendar';
 import { Legend } from '@/components/calendar/legend';
 import type { Mode } from '@/components/calendar/palette';
 import { ExportPanel } from '@/components/export/export-panel';
 import { ForecastPanel } from '@/components/forecast/forecast-panel';
+import type { FireLayerState } from '@/components/map/aoi-map';
 import { Headline } from '@/components/metric/headline';
 import { useUi } from '@/components/ui-store';
 import {
@@ -84,6 +85,7 @@ export function Explorer({ aoi }: { aoi: AoiRef | null }) {
     mode: parseAsStringLiteral(MODES).withDefault('harm'),
   });
   const { palette, setPalette, newestFirst, toggleOrder } = useUi();
+  const [fireLayer, setFireLayer] = useState<FireLayerState>({ kind: 'loading' });
 
   const data = query.data;
   // A shared link with mode=raw on a source without raw counts falls back to harmonized.
@@ -103,7 +105,7 @@ export function Explorer({ aoi }: { aoi: AoiRef | null }) {
   // The browser tab names the place in the reader's language.
   useEffect(() => {
     if (!data || !aoi) return;
-    document.title = `${t.pageTitle(placeName(aoi, data.aoi.label, i))} · ${APP_NAME}`;
+    document.title = `${t.pageTitle(placeName(aoi, data.aoi.label, data.aoi.names, i))} · ${APP_NAME}`;
   }, [data, aoi, i, t]);
 
   const error = aoi === null ? first.error : query.error;
@@ -148,7 +150,7 @@ export function Explorer({ aoi }: { aoi: AoiRef | null }) {
   const trend = calendar.series.trend;
   const finalOnly = calendar.series.finalOnly;
   const ex = t.explorer;
-  const label = placeName(aoi, data.aoi.label, i);
+  const label = placeName(aoi, data.aoi.label, data.aoi.names, i);
 
   return (
     <Shell>
@@ -268,7 +270,15 @@ export function Explorer({ aoi }: { aoi: AoiRef | null }) {
               <span className="step">2</span> {ex.mapTitle}
             </h2>
             <p className="text-muted mt-1 mb-3 text-sm">{ex.mapDesc}</p>
-            <AoiMap key={i.locale} aoi={data.aoi} label={label} />
+            <AoiMap
+              key={i.locale}
+              aoi={data.aoi}
+              label={label}
+              regionId={aoi.kind === 'region' ? aoi.iso3.toLowerCase() : null}
+              month={selected ? `${selected.y}-${String(selected.m).padStart(2, '0')}` : null}
+              onLayer={setFireLayer}
+            />
+            <FireCaption state={fireLayer} />
           </section>
           <AoiPicker />
           <ExportPanel aoi={aoi} />
@@ -354,6 +364,36 @@ export function Explorer({ aoi }: { aoi: AoiRef | null }) {
         </p>
       </footer>
     </Shell>
+  );
+}
+
+function FireCaption({ state }: { state: FireLayerState }) {
+  const i = useI18n();
+  const M = i.t.map;
+  if (state.kind === 'loading') return <p className="text-muted mt-2 text-xs">{M.fireLoading}</p>;
+  if (state.kind === 'none') return <p className="text-muted mt-2 text-xs">{M.fireNone}</p>;
+  const title =
+    state.kind === 'month'
+      ? M.fireMonth(`${i.month(Number(state.month.slice(5)))} ${state.month.slice(0, 4)}`)
+      : M.fireTypical(state.from, state.to);
+  const extras = [
+    M.fireCount(state.count),
+    state.truncated ? M.fireTruncated : null,
+    state.kind === 'month' && state.partial ? M.firePartial : null,
+  ].filter(Boolean);
+  return (
+    <div className="mt-3 text-sm" aria-live="polite">
+      <p className="flex items-center gap-2 font-medium">
+        <span
+          aria-hidden="true"
+          className="inline-block h-3 w-10 rounded-full bg-[linear-gradient(90deg,#781c6d,#cf4446,#ed6925,#fcffa4)]"
+        />
+        {title}
+      </p>
+      <p className="text-muted mt-1 text-xs">
+        {extras.join(' · ')}. {M.fireLegend}
+      </p>
+    </div>
   );
 }
 

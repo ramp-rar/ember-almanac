@@ -25,6 +25,7 @@ function response(): CalendarResponse {
       kind: 'region',
       id: 'ZZB',
       label: 'Mock',
+      names: null,
       bbox: [0, 0, 1, 1],
       ring: null,
       cellsCount: 1,

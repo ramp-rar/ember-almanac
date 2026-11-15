@@ -310,6 +310,16 @@ const en = {
     aria: (label: S) =>
       `3D satellite map of ${label}. Click the map to propose a point for a custom area.`,
     to3d: 'Switch to 3D',
+    fireMonth: (m: S) => `Where fire was detected in ${m}`,
+    fireTypical: (from: number, to: number) =>
+      `Where it usually burns: average year ${from}–${to} (the selected month is older than the last 12 months)`,
+    fireNone: 'No fire map for this area yet.',
+    fireLoading: 'Loading fire locations…',
+    fireLegend:
+      'Brighter = more fire-days. Each dot is a hexagon of about 250 km²; zoom in to see them one by one.',
+    fireCount: (n: number) => `${n} hexagons with fire`,
+    fireTruncated: 'only the strongest are shown',
+    firePartial: 'this month is not over yet',
     toFlat: '3D relief on · switch to flat',
     controls: {
       'Map.Title': 'Map',
@@ -626,6 +636,16 @@ const ru: Messages = {
     aria: (label) =>
       `3D-карта со спутниковым снимком: ${label}. Нажмите на карту, чтобы предложить точку для своей области.`,
     to3d: 'Включить 3D',
+    fireMonth: (m) => `Где замечен огонь: ${m}`,
+    fireTypical: (from, to) =>
+      `Где обычно горит: средний год ${from}–${to} (выбранный месяц старше последних 12 месяцев)`,
+    fireNone: 'Для этой области карты пожаров пока нет.',
+    fireLoading: 'Загружаем места пожаров…',
+    fireLegend:
+      'Ярче — больше пожарных дней. Каждая точка — шестиугольник около 250 км²; приблизьте, чтобы увидеть их по отдельности.',
+    fireCount: (n) => `шестиугольников с огнём: ${n}`,
+    fireTruncated: 'показаны только самые сильные',
+    firePartial: 'месяц ещё не закончился',
     toFlat: '3D-рельеф включён · сделать плоской',
     controls: {
       'Map.Title': 'Карта',
@@ -945,6 +965,16 @@ const tg: Messages = {
     aria: (label) =>
       `Харитаи 3D бо тасвири моҳвораӣ: ${label}. Барои пешниҳоди нуқта барои минтақаи худ харитаро пахш кунед.`,
     to3d: 'Фаъол кардани 3D',
+    fireMonth: (m) => `Дар куҷо оташ дида шуд: ${m}`,
+    fireTypical: (from, to) =>
+      `Дар куҷо одатан месӯзад: соли миёна ${from}–${to} (моҳи интихобшуда аз 12 моҳи охир кӯҳнатар аст)`,
+    fireNone: 'Барои ин минтақа ҳоло харитаи сӯхтор нест.',
+    fireLoading: 'Ҷойҳои сӯхтор бор мешаванд…',
+    fireLegend:
+      'Равшантар — рӯзҳои сӯхтор бештар. Ҳар нуқта — шашкунҷаи тақрибан 250 км²; барои дидани ҳар яке наздик кунед.',
+    fireCount: (n) => `шашкунҷаҳо бо оташ: ${n}`,
+    fireTruncated: 'танҳо пурзӯртаринҳо нишон дода шудаанд',
+    firePartial: 'моҳ ҳанӯз тамом нашудааст',
     toFlat: 'Релефи 3D фаъол аст · ҳамвор кардан',
     controls: {
       'Map.Title': 'Харита',

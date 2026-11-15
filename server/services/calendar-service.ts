@@ -48,6 +48,7 @@ export async function getCalendar(ref: AoiRef, today: string): Promise<CalendarR
       kind: 'region',
       id: region.iso3,
       label: region.nameEn,
+      names: region.names ?? null,
       bbox: region.bbox,
       ring: [
         [w, s],
@@ -70,6 +71,7 @@ export async function getCalendar(ref: AoiRef, today: string): Promise<CalendarR
       kind: 'aoi',
       id: ref.id,
       label: describeAoi(input),
+      names: null,
       bbox: aoiBbox(input),
       ring: aoiRing(input),
       cellsCount: cells.cells.length,
