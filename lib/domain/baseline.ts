@@ -7,13 +7,14 @@ export interface MonthPoint {
   readonly value: HonestValue;
   /**
    * Observed vs calendar days (status.ts `monthCoverage`). A month with observed < total is
-   * partial: it gets no ratio and stays out of every baseline. Absent = fully observed.
+   * partial: it gets no ratio and stays out of every baseline. Required, so a hand-built series
+   * cannot skip the check.
    */
-  readonly coverage?: { readonly observed: number; readonly total: number };
+  readonly coverage: { readonly observed: number; readonly total: number };
 }
 
 function isPartial(p: MonthPoint): boolean {
-  return p.coverage !== undefined && p.coverage.observed < p.coverage.total;
+  return p.coverage.observed < p.coverage.total;
 }
 
 /** Baseline needs at least this many valid years of the same month. */
@@ -151,7 +152,7 @@ export function ratioToMedian(
   }
 
   if (found && isPartial(found)) {
-    const { observed, total } = found.coverage!;
+    const { observed, total } = found.coverage;
     const ratio = honest({
       value: null,
       status: target.status,
@@ -196,7 +197,9 @@ export function ratioToMedian(
  * Headline copy, e.g. "×1.8 vs median of 23 Novembers (2003–2025)".
  * `monthPlural` is the plural month name ("Novembers"). n and the years are the real ones used.
  */
-export function ratioCopy(result: RatioToMedian, monthPlural: string): string {
+export type RatioSummary = Pick<RatioToMedian, 'kind' | 'ratio' | 'target' | 'n' | 'baselineYears'>;
+
+export function ratioCopy(result: RatioSummary, monthPlural: string): string {
   switch (result.kind) {
     case 'target_unavailable':
       return result.target.status === 'future' ? 'not yet observed' : 'no data';
@@ -218,7 +221,9 @@ export function ratioCopy(result: RatioToMedian, monthPlural: string): string {
  * Discloses that the baseline mixes sensors: years before VIIRS are MODIS-only estimates
  * scaled into VIIRS-equivalent units. Shown next to the headline; null when there are none.
  */
-export function baselineNote(result: RatioToMedian): string | null {
+export function baselineNote(
+  result: Pick<RatioToMedian, 'baselineEstimateYears' | 'n'>,
+): string | null {
   if (result.baselineEstimateYears === 0) return null;
   return `baseline includes ${result.baselineEstimateYears} MODIS-only estimate years of ${result.n}`;
 }

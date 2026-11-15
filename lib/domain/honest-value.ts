@@ -127,3 +127,21 @@ export function sumHonest(parts: readonly HonestValue[], unit: Unit): HonestValu
     note: `${observed} of ${parts.length} parts observed`,
   });
 }
+
+/** JSON shape of an HonestValue (the unit is implied by the field that carries it). */
+export interface PlainHonest {
+  readonly v: number | null;
+  readonly s: Status;
+  readonly note?: string;
+}
+
+export function toPlain(value: HonestValue): PlainHonest {
+  return value.note === undefined
+    ? { v: value.value, s: value.status }
+    : { v: value.value, s: value.status, note: value.note };
+}
+
+/** Rebuilds (and re-validates) a value that crossed a JSON boundary. */
+export function fromPlain(plain: PlainHonest, unit: Unit): HonestValue {
+  return honest({ value: plain.v, status: plain.s, unit, note: plain.note });
+}

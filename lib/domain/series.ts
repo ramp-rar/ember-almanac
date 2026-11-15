@@ -40,7 +40,12 @@ export function buildMonthSeries(
         if (stored !== undefined && stored !== 0) {
           throw new RangeError(`Row with a value in a ${status} month: ${year}-${month}`);
         }
-        series.push({ year, month, value: status === 'future' ? future(unit) : noData(unit) });
+        series.push({
+          year,
+          month,
+          value: status === 'future' ? future(unit) : noData(unit),
+          coverage: monthCoverage(year, month, meta, today),
+        });
       } else {
         series.push({
           year,

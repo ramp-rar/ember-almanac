@@ -21,6 +21,7 @@ function point(year: number, month: number, value: number | null, status: Status
       value === null
         ? noData('fire_days_harm')
         : honest({ value, status: status as 'final', unit: 'fire_days_harm' }),
+    coverage: { observed: 30, total: 30 },
   };
 }
 
@@ -183,7 +184,12 @@ describe('ratioToMedian()', () => {
   it('rejects series whose values are not fire-day or detection totals of one unit', () => {
     const series = [
       ...novembers(point(2026, 11, 5, 'final')),
-      { year: 2010, month: 11, value: honest({ value: 1, status: 'final', unit: 'frp_mw' }) },
+      {
+        year: 2010,
+        month: 11,
+        value: honest({ value: 1, status: 'final', unit: 'frp_mw' }),
+        coverage: { observed: 30, total: 30 },
+      },
     ];
     expect(() => ratioToMedian(series, 2026, 11, BASELINE)).toThrow();
   });
