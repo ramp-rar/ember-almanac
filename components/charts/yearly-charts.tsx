@@ -7,7 +7,7 @@ import { SVGRenderer } from 'echarts/renderers';
 import { useEffect, useRef } from 'react';
 import { useTheme } from '@/components/theme';
 import type { CalendarData } from '@/lib/domain/calendar';
-import { STATUS_LABEL, fmt, fmtSigned } from '@/lib/format';
+import { useI18n } from '@/lib/i18n/use-locale';
 
 echarts.use([BarChart, LineChart, GridComponent, TooltipComponent, MarkLineComponent, SVGRenderer]);
 
@@ -105,6 +105,9 @@ export default function YearlyCharts({
   onSelectYear: (year: number) => void;
 }) {
   const theme = useTheme();
+  const i = useI18n();
+  const C = i.t.charts;
+  const STATUS_LABEL = i.t.status.label;
   const c = PALETTE[theme];
   const AXIS = axisOf(c);
   const years = series.years.map((y) => String(y.y));
@@ -136,8 +139,8 @@ export default function YearlyCharts({
         formatter: (ps: { dataIndex: number }[]) => {
           const p = series.years[ps[0]!.dataIndex]!;
           return p.total === null
-            ? `${p.y}: no total (incomplete year) · ${STATUS_LABEL[p.s]}`
-            : `${p.y}: ${fmt(p.total)} fire-days<br/>${STATUS_LABEL[p.s]}${p.complete ? '' : ' · not in trend'}`;
+            ? C.tipNoTotal(p.y, STATUS_LABEL[p.s])
+            : C.tipTotal(p.y, i.n(p.total), STATUS_LABEL[p.s], p.complete);
         },
       },
       xAxis: {
@@ -181,7 +184,7 @@ export default function YearlyCharts({
           : []),
       ],
     }),
-    [series, selectedYear, theme],
+    [series, selectedYear, theme, i],
     onSelectYear,
   );
 
@@ -195,7 +198,7 @@ export default function YearlyCharts({
         textStyle: { color: c.tipText, fontSize: 12 },
         formatter: (ps: { dataIndex: number }[]) => {
           const p = series.years[ps[0]!.dataIndex]!;
-          return `${p.y}: ${p.anomaly === null ? 'incomplete year' : `${fmtSigned(p.anomaly)} fire-days vs mean`}`;
+          return C.tipAnomaly(p.y, p.anomaly === null ? null : i.signed(p.anomaly));
         },
       },
       xAxis: {
@@ -228,36 +231,26 @@ export default function YearlyCharts({
         },
       ],
     }),
-    [series, selectedYear, theme],
+    [series, selectedYear, theme, i],
     onSelectYear,
   );
 
   return (
     <div className="grid gap-6 lg:grid-cols-2">
       <figure>
-        <figcaption className="text-base font-semibold">Year totals and trend</figcaption>
-        <div
-          ref={totals}
-          className="mt-2 h-56 w-full"
-          role="img"
-          aria-label="Bar chart of yearly harmonized fire-days with a Theil–Sen trend line; shaded columns are incomplete years without a total"
-        />
+        <figcaption className="text-base font-semibold">{C.totals}</figcaption>
+        <div ref={totals} className="mt-2 h-56 w-full" role="img" aria-label={C.totalsAria} />
       </figure>
       <figure>
         <figcaption className="text-base font-semibold">
-          Anomalies{' '}
+          {C.anomalies}{' '}
           {series.anomalyBase && (
             <span className="text-muted font-normal">
-              vs mean {series.anomalyBase.from}–{series.anomalyBase.to} (n = {series.anomalyBase.n})
+              {C.vsMean(series.anomalyBase.from, series.anomalyBase.to, series.anomalyBase.n)}
             </span>
           )}
         </figcaption>
-        <div
-          ref={anomalies}
-          className="mt-2 h-56 w-full"
-          role="img"
-          aria-label="Bar chart of each year minus the multi-year mean; orange above, blue below; shaded columns are incomplete years"
-        />
+        <div ref={anomalies} className="mt-2 h-56 w-full" role="img" aria-label={C.anomaliesAria} />
       </figure>
     </div>
   );

@@ -3,7 +3,8 @@
 import { memo, useCallback, useMemo, useRef, useState, type KeyboardEvent } from 'react';
 import type { CalendarResponse } from '@/lib/api/types';
 import type { CalendarCell } from '@/lib/domain/calendar';
-import { MONTHS_SHORT, STATUS_LABEL, fmt, monthLong } from '@/lib/format';
+import { cellLabelText, ratioText, times } from '@/lib/i18n/copy';
+import { useI18n, type I18n } from '@/lib/i18n/use-locale';
 import { cellLook, rawTotal, type Mode, type PaletteName } from './palette';
 
 const CW = 30;
@@ -24,17 +25,6 @@ export interface CalendarProps {
   readonly newestFirst: boolean;
   readonly selected: { y: number; m: number } | null;
   readonly onSelect: (y: number, m: number) => void;
-}
-
-export function cellLabel(c: CalendarCell): string {
-  const when = `${monthLong(c.m)} ${c.y}`;
-  if (c.s === 'future') return `${when}: not yet observed`;
-  if (c.s === 'no_data' || c.h === null) return `${when}: no data`;
-  const parts = [`${when}: ${fmt(c.h)} harmonized fire-days`, STATUS_LABEL[c.s]];
-  if (c.cov[0] < c.cov[1]) parts.push(`${c.cov[0]} of ${c.cov[1]} days observed`);
-  if (c.r.v !== null) parts.push(`${c.r.v.toFixed(1)} times the median`);
-  else if (c.r.note) parts.push(c.r.note);
-  return parts.join(', ');
 }
 
 function Patterns() {
@@ -63,10 +53,18 @@ interface LayerProps {
   readonly mode: Mode;
   readonly palette: PaletteName;
   readonly breaks: CalendarResponse['calendar']['breaks'];
+  readonly tr: I18n;
 }
 
 /** All 324 cells. Memoised: hover, focus and selection never re-render it. */
-const CellsLayer = memo(function CellsLayer({ cells, years, mode, palette, breaks }: LayerProps) {
+const CellsLayer = memo(function CellsLayer({
+  cells,
+  years,
+  mode,
+  palette,
+  breaks,
+  tr,
+}: LayerProps) {
   return (
     <>
       {years.map((y, row) => (
@@ -96,7 +94,7 @@ const CellsLayer = memo(function CellsLayer({ cells, years, mode, palette, break
                   key={c.m}
                   role="gridcell"
                   id={`cell-${c.y}-${c.m}`}
-                  aria-label={cellLabel(c)}
+                  aria-label={cellLabelText(c, tr)}
                   data-y={c.y}
                   data-m={c.m}
                 >
@@ -160,6 +158,10 @@ export function BurningCalendar({
   selected,
   onSelect,
 }: CalendarProps) {
+  const tr = useI18n();
+  const fmt = tr.n;
+  const K = tr.t.calendar;
+  const STATUS_LABEL = tr.t.status.label;
   const { calendar, dataset } = data;
   const years = useMemo(() => {
     const ys = calendar.yearTotals.map((t) => t.y);
@@ -269,7 +271,7 @@ export function BurningCalendar({
         viewBox={`0 0 ${width} ${height}`}
         className="h-auto w-full touch-manipulation outline-none select-none"
         role="grid"
-        aria-label={`Burning calendar of ${data.aoi.label}: rows are years, columns are months. Use arrow keys to move and Enter to select a month.`}
+        aria-label={K.gridAria(data.aoi.label)}
         aria-activedescendant={focused ? activeId : undefined}
         tabIndex={0}
         onKeyDown={onKey}
@@ -306,7 +308,7 @@ export function BurningCalendar({
       >
         <Patterns />
         {/* month labels */}
-        {MONTHS_SHORT.map((label, i) => (
+        {tr.t.monthsShort.map((label, i) => (
           <text
             key={label}
             x={LEFT + i * (CW + GAP) + CW / 2}
@@ -360,6 +362,7 @@ export function BurningCalendar({
           mode={mode}
           palette={palette}
           breaks={calendar.breaks}
+          tr={tr}
         />
 
         {/* selection, hover/focus overlay */}
@@ -412,7 +415,9 @@ export function BurningCalendar({
           const w = v.v === null ? 0 : Math.max(1, (v.v / maxTotal) * BAR_W);
           return (
             <g key={t.y}>
-              <title>{`${t.y} total: ${v.v === null ? `— (${v.note ?? STATUS_LABEL[v.s]})` : fmt(v.v)}, ${STATUS_LABEL[v.s]}`}</title>
+              <title>
+                {K.yearTotalTitle(t.y, v.v === null ? '—' : fmt(v.v), STATUS_LABEL[v.s])}
+              </title>
               {v.v === null ? (
                 <rect
                   x={x0}
@@ -445,7 +450,7 @@ export function BurningCalendar({
           y={TOP - 7}
           className="fill-[var(--t-muted)] font-mono text-[9px]"
         >
-          {mode === 'raw' ? 'year total (raw)' : 'year total'}
+          {mode === 'raw' ? K.yearTotalRaw : K.yearTotal}
         </text>
 
         {/* month medians */}
@@ -455,7 +460,9 @@ export function BurningCalendar({
           const h = md.harm.v === null ? 0 : Math.max(1, (md.harm.v / maxMedian) * (MED_H - 10));
           return (
             <g key={md.m}>
-              <title>{`${monthLong(md.m)} median: ${md.harm.v === null ? `— (${md.harm.note ?? ''})` : fmt(md.harm.v)} (n = ${md.n}, ${STATUS_LABEL[md.harm.s]})`}</title>
+              <title>
+                {K.medianTitle(tr.month(md.m), fmt(md.harm.v), md.n, STATUS_LABEL[md.harm.s])}
+              </title>
               {md.harm.v === null ? (
                 <rect x={x + 4} y={base - 6} width={CW - 8} height={6} fill="url(#ft-nodata)" />
               ) : (
@@ -478,7 +485,7 @@ export function BurningCalendar({
           textAnchor="end"
           className="fill-[var(--t-muted)] font-mono text-[8.5px]"
         >
-          {mode === 'raw' ? 'harm. median' : 'median'}
+          {mode === 'raw' ? K.harmMedian : K.median}
         </text>
       </svg>
 
@@ -503,6 +510,9 @@ function CellTooltip({
   topPct: number;
 }) {
   const raw = rawTotal(c);
+  const tr = useI18n();
+  const fmt = tr.n;
+  const K = tr.t.calendar;
   return (
     <div
       role="tooltip"
@@ -513,21 +523,18 @@ function CellTooltip({
       }}
     >
       <p className="font-display text-sm font-medium">
-        {monthLong(c.m)} {c.y}
+        {tr.month(c.m)} {c.y}
       </p>
       <p className="mt-1 font-mono">
-        <span className="text-muted">status </span>
-        {STATUS_LABEL[c.s]}
+        <span className="text-muted">{K.tipStatus} </span>
+        {tr.t.status.label[c.s]}
         {c.cov[0] < c.cov[1] && c.h !== null && (
-          <span className="text-muted">
-            {' '}
-            · {c.cov[0]} of {c.cov[1]} days
-          </span>
+          <span className="text-muted"> · {K.tipDays(c.cov[0], c.cov[1])}</span>
         )}
       </p>
       {c.h !== null ? (
         <dl className="mt-2 grid grid-cols-[auto_1fr] gap-x-3 gap-y-0.5 font-mono">
-          <dt className="text-muted">harmonized</dt>
+          <dt className="text-muted">{K.tipHarm}</dt>
           <dd>
             {fmt(c.h)}{' '}
             {c.lo !== null && c.hi !== null && (
@@ -536,26 +543,24 @@ function CellTooltip({
               </span>
             )}
           </dd>
-          <dt className="text-muted">vs median</dt>
+          <dt className="text-muted">{K.tipVs}</dt>
           <dd>
-            {c.r.v !== null ? `×${c.r.v.toFixed(1)}` : (c.r.note ?? '—')}
+            {c.r.v !== null ? times(c.r.v, tr) : ratioText(c, tr)}
             {c.r.v !== null && <span className="text-muted"> · n {c.r.n}</span>}
           </dd>
           {c.rm !== null && c.rv !== null && (
             <>
-              <dt className="text-muted">raw MODIS</dt>
+              <dt className="text-muted">{K.tipRawModis}</dt>
               <dd>{fmt(c.rm)}</dd>
-              <dt className="text-muted">raw VIIRS</dt>
+              <dt className="text-muted">{K.tipRawViirs}</dt>
               <dd>{fmt(c.rv)}</dd>
-              <dt className="text-muted">raw total</dt>
+              <dt className="text-muted">{K.tipRawTotal}</dt>
               <dd>{fmt(raw)}</dd>
             </>
           )}
         </dl>
       ) : (
-        <p className="text-muted mt-2">
-          {c.s === 'future' ? 'Not yet observed.' : 'No observations — not zero.'}
-        </p>
+        <p className="text-muted mt-2">{c.s === 'future' ? K.tipNotYet : K.tipNoObs}</p>
       )}
     </div>
   );

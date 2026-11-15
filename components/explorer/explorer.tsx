@@ -20,8 +20,8 @@ import {
   type CalendarResponse,
   type RegionItem,
 } from '@/lib/api/types';
-import { formatP, trendVerdict } from '@/lib/domain/calendar';
-import { fmt, fmtSigned } from '@/lib/format';
+import { pText, trendText } from '@/lib/i18n/copy';
+import { useI18n } from '@/lib/i18n/use-locale';
 
 const AoiMap = dynamic(() => import('@/components/map/aoi-map'), {
   ssr: false,
@@ -33,16 +33,6 @@ const YearlyCharts = dynamic(() => import('@/components/charts/yearly-charts'), 
 });
 
 const MODES = ['harm', 'raw', 'ratio'] as const;
-const MODE_LABEL: Record<Mode, string> = {
-  harm: 'Harmonized fire-days',
-  raw: 'Raw detections',
-  ratio: 'Ratio to median',
-};
-const MODE_HELP: Record<Mode, string> = {
-  harm: 'Both satellites on one scale: the fair way to compare years.',
-  raw: 'Plain satellite counts. They jump when the newer satellite starts, so do not compare years with this.',
-  ratio: 'How this month compares with the usual one: blue is quieter, orange is busier.',
-};
 
 async function fetchJson<T>(url: string): Promise<T> {
   const res = await fetch(url);
@@ -54,6 +44,8 @@ async function fetchJson<T>(url: string): Promise<T> {
 /** The home screen: Burning Calendar first; map, picker and export support it. */
 export function Explorer({ aoi }: { aoi: AoiRef | null }) {
   const router = useRouter();
+  const i = useI18n();
+  const { t } = i;
 
   // "/" has no area yet: open the first region.
   const first = useQuery({
@@ -80,6 +72,7 @@ export function Explorer({ aoi }: { aoi: AoiRef | null }) {
   const { palette, setPalette, newestFirst, toggleOrder } = useUi();
 
   const data = query.data;
+  // A shared link with mode=raw on a source without raw counts falls back to harmonized.
   const mode: Mode = url.mode === 'raw' && data && !data.dataset.hasRaw ? 'harm' : url.mode;
   const selected = useMemo(() => {
     if (!data) return null;
@@ -98,14 +91,14 @@ export function Explorer({ aoi }: { aoi: AoiRef | null }) {
     return (
       <Shell>
         <div role="alert" className="card p-6">
-          <p className="font-display text-lg">Could not load the calendar.</p>
+          <p className="font-display text-lg">{t.explorer.loadError}</p>
           <p className="text-muted mt-1 text-sm">{(error as Error).message}</p>
           <button
             type="button"
             onClick={() => (aoi === null ? first.refetch() : query.refetch())}
             className="bg-ember text-on-ember mt-4 min-h-10 rounded-full px-4 text-sm font-medium"
           >
-            Retry
+            {t.explorer.retry}
           </button>
         </div>
         <div className="mt-6 max-w-md">
@@ -119,8 +112,7 @@ export function Explorer({ aoi }: { aoi: AoiRef | null }) {
     return (
       <Shell>
         <p role="status" className="card p-6">
-          No regions are loaded yet. Generate the mock delivery (pnpm fixtures) or ingest a
-          delivery.
+          {t.explorer.noRegions}
         </p>
       </Shell>
     );
@@ -131,29 +123,27 @@ export function Explorer({ aoi }: { aoi: AoiRef | null }) {
   const { calendar } = data;
   const trend = calendar.series.trend;
   const finalOnly = calendar.series.finalOnly;
+  const ex = t.explorer;
 
   return (
     <Shell>
       <section className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="text-muted font-mono text-xs tracking-wide uppercase">
-            {aoi.kind === 'region' ? 'country / region' : 'custom area'}
+            {aoi.kind === 'region' ? ex.kindRegion : ex.kindAoi}
           </p>
           <h1 className="font-display text-3xl tracking-tight sm:text-4xl">{data.aoi.label}</h1>
           <p className="text-muted mt-1 text-sm">
-            {data.aoi.areaKm2 !== null && `${fmt(Math.round(data.aoi.areaKm2))} km² · `}
-            {fmt(data.aoi.cellsCount)} map cells
-            {data.aoi.coarse && ' (coarser grid: the area is very large)'}
+            {data.aoi.areaKm2 !== null && `${ex.area(i.n(Math.round(data.aoi.areaKm2)))} · `}
+            {ex.cells(i.n(data.aoi.cellsCount))}
+            {data.aoi.coarse && ex.coarse}
           </p>
         </div>
-        <p className="text-muted max-w-md text-sm">
-          Satellites have watched fires since 2000. Two different satellites counted differently, so
-          we put them on one scale. Pick a place, then click a month to compare it with a usual one.
-        </p>
+        <p className="text-muted max-w-md text-sm">{ex.intro}</p>
       </section>
 
       <section
-        aria-label="Selected month"
+        aria-label={ex.selectedMonth}
         className="card mt-5 border-l-4 border-l-[var(--t-ember)] p-5 sm:p-6"
       >
         <Headline cell={selectedCell} />
@@ -162,16 +152,13 @@ export function Explorer({ aoi }: { aoi: AoiRef | null }) {
       <div className="mt-6 grid items-start gap-6 xl:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
         <section aria-labelledby="cal-h" className="card min-w-0 p-4 sm:p-6">
           <h2 id="cal-h" className="flex items-center gap-2.5 text-lg font-semibold">
-            <span className="step">1</span> Burning calendar
+            <span className="step">1</span> {ex.calTitle}
           </h2>
-          <p className="text-muted mt-1 text-sm">
-            Each row is a year, each column a month. The brighter the square, the more fire
-            activity. Click any square.
-          </p>
+          <p className="text-muted mt-1 text-sm">{ex.calDesc}</p>
           <div className="mt-4 flex flex-wrap items-center gap-2 text-sm">
             <div
               role="radiogroup"
-              aria-label="Colour by"
+              aria-label={ex.colourBy}
               className="border-line bg-panel-2 flex flex-wrap rounded-full border p-0.5"
             >
               {MODES.filter((m) => m !== 'raw' || data.dataset.hasRaw).map((m) => (
@@ -181,10 +168,10 @@ export function Explorer({ aoi }: { aoi: AoiRef | null }) {
                   role="radio"
                   aria-checked={mode === m}
                   onClick={() => setUrl({ mode: m })}
-                  title={MODE_HELP[m]}
+                  title={ex.modeHelp[m]}
                   className={`min-h-9 rounded-full px-3 font-medium ${mode === m ? 'bg-text text-ink' : 'text-muted hover:text-text'}`}
                 >
-                  {MODE_LABEL[m]}
+                  {ex.modes[m]}
                 </button>
               ))}
             </div>
@@ -193,9 +180,9 @@ export function Explorer({ aoi }: { aoi: AoiRef | null }) {
                 type="button"
                 onClick={() => setPalette(palette === 'inferno' ? 'cividis' : 'inferno')}
                 className="border-line text-muted hover:text-text min-h-9 rounded-full border px-3"
-                aria-label={`Colour scale: ${palette}. Switch scale.`}
+                aria-label={ex.colourAria(palette)}
               >
-                colours: {palette === 'inferno' ? 'warm' : 'blue–yellow'}
+                {ex.colours(palette === 'inferno')}
               </button>
             )}
             <button
@@ -203,18 +190,17 @@ export function Explorer({ aoi }: { aoi: AoiRef | null }) {
               onClick={toggleOrder}
               className="border-line text-muted hover:text-text min-h-9 rounded-full border px-3"
             >
-              {newestFirst ? 'newest first' : 'oldest first'}
+              {newestFirst ? ex.newestFirst : ex.oldestFirst}
             </button>
           </div>
-          <p className="text-muted mt-2 text-xs">{MODE_HELP[mode]}</p>
+          <p className="text-muted mt-2 text-xs">{ex.modeHelp[mode]}</p>
 
           {calendar.empty && (
             <p
               role="status"
               className="border-line mt-3 rounded-lg border border-dashed p-3 text-sm"
             >
-              No fire observations in this area. Observed months are shown as 0; months without
-              observations are hatched.
+              {ex.empty}
             </p>
           )}
 
@@ -241,12 +227,9 @@ export function Explorer({ aoi }: { aoi: AoiRef | null }) {
         <aside className="space-y-6 xl:sticky xl:top-20">
           <section className="card p-4 sm:p-5">
             <h2 className="flex items-center gap-2.5 text-lg font-semibold">
-              <span className="step">2</span> Where is it?
+              <span className="step">2</span> {ex.mapTitle}
             </h2>
-            <p className="text-muted mt-1 mb-3 text-sm">
-              Real satellite picture with relief: forests, fields and mountains are visible. Drag to
-              rotate, scroll to zoom.
-            </p>
+            <p className="text-muted mt-1 mb-3 text-sm">{ex.mapDesc}</p>
             <AoiMap aoi={data.aoi} />
           </section>
           <AoiPicker />
@@ -256,26 +239,25 @@ export function Explorer({ aoi }: { aoi: AoiRef | null }) {
 
       <section aria-labelledby="charts-h" className="card mt-6 p-4 sm:p-6">
         <h2 id="charts-h" className="flex items-center gap-2.5 text-lg font-semibold">
-          <span className="step">3</span> Is it getting worse over the years?
+          <span className="step">3</span> {ex.trendTitle}
         </h2>
-        <p className="mt-2 text-base font-medium">{trendVerdict(calendar.series)}</p>
+        <p className="mt-2 text-base font-medium">{trendText(calendar.series, i)}</p>
         {trend && (
           <p className="text-muted mt-1 text-sm">
-            Slope (Theil–Sen):{' '}
-            <span className="font-mono">{fmtSigned(trend.slope)} fire-days per year</span> over
-            complete years {trend.from}–{trend.to}
-            {trend.estimateYears > 0 &&
-              `; includes ${trend.estimateYears} older-satellite estimate years of ${trend.n}`}
-            .{' '}
+            {ex.slope(i.signed(trend.slope), trend.from, trend.to)}
+            {trend.estimateYears > 0 && ex.slopeEstimates(trend.estimateYears, trend.n)}.{' '}
             {finalOnly
-              ? `Checked years only (${finalOnly.from}–${finalOnly.to}, n = ${finalOnly.n}): ${fmtSigned(finalOnly.slope)} fire-days per year, Mann–Kendall ${formatP(finalOnly.p)}.`
-              : 'Too few checked years for a separate test.'}
+              ? ex.checkedOnly(
+                  finalOnly.from,
+                  finalOnly.to,
+                  finalOnly.n,
+                  i.signed(finalOnly.slope),
+                  pText(finalOnly.p, i),
+                )
+              : ex.checkedTooFew}
           </p>
         )}
-        <p className="text-muted mt-1 text-xs">
-          Shaded columns are incomplete years without a total; hatched years are preliminary.
-          Neither is in the trend. Significance level 0.05.
-        </p>
+        <p className="text-muted mt-1 text-xs">{ex.chartsNote}</p>
         <div className="mt-4">
           <YearlyCharts
             series={calendar.series}
@@ -289,31 +271,24 @@ export function Explorer({ aoi }: { aoi: AoiRef | null }) {
         <ForecastPanel forecast={data.forecast} monthMedians={calendar.monthMedians} />
       )}
 
-      <section id="how" className="card mt-6 p-4 sm:p-6">
-        <h2 className="text-lg font-semibold">How it works</h2>
+      <section id="how" className="card mt-6 scroll-mt-20 p-4 sm:p-6">
+        <h2 className="text-lg font-semibold">{ex.howTitle}</h2>
         <ol className="mt-3 grid gap-4 text-sm sm:grid-cols-3">
-          <li>
-            <strong>1. Two satellites, one scale.</strong> MODIS (since 2000) and VIIRS (since 2012)
-            see fires differently. We convert both to one unit so years are comparable.
-          </li>
-          <li>
-            <strong>2. Compared with a usual month.</strong> &ldquo;×1.2&rdquo; means 20% more fire
-            activity than the middle (median) of the same month in other years.
-          </li>
-          <li>
-            <strong>3. We say how sure we are.</strong> Every number is marked checked, estimate,
-            preliminary or no data. No data is never shown as zero.
-          </li>
+          {ex.how.map(([title, body]) => (
+            <li key={title}>
+              <strong>{title}</strong> {body}
+            </li>
+          ))}
         </ol>
       </section>
 
-      <section id="glossary" className="card mt-6 p-4 sm:p-6">
-        <h2 className="text-lg font-semibold">Glossary</h2>
+      <section id="glossary" className="card mt-6 scroll-mt-20 p-4 sm:p-6">
+        <h2 className="text-lg font-semibold">{ex.glossaryTitle}</h2>
         <dl className="mt-3 grid gap-x-8 gap-y-3 text-sm sm:grid-cols-2">
-          {GLOSSARY.map(([t, d]) => (
-            <div key={t}>
-              <dt className="font-semibold">{t}</dt>
-              <dd className="text-muted">{d}</dd>
+          {ex.glossary.map(([term, def]) => (
+            <div key={term}>
+              <dt className="font-semibold">{term}</dt>
+              <dd className="text-muted">{def}</dd>
             </div>
           ))}
         </dl>
@@ -321,11 +296,16 @@ export function Explorer({ aoi }: { aoi: AoiRef | null }) {
 
       <footer className="text-muted mt-8 space-y-1 border-t border-[var(--t-line)] pt-4 text-xs">
         <p>
-          Method: {data.dataset.method}. Usual month = median of {data.dataset.baselineYears[0]}–
-          {data.dataset.baselineYears[1]}. Checked data through{' '}
-          {data.dataset.standardProcessingThrough}; quick data through {data.dataset.nrtThrough}.
+          {ex.method(
+            data.dataset.method,
+            data.dataset.baselineYears[0],
+            data.dataset.baselineYears[1],
+            data.dataset.standardProcessingThrough,
+            data.dataset.nrtThrough,
+          )}
         </p>
-        <p>
+        {/* FIRMS asks for this acknowledgement verbatim, so it stays in English. */}
+        <p lang="en">
           We acknowledge the use of data and imagery from NASA&apos;s Fire Information for Resource
           Management System (FIRMS), part of NASA&apos;s Earth Science Data and Information System
           (ESDIS).
@@ -335,32 +315,18 @@ export function Explorer({ aoi }: { aoi: AoiRef | null }) {
   );
 }
 
-const GLOSSARY: [string, string][] = [
-  [
-    'Fire-day',
-    'One map cell (about 1 km) with fire seen on one day. A measure of activity, not burnt area or number of fires.',
-  ],
-  [
-    'MODIS / VIIRS',
-    'Two satellite instruments. VIIRS is newer and sharper, so it sees more small fires.',
-  ],
-  [
-    'Median',
-    'The middle value: half of the years had more, half less. One extreme year does not distort it.',
-  ],
-  ['Preliminary', 'Quick data that NASA re-checks a few months later; it may change slightly.'],
-  ['Estimate', 'Years before VIIRS: MODIS counts scaled to VIIRS units. Less certain.'],
-  ['P74', 'Percentile: this month had more activity than 74% of the same months in other years.'],
-];
-
 function Shell({ children }: { children: React.ReactNode }) {
-  return <main className="mx-auto w-full max-w-[88rem] px-4 py-6 sm:px-6">{children}</main>;
+  return (
+    <main id="main" className="mx-auto w-full max-w-[88rem] px-4 py-6 sm:px-6">
+      {children}
+    </main>
+  );
 }
 
 export function ExplorerSkeleton() {
   return (
     <Shell>
-      <div aria-busy="true" aria-label="Loading the calendar" className="animate-pulse space-y-5">
+      <div aria-busy="true" className="animate-pulse space-y-5">
         <div className="h-16 w-72 rounded bg-[var(--t-panel)]" />
         <div className="h-28 rounded-lg bg-[var(--t-panel)]" />
         <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_20rem]">

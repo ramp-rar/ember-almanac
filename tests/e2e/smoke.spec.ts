@@ -47,3 +47,23 @@ test('home shows the calendar, explains all five statuses and flags mock data', 
   );
   expect(overflow).toBe(false);
 });
+
+test('head scripts run: theme and language are set before the app loads', async ({ page }) => {
+  const errors: string[] = [];
+  page.on('pageerror', (e) => errors.push(String(e)));
+  await page.goto('/');
+  await expect(page.locator('html')).toHaveAttribute('data-theme', /^(light|dark)$/);
+  await expect(page.locator('html')).toHaveAttribute('data-lang', /^(en|ru|tg)$/);
+  expect(errors).toEqual([]);
+});
+
+test('language switch translates the page and is remembered', async ({ page }) => {
+  await page.goto('/r/ZZB');
+  await page.getByRole('radio', { name: 'Русский' }).click();
+  await expect(page.locator('html')).toHaveAttribute('lang', 'ru');
+  await expect(page.getByRole('heading', { name: /Календарь пожаров/ })).toBeVisible();
+  await page.reload();
+  await expect(page.getByRole('heading', { name: /Календарь пожаров/ })).toBeVisible();
+  await page.getByRole('radio', { name: 'Тоҷикӣ' }).click();
+  await expect(page.getByRole('heading', { name: /Тақвими сӯхтор/ })).toBeVisible();
+});

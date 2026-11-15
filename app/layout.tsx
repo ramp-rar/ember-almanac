@@ -4,18 +4,23 @@ import Link from 'next/link';
 import { Suspense } from 'react';
 import { DatasetBanner } from '@/components/dataset-banner';
 import { Providers } from '@/components/providers';
-import { THEME_SCRIPT, ThemeToggle } from '@/components/theme';
+import { HeaderControls, SkipLink, Tagline } from '@/components/site-chrome';
+import { LOCALE_SCRIPT, THEME_SCRIPT } from '@/lib/head-scripts';
 import { APP_NAME, APP_TAGLINE, splitName } from '@/lib/brand';
 import './globals.css';
 
-const serif = Source_Serif_4({ subsets: ['latin'], variable: '--font-serif', weight: ['600'] });
+const serif = Source_Serif_4({
+  subsets: ['latin', 'cyrillic', 'cyrillic-ext'],
+  variable: '--font-serif',
+  weight: ['600'],
+});
 const sans = IBM_Plex_Sans({
-  subsets: ['latin'],
+  subsets: ['latin', 'cyrillic', 'cyrillic-ext'],
   variable: '--font-plex',
   weight: ['400', '500', '600'],
 });
 const mono = IBM_Plex_Mono({
-  subsets: ['latin'],
+  subsets: ['latin', 'cyrillic', 'cyrillic-ext'],
   variable: '--font-plex-mono',
   weight: ['400', '500', '600'],
 });
@@ -41,15 +46,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${serif.variable} ${sans.variable} ${mono.variable}`}
     >
       <head>
-        <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
+        <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT + LOCALE_SCRIPT }} />
       </head>
       <body className="min-h-dvh antialiased">
-        <a
-          href="#main"
-          className="bg-text text-ink sr-only z-50 rounded px-3 py-2 focus:not-sr-only focus:fixed focus:top-2 focus:left-2"
-        >
-          Skip to content
-        </a>
+        <SkipLink />
         <Providers>
           <header className="border-line bg-ink/90 sticky top-0 z-40 border-b backdrop-blur">
             <div className="mx-auto flex max-w-[88rem] items-center gap-4 px-4 py-2.5 sm:px-6">
@@ -59,22 +59,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   {first} <span className="text-ember-text">{rest}</span>
                 </span>
               </Link>
-              <p className="text-muted hidden min-w-0 truncate text-sm lg:block">{APP_TAGLINE}</p>
-              <nav aria-label="Page" className="ml-auto flex items-center gap-1 text-sm">
-                <a
-                  href="#how"
-                  className="text-muted hover:text-text hidden rounded-full px-3 py-1.5 sm:block"
-                >
-                  How it works
-                </a>
-                <a
-                  href="#glossary"
-                  className="text-muted hover:text-text hidden rounded-full px-3 py-1.5 sm:block"
-                >
-                  Glossary
-                </a>
-              </nav>
-              <ThemeToggle />
+              <Tagline />
+              <HeaderControls />
             </div>
           </header>
           <Suspense fallback={<div className="h-9" />}>

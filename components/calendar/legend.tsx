@@ -1,5 +1,5 @@
 import { RATIO_LIMITS, VALUE_CLASSES } from '@/lib/domain/calendar';
-import { STATUS_HELP, STATUS_LABEL, fmt } from '@/lib/format';
+import { useI18n } from '@/lib/i18n/use-locale';
 import { DIVERGING, SEQUENTIAL, type Mode, type PaletteName } from './palette';
 
 function Swatch({ children, label }: { children: React.ReactNode; label: string }) {
@@ -42,6 +42,10 @@ export function Legend({
   palette: PaletteName;
   breaks: readonly number[];
 }) {
+  const { t, n: fmt } = useI18n();
+  const L = t.legend;
+  const STATUS_LABEL = t.status.label;
+  const STATUS_HELP = t.status.help;
   const colours = SEQUENTIAL[palette];
   const valueLabels: string[] = ['0'];
   if (breaks.length > 0) {
@@ -57,14 +61,10 @@ export function Legend({
   ];
 
   return (
-    <div className="grid gap-4 text-xs sm:grid-cols-2" aria-label="Legend">
+    <div className="grid gap-4 text-xs sm:grid-cols-2" aria-label={L.aria}>
       <div>
         <p className="text-muted mb-2 font-mono tracking-wide uppercase">
-          {mode === 'ratio'
-            ? 'ratio to median of the same month'
-            : mode === 'harm'
-              ? 'harmonized fire-days (classes of this area — compare areas by numbers, not colours)'
-              : 'raw detections, MODIS + VIIRS (classes of this area)'}
+          {mode === 'ratio' ? L.ratio : mode === 'harm' ? L.harm : L.raw}
         </p>
         <ul className="grid grid-cols-2 gap-1.5 font-mono">
           {mode === 'ratio'
@@ -79,7 +79,7 @@ export function Legend({
                 </Swatch>
               ))}
           {mode === 'ratio' && (
-            <Swatch label="no ratio (see tooltip)">
+            <Swatch label={L.noRatio}>
               <rect
                 x="0.5"
                 y="0.5"
@@ -92,15 +92,10 @@ export function Legend({
             </Swatch>
           )}
         </ul>
-        {mode === 'raw' && (
-          <p className="text-muted mt-2">
-            Raw counts jump when VIIRS starts ({estimateBeforeYear}) because the sensor sees more,
-            not because more burned. Use harmonized values to compare years.
-          </p>
-        )}
+        {mode === 'raw' && <p className="text-muted mt-2">{L.rawWarning(estimateBeforeYear)}</p>}
       </div>
       <div>
-        <p className="text-muted mb-2 font-mono tracking-wide uppercase">data status</p>
+        <p className="text-muted mb-2 font-mono tracking-wide uppercase">{L.status}</p>
         <ul className="grid gap-1.5">
           <Swatch label={`${STATUS_LABEL.final} — ${STATUS_HELP.final}`}>
             <rect width="26" height="16" rx="2" fill={colours[4]} />
@@ -136,7 +131,7 @@ export function Legend({
               style={{ stroke: 'var(--t-future-line)' }}
             />
           </Swatch>
-          <Swatch label="partly observed month — no ratio, not comparable with full months">
+          <Swatch label={L.partial}>
             <rect width="26" height="16" rx="2" fill={colours[3]} />
             <path d="M18 0 h6 a2 2 0 0 1 2 2 v6 z" fill="#ffffff" />
           </Swatch>

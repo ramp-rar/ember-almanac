@@ -12,6 +12,7 @@ import {
 import { useEffect, useRef, useState } from 'react';
 import { useUi } from '@/components/ui-store';
 import type { CalendarResponse } from '@/lib/api/types';
+import { useI18n } from '@/lib/i18n/use-locale';
 
 // MapLibre v6 runs tiles in a module worker; the bundler emits it as a separate asset.
 setWorkerUrl(new URL('maplibre-gl/dist/maplibre-gl-worker.mjs', import.meta.url).href);
@@ -80,6 +81,7 @@ export default function AoiMap({
   const map = useRef<MapLibre | null>(null);
   const setDraftPoint = useUi((s) => s.setDraftPoint);
   const [flat, setFlat] = useState(false);
+  const M = useI18n().t.map;
 
   const outline = (a: CalendarResponse['aoi']) => ({
     type: 'Feature' as const,
@@ -195,7 +197,7 @@ export default function AoiMap({
         ref={container}
         className="border-line h-[26rem] w-full overflow-hidden rounded-xl border lg:h-[32rem]"
         role="region"
-        aria-label={`3D satellite map of ${aoi.label}. Click the map to propose a point for a custom area.`}
+        aria-label={M.aria(aoi.label)}
       />
       <button
         type="button"
@@ -203,7 +205,7 @@ export default function AoiMap({
         aria-pressed={!flat}
         className="bg-panel text-text border-line absolute bottom-8 left-3 min-h-9 rounded-full border px-3 text-xs font-medium shadow"
       >
-        {flat ? 'Switch to 3D' : '3D relief on · switch to flat'}
+        {flat ? M.to3d : M.toFlat}
       </button>
     </div>
   );

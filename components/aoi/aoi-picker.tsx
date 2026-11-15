@@ -6,6 +6,7 @@ import { useId, useState, type FormEvent } from 'react';
 import { useUi } from '@/components/ui-store';
 import type { AoiCreated, ApiError, RegionItem } from '@/lib/api/types';
 import { MAX_RADIUS_KM, MIN_RADIUS_KM, validateAoi, type AoiInput } from '@/lib/h3/aoi-id';
+import { useI18n } from '@/lib/i18n/use-locale';
 
 type Tab = 'region' | 'coords' | 'draw';
 
@@ -18,6 +19,8 @@ async function getJson<T>(url: string, init?: RequestInit): Promise<T> {
 
 /** F01: three ways to choose an area. All end on a calendar URL (/r/<ISO3> or /a/<aoiId>). */
 export function AoiPicker() {
+  const { t } = useI18n();
+  const P = t.picker;
   const [tab, setTab] = useState<Tab>('region');
   const draft = useUi((s) => s.draftPoint);
   // A point picked on the map opens the coordinates form (state adjusted during render, not in an effect).
@@ -28,14 +31,14 @@ export function AoiPicker() {
   }
   const id = useId();
   const tabs: { key: Tab; label: string }[] = [
-    { key: 'region', label: 'Country' },
-    { key: 'coords', label: 'Coordinates' },
-    { key: 'draw', label: 'Draw' },
+    { key: 'region', label: P.tabs.region },
+    { key: 'coords', label: P.tabs.coords },
+    { key: 'draw', label: P.tabs.draw },
   ];
   return (
     <section aria-labelledby={`${id}-h`} className="card p-4 sm:p-5">
       <h2 id={`${id}-h`} className="font-display text-sm font-medium">
-        Area of interest
+        {P.title}
       </h2>
       <div role="tablist" className="border-line mt-3 flex gap-1 border-b text-xs">
         {tabs.map((t) => (
@@ -59,11 +62,8 @@ export function AoiPicker() {
         )}
         {tab === 'draw' && (
           <div className="text-muted space-y-2 text-xs">
-            <p>Click the map to place a point; it opens in the Coordinates tab.</p>
-            <p>
-              Polygon and rectangle drawing (terra-draw, F01) is not built yet — use a point with a
-              radius or a bounding box meanwhile.
-            </p>
+            <p>{P.draw1}</p>
+            <p>{P.draw2}</p>
           </div>
         )}
       </div>
@@ -72,6 +72,7 @@ export function AoiPicker() {
 }
 
 function RegionSearch() {
+  const P = useI18n().t.picker;
   const router = useRouter();
   const [q, setQ] = useState('');
   const listId = useId();
@@ -83,13 +84,13 @@ function RegionSearch() {
   return (
     <div>
       <label htmlFor={`${listId}-q`} className="text-muted block text-xs">
-        Search by name or code
+        {P.search}
       </label>
       <input
         id={`${listId}-q`}
         value={q}
         onChange={(e) => setQ(e.target.value)}
-        placeholder="e.g. Central"
+        placeholder={P.placeholder}
         autoComplete="off"
         className="border-line bg-ink focus:border-ember mt-1 w-full rounded-lg border px-3 py-2 text-sm outline-none"
         aria-controls={listId}
@@ -112,13 +113,14 @@ function RegionSearch() {
             </button>
           </li>
         ))}
-        {data?.length === 0 && <li className="text-muted px-2 text-xs">No match.</li>}
+        {data?.length === 0 && <li className="text-muted px-2 text-xs">{P.noMatch}</li>}
       </ul>
     </div>
   );
 }
 
 function CoordinatesForm({ draft }: { draft: { lat: number; lon: number } | null }) {
+  const P = useI18n().t.picker;
   const router = useRouter();
   const [kind, setKind] = useState<'point' | 'bbox'>('point');
   const [f, setF] = useState({
@@ -180,7 +182,7 @@ function CoordinatesForm({ draft }: { draft: { lat: number; lon: number } | null
   return (
     <form onSubmit={submit} noValidate className="space-y-3">
       <fieldset className="flex gap-4 text-xs">
-        <legend className="sr-only">Area type</legend>
+        <legend className="sr-only">{P.areaType}</legend>
         {(['point', 'bbox'] as const).map((k) => (
           <label key={k} className="flex items-center gap-1.5">
             <input
@@ -190,22 +192,22 @@ function CoordinatesForm({ draft }: { draft: { lat: number; lon: number } | null
               onChange={() => setKind(k)}
               className="accent-[var(--t-ember)]"
             />
-            {k === 'point' ? 'Point + radius' : 'Bounding box'}
+            {k === 'point' ? P.point : P.bbox}
           </label>
         ))}
       </fieldset>
       {kind === 'point' ? (
         <div className="grid grid-cols-3 gap-2">
-          {field('lat', 'Latitude')}
-          {field('lon', 'Longitude')}
-          {field('radius', 'Radius, km', `${MIN_RADIUS_KM}–${MAX_RADIUS_KM}`)}
+          {field('lat', P.lat)}
+          {field('lon', P.lon)}
+          {field('radius', P.radius, `${MIN_RADIUS_KM}–${MAX_RADIUS_KM}`)}
         </div>
       ) : (
         <div className="grid grid-cols-2 gap-2">
-          {field('west', 'West °')}
-          {field('east', 'East °')}
-          {field('south', 'South °')}
-          {field('north', 'North °')}
+          {field('west', P.west)}
+          {field('east', P.east)}
+          {field('south', P.south)}
+          {field('north', P.north)}
         </div>
       )}
       {errors.length > 0 && (
@@ -220,7 +222,7 @@ function CoordinatesForm({ draft }: { draft: { lat: number; lon: number } | null
         disabled={busy}
         className="bg-ember text-on-ember min-h-11 w-full rounded-full px-4 text-sm font-semibold disabled:opacity-60"
       >
-        {busy ? 'Computing cells…' : 'Show calendar'}
+        {busy ? P.busy : P.submit}
       </button>
     </form>
   );

@@ -1,16 +1,11 @@
 'use client';
 
 import { useSyncExternalStore } from 'react';
+import { useI18n } from '@/lib/i18n/use-locale';
 
 export type ThemePref = 'light' | 'dark' | 'system';
 export type Theme = 'light' | 'dark';
-const KEY = 'ft-theme';
-
-/**
- * Runs before first paint (inlined in <head>): resolves the stored preference or the OS setting
- * into data-theme on <html>, so there is no flash of the wrong theme. Follows OS changes in "system".
- */
-export const THEME_SCRIPT = `(function(){try{var k='${KEY}',d=document.documentElement,m=window.matchMedia('(prefers-color-scheme: dark)');function a(){var p=null;try{p=localStorage.getItem(k)}catch(e){}var t=p==='light'||p==='dark'?p:(m.matches?'dark':'light');d.setAttribute('data-theme',t);d.setAttribute('data-theme-pref',p==='light'||p==='dark'?p:'system')}a();m.addEventListener('change',a);window.__ftTheme=a}catch(e){}})();`;
+import { THEME_KEY as KEY } from '@/lib/head-scripts';
 
 function subscribe(cb: () => void) {
   const obs = new MutationObserver(cb);
@@ -79,10 +74,12 @@ const OPTIONS: { key: ThemePref; label: string; icon: React.ReactNode }[] = [
 /** Light / Dark / Auto (follows the device). */
 export function ThemeToggle() {
   const pref = usePref();
+  const { t } = useI18n();
+  const label = { light: t.nav.light, dark: t.nav.dark, system: t.nav.auto };
   return (
     <div
       role="radiogroup"
-      aria-label="Colour theme"
+      aria-label={t.nav.theme}
       className="border-line bg-panel flex rounded-full border p-0.5"
     >
       {OPTIONS.map((o) => (
@@ -91,7 +88,7 @@ export function ThemeToggle() {
           type="button"
           role="radio"
           aria-checked={pref === o.key}
-          title={o.key === 'system' ? 'Follow the device setting' : `${o.label} theme`}
+          title={o.key === 'system' ? t.nav.autoTitle : t.nav.themeTitle(label[o.key])}
           onClick={() => setPref(o.key)}
           className={`flex min-h-9 items-center gap-1.5 rounded-full px-2.5 text-xs font-medium transition-colors ${
             pref === o.key ? 'bg-text text-ink' : 'text-muted hover:text-text'
@@ -110,7 +107,7 @@ export function ThemeToggle() {
           >
             {o.icon}
           </svg>
-          <span className="hidden sm:inline">{o.label}</span>
+          <span className="hidden sm:inline">{label[o.key]}</span>
         </button>
       ))}
     </div>
