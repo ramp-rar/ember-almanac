@@ -268,3 +268,80 @@ is right (it is incompatible with `cacheComponents`, and Node is the default). `
 health and errors, plus a short `s-maxage` on meta, are appropriate. The partial unique index
 `dataset_version_one_active` is correct, and the swap order (deactivate, then activate, in one
 transaction) satisfies it.
+
+---
+
+# Second pass (fixes 07ad660..HEAD)
+
+Verdict: APPROVE
+
+Scope: `git diff 07ad660 HEAD` and `docs/reviews/2026-11-15-phase0-resolution.md`.
+`pnpm test` (117 passed) and `pnpm typecheck` are clean. I also ran a scratch probe
+against the domain functions; it is not committed.
+
+## Fix verification
+
+| Finding | Holds? | How I tried to break it |
+|---|---|---|
+| B1 | Yes | `nrt_through = 2026-10-31`, `today = 2026-11-15` gives November `no_data` and October `preliminary` (31/31 days). 2000-10 is `no_data`, 2000-11 is `estimate`. |
+| M1 | Yes | A spread or a literal fails to compile (`@ts-expect-error` in `honest-brand.test.ts`), and `HonestValue.is()` rejects both at runtime. The constructor validates, freezes, and keeps a blank note from justifying a null. Only explicit `as unknown as` casts remain, which no type system stops. |
+| M2 | Yes, with a residual (m-2a) | `buildMonthSeries` with fire in only 5 of 23 Novembers gives n = 22, median 0, kind `no_usual_activity`, which is correct. A value in a `no_data` month throws. Duplicate rows throw in both functions. |
+| M3 | Yes | `nrt_through = 2026-11-14` gives kind `partial_month` with the note "partial month: 14 of 30 days observed". Partial months stay out of baselines. |
+| M4 | Yes | An existing inactive version is a no-op without `--activate`. The advisory lock plus the re-check inside the transaction closes the TOCTOU. |
+| M5 | Yes, with a residual (m-2b) | The delivered set replaces older regions (`delete … not in`, guarded against an empty list). `mock-*` is refused once real data exists. `regions.geojson` is required. |
+| M7 | Yes | The bypass header is sent only when `E2E_BASE_URL` is set, and the secret is set only on the test step. |
+| M8 | Yes (validator half) | 19 failure cases, each asserting the exact failing check name, plus a happy path. |
+| Minor fixes | Yes | `isfinite` on all float columns. `lo < 0` rejected. CI cancels only PR runs. bbox computed in a loop. |
+
+## Deferrals — judgement
+
+- **M6 (in-memory ingest): acceptable for the Phase 0 gate.** Only the mock (74 k rows) and a
+  pilot region are in scope, and the limit is documented in the `scripts/ingest.ts` header.
+  Condition: before any non-pilot delivery, either do the COPY-to-staging rewrite or at least
+  add a fail-fast guard, e.g. abort when `count(*)` of `cell_month.parquet` exceeds ~3 M rows.
+  Then nobody finds the limit by OOM. Track it as a release blocker for the first real delivery.
+- **Automated PGlite ingest test: acceptable for Phase 0, not beyond F07.** Ingest now has
+  more branches than when I first reviewed it: rollback, the mock guard, region replacement and
+  the lock. Six hand-run scenarios are evidence, not regression protection. Automate it before
+  the first real delivery, together with the M6 rewrite, which will change this code anyway.
+
+## Remaining BLOCKER / MAJOR
+
+None.
+
+## New or residual MINOR
+
+- m-2a. `lib/domain/baseline.ts:105-130` — `ratioToMedian` still accepts a hand-built sparse
+  series and treats absent years as unobserved. A probe series of 5 Novembers returned a quiet
+  `insufficient_baseline` or `target_unavailable` instead of an error. `coverage` is optional,
+  and "absent = fully observed" means a caller that skips `buildMonthSeries` also skips the
+  partial-month guard. Fix: make `coverage` required, or brand the dense series type returned by
+  `buildMonthSeries` and accept only that type in `ratioToMedian`.
+- m-2b. `scripts/ingest.ts` (region replacement) together with `db/schema.ts:92-94`
+  (`region_month.iso3 … on delete cascade`) — deleting regions absent from the new delivery
+  cascades to `region_month` rows of **every** version. `--activate` rollback to an older
+  version then silently lacks those countries. Fix: version the region set, or refuse
+  `--activate` when the target version's `region_month` covers regions that no longer exist
+  (or rebuild them).
+- m-2c. Rollback path in `scripts/ingest.ts` (the `--activate` branch) — it does not take
+  the advisory lock, so it can interleave with a concurrent ingest's swap. The unique index
+  prevents two active rows, but the outcome is order-dependent. Fix: take the same
+  `pg_advisory_xact_lock` in that transaction.
+- m-2d. `regions.geojson` is now required by ingest, but `docs/DATA_CONTRACT.md` still says
+  "optional" and `contract:validate` passes a delivery without it, so a "PASS" delivery fails at
+  ingest. `lo >= 0` is likewise a new rule not in the contract. Fix: add both checks to the
+  validator and update DATA_CONTRACT.md, with an ADR, as the contract header requires.
+- m-2e. `lib/domain/status.ts` (`monthCoverage`) — a single day missing on every flying
+  platform makes the month partial, which excludes it from all baselines. That is common for
+  MODIS-only years. This is a conservative stop-gap pending science Q2, as the resolution notes.
+  Revisit it with the threshold.
+- m-2f. `lib/domain/honest-value.ts` — class instances cannot be passed as props to Client
+  Components (RSC needs plain objects). There is no `fromJson`/`toPlain` helper yet. Add one
+  before F02 starts, so nobody falls back to `as HonestValue`.
+
+## NIT
+- The `deployment_status` e2e job runs checked-out PR code with the bypass secret in its env.
+  If Vercel ever deploys fork PRs, that code can read the secret. The impact is low (preview
+  access only), but keep fork deployments gated.
+- The class declares `note` as a field, so every instance has an own `note: undefined`. JSON
+  output is unaffected, but `'note' in v` is always true.

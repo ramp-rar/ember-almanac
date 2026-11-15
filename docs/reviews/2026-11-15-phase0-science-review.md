@@ -221,3 +221,74 @@ Questions in **bold** must be answered before F02/F03.
    day (m8)?
 10. (before F04) Terra-only months (2000-11 to ~2002-07): are they harmonized with the same chain as Aqua?
     Should they carry an extra note or be excluded from the trend?
+
+---
+
+# Second pass (fixes in `git diff 07ad660 HEAD`)
+
+Verdict: APPROVE
+
+Approved for the Phase 0 gate. No BLOCKER and no new MAJOR remains. M1 and M4 stay open as tracked
+science-team questions and must be closed before F03 ships (see "Gate conditions").
+
+Scope read: `lib/`, the resolution note, and the unit suite (117 tests, green). I re-verified with my own
+throwaway script (deleted afterwards). I did not read the `scripts/lib` or test diffs line by line.
+
+## Fixes verified
+- **B1 fixed.** `nrt_through = 2026-10-20`, today 2026-11-15: November is `no_data` and `buildMonthSeries`
+  gives value null, not 0. October is `preliminary` with coverage 20 of 31. With `nrt_through = 2026-10-31`,
+  October is 31 of 31 and November is `no_data`. With `nrt_through = 2026-11-01`, November is `preliminary`,
+  1 of 30. No boundary mislabel found.
+- **B2 fixed.** November 2026 (14 of 30 days) gives `partial_month`, no ratio, no percentile, copy "partial
+  month: 14 of 30 days observed", status preliminary. Partial months are kept out of baselines.
+- **M2 fixed in `statusOf`.** SP = 06-30: June `final`, July `preliminary`. SP = 06-15 or 06-29: June
+  `preliminary`, May `final`. Preliminary still wins over estimate. The validator keeps the month-start rule
+  pending Q3; that is acceptable because it only checks the delivery, and the label users see is now the
+  stricter one.
+- **M3 fixed.** `baselineNote()` gives "baseline includes 9 MODIS-only estimate years of 21". It is a separate
+  string, so F03 must render it next to the headline (gate condition 3).
+- **Sparse zeros.** With no rows at all: 2000-10 is null/no_data, 2005-07 is 0/estimate, 2026-12 is future.
+
+## Does excluding partial months silently shrink baselines?
+No, it is not silent, and the direction is safe. With one all-platform gap day in November 2015, a 2025 target
+gives "×1.0 vs median of 21 Novembers (2003–2024)": the real n is printed and 2015 is dropped. If enough years
+drop, the result is "insufficient baseline", never a wrong ratio. The printed year range does not say which
+year inside it was dropped; list excluded years in the tooltip (minor).
+
+## Is the interim M1 rule safe?
+Yes. "Any unobserved day means partial, no ratio, out of the baseline" can only withhold a number, never show a
+wrong one. Checked cases:
+- Jan 2012 normal (MODIS all month, S-NPP from the 20th): 31 of 31, not partial. Correct.
+- Jan 2012 with MODIS missing all month: 12 of 31, partial, no ratio.
+- MODIS start mid-month (2000-11-15): 16 of 30, partial.
+- One day missing on one platform only (Feb 2016, S-NPP): 29 of 29, not partial. Correct.
+- One all-platform gap day (Nov 2015): 29 of 30, no ratio for that month. This is over-strict, and Q2 should
+  relax it, but it is honest.
+
+Limit of the interim rule: a day counts as observed if any one platform saw it. A VIIRS-era day seen only by
+MODIS counts as observed. Whether the harmonized value is still valid then is part of Q2.
+
+## Remaining findings (all MINOR; none blocks the gate)
+- N1. **Year totals ignore coverage.** lib/domain/honest-value.ts `sumHonest`. Verified: `nrt_through =
+  2026-12-20`, today 2027-01-05 gives a 2026 year total with a number and status `preliminary`, although
+  December has 20 of 31 days. A year with a partial month must not get a plain year total or enter the F04
+  trend. Fix before F02 year totals: sum `MonthPoint`s, and withhold or label the total when any month is
+  partial.
+- N2. **`coverage` is optional and absent means "fully observed".** lib/domain/baseline.ts:8-17. Verified: a
+  hand-built series without `coverage` reproduces the old B2 result ("×0.5 … (preliminary)"). The safe default
+  is the other way round. Make `coverage` required on `MonthPoint` (tests can use a helper) before F03.
+- N3. **Partial months still show a status but no flag on the cell.** A `final` cell with 12 of 31 days looks
+  like any other final cell unless the UI reads `coverage`. F02 tooltips and the CSV must show "N of M days".
+- N4. **`buildMonthSeries` throws on a row inside a no_data month** (series.ts:40-42). Correct to refuse, but
+  the validator should reject such a delivery first (m7, still open), so the calendar cannot crash at runtime.
+- Still open from the first pass and tracked: m1, m2, m3, m4, m6, m7 (rest), m8, m9, m10, m12, m13, m14;
+  `region_month.processing`; the labelled year-to-date total (product decision).
+
+## Gate conditions
+1. **M1 may stay open** for the Phase 0 gate. The interim rule is safe. Close it with Q2 before F03.
+2. **M4 may stay open** for the Phase 0 gate, because nothing renders a ratio yet. It must be closed before
+   F03 ships: without a minimum-median floor from the science team (Q5), "×30 vs median" for a near-zero
+   median is still produced (not re-tested; the code path is unchanged). Do not invent the floor.
+3. F03 must render `baselineNote()` wherever the ratio headline appears, including the CSV method field.
+4. N1 before F02 year totals; N2 before F03.
+5. Q1–Q7 and Q9 go to the science team now; they are needed before F02/F03.

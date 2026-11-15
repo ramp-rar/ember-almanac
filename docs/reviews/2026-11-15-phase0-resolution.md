@@ -37,3 +37,21 @@ Both first passes: CHANGES REQUESTED.
 
 Listed in full in the science review, section "Questions for the science team" (Q1–Q10).
 Q1–Q7 and Q9 are needed before F02/F03.
+
+## Second pass — both APPROVE
+
+Code review: APPROVE · Science review: APPROVE (see the "Second pass" section of each report).
+
+Carried into Phase 1 (each must be closed before the feature named):
+
+| Item | Close before |
+|---|---|
+| Science M1 (observed-days threshold, Q2) and M4 (minimum-median floor, Q5) | F03 |
+| F03 shows `baselineNote()` next to every ratio headline and in the CSV method field | F03 |
+| N2 / m-2a — make `MonthPoint.coverage` required so a hand-built series cannot skip the partial-month check | F03 |
+| N1 — year totals ignore partial coverage | F02 year totals, F04 trend |
+| N3 — "N of M days" in tooltips and CSV for partial months | F02, F05 |
+| m-2f — `toPlain` / `fromJson` for `HonestValue` across the server→client boundary | F02 |
+| N4 / m-2d — validator rejects rows in no_data months; `regions.geojson` and `lo ≥ 0` written into DATA_CONTRACT.md | next delivery |
+| m-2b — removing a region cascades to older versions' `region_month`; m-2c — rollback branch takes the advisory lock | F01 |
+| Code M6 — COPY-to-staging ingest (or abort above ~3 M rows) + automated PGlite ingest test | first non-pilot delivery, at the latest F07 |
