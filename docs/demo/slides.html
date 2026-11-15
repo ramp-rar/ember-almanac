@@ -60,10 +60,14 @@
   <span class="muted">A harmonized MODIS × VIIRS burning calendar, 2000–2026, for 159 countries and Texas.</span></p>
   <div style="margin-top:auto" class="row">
     <div style="flex:1">
-      <div class="kicker" style="margin-bottom:12px">Team Adeptus Vulkanis · Tajikistan</div>
-      <p style="font-size:24px;line-height:1.55;margin:0">Azamat Israilov <span class="muted">(team owner · data &amp; harmonization)</span><br>
-      Abubakr Damonov <span class="muted">(full-stack web app)</span><br>
-      Ibrohim Yormahmadov · Muhammadjon Ashurzoda · Sumaiyo Isroilova</p>
+      <div class="kicker" style="margin-bottom:14px">Team Adeptus Vulkanis · Tajikistan</div>
+      <div style="display:grid;grid-template-columns:repeat(3,auto);gap:10px 46px;font-size:23px;line-height:1.25">
+        <div>Azamat Israilov<br><span class="muted" style="font-size:18px">ML Lead · team owner</span></div>
+        <div>Ibrohim Yormahmadov<br><span class="muted" style="font-size:18px">ML Engineer</span></div>
+        <div>Muhammadjon Ashurzoda<br><span class="muted" style="font-size:18px">ML Engineer</span></div>
+        <div>Sumaiyo Isroilova<br><span class="muted" style="font-size:18px">Data Analysis</span></div>
+        <div>Abubakr Damonov<br><span class="muted" style="font-size:18px">Full-stack Engineer</span></div>
+      </div>
     </div>
     <div style="text-align:right;align-self:flex-end;font:600 24px 'IBM Plex Mono',monospace" class="ember">ember-almanac.vercel.app</div>
   </div>
@@ -131,10 +135,9 @@
         <tr><td>Range check</td><td>We measured how often past months fell inside it.</td></tr>
       </table>
     </div>
-    <div class="card" style="flex:0 0 470px;display:flex;flex-direction:column;justify-content:center">
-      <div class="kicker">Kazakhstan, 178 past months</div>
-      <div class="big" style="margin-top:14px">78%</div>
-      <p style="margin-top:10px">of months fell inside the “likely” range that aims at 80% — and 92% inside the 95% range. Measured in-sample, so we state it as an upper bound.</p>
+    <div style="flex:0 0 640px;display:flex;flex-direction:column;gap:14px">
+      <div class="shot" style="max-height:470px"><img src="shot-forecast.png" alt="Expected range and how often it held, Kazakhstan"></div>
+      <p style="margin:0;font-size:19px;line-height:1.45"><b class="ember" style="font-size:26px">78%</b> of 178 past months in Kazakhstan fell inside the “likely” range that aims at 80% (92% inside the 95% range). Measured in-sample, so we present it as an upper bound.</p>
     </div>
   </div>
   <div class="foot"><span>5 / 7</span><span>Numbers computed from the delivered data, not invented</span></div>
@@ -146,7 +149,16 @@
   <div class="row" style="margin-top:20px;flex:1">
     <div style="flex:1">
       <h2 style="font-size:44px">From FIRMS hot spots to one calendar</h2>
-      <table class="t" style="margin-top:22px">
+      <div style="display:flex;align-items:stretch;gap:0;margin-top:26px">
+        <div class="card" style="flex:1;padding:18px 20px"><div class="kicker" style="font-size:14px">NASA</div><p style="font-size:18px"><b>FIRMS</b><br>MODIS + VIIRS active fires, 2000 → Nov 2026</p></div>
+        <div style="align-self:center;font-size:34px;padding:0 10px;color:#b13f0d">→</div>
+        <div class="card" style="flex:1;padding:18px 20px"><div class="kicker" style="font-size:14px">ML &amp; data team</div><p style="font-size:18px"><b>Harmonization</b><br>MODIS years → VIIRS units, H3 grid, flares removed</p></div>
+        <div style="align-self:center;font-size:34px;padding:0 10px;color:#b13f0d">→</div>
+        <div class="card" style="flex:1;padding:18px 20px"><div class="kicker" style="font-size:14px">Data service</div><p style="font-size:18px"><b>FastAPI</b><br>monthly values, norms, expected ranges</p></div>
+        <div style="align-self:center;font-size:34px;padding:0 10px;color:#b13f0d">→</div>
+        <div class="card" style="flex:1;padding:18px 20px"><div class="kicker" style="font-size:14px">Web app</div><p style="font-size:18px"><b>Ember Almanac</b><br>calendar, map, trend, export · EN/RU/TJ</p></div>
+      </div>
+      <table class="t" style="margin-top:26px;font-size:19px">
         <tr><td>NASA FIRMS</td><td>MODIS (Terra/Aqua) and VIIRS (S-NPP) active-fire detections, 2000 – Nov 2026, standard + near real-time.</td></tr>
         <tr><td>Harmonization</td><td>Our data team rescales the MODIS-only years to VIIRS units on an H3 hexagon grid; static sources such as gas flares are removed.</td></tr>
         <tr><td>Data service</td><td>Python · pandas · H3 · FastAPI (Docker) → monthly values, norms, expected ranges per country.</td></tr>
