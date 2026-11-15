@@ -114,7 +114,9 @@ export function valueBreaks(values: readonly (number | null)[]): number[] {
   if (nonZero.length === 0) return [];
   const breaks: number[] = [];
   for (let i = 1; i < VALUE_CLASSES - 1; i++) {
-    breaks.push(percentile(nonZero, (i / (VALUE_CLASSES - 1)) * 100) as number);
+    breaks.push(
+      Math.round((percentile(nonZero, (i / (VALUE_CLASSES - 1)) * 100) as number) * 1000) / 1000,
+    );
   }
   return breaks;
 }
@@ -134,6 +136,9 @@ export function ratioClass(ratio: number): number {
   for (const limit of RATIO_LIMITS) if (ratio >= limit) cls += 1;
   return cls;
 }
+
+/** Display precision: removes float32 noise (25.899999976 → 25.9). */
+const r3 = (v: number | null): number | null => (v === null ? null : Math.round(v * 1000) / 1000);
 
 function isFull(p: MonthPoint): boolean {
   return p.coverage.observed === p.coverage.total;
@@ -184,9 +189,9 @@ export function buildCalendar(
       m: p.month,
       s: p.value.status,
       cov: [p.coverage.observed, p.coverage.total],
-      h: p.value.value,
-      lo: observed ? (row?.harmLo ?? 0) : null,
-      hi: observed ? (row?.harmHi ?? 0) : null,
+      h: r3(p.value.value),
+      lo: observed ? r3(row?.harmLo ?? 0) : null,
+      hi: observed ? r3(row?.harmHi ?? 0) : null,
       rm: observed ? (row?.rawModis ?? 0) : null,
       rv: observed ? (row?.rawViirs ?? 0) : null,
       r: {
@@ -197,7 +202,7 @@ export function buildCalendar(
         by: ratio.baselineYears,
         ne: ratio.baselineEstimateYears,
         p: ratio.percentile,
-        md: ratio.median,
+        md: r3(ratio.median),
       },
     };
   });
@@ -241,7 +246,7 @@ export function buildCalendar(
       });
     } else {
       value = honest({
-        value: median(base.map((p) => p.value.value as number)) as number,
+        value: r3(median(base.map((p) => p.value.value as number))) as number,
         status,
         unit: 'fire_days_harm',
       });

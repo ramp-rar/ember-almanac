@@ -33,7 +33,8 @@ async function activeFromDatabase(): Promise<DatasetMeta | null> {
  * Local runs only (never on Vercel), when no database is configured: the newest `delivery/mock-*`
  * folder written by `pnpm fixtures`. Only mock deliveries are ever served this way.
  */
-async function activeFromLocalFixture(): Promise<DatasetMeta | null> {
+export async function localDeliveryDir(): Promise<string | null> {
+  if (process.env.VERCEL || isDatabaseConfigured()) return null;
   const root = path.join(process.cwd(), 'delivery');
   let names: string[];
   try {
@@ -45,9 +46,14 @@ async function activeFromLocalFixture(): Promise<DatasetMeta | null> {
     .filter((n) => n.startsWith('mock-'))
     .sort()
     .at(-1);
-  if (!newest) return null;
+  return newest ? path.join(root, newest) : null;
+}
+
+async function activeFromLocalFixture(): Promise<DatasetMeta | null> {
+  const dir = await localDeliveryDir();
+  if (!dir) return null;
   try {
-    const raw = await readFile(path.join(root, newest, 'meta.json'), 'utf8');
+    const raw = await readFile(path.join(dir, 'meta.json'), 'utf8');
     return DatasetMetaSchema.parse(JSON.parse(raw));
   } catch {
     return null;
