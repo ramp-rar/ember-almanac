@@ -3,11 +3,15 @@ import type { DatasetMeta } from '@/lib/domain/meta';
 import kazakhstan from '@/data/snapshot/kazakhstan.json';
 import regionsFile from '@/data/snapshot/regions.json';
 import texas from '@/data/snapshot/texas.json';
+import forecastKz from '@/data/snapshot/forecast-kazakhstan.json';
+import forecastTx from '@/data/snapshot/forecast-texas.json';
 import type { FireSource } from './fire-source';
 import {
   CalendarRowSchema,
   OutsideCoverageError,
+  ForecastRowSchema,
   RegionSchema,
+  toForecast,
   deriveMeta,
   summary,
   toRows,
@@ -30,6 +34,10 @@ const rowsById: Record<string, readonly ApiRow[]> = {
   kazakhstan: z.array(CalendarRowSchema).parse(kazakhstan),
   texas: z.array(CalendarRowSchema).parse(texas),
 };
+const forecastById: Record<string, ReturnType<typeof toForecast>> = {
+  kazakhstan: toForecast(z.array(ForecastRowSchema).parse(forecastKz)),
+  texas: toForecast(z.array(ForecastRowSchema).parse(forecastTx)),
+};
 const regions: readonly ApiRegion[] = parsed.regions.filter((r) => rowsById[r.id] !== undefined);
 
 export const SNAPSHOT_GENERATED_AT = parsed.generated_at;
@@ -42,6 +50,9 @@ export function snapshotSource(): FireSource {
   return {
     async monthCells() {
       return [];
+    },
+    async forecast(iso3) {
+      return forecastById[iso3.toLowerCase()] ?? null;
     },
     async listRegions(query) {
       const q = query.trim().toLowerCase();

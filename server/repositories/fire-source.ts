@@ -1,6 +1,7 @@
 import { and, asc, count, eq, ilike, or, sql } from 'drizzle-orm';
 import type { AnyPgColumn } from 'drizzle-orm/pg-core';
 import { cellMonth, cellMonthR4, region, regionCell, regionMonth } from '@/db/schema';
+import type { ForecastMonth } from '@/lib/api/types';
 import type { AoiMonthRow } from '@/lib/domain/calendar';
 import type { DatasetMeta } from '@/lib/domain/meta';
 import { getDb } from '@/server/db/client';
@@ -19,6 +20,8 @@ export interface RegionSummary {
 
 /** Where fire numbers come from. Two implementations: Postgres, and a local mock delivery. */
 export interface FireSource {
+  /** Optional: the data team's 6-month projection for a whole region. */
+  forecast?(iso3: string): Promise<ForecastMonth[] | null>;
   listRegions(query: string): Promise<RegionSummary[]>;
   region(iso3: string): Promise<(RegionSummary & { cellsCount: number }) | null>;
   /** Country totals per (year, month), sparse. */

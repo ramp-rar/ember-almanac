@@ -40,6 +40,19 @@ export interface CalendarResponse {
   };
   readonly today: string;
   readonly calendar: CalendarData;
+  /** Only for whole regions whose source provides it; otherwise null. */
+  readonly forecast: readonly ForecastMonth[] | null;
+}
+
+/** Statistical projection delivered by the data team: 6 months with 80% / 95% corridors. */
+export interface ForecastMonth {
+  readonly y: number;
+  readonly m: number;
+  readonly mean: number;
+  readonly lo80: number;
+  readonly hi80: number;
+  readonly lo95: number;
+  readonly hi95: number;
 }
 
 export interface RegionItem {

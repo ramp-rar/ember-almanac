@@ -10,6 +10,7 @@ import { BurningCalendar } from '@/components/calendar/burning-calendar';
 import { Legend } from '@/components/calendar/legend';
 import type { Mode } from '@/components/calendar/palette';
 import { ExportPanel } from '@/components/export/export-panel';
+import { ForecastPanel } from '@/components/forecast/forecast-panel';
 import { Headline } from '@/components/metric/headline';
 import { useUi } from '@/components/ui-store';
 import {
@@ -283,6 +284,10 @@ export function Explorer({ aoi }: { aoi: AoiRef | null }) {
           />
         </div>
       </section>
+
+      {data.forecast && (
+        <ForecastPanel forecast={data.forecast} monthMedians={calendar.monthMedians} />
+      )}
 
       <section id="how" className="card mt-6 p-4 sm:p-6">
         <h2 className="text-lg font-semibold">How it works</h2>

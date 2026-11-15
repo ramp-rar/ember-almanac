@@ -2,6 +2,7 @@ import { cellToChildren, cellToLatLng, cellToParent } from 'h3-js';
 import { z } from 'zod';
 import type { AoiMonthRow } from '@/lib/domain/calendar';
 import { DatasetMetaSchema, type DatasetMeta } from '@/lib/domain/meta';
+import type { ForecastMonth } from '@/lib/api/types';
 import type { Bbox, FireSource, RegionSummary } from './fire-source';
 
 /**
@@ -40,6 +41,25 @@ export const CalendarRowSchema = z.object({
   partial: z.boolean(),
 });
 const CalendarSchema = z.array(CalendarRowSchema);
+export const ForecastRowSchema = z.object({
+  month: z.string().regex(/^\d{4}-\d{2}$/),
+  mean: z.number().nonnegative(),
+  lo80: z.number().nonnegative(),
+  hi80: z.number().nonnegative(),
+  lo95: z.number().nonnegative(),
+  hi95: z.number().nonnegative(),
+});
+const ForecastSchema = z.array(ForecastRowSchema);
+
+/** Keeps only coherent rows (lo95 ≤ lo80 ≤ mean ≤ hi80 ≤ hi95): never show a broken corridor. */
+export function toForecast(rows: readonly z.infer<typeof ForecastRowSchema>[]): ForecastMonth[] {
+  return rows.flatMap((r) => {
+    if (!(r.lo95 <= r.lo80 && r.lo80 <= r.mean && r.mean <= r.hi80 && r.hi80 <= r.hi95)) return [];
+    const [y, m] = r.month.split('-').map(Number) as [number, number];
+    return [{ y, m, mean: r.mean, lo80: r.lo80, hi80: r.hi80, lo95: r.lo95, hi95: r.hi95 }];
+  });
+}
+
 const QuerySchema = z.object({ calendar: CalendarSchema });
 const LocateSchema = z.object({ regions: z.array(z.string()) });
 export type ApiRow = z.infer<typeof CalendarRowSchema>;
@@ -204,6 +224,20 @@ export function remoteApiSource(base: string): FireSource {
     // Per-cell monthly values are not served by the API (it has per-hex means only): no points.
     async monthCells() {
       return [];
+    },
+    async forecast(iso3) {
+      try {
+        return toForecast(
+          await cached(
+            `fc:${iso3}`,
+            () => request(base, `/regions/${encodeURIComponent(iso3.toLowerCase())}/forecast`),
+            ForecastSchema,
+          ),
+        );
+      } catch (error) {
+        if (error instanceof OutsideCoverageError) return null;
+        throw error;
+      }
     },
     async listRegions(query) {
       const q = query.trim().toLowerCase();

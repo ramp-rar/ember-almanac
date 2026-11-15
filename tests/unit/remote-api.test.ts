@@ -165,3 +165,14 @@ describe('remote source', () => {
     await expect(remoteApiSource(BASE).listRegions('')).rejects.toBeInstanceOf(RemoteApiError);
   });
 });
+
+describe('forecast corridor', () => {
+  it('keeps coherent rows and drops broken corridors instead of drawing them', async () => {
+    const { toForecast } = await import('@/server/repositories/remote-api');
+    const ok = { month: '2026-12', mean: 17, lo80: 5, hi80: 58, lo95: 2, hi95: 109 };
+    const broken = { month: '2027-01', mean: 90, lo80: 5, hi80: 58, lo95: 2, hi95: 109 };
+    expect(toForecast([ok, broken])).toEqual([
+      { y: 2026, m: 12, mean: 17, lo80: 5, hi80: 58, lo95: 2, hi95: 109 },
+    ]);
+  });
+});

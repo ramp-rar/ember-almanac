@@ -58,7 +58,8 @@ export async function getHealth(now: Date): Promise<HealthResponse> {
   }
 
   return HealthResponseSchema.parse({
-    status: reachable && version !== null ? 'ok' : 'degraded',
+    // No database configured is fine when a bundled/remote dataset serves the app.
+    status: (reachable || !configured) && version !== null ? 'ok' : 'degraded',
     dataset_version: version,
     db: { configured, reachable, latency_ms: latency },
     time: now.toISOString(),
