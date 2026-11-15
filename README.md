@@ -8,6 +8,7 @@ Russian and Tajik. NASA Space Apps Challenge 2026 · Dushanbe · challenge
 
 - **Live:** https://ember-almanac.vercel.app
 - **Demo (7 slides, PDF):** https://ember-almanac.vercel.app/ember-almanac-demo.pdf
+- **Code:** https://github.com/ramp-rar/ember-almanac
 
 ## What it does
 
