@@ -3,7 +3,9 @@
 import 'maplibre-gl/dist/maplibre-gl.css';
 import {
   Map as MapLibre,
+  Marker,
   NavigationControl,
+  Popup,
   setWorkerUrl,
   type GeoJSONSource,
   type MapMouseEvent,
@@ -108,11 +110,34 @@ const toFc = (pts: readonly (readonly [number, number, number])[]) => ({
   })),
 });
 
+type Pt = readonly [number, number, number];
+
 export type FireLayerState =
   | { kind: 'loading' }
   | { kind: 'none' }
-  | { kind: 'month'; month: string; count: number; truncated: boolean; partial: boolean }
-  | { kind: 'typical'; from: number; to: number; count: number; truncated: boolean };
+  | {
+      kind: 'month';
+      month: string;
+      count: number;
+      truncated: boolean;
+      partial: boolean;
+      top: readonly Pt[];
+    }
+  | {
+      kind: 'typical';
+      from: number;
+      to: number;
+      count: number;
+      truncated: boolean;
+      top: readonly Pt[];
+    };
+
+/** A point to fly to; `n` changes on every request so the same place can be revisited. */
+export interface MapFocus {
+  readonly lon: number;
+  readonly lat: number;
+  readonly n: number;
+}
 
 /**
  * 3D satellite map with relief and the places where fire was detected: for the selected month if
@@ -125,6 +150,7 @@ export default function AoiMap({
   regionId,
   month,
   onLayer,
+  focus,
 }: {
   aoi: CalendarResponse['aoi'];
   /** Area name in the current language. */
@@ -134,6 +160,7 @@ export default function AoiMap({
   /** Selected month, YYYY-MM. */
   month: string | null;
   onLayer: (s: FireLayerState) => void;
+  focus?: MapFocus | null;
 }) {
   const container = useRef<HTMLDivElement>(null);
   const map = useRef<MapLibre | null>(null);
@@ -142,9 +169,33 @@ export default function AoiMap({
   const [loaded, setLoaded] = useState<{ id: string; file: GeoFile | null } | null>(null);
   const M = useI18n().t.map;
   const report = useRef(onLayer);
+  const i18n = useI18n();
+  const popupText = useRef((v: number) => M.popup(i18n.n(v)));
   useEffect(() => {
     report.current = onLayer;
+    popupText.current = (v: number) => M.popup(i18n.n(v));
   });
+
+  const marker = useRef<Marker | null>(null);
+  useEffect(() => {
+    if (!focus || !map.current) return;
+    // A ring that stays visible on top of the relief marks the place we flew to.
+    if (!marker.current) {
+      const el = document.createElement('div');
+      el.setAttribute('aria-hidden', 'true');
+      el.style.cssText =
+        'width:30px;height:30px;border-radius:999px;border:3px solid #fcffa4;box-shadow:0 0 0 3px #e0561c,0 0 18px 6px rgba(255,113,54,.65);background:rgba(255,113,54,.25)';
+      marker.current = new Marker({ element: el });
+    }
+    marker.current.setLngLat([focus.lon, focus.lat]).addTo(map.current);
+    map.current.flyTo({
+      center: [focus.lon, focus.lat],
+      zoom: 8.5,
+      pitch: flat ? 0 : PITCH,
+      duration: 1600,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [focus]);
 
   const outline = (a: CalendarResponse['aoi']) => ({
     type: 'Feature' as const,
@@ -273,9 +324,21 @@ export default function AoiMap({
       });
     });
     m.on('click', (e: MapMouseEvent) => {
+      // A click on a fire dot explains it; anywhere else proposes a point for a custom area.
+      const hit = m.queryRenderedFeatures(e.point, { layers: ['fire-cells'] })[0];
+      const v = hit?.properties?.v as number | undefined;
+      if (hit && v !== undefined) {
+        new Popup({ closeButton: true, maxWidth: '240px' })
+          .setLngLat(e.lngLat)
+          .setText(popupText.current(v))
+          .addTo(m);
+        return;
+      }
       const p = e.lngLat.wrap();
       setDraftPoint({ lat: p.lat, lon: p.lng });
     });
+    m.on('mouseenter', 'fire-cells', () => (m.getCanvas().style.cursor = 'pointer'));
+    m.on('mouseleave', 'fire-cells', () => (m.getCanvas().style.cursor = ''));
     map.current = m;
     return () => {
       m.remove();
@@ -330,6 +393,7 @@ export default function AoiMap({
           count: m.pts.length,
           truncated: m.truncated,
           partial: geo.partial_month === month,
+          top: m.pts.slice(0, 5),
         },
         pts: m.pts,
       };
@@ -342,6 +406,7 @@ export default function AoiMap({
         to: t.to,
         count: t.pts.length,
         truncated: t.truncated,
+        top: t.pts.slice(0, 5),
       },
       pts: t.pts,
     };

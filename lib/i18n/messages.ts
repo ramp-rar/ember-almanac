@@ -83,6 +83,12 @@ const en = {
     intro:
       'Satellites have watched fires since 2000. Two different satellites counted differently, so we put them on one scale. Pick a place, then click a month to compare it with a usual one.',
     selectedMonth: 'Selected month',
+    ytdTitle: (y: number, range: S) => `${y} so far (${range})`,
+    ytdValue: (v: S) => `${v} fire-days`,
+    ytdVs: (x: S, n: number, from: number, to: number) =>
+      `${x} vs the same months in a usual year (median of ${n} years, ${from}–${to})`,
+    ytdNoBase: (n: number) => `no usual value yet (${n} of 10 comparable years)`,
+    ytdZero: 'usually no fire in these months',
     calTitle: 'Burning calendar',
     calDesc:
       'Each row is a year, each column a month. The brighter the square, the more fire activity. Click any square.',
@@ -320,6 +326,9 @@ const en = {
     fireCount: (n: number) => `${n} hexagons with fire`,
     fireTruncated: 'only the strongest are shown',
     firePartial: 'this month is not over yet',
+    topTitle: 'Strongest fire areas — click to fly there',
+    topItem: (lat: S, lon: S, v: S) => `${lat}° N, ${lon}° E · ${v} fire-days`,
+    popup: (v: S) => `${v} fire-days in this hexagon (~250 km²)`,
     toFlat: '3D relief on · switch to flat',
     controls: {
       'Map.Title': 'Map',
@@ -415,6 +424,12 @@ const ru: Messages = {
     intro:
       'Спутники следят за пожарами с 2000 года. Два разных спутника считали по-разному, поэтому мы привели их к одной шкале. Выберите место и нажмите на месяц, чтобы сравнить его с обычным.',
     selectedMonth: 'Выбранный месяц',
+    ytdTitle: (y, range) => `${y} с начала года (${range})`,
+    ytdValue: (v) => `${v} пожарных дней`,
+    ytdVs: (x, n, from, to) =>
+      `${x} к тем же месяцам обычного года (медиана ${n} лет, ${from}–${to})`,
+    ytdNoBase: (n) => `нормы пока нет (${n} из 10 сравнимых лет)`,
+    ytdZero: 'обычно в эти месяцы пожаров нет',
     calTitle: 'Календарь пожаров',
     calDesc:
       'Каждая строка — год, каждый столбец — месяц. Чем ярче квадрат, тем больше пожарной активности. Нажмите на любой квадрат.',
@@ -646,6 +661,9 @@ const ru: Messages = {
     fireCount: (n) => `шестиугольников с огнём: ${n}`,
     fireTruncated: 'показаны только самые сильные',
     firePartial: 'месяц ещё не закончился',
+    topTitle: 'Самые сильные очаги — нажмите, чтобы перелететь',
+    topItem: (lat, lon, v) => `${lat}° с. ш., ${lon}° в. д. · ${v} пожарных дней`,
+    popup: (v) => `${v} пожарных дней в этом шестиугольнике (~250 км²)`,
     toFlat: '3D-рельеф включён · сделать плоской',
     controls: {
       'Map.Title': 'Карта',
@@ -739,6 +757,12 @@ const tg: Messages = {
     intro:
       'Моҳвораҳо аз соли 2000 сӯхторҳоро назорат мекунанд. Ду моҳвораи гуногун ба таври гуногун ҳисоб мекарданд, бинобар ин мо онҳоро ба як миқёс овардем. Ҷойро интихоб кунед ва моҳро пахш кунед, то онро бо моҳи муқаррарӣ муқоиса кунед.',
     selectedMonth: 'Моҳи интихобшуда',
+    ytdTitle: (y, range) => `${y} аз аввали сол (${range})`,
+    ytdValue: (v) => `${v} рӯзи сӯхтор`,
+    ytdVs: (x, n, from, to) =>
+      `${x} нисбат ба ҳамин моҳҳои соли муқаррарӣ (медианаи ${n} сол, ${from}–${to})`,
+    ytdNoBase: (n) => `меъёр ҳоло нест (${n} аз 10 соли муқоисашаванда)`,
+    ytdZero: 'одатан дар ин моҳҳо сӯхтор нест',
     calTitle: 'Тақвими сӯхтор',
     calDesc:
       'Ҳар сатр — сол, ҳар сутун — моҳ. Ҳар қадар мураббаъ равшантар бошад, фаъолияти сӯхтор ҳамон қадар зиёд аст. Ягон мураббаъро пахш кунед.',
@@ -975,6 +999,9 @@ const tg: Messages = {
     fireCount: (n) => `шашкунҷаҳо бо оташ: ${n}`,
     fireTruncated: 'танҳо пурзӯртаринҳо нишон дода шудаанд',
     firePartial: 'моҳ ҳанӯз тамом нашудааст',
+    topTitle: 'Пурзӯртарин минтақаҳои сӯхтор — барои парвоз пахш кунед',
+    topItem: (lat, lon, v) => `${lat}° а. ш., ${lon}° т. ш. · ${v} рӯзи сӯхтор`,
+    popup: (v) => `${v} рӯзи сӯхтор дар ин шашкунҷа (~250 км²)`,
     toFlat: 'Релефи 3D фаъол аст · ҳамвор кардан',
     controls: {
       'Map.Title': 'Харита',

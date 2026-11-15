@@ -11,7 +11,7 @@ import { Legend } from '@/components/calendar/legend';
 import type { Mode } from '@/components/calendar/palette';
 import { ExportPanel } from '@/components/export/export-panel';
 import { ForecastPanel } from '@/components/forecast/forecast-panel';
-import type { FireLayerState } from '@/components/map/aoi-map';
+import type { FireLayerState, MapFocus } from '@/components/map/aoi-map';
 import { Headline } from '@/components/metric/headline';
 import { useUi } from '@/components/ui-store';
 import {
@@ -21,7 +21,8 @@ import {
   type CalendarResponse,
   type RegionItem,
 } from '@/lib/api/types';
-import { pText, trendText } from '@/lib/i18n/copy';
+import { yearToDate } from '@/lib/domain/ytd';
+import { pText, times, trendText } from '@/lib/i18n/copy';
 import { APP_NAME } from '@/lib/brand';
 import { placeName } from '@/lib/i18n/places';
 import { useI18n } from '@/lib/i18n/use-locale';
@@ -86,6 +87,7 @@ export function Explorer({ aoi }: { aoi: AoiRef | null }) {
   });
   const { palette, setPalette, newestFirst, toggleOrder } = useUi();
   const [fireLayer, setFireLayer] = useState<FireLayerState>({ kind: 'loading' });
+  const [focus, setFocus] = useState<MapFocus | null>(null);
 
   const data = query.data;
   // A shared link with mode=raw on a source without raw counts falls back to harmonized.
@@ -188,6 +190,8 @@ export function Explorer({ aoi }: { aoi: AoiRef | null }) {
         <Headline cell={selectedCell} />
       </section>
 
+      <YtdTile cells={calendar.cells} />
+
       <div className="mt-6 grid items-start gap-6 xl:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
         <section aria-labelledby="cal-h" className="card min-w-0 p-4 sm:p-6">
           <h2 id="cal-h" className="flex items-center gap-2.5 text-lg font-semibold">
@@ -277,8 +281,12 @@ export function Explorer({ aoi }: { aoi: AoiRef | null }) {
               regionId={aoi.kind === 'region' ? aoi.iso3.toLowerCase() : null}
               month={selected ? `${selected.y}-${String(selected.m).padStart(2, '0')}` : null}
               onLayer={setFireLayer}
+              focus={focus}
             />
-            <FireCaption state={fireLayer} />
+            <FireCaption
+              state={fireLayer}
+              onFly={(lon, lat) => setFocus((f) => ({ lon, lat, n: (f?.n ?? 0) + 1 }))}
+            />
           </section>
           <AoiPicker />
           <ExportPanel aoi={aoi} />
@@ -367,9 +375,50 @@ export function Explorer({ aoi }: { aoi: AoiRef | null }) {
   );
 }
 
-function FireCaption({ state }: { state: FireLayerState }) {
+function YtdTile({ cells }: { cells: CalendarResponse['calendar']['cells'] }) {
+  const i = useI18n();
+  const ex = i.t.explorer;
+  const ytd = useMemo(() => yearToDate(cells), [cells]);
+  if (!ytd) return null;
+  const range =
+    ytd.toMonth === 1
+      ? i.t.monthsShort[0]!
+      : `${i.t.monthsShort[0]}–${i.t.monthsShort[ytd.toMonth - 1]}`;
+  const compare =
+    ytd.median === null
+      ? ex.ytdNoBase(ytd.n)
+      : ytd.ratio === null
+        ? ex.ytdZero
+        : ex.ytdVs(times(ytd.ratio, i), ytd.n, ytd.from!, ytd.to!);
+  return (
+    <section
+      aria-label={ex.ytdTitle(ytd.year, range)}
+      className="card mt-4 flex flex-wrap items-center gap-x-6 gap-y-2 p-4 sm:px-6"
+    >
+      <p className="text-muted text-sm font-medium">{ex.ytdTitle(ytd.year, range)}</p>
+      <p className="font-display text-2xl">{ex.ytdValue(i.n(ytd.value))}</p>
+      <p className="text-sm">{compare}</p>
+      <span
+        className="border-line-strong rounded-full border px-2.5 py-0.5 font-mono text-xs font-medium uppercase"
+        title={i.t.status.help[ytd.status]}
+      >
+        {i.t.status.title[ytd.status]}
+      </span>
+    </section>
+  );
+}
+
+function FireCaption({
+  state,
+  onFly,
+}: {
+  state: FireLayerState;
+  onFly: (lon: number, lat: number) => void;
+}) {
   const i = useI18n();
   const M = i.t.map;
+  // Coordinates keep two decimals (~1 km); the generic number format would round 37.31 to 37.
+  const coord = (v: number) => (i.locale === 'en' ? v.toFixed(2) : v.toFixed(2).replace('.', ','));
   if (state.kind === 'loading') return <p className="text-muted mt-2 text-xs">{M.fireLoading}</p>;
   if (state.kind === 'none') return <p className="text-muted mt-2 text-xs">{M.fireNone}</p>;
   const title =
@@ -393,6 +442,27 @@ function FireCaption({ state }: { state: FireLayerState }) {
       <p className="text-muted mt-1 text-xs">
         {extras.join(' · ')}. {M.fireLegend}
       </p>
+      {state.top.length > 0 && (
+        <div className="mt-3">
+          <p className="text-xs font-semibold">{M.topTitle}</p>
+          <ol className="mt-1.5 space-y-1">
+            {state.top.map(([lon, lat, v], k) => (
+              <li key={`${lon},${lat}`}>
+                <button
+                  type="button"
+                  onClick={() => onFly(lon, lat)}
+                  className="hover:bg-panel-2 flex w-full items-center gap-2 rounded-lg px-2 py-1 text-left font-mono text-xs"
+                >
+                  <span className="bg-ember text-on-ember grid h-5 w-5 shrink-0 place-items-center rounded-full text-[10px] font-semibold">
+                    {k + 1}
+                  </span>
+                  {M.topItem(coord(lat), coord(lon), i.n(v))}
+                </button>
+              </li>
+            ))}
+          </ol>
+        </div>
+      )}
     </div>
   );
 }
