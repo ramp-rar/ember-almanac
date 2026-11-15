@@ -49,6 +49,7 @@ function response(): CalendarResponse {
     today: TODAY,
     calendar: buildCalendar(rows, contractMeta, TODAY),
     forecast: null,
+    forecastCheck: null,
   };
 }
 

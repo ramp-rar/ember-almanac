@@ -149,7 +149,11 @@ export default function YearlyCharts({
         ...AXIS,
         axisLabel: { ...AXIS.axisLabel, interval: 3 },
       },
-      yAxis: { type: 'value', ...AXIS },
+      yAxis: {
+        type: 'value',
+        ...AXIS,
+        axisLabel: { ...AXIS.axisLabel, formatter: (v: number) => i.n(v) },
+      },
       series: [
         {
           type: 'bar',
@@ -207,7 +211,11 @@ export default function YearlyCharts({
         ...AXIS,
         axisLabel: { ...AXIS.axisLabel, interval: 3 },
       },
-      yAxis: { type: 'value', ...AXIS },
+      yAxis: {
+        type: 'value',
+        ...AXIS,
+        axisLabel: { ...AXIS.axisLabel, formatter: (v: number) => i.n(v) },
+      },
       series: [
         {
           type: 'bar',

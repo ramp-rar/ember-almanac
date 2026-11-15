@@ -1,6 +1,7 @@
 'use client';
 
 import type { ForecastMonth } from '@/lib/api/types';
+import type { CorridorCheck } from '@/lib/domain/corridor';
 import type { CalendarData } from '@/lib/domain/calendar';
 import { useI18n } from '@/lib/i18n/use-locale';
 
@@ -11,17 +12,17 @@ import { useI18n } from '@/lib/i18n/use-locale';
  */
 export function ForecastPanel({
   forecast,
+  check,
   monthMedians,
 }: {
   forecast: readonly ForecastMonth[];
+  check: CorridorCheck | null;
   monthMedians: CalendarData['monthMedians'];
 }) {
   const i = useI18n();
   const F = i.t.forecast;
   const fmt = i.n;
   if (forecast.length === 0) return null;
-  const scale = Math.max(1, ...forecast.map((f) => f.hi95));
-  const pct = (v: number) => `${Math.min(100, (v / scale) * 100)}%`;
   const usual = (m: number) => monthMedians.find((x) => x.m === m)?.harm.v ?? null;
 
   return (
@@ -57,6 +58,9 @@ export function ForecastPanel({
           <tbody>
             {forecast.map((f) => {
               const u = usual(f.m);
+              // Per-row scale: winter months would vanish next to the spring peak otherwise.
+              const scale = Math.max(1, f.hi95, u ?? 0) * 1.05;
+              const pct = (v: number) => `${Math.min(100, (v / scale) * 100)}%`;
               return (
                 <tr key={`${f.y}-${f.m}`} className="border-line border-t">
                   <th scope="row" className="py-2.5 pr-3 text-left font-medium whitespace-nowrap">
@@ -103,6 +107,37 @@ export function ForecastPanel({
         </table>
       </div>
       <p className="text-muted mt-3 text-xs">{F.foot}</p>
+      {check && (
+        <div className="border-line mt-5 border-t pt-4">
+          <h3 className="text-base font-semibold">{F.checkTitle}</h3>
+          <dl className="mt-2 grid gap-3 text-sm sm:grid-cols-2">
+            {(
+              [
+                [F.checkLikely, check.in80, 80],
+                [F.checkSure, check.in95, 95],
+              ] as const
+            ).map(([name, inside, target]) => {
+              const pct = Math.round((inside / check.n) * 100);
+              return (
+                <div key={name} className="bg-panel-2 rounded-xl p-3">
+                  <dt className="text-muted text-xs">{name}</dt>
+                  <dd className="mt-1">
+                    <span className="font-display text-2xl">{pct}%</span>{' '}
+                    <span className="text-muted">{F.checkLine(inside, check.n, pct, target)}</span>
+                    <div
+                      className="bg-line mt-2 h-1.5 overflow-hidden rounded-full"
+                      aria-hidden="true"
+                    >
+                      <div className="bg-ember h-full" style={{ width: `${pct}%` }} />
+                    </div>
+                  </dd>
+                </div>
+              );
+            })}
+          </dl>
+          <p className="text-muted mt-2 text-xs">{F.checkNote(check.from, check.to)}</p>
+        </div>
+      )}
     </section>
   );
 }

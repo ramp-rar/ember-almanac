@@ -26,3 +26,17 @@ describe('region names', () => {
     expect(matchesRegion(region, 'texas')).toBe(false);
   });
 });
+
+describe('regionAt', () => {
+  it('finds the region whose box holds the point, or none', async () => {
+    const { regionAt } = await import('@/components/aoi/aoi-picker');
+    const regions = snapshot.regions.map((r) => ({
+      iso3: r.id.toUpperCase(),
+      nameEn: r.name,
+      bbox: r.bbox as [number, number, number, number],
+    }));
+    expect(regionAt(regions, 43.24, 76.95)?.iso3).toBe('KAZAKHSTAN'); // Almaty
+    expect(regionAt(regions, 29.76, -95.37)?.iso3).toBe('TEXAS'); // Houston
+    expect(regionAt(regions, 38.56, 68.79)).toBeNull(); // Dushanbe: not delivered yet
+  });
+});

@@ -51,6 +51,15 @@ export const ForecastRowSchema = z.object({
   hi95: z.number().nonnegative(),
 });
 const ForecastSchema = z.array(ForecastRowSchema);
+export const CorridorRowSchema = z.object({
+  month: z.string().regex(/^\d{4}-\d{2}$/),
+  actual: z.number().nonnegative().nullable(),
+  lo80: z.number(),
+  hi80: z.number(),
+  lo95: z.number(),
+  hi95: z.number(),
+});
+const CorridorSchema = z.array(CorridorRowSchema);
 
 /** Keeps only coherent rows (lo95 ≤ lo80 ≤ mean ≤ hi80 ≤ hi95): never show a broken corridor. */
 export function toForecast(rows: readonly z.infer<typeof ForecastRowSchema>[]): ForecastMonth[] {
@@ -233,6 +242,22 @@ export function remoteApiSource(base: string): FireSource {
     // Per-cell monthly values are not served by the API (it has per-hex means only): no points.
     async monthCells() {
       return [];
+    },
+    async corridorHistory(iso3) {
+      try {
+        return await cached(
+          `an:${iso3}`,
+          () =>
+            request(
+              base,
+              `/regions/${encodeURIComponent(iso3.toLowerCase())}/anomalies?only_flagged=false`,
+            ),
+          CorridorSchema,
+        );
+      } catch (error) {
+        if (error instanceof OutsideCoverageError) return null;
+        throw error;
+      }
     },
     async forecast(iso3) {
       try {

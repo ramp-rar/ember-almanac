@@ -1,5 +1,6 @@
 import type { AoiRef, CalendarResponse } from '@/lib/api/types';
 import { buildCalendar } from '@/lib/domain/calendar';
+import { corridorCoverage } from '@/lib/domain/corridor';
 import { isMockDataset } from '@/lib/domain/meta';
 import { aoiCells, aoiRing, aoiBbox, decodeAoi, describeAoi } from '@/lib/h3/aoi';
 import { getActiveSource } from '@/server/repositories/fire-source';
@@ -32,11 +33,16 @@ export async function getCalendar(ref: AoiRef, today: string): Promise<CalendarR
   let aoi: CalendarResponse['aoi'];
   let rows;
   let forecast: CalendarResponse['forecast'] = null;
+  let forecastCheck: CalendarResponse['forecastCheck'] = null;
   if (ref.kind === 'region') {
     const region = await source.region(ref.iso3);
     if (!region) throw new NotFoundError(`Unknown region ${ref.iso3}`);
     rows = await source.regionMonthly(ref.iso3);
     forecast = (await source.forecast?.(ref.iso3)) ?? null;
+    if (forecast) {
+      const history = await source.corridorHistory?.(ref.iso3);
+      forecastCheck = history ? corridorCoverage(history) : null;
+    }
     const [w, s, e, n] = region.bbox;
     aoi = {
       kind: 'region',
@@ -92,6 +98,7 @@ export async function getCalendar(ref: AoiRef, today: string): Promise<CalendarR
     today,
     calendar: buildCalendar(rows, meta, today),
     forecast,
+    forecastCheck,
   };
 }
 

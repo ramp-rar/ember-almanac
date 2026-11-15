@@ -154,6 +154,11 @@ const en = {
     retry: 'Retry',
     noRegions: 'No regions are loaded yet.',
     loading: 'Loading the calendar',
+    honesty: [
+      'Satellite detections are not a count of fires',
+      'The expected range is not a forecast',
+      'No data is never shown as zero',
+    ] as S[],
   },
   headline: {
     pick: 'Click a month in the calendar to see how it compares.',
@@ -181,9 +186,9 @@ const en = {
     none: (p: S, n: number, from: number, to: number) =>
       `No statistically detectable trend in harmonized fire-days (${p}, n = ${n}, ${from}–${to}).`,
     up: (p: S, n: number, from: number, to: number) =>
-      `Upward trend in harmonized fire-days (Mann–Kendall ${p} < 0.05, n = ${n}, ${from}–${to}).`,
+      `Upward trend in harmonized fire-days (Mann–Kendall ${p}, significant at 0.05; n = ${n}, ${from}–${to}).`,
     down: (p: S, n: number, from: number, to: number) =>
-      `Downward trend in harmonized fire-days (Mann–Kendall ${p} < 0.05, n = ${n}, ${from}–${to}).`,
+      `Downward trend in harmonized fire-days (Mann–Kendall ${p}, significant at 0.05; n = ${n}, ${from}–${to}).`,
     pNone: 'not computed',
   },
   calendar: {
@@ -242,6 +247,13 @@ const en = {
     north: 'North °',
     busy: 'Computing cells…',
     submit: 'Show calendar',
+    locate: 'Use my location',
+    locating: 'Finding you…',
+    near: (name: S) =>
+      `You are in or near ${name} (inside its map frame; the border itself is not checked).`,
+    open: (name: S) => `Open ${name}`,
+    notCovered: (names: S) => `There is no fire data for your location yet. Covered: ${names}.`,
+    locateFailed: 'Your location is not available (permission denied or not supported).',
   },
   export: {
     title: 'Download the data',
@@ -265,7 +277,14 @@ const en = {
     colUsual: 'Usual',
     middle: (v: S) => `middle estimate ${v}`,
     usual: (v: S) => `usual ${v}`,
-    foot: 'Solid mark = middle estimate · dashed line = usual month (median of past years). The ranges come from the data team’s model (method still to be documented); the corridors are meant to hold the real value about 8 times in 10 (dark) and 19 in 20 (light) — we have not verified that ourselves. The current month is only partly observed.',
+    checkTitle: 'How often did the real month fall inside the range?',
+    checkLine: (inside: number, n: number, pct: number, target: number) =>
+      `${inside} of ${n} past months (${pct}%; the model aims at ${target}%)`,
+    checkLikely: 'Dark (likely) range',
+    checkSure: 'Light (almost certain) range',
+    checkNote: (from: S, to: S) =>
+      `Months ${from} to ${to}. The model was fitted on these same months, so in advance it would do no better than this — likely a bit worse.`,
+    foot: 'Solid mark = middle estimate · dashed line = usual month (median of past years). The ranges come from the data team’s model (method still to be documented). Each row has its own scale; compare months by the numbers. The current month is only partly observed.',
   },
   charts: {
     totals: 'Year totals and trend',
@@ -456,6 +475,11 @@ const ru: Messages = {
     retry: 'Повторить',
     noRegions: 'Регионы ещё не загружены.',
     loading: 'Загружаем календарь',
+    honesty: [
+      'Спутниковые обнаружения — это не число пожаров',
+      'Ожидаемый диапазон — не прогноз',
+      '«Нет данных» никогда не показывается как ноль',
+    ],
   },
   headline: {
     pick: 'Нажмите на месяц в календаре, чтобы увидеть сравнение.',
@@ -479,9 +503,9 @@ const ru: Messages = {
     notEnough: (n, need) => `Мало полных лет для тренда (${n} из ${need} нужных).`,
     none: (p, n, from, to) => `Статистически значимого тренда нет (${p}, n = ${n}, ${from}–${to}).`,
     up: (p, n, from, to) =>
-      `Тренд вверх по гармонизированным пожарным дням (Манн–Кендалл ${p} < 0,05, n = ${n}, ${from}–${to}).`,
+      `Тренд вверх по гармонизированным пожарным дням (Манн–Кендалл ${p}, значимо на уровне 0,05; n = ${n}, ${from}–${to}).`,
     down: (p, n, from, to) =>
-      `Тренд вниз по гармонизированным пожарным дням (Манн–Кендалл ${p} < 0,05, n = ${n}, ${from}–${to}).`,
+      `Тренд вниз по гармонизированным пожарным дням (Манн–Кендалл ${p}, значимо на уровне 0,05; n = ${n}, ${from}–${to}).`,
     pNone: 'не рассчитано',
   },
   calendar: {
@@ -540,6 +564,13 @@ const ru: Messages = {
     north: 'Север °',
     busy: 'Считаем ячейки…',
     submit: 'Показать календарь',
+    locate: 'Моё местоположение',
+    locating: 'Определяем…',
+    near: (name) =>
+      `Вы в регионе ${name} или рядом с ним (внутри его рамки на карте; сама граница не проверяется).`,
+    open: (name) => `Открыть: ${name}`,
+    notCovered: (names) => `Для вашего места данных о пожарах пока нет. Доступно: ${names}.`,
+    locateFailed: 'Местоположение недоступно (нет разрешения или не поддерживается).',
   },
   export: {
     title: 'Скачать данные',
@@ -563,7 +594,14 @@ const ru: Messages = {
     colUsual: 'Обычно',
     middle: (v) => `средняя оценка ${v}`,
     usual: (v) => `обычно ${v}`,
-    foot: 'Сплошная метка — средняя оценка · пунктир — обычный месяц (медиана прошлых лет). Диапазоны взяты из модели команды данных (метод ещё описывается); коридоры должны содержать реальное значение примерно в 8 случаях из 10 (тёмный) и в 19 из 20 (светлый) — сами мы это не проверяли. Текущий месяц наблюдается не полностью.',
+    checkTitle: 'Как часто реальный месяц попадал в диапазон?',
+    checkLine: (inside, n, pct, target) =>
+      `${inside} из ${n} прошлых месяцев (${pct}%; модель рассчитана на ${target}%)`,
+    checkLikely: 'Тёмный (вероятный) диапазон',
+    checkSure: 'Светлый (почти наверняка) диапазон',
+    checkNote: (from, to) =>
+      `Месяцы с ${from} по ${to}. Модель обучалась на этих же месяцах, поэтому заранее она сработала бы не лучше — скорее чуть хуже.`,
+    foot: 'Сплошная метка — средняя оценка · пунктир — обычный месяц (медиана прошлых лет). Диапазоны взяты из модели команды данных (метод ещё описывается). У каждой строки своя шкала: сравнивайте месяцы по числам. Текущий месяц наблюдается не полностью.',
   },
   charts: {
     totals: 'Суммы по годам и тренд',
@@ -754,6 +792,11 @@ const tg: Messages = {
     retry: 'Такрор кардан',
     noRegions: 'Минтақаҳо ҳанӯз бор нашудаанд.',
     loading: 'Тақвим бор мешавад',
+    honesty: [
+      'Ошкоркуниҳои моҳвораӣ шумораи сӯхторҳо нестанд',
+      'Диапазони интизорӣ пешгӯӣ нест',
+      '«Маълумот нест» ҳеҷ гоҳ ҳамчун сифр нишон дода намешавад',
+    ],
   },
   headline: {
     pick: 'Барои дидани муқоиса моҳро дар тақвим пахш кунед.',
@@ -778,9 +821,9 @@ const tg: Messages = {
     none: (p, n, from, to) =>
       `Тамоюли аз ҷиҳати оморӣ муҳим вуҷуд надорад (${p}, n = ${n}, ${from}–${to}).`,
     up: (p, n, from, to) =>
-      `Тамоюли афзоиш дар рӯзҳои сӯхтори ҳамоҳангшуда (Манн–Кендалл ${p} < 0,05, n = ${n}, ${from}–${to}).`,
+      `Тамоюли афзоиш дар рӯзҳои сӯхтори ҳамоҳангшуда (Манн–Кендалл ${p}, дар сатҳи 0,05 муҳим; n = ${n}, ${from}–${to}).`,
     down: (p, n, from, to) =>
-      `Тамоюли коҳиш дар рӯзҳои сӯхтори ҳамоҳангшуда (Манн–Кендалл ${p} < 0,05, n = ${n}, ${from}–${to}).`,
+      `Тамоюли коҳиш дар рӯзҳои сӯхтори ҳамоҳангшуда (Манн–Кендалл ${p}, дар сатҳи 0,05 муҳим; n = ${n}, ${from}–${to}).`,
     pNone: 'ҳисоб нашудааст',
   },
   calendar: {
@@ -840,6 +883,13 @@ const tg: Messages = {
     north: 'Шимол °',
     busy: 'Чашмакҳо ҳисоб мешаванд…',
     submit: 'Нишон додани тақвим',
+    locate: 'Ҷойгиршавии ман',
+    locating: 'Муайян карда истодаем…',
+    near: (name) =>
+      `Шумо дар минтақаи ${name} ё наздики он ҳастед (дар дохили чорчӯбаи харита; худи сарҳад санҷида намешавад).`,
+    open: (name) => `Кушодан: ${name}`,
+    notCovered: (names) => `Барои ҷои шумо ҳоло маълумоти сӯхтор нест. Дастрас: ${names}.`,
+    locateFailed: 'Ҷойгиршавӣ дастнорас аст (иҷозат нест ё дастгирӣ намешавад).',
   },
   export: {
     title: 'Боргирии маълумот',
@@ -863,7 +913,14 @@ const tg: Messages = {
     colUsual: 'Муқаррарӣ',
     middle: (v) => `баҳои миёна ${v}`,
     usual: (v) => `муқаррарӣ ${v}`,
-    foot: 'Аломати пурра — баҳои миёна · хати нуқтадор — моҳи муқаррарӣ (медианаи солҳои гузашта). Диапазонҳо аз модели гурӯҳи маълумот гирифта шудаанд (усул ҳанӯз тавсиф мешавад); долонҳо бояд қимати воқеиро тақрибан 8 аз 10 (торик) ва 19 аз 20 (равшан) маротиба дар бар гиранд — мо инро худамон насанҷидаем. Моҳи ҷорӣ пурра мушоҳида нашудааст.',
+    checkTitle: 'Моҳи воқеӣ чанд маротиба ба диапазон даромад?',
+    checkLine: (inside, n, pct, target) =>
+      `${inside} аз ${n} моҳи гузашта (${pct}%; модел ба ${target}% ҳисоб шудааст)`,
+    checkLikely: 'Диапазони торик (эҳтимолӣ)',
+    checkSure: 'Диапазони равшан (қариб яқин)',
+    checkNote: (from, to) =>
+      `Моҳҳо аз ${from} то ${to}. Модел дар ҳамин моҳҳо омӯхта шудааст, бинобар ин пешакӣ на беҳтар аз ин — эҳтимол каме бадтар — кор мекард.`,
+    foot: 'Аломати пурра — баҳои миёна · хати нуқтадор — моҳи муқаррарӣ (медианаи солҳои гузашта). Диапазонҳо аз модели гурӯҳи маълумот гирифта шудаанд (усул ҳанӯз тавсиф мешавад). Ҳар сатр миқёси худро дорад: моҳҳоро аз рӯи рақамҳо муқоиса кунед. Моҳи ҷорӣ пурра мушоҳида нашудааст.',
   },
   charts: {
     totals: 'Ҷамъи солона ва тамоюл',

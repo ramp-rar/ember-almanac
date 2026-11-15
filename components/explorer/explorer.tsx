@@ -167,6 +167,18 @@ export function Explorer({ aoi }: { aoi: AoiRef | null }) {
         <p className="text-muted max-w-md text-sm">{ex.intro}</p>
       </section>
 
+      <ul
+        aria-label={ex.honesty.join('. ')}
+        className="text-muted mt-4 flex flex-wrap gap-x-5 gap-y-1 text-xs"
+      >
+        {ex.honesty.map((line) => (
+          <li key={line} className="flex items-center gap-1.5">
+            <span aria-hidden="true" className="bg-ember inline-block h-1.5 w-1.5 rounded-full" />
+            {line}
+          </li>
+        ))}
+      </ul>
+
       <section
         aria-label={ex.selectedMonth}
         className="card mt-5 border-l-4 border-l-[var(--t-ember)] p-5 sm:p-6"
@@ -294,7 +306,11 @@ export function Explorer({ aoi }: { aoi: AoiRef | null }) {
       </section>
 
       {data.forecast && (
-        <ForecastPanel forecast={data.forecast} monthMedians={calendar.monthMedians} />
+        <ForecastPanel
+          forecast={data.forecast}
+          check={data.forecastCheck}
+          monthMedians={calendar.monthMedians}
+        />
       )}
 
       <section id="how" className="card mt-6 scroll-mt-20 p-4 sm:p-6">

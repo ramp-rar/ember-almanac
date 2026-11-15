@@ -57,7 +57,12 @@ export function AoiPicker() {
         ))}
       </div>
       <div id={`${id}-${tab}`} role="tabpanel" className="pt-3">
-        {tab === 'region' && <RegionSearch />}
+        {tab === 'region' && (
+          <>
+            <LocateMe />
+            <RegionSearch />
+          </>
+        )}
         {tab === 'coords' && (
           <CoordinatesForm key={draft ? `${draft.lat},${draft.lon}` : 'none'} draft={draft} />
         )}
@@ -69,6 +74,94 @@ export function AoiPicker() {
         )}
       </div>
     </section>
+  );
+}
+
+/** The first region whose bounding box contains the point (regions are few; bbox is enough). */
+export function regionAt(
+  regions: readonly RegionItem[],
+  lat: number,
+  lon: number,
+): RegionItem | null {
+  return (
+    regions.find(
+      (r) => lon >= r.bbox[0] && lon <= r.bbox[2] && lat >= r.bbox[1] && lat <= r.bbox[3],
+    ) ?? null
+  );
+}
+
+function LocateMe() {
+  const router = useRouter();
+  const { t, locale } = useI18n();
+  const P = t.picker;
+  const [state, setState] = useState<'idle' | 'busy' | string>('idle');
+  const [hit, setHit] = useState<RegionItem | null>(null);
+  const all = useQuery({
+    queryKey: ['regions', ''],
+    queryFn: () => getJson<RegionItem[]>('/api/regions?q='),
+    staleTime: 60 * 60 * 1000,
+  });
+  const locate = () => {
+    if (!('geolocation' in navigator)) return setState(P.locateFailed);
+    setState('busy');
+    setHit(null);
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const regions = all.data ?? [];
+        const found = regionAt(regions, pos.coords.latitude, pos.coords.longitude);
+        if (found) {
+          setHit(found);
+          setState('idle');
+        } else
+          setState(
+            P.notCovered(regions.map((r) => regionName(r.iso3, r.nameEn, locale)).join(', ')),
+          );
+      },
+      () => setState(P.locateFailed),
+      { timeout: 10_000, maximumAge: 600_000 },
+    );
+  };
+  return (
+    <div className="mb-3">
+      <button
+        type="button"
+        onClick={locate}
+        disabled={state === 'busy' || !all.data}
+        className="border-line hover:border-ember flex min-h-10 w-full items-center justify-center gap-2 rounded-full border px-3 text-sm font-medium disabled:opacity-60"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          width="16"
+          height="16"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          aria-hidden="true"
+        >
+          <circle cx="12" cy="12" r="3" />
+          <path d="M12 2v3m0 14v3M2 12h3m14 0h3" />
+          <circle cx="12" cy="12" r="7" />
+        </svg>
+        {state === 'busy' ? P.locating : P.locate}
+      </button>
+      {hit && (
+        <div role="status" className="mt-2 text-xs">
+          <p>{P.near(regionName(hit.iso3, hit.nameEn, locale))}</p>
+          <button
+            type="button"
+            onClick={() => router.push(`/r/${hit.iso3}`)}
+            className="text-ember-text mt-1 font-semibold underline underline-offset-2"
+          >
+            {P.open(regionName(hit.iso3, hit.nameEn, locale))}
+          </button>
+        </div>
+      )}
+      {state !== 'idle' && state !== 'busy' && (
+        <p role="status" className="text-warn mt-2 text-xs">
+          {state}
+        </p>
+      )}
+    </div>
   );
 }
 

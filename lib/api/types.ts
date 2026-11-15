@@ -1,4 +1,5 @@
 import type { CalendarData } from '@/lib/domain/calendar';
+import type { CorridorCheck } from '@/lib/domain/corridor';
 
 /** JSON contracts between route handlers and the UI. */
 
@@ -42,6 +43,8 @@ export interface CalendarResponse {
   readonly calendar: CalendarData;
   /** Only for whole regions whose source provides it; otherwise null. */
   readonly forecast: readonly ForecastMonth[] | null;
+  /** How often past months fell inside the same model's corridors (in-sample); null if unknown. */
+  readonly forecastCheck: CorridorCheck | null;
 }
 
 /** Statistical projection delivered by the data team: 6 months with 80% / 95% corridors. */

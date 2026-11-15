@@ -10,7 +10,7 @@ import type { I18n } from './use-locale';
 
 export function pText(p: number | null, i: I18n): string {
   if (p === null) return i.t.trend.pNone;
-  if (p < 0.001) return 'p < 0.001';
+  if (p < 0.001) return i.locale === 'en' ? 'p < 0.001' : 'p < 0,001';
   const s = String(Number(p.toPrecision(2)));
   return `p = ${i.locale === 'en' ? s : s.replace('.', ',')}`;
 }
