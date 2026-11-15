@@ -5,6 +5,15 @@ export interface MonthPoint {
   readonly year: number;
   readonly month: number;
   readonly value: HonestValue;
+  /**
+   * Observed vs calendar days (status.ts `monthCoverage`). A month with observed < total is
+   * partial: it gets no ratio and stays out of every baseline. Absent = fully observed.
+   */
+  readonly coverage?: { readonly observed: number; readonly total: number };
+}
+
+function isPartial(p: MonthPoint): boolean {
+  return p.coverage !== undefined && p.coverage.observed < p.coverage.total;
 }
 
 /** Baseline needs at least this many valid years of the same month. */
@@ -52,7 +61,12 @@ export function percentileRank(baseline: readonly number[], x: number): number |
 }
 
 export interface RatioToMedian {
-  readonly kind: 'ratio' | 'insufficient_baseline' | 'no_usual_activity' | 'target_unavailable';
+  readonly kind:
+    | 'ratio'
+    | 'insufficient_baseline'
+    | 'no_usual_activity'
+    | 'target_unavailable'
+    | 'partial_month';
   /** unit `ratio`; status of the target month; value null unless kind = 'ratio'. */
   readonly ratio: HonestValue;
   readonly target: HonestValue;
@@ -72,11 +86,17 @@ export interface RatioToMedian {
  * Main emergency metric: the target month relative to the median of the same month in
  * other years.
  * - baseline = same month, years within `baselineYears`, excluding the target year,
- *   status final | estimate only;
+ *   status final | estimate only, fully observed months only;
+ * - a partly observed target month → no ratio: part of a month is not comparable with the
+ *   median of full months;
  * - fewer than 10 baseline years → no ratio ("insufficient baseline");
  * - median = 0 → no ratio ("no usual activity in this month"), the absolute value stands;
  * - otherwise ratio = value / median, rounded to one decimal.
  * The ratio carries the status of the target month.
+ *
+ * `series` must be dense: build it with `buildMonthSeries`, which turns the sparse storage
+ * (no row = 0 in an observed month) into explicit zeros. A year absent from the series is
+ * treated as unobserved, never as zero.
  */
 export function ratioToMedian(
   series: readonly MonthPoint[],
@@ -85,6 +105,9 @@ export function ratioToMedian(
   baselineYears: readonly [number, number],
 ): RatioToMedian {
   const sameMonth = series.filter((p) => p.month === month);
+  if (new Set(sameMonth.map((p) => p.year)).size !== sameMonth.length) {
+    throw new RangeError(`Duplicate (year, month) in series for month ${month}`);
+  }
   const found = sameMonth.find((p) => p.year === year);
   const unit = found?.value.unit ?? sameMonth[0]?.value.unit ?? 'fire_days_harm';
   if (unit === 'ratio') throw new TypeError('ratioToMedian needs totals, not ratios');
@@ -101,6 +124,7 @@ export function ratioToMedian(
       p.year >= from &&
       p.year <= to &&
       p.value.value !== null &&
+      !isPartial(p) &&
       (p.value.status === 'final' || p.value.status === 'estimate'),
   );
   const values = baseline.map((p) => p.value.value as number);
@@ -124,6 +148,17 @@ export function ratioToMedian(
             note: target.note ?? 'no value',
           });
     return { kind: 'target_unavailable', ratio, median: null, percentile: null, ...common };
+  }
+
+  if (found && isPartial(found)) {
+    const { observed, total } = found.coverage!;
+    const ratio = honest({
+      value: null,
+      status: target.status,
+      unit: 'ratio',
+      note: `partial month: ${observed} of ${total} days observed`,
+    });
+    return { kind: 'partial_month', ratio, median: null, percentile: null, ...common };
   }
 
   if (n < MIN_BASELINE_YEARS) {
@@ -169,10 +204,21 @@ export function ratioCopy(result: RatioToMedian, monthPlural: string): string {
       return `insufficient baseline (${result.n} of ${MIN_BASELINE_YEARS} years needed)`;
     case 'no_usual_activity':
       return 'no usual activity in this month';
+    case 'partial_month':
+      return result.ratio.note as string;
     case 'ratio': {
       const [from, to] = result.baselineYears as readonly [number, number];
       const base = `×${(result.ratio.value as number).toFixed(1)} vs median of ${result.n} ${monthPlural} (${from}–${to})`;
       return result.ratio.status === 'preliminary' ? `${base} (preliminary)` : base;
     }
   }
+}
+
+/**
+ * Discloses that the baseline mixes sensors: years before VIIRS are MODIS-only estimates
+ * scaled into VIIRS-equivalent units. Shown next to the headline; null when there are none.
+ */
+export function baselineNote(result: RatioToMedian): string | null {
+  if (result.baselineEstimateYears === 0) return null;
+  return `baseline includes ${result.baselineEstimateYears} MODIS-only estimate years of ${result.n}`;
 }

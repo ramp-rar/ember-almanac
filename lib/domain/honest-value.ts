@@ -7,17 +7,47 @@ export type Status = (typeof STATUSES)[number];
 
 export type Unit = 'fire_days_harm' | 'detections_raw' | 'ratio' | 'frp_mw';
 
-declare const honestBrand: unique symbol;
-
-export interface HonestValue {
+/**
+ * A class with an ECMAScript-private brand and a private constructor: only `honest()` can
+ * produce one. An object literal or a spread copy (`{ ...v, value: 42 }`) lacks the brand and
+ * does not type-check, so a number can never be shown without the status it was built with.
+ * Values that crossed a JSON boundary must be rebuilt with `honest()`.
+ */
+export class HonestValue {
+  readonly #brand = true;
   /** null when status is no_data | future, or when the value cannot be computed (see `note`). */
   readonly value: number | null;
   readonly status: Status;
   readonly unit: Unit;
   /** e.g. "Terra only", "insufficient baseline". */
   readonly note?: string;
-  /** Brand: only `honest()` can produce this type, so a bare number or literal never type-checks. */
-  readonly [honestBrand]: true;
+
+  private constructor(input: HonestInput) {
+    const { value, status, unit, note } = input;
+    if (!STATUSES.includes(status)) throw new TypeError(`Unknown status: ${String(status)}`);
+    if (hasNoObservation(status)) {
+      if (value !== null) throw new RangeError(`A ${status} value must be null, got ${value}`);
+    } else if (value === null) {
+      if (!note?.trim())
+        throw new RangeError(`A ${status} value may be null only with a note explaining why`);
+    } else if (!Number.isFinite(value) || value < 0) {
+      throw new RangeError(`Invalid ${unit} value: ${value}`);
+    }
+    this.value = input.value;
+    this.status = input.status;
+    this.unit = input.unit;
+    if (input.note !== undefined) this.note = input.note;
+    Object.freeze(this);
+  }
+
+  /** The validating factory behind `honest()`. */
+  static of(input: HonestInput): HonestValue {
+    return new HonestValue(input);
+  }
+
+  static is(value: unknown): value is HonestValue {
+    return value instanceof HonestValue && #brand in value;
+  }
 }
 
 export interface HonestInput {
@@ -38,20 +68,7 @@ function hasNoObservation(status: Status): boolean {
  *   the value cannot be computed (e.g. a ratio with an insufficient baseline).
  */
 export function honest(input: HonestInput): HonestValue {
-  const { value, status, unit, note } = input;
-  if (!STATUSES.includes(status)) throw new TypeError(`Unknown status: ${String(status)}`);
-
-  if (hasNoObservation(status)) {
-    if (value !== null) throw new RangeError(`A ${status} value must be null, got ${value}`);
-  } else if (value === null) {
-    if (!note)
-      throw new RangeError(`A ${status} value may be null only with a note explaining why`);
-  } else if (!Number.isFinite(value) || value < 0) {
-    throw new RangeError(`Invalid ${unit} value: ${value}`);
-  }
-
-  const result = note === undefined ? { value, status, unit } : { value, status, unit, note };
-  return Object.freeze(result) as HonestValue;
+  return HonestValue.of(input);
 }
 
 export function noData(unit: Unit, note?: string): HonestValue {
