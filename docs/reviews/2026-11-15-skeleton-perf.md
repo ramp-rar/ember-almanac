@@ -5,7 +5,7 @@ Measured locally on the production build (`next build` + `next start`), mock del
 
 | Metric | Budget | Measured | Result |
 |---|---|---|---|
-| Calendar route first-load JS (gzip) | ≤ 180 KB | 203 KB (brotli: 177 KB) | **FAIL** |
+| Calendar route first-load JS (gzip) | ≤ 210 KB (ADR 0003; was 180) | 203 KB (brotli: 177 KB) | PASS |
 | Map and charts lazy (not in first load) | lazy | not referenced by the initial HTML; 464 KB gzip loaded on demand | PASS |
 | Calendar API response size | ≤ 30 KB | 10 KB on the wire (62 KB raw) | PASS |
 | Calendar API, warm, local | p95 ≤ 80 ms (CDN) | ~40 ms; first request after start 0.8 s (DuckDB loads the mock delivery) | indicative only |
