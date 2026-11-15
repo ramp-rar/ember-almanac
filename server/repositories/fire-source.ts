@@ -7,6 +7,7 @@ import { getDb } from '@/server/db/client';
 import { getActiveDataset, localDeliveryDir, type MetaSource } from './dataset-repository';
 import { loadLocalDelivery } from './local-delivery';
 import { remoteApiBase, remoteApiSource } from './remote-api';
+import { snapshotSource } from './snapshot';
 
 export type Bbox = readonly [number, number, number, number];
 
@@ -150,6 +151,9 @@ function postgresSource(version: string): FireSource {
 export async function getActiveSource(): Promise<ActiveSource | null> {
   const active = await getActiveDataset();
   if (!active) return null;
+  if (active.source === 'snapshot') {
+    return { ...active, origin: 'snapshot', source: snapshotSource() };
+  }
   if (active.source === 'remote_api') {
     return { ...active, origin: 'remote_api', source: remoteApiSource(remoteApiBase()!) };
   }

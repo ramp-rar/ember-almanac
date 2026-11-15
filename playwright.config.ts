@@ -30,6 +30,7 @@ export default defineConfig({
     ? undefined
     : {
         command: 'pnpm build && pnpm start -p 3000',
+        env: { FIRE_DATA: 'mock' },
         url: `${localUrl}/api/health`,
         reuseExistingServer: !process.env.CI,
         timeout: 240_000,

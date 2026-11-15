@@ -22,7 +22,7 @@ export interface CalendarResponse {
   readonly dataset: {
     readonly version: string;
     readonly isMock: boolean;
-    readonly source: 'database' | 'local_fixture' | 'remote_api';
+    readonly source: 'database' | 'local_fixture' | 'remote_api' | 'snapshot';
     /** false when the source has no per-sensor raw counts (the raw view is then unavailable). */
     readonly hasRaw: boolean;
     /** false when the source has no uncertainty range. */

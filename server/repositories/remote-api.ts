@@ -21,7 +21,7 @@ export class RemoteApiError extends Error {}
 /** The requested area is outside the regions the API has data for: "no data", never "zero". */
 export class OutsideCoverageError extends Error {}
 
-const RegionSchema = z.object({
+export const RegionSchema = z.object({
   id: z.string().regex(/^[a-z0-9_]{1,60}$/),
   name: z.string().min(1),
   data_end: z.iso.date(),
@@ -31,9 +31,9 @@ const RegionSchema = z.object({
   hexes_r5: z.number().int().nonnegative().optional(),
 });
 const RegionsSchema = z.array(RegionSchema);
-type ApiRegion = z.infer<typeof RegionSchema>;
+export type ApiRegion = z.infer<typeof RegionSchema>;
 
-const CalendarRowSchema = z.object({
+export const CalendarRowSchema = z.object({
   month: z.string().regex(/^\d{4}-\d{2}$/),
   value: z.number().nonnegative().nullable(),
   source: z.enum(['estimate', 'observed', 'preliminary']),
@@ -42,7 +42,7 @@ const CalendarRowSchema = z.object({
 const CalendarSchema = z.array(CalendarRowSchema);
 const QuerySchema = z.object({ calendar: CalendarSchema });
 const LocateSchema = z.object({ regions: z.array(z.string()) });
-type ApiRow = z.infer<typeof CalendarRowSchema>;
+export type ApiRow = z.infer<typeof CalendarRowSchema>;
 
 const cache = new Map<string, { at: number; value: unknown }>();
 
@@ -91,7 +91,7 @@ export function remoteApiBase(raw = process.env.FIRE_API_URL): string | null {
   return url.origin + url.pathname.replace(/\/+$/, '');
 }
 
-const toRows = (rows: readonly ApiRow[]): AoiMonthRow[] =>
+export const toRows = (rows: readonly ApiRow[]): AoiMonthRow[] =>
   rows.flatMap((r) => {
     if (r.value === null) return []; // a month without a value stays absent, never becomes 0
     const [year, month] = r.month.split('-').map(Number) as [number, number];
@@ -119,14 +119,22 @@ const lastDayBefore = (month: string): string => {
  * month. Assumptions that need the data team's confirmation are listed in docs/adr/0004.
  */
 export async function remoteMeta(base: string): Promise<DatasetMeta> {
-  const regions = await listApiRegions(base);
+  return deriveMeta(await listApiRegions(base), (id) => regionRows(base, id));
+}
+
+/** Meta from region descriptions and their monthly rows (shared by the live API and the snapshot). */
+export async function deriveMeta(
+  regions: readonly ApiRegion[],
+  rowsOf: (id: string) => Promise<readonly ApiRow[]>,
+  versionPrefix = 'fire-calendar-api',
+): Promise<DatasetMeta> {
   if (regions.length === 0) throw new RemoteApiError('The fire data service has no regions.');
   let nrt = '0000-00-00';
   let sp = '9999-99-99';
   let firstObserved = '9999-99';
   for (const r of regions) {
     nrt = r.data_end > nrt ? r.data_end : nrt;
-    const rows = await regionRows(base, r.id);
+    const rows = await rowsOf(r.id);
     const prelim = rows.find((x) => x.source === 'preliminary')?.month;
     const sp1 = prelim ? lastDayBefore(prelim) : r.data_end;
     sp = sp1 < sp ? sp1 : sp;
@@ -139,7 +147,7 @@ export async function remoteMeta(base: string): Promise<DatasetMeta> {
   const north = Math.max(...regions.map((r) => r.bbox[3]));
   return DatasetMetaSchema.parse({
     contract_version: '1',
-    dataset_version: `fire-calendar-api-${nrt}`,
+    dataset_version: `${versionPrefix}-${nrt}`,
     harmonization: {
       method: `Fire Calendar API (data team): MODIS-based estimate before ${firstObserved}, VIIRS S-NPP observed after; unit = cell-days of ~1 km cells`,
       unit: 'harmonized cell-days, VIIRS S-NPP equivalent',
@@ -170,7 +178,7 @@ async function regionRows(base: string, id: string): Promise<ApiRow[]> {
   );
 }
 
-const summary = (r: ApiRegion): RegionSummary => ({
+export const summary = (r: ApiRegion): RegionSummary => ({
   iso3: r.id.toUpperCase(),
   nameEn: r.name,
   bbox: r.bbox as Bbox,

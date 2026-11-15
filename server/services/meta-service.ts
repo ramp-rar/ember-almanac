@@ -6,7 +6,7 @@ import { getActiveDataset, pingDatabase } from '@/server/repositories/dataset-re
 export const MetaResponseSchema = z.object({
   dataset_version: z.string(),
   is_mock: z.boolean(),
-  source: z.enum(['database', 'local_fixture', 'remote_api']),
+  source: z.enum(['database', 'local_fixture', 'remote_api', 'snapshot']),
   meta: DatasetMetaSchema,
 });
 export type MetaResponse = z.infer<typeof MetaResponseSchema>;

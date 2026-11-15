@@ -5,8 +5,9 @@ import { datasetVersion } from '@/db/schema';
 import { DatasetMetaSchema, type DatasetMeta } from '@/lib/domain/meta';
 import { getDb, isDatabaseConfigured } from '@/server/db/client';
 import { remoteApiBase, remoteMeta } from './remote-api';
+import { snapshotMeta } from './snapshot';
 
-export type MetaSource = 'database' | 'local_fixture' | 'remote_api';
+export type MetaSource = 'database' | 'local_fixture' | 'remote_api' | 'snapshot';
 
 export interface ActiveDataset {
   readonly meta: DatasetMeta;
@@ -36,6 +37,7 @@ async function activeFromDatabase(): Promise<DatasetMeta | null> {
  */
 export async function localDeliveryDir(): Promise<string | null> {
   if (process.env.VERCEL || isDatabaseConfigured() || remoteApiBase()) return null;
+  if (process.env.FIRE_DATA !== 'mock') return null;
   const root = path.join(process.cwd(), 'delivery');
   let names: string[];
   try {
@@ -69,6 +71,8 @@ export async function getActiveDataset(): Promise<ActiveDataset | null> {
     const meta = await activeFromDatabase();
     return meta ? { meta, source: 'database' } : null;
   }
+  // Real bundled data first; generated mock fixtures only when explicitly asked (FIRE_DATA=mock).
+  if (process.env.FIRE_DATA !== 'mock') return { meta: await snapshotMeta(), source: 'snapshot' };
   if (process.env.VERCEL) return null;
   const meta = await activeFromLocalFixture();
   return meta ? { meta, source: 'local_fixture' } : null;
