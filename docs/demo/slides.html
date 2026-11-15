@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Ember Almanac — Adeptus Vulkanis — NASA Space Apps 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,600&display=swap" rel="stylesheet">
+<style>
+  @page { size: 1600px 900px; margin: 0; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #ddd; font-family: 'IBM Plex Sans', system-ui, sans-serif; color: #1d1c1a; }
+  .slide { width: 1600px; height: 900px; background: #f5f2ec; position: relative; overflow: hidden;
+           page-break-after: always; padding: 64px 80px 56px; display: flex; flex-direction: column; }
+  .slide.dark { background: #12110f; color: #eeebe4; }
+  h1, h2 { font-family: 'Source Serif 4', Georgia, serif; font-weight: 600; letter-spacing: -0.01em; margin: 0; }
+  h1 { font-size: 92px; line-height: 1; }
+  h2 { font-size: 54px; line-height: 1.08; }
+  .kicker { font: 600 18px 'IBM Plex Mono', monospace; letter-spacing: .08em; text-transform: uppercase; color: #b13f0d; }
+  .dark .kicker { color: #ff9061; }
+  .lead { font-size: 27px; line-height: 1.4; color: #3d3a35; max-width: 1180px; }
+  .dark .lead { color: #c9c4ba; }
+  .muted { color: #5d5850; }
+  .dark .muted { color: #a8a297; }
+  .ember { color: #b13f0d; }
+  .dark .ember { color: #ff9061; }
+  .row { display: flex; gap: 40px; align-items: stretch; }
+  .row > .shot { max-height: 690px; min-height: 0; }
+  .shot { border-radius: 16px; border: 1px solid #e0dad0; box-shadow: 0 8px 30px rgb(40 30 10 / .12); overflow: hidden; background: #fff; }
+  .shot img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top left; }
+  .foot { position: absolute; left: 80px; right: 80px; bottom: 30px; display: flex; justify-content: space-between;
+          font: 500 15px 'IBM Plex Mono', monospace; color: #8a8378; }
+  .dark .foot { color: #6f6a61; }
+  .num { display: inline-grid; place-items: center; width: 44px; height: 44px; border-radius: 99px; background: #1d1c1a; color: #f5f2ec;
+         font: 600 20px 'IBM Plex Mono', monospace; flex-shrink: 0; }
+  .card { background: #fff; border: 1px solid #e0dad0; border-radius: 16px; padding: 26px 28px; }
+  .dark .card { background: #1b1a17; border-color: #2f2c27; }
+  .card h3 { margin: 0 0 8px; font-size: 25px; }
+  .card p { margin: 0; font-size: 20px; line-height: 1.45; color: #4a4640; }
+  .dark .card p { color: #c9c4ba; }
+  ul.clean { list-style: none; padding: 0; margin: 0; }
+  .chip { display: inline-block; font: 600 15px 'IBM Plex Mono', monospace; padding: 6px 12px; border-radius: 99px; border: 1.5px solid #c9c2b5; margin: 0 8px 8px 0; }
+  .logo { display: inline-grid; grid-template-columns: repeat(3, 18px); gap: 5px; vertical-align: middle; margin-right: 18px; }
+  .logo i { width: 18px; height: 18px; border-radius: 4px; background: currentColor; opacity: .3; }
+  .logo i.on { background: #ff7136; opacity: 1; }
+  .big { font-family: 'Source Serif 4', serif; font-size: 120px; line-height: .9; color: #b13f0d; }
+  table.t { border-collapse: collapse; font-size: 20px; width: 100%; }
+  table.t td { padding: 9px 0; border-bottom: 1px solid #e0dad0; vertical-align: top; }
+  table.t td:first-child { width: 300px; font-weight: 600; }
+</style>
+</head>
+<body>
+
+<!-- 1 · Title -->
+<section class="slide dark">
+  <div class="kicker">NASA Space Apps Challenge 2026 · Dushanbe · Harmonization of MODIS and VIIRS Hot Spots</div>
+  <div style="display:flex;align-items:center;margin-top:70px">
+    <span class="logo"><i></i><i></i><i></i><i></i><i></i><i class="on"></i><i></i><i></i><i></i></span>
+    <h1>Ember Almanac</h1>
+  </div>
+  <p class="lead" style="margin-top:28px;font-size:34px">Did Earth burn more — or did our satellites just get better at seeing it?<br>
+  <span class="muted">A harmonized MODIS × VIIRS burning calendar, 2000–2026, for 159 countries and Texas.</span></p>
+  <div style="margin-top:auto" class="row">
+    <div style="flex:1">
+      <div class="kicker" style="margin-bottom:12px">Team Adeptus Vulkanis · Tajikistan</div>
+      <p style="font-size:24px;line-height:1.55;margin:0">Azamat Israilov <span class="muted">(team owner · data &amp; harmonization)</span><br>
+      Abubakr Damonov <span class="muted">(full-stack web app)</span><br>
+      Ibrohim Yormahmadov · Muhammadjon Ashurzoda · Sumaiyo Isroilova</p>
+    </div>
+    <div style="text-align:right;align-self:flex-end;font:600 24px 'IBM Plex Mono',monospace" class="ember">ember-almanac.vercel.app</div>
+  </div>
+  <div class="foot"><span>1 / 7</span><span>English · Русский · Тоҷикӣ</span></div>
+</section>
+
+<!-- 2 · Problem -->
+<section class="slide">
+  <div class="kicker">The problem</div>
+  <h2 style="margin-top:14px;max-width:1300px">In 2012 a sharper satellite sensor arrived. Fire records “jumped” — and nobody can tell a real change from a better eye.</h2>
+  <div class="row" style="margin-top:46px">
+    <div class="card" style="flex:1"><h3>Two instruments, two scales</h3><p>MODIS (since 2000, 1 km) and VIIRS (since 2012, 375 m) see the same fire differently. Raw counts are not comparable across 2012.</p></div>
+    <div class="card" style="flex:1"><h3>“Is this month unusual?”</h3><p>Emergency services and forestry need one honest sentence per month — not a map of millions of dots.</p></div>
+    <div class="card" style="flex:1"><h3>Missing ≠ zero</h3><p>Gaps, preliminary data and old-sensor estimates are usually drawn the same as real observations. That misleads.</p></div>
+  </div>
+  <p class="lead" style="margin-top:auto">Our answer: one harmonized record from 2000 to today, a calendar anyone can read, and a status on every single number.</p>
+  <div class="foot"><span>2 / 7</span><span>Ember Almanac · Adeptus Vulkanis</span></div>
+</section>
+
+<!-- 3 · Solution -->
+<section class="slide">
+  <div class="kicker">What we built</div>
+  <div class="row" style="margin-top:18px;flex:1">
+    <div style="flex:0 0 520px;display:flex;flex-direction:column;gap:18px">
+      <h2>The Burning Calendar</h2>
+      <p class="lead" style="font-size:23px">Rows are years 2000–2026, columns are months. One glance shows the fire season, the bad years and the quiet ones — on one harmonized scale.</p>
+      <ul class="clean" style="font-size:21px;line-height:1.6">
+        <li>▸ <b>159 countries and Texas</b>, data through 15 Nov 2026</li>
+        <li>▸ <b>“×0.5 vs median of 25 Octobers”</b> — the selected month against a usual one</li>
+        <li>▸ <b>3D satellite map</b> of where fire was seen</li>
+        <li>▸ <b>Trend test</b> and an expected range for the next 6 months</li>
+      </ul>
+    </div>
+    <div class="shot" style="flex:1"><img src="shot-calendar.png" alt="Burning calendar of Kazakhstan"></div>
+  </div>
+  <div class="foot"><span>3 / 7</span><span>Screenshot: live site, Kazakhstan</span></div>
+</section>
+
+<!-- 4 · How users interact -->
+<section class="slide">
+  <div class="kicker">How a user works with it</div>
+  <div class="row" style="margin-top:18px;flex:1">
+    <div style="flex:0 0 560px;display:flex;flex-direction:column;gap:22px">
+      <div style="display:flex;gap:16px"><span class="num">1</span><p style="margin:0;font-size:23px"><b>Pick a place</b> — search a country in any of three languages, or press “Use my location”.</p></div>
+      <div style="display:flex;gap:16px"><span class="num">2</span><p style="margin:0;font-size:23px"><b>Click any month</b> in the calendar. The headline answers in plain words and shows how sure we are.</p></div>
+      <div style="display:flex;gap:16px"><span class="num">3</span><p style="margin:0;font-size:23px"><b>See where it burned</b> on the 3D satellite map — forests, fields and mountains are visible.</p></div>
+      <div style="display:flex;gap:16px"><span class="num">4</span><p style="margin:0;font-size:23px"><b>Check the trend, the expected range</b> and download a CSV where every row has its status.</p></div>
+    </div>
+    <div class="shot" style="flex:1"><img src="shot-map.png" alt="Map of Tajikistan with fire locations in October 2026"></div>
+  </div>
+  <div class="foot"><span>4 / 7</span><span>Screenshot: Tajikistan, fire seen in October 2026</span></div>
+</section>
+
+<!-- 5 · Honest by design -->
+<section class="slide">
+  <div class="kicker">Honest by design</div>
+  <h2 style="margin-top:14px">Every number carries its status. No data is never drawn as zero.</h2>
+  <div class="row" style="margin-top:34px;flex:1">
+    <div style="flex:1">
+      <div style="margin-bottom:14px"><span class="chip">checked</span><span class="chip">estimate (older satellite)</span><span class="chip">preliminary</span><span class="chip">no data</span><span class="chip">not yet</span></div>
+      <table class="t">
+        <tr><td>Usual month</td><td>Median of the same month in ≥ 10 other years; the selected year is never in its own baseline.</td></tr>
+        <tr><td>Trend</td><td>Mann–Kendall test + Theil–Sen slope; we say “no detectable trend” when p ≥ 0.05.</td></tr>
+        <tr><td>Expected range</td><td>Shown as a range, never one number, labelled “not a forecast”.</td></tr>
+        <tr><td>Range check</td><td>We measured how often past months fell inside it.</td></tr>
+      </table>
+    </div>
+    <div class="card" style="flex:0 0 470px;display:flex;flex-direction:column;justify-content:center">
+      <div class="kicker">Kazakhstan, 178 past months</div>
+      <div class="big" style="margin-top:14px">78%</div>
+      <p style="margin-top:10px">of months fell inside the “likely” range that aims at 80% — and 92% inside the 95% range. Measured in-sample, so we state it as an upper bound.</p>
+    </div>
+  </div>
+  <div class="foot"><span>5 / 7</span><span>Numbers computed from the delivered data, not invented</span></div>
+</section>
+
+<!-- 6 · NASA data & technology -->
+<section class="slide">
+  <div class="kicker">NASA data and how we used it</div>
+  <div class="row" style="margin-top:20px;flex:1">
+    <div style="flex:1">
+      <h2 style="font-size:44px">From FIRMS hot spots to one calendar</h2>
+      <table class="t" style="margin-top:22px">
+        <tr><td>NASA FIRMS</td><td>MODIS (Terra/Aqua) and VIIRS (S-NPP) active-fire detections, 2000 – Nov 2026, standard + near real-time.</td></tr>
+        <tr><td>Harmonization</td><td>Our data team rescales the MODIS-only years to VIIRS units on an H3 hexagon grid; static sources such as gas flares are removed.</td></tr>
+        <tr><td>Data service</td><td>Python · pandas · H3 · FastAPI (Docker) → monthly values, norms, expected ranges per country.</td></tr>
+        <tr><td>Web app</td><td>Next.js 16 · TypeScript (strict) · MapLibre 3D terrain · ECharts · Zod-validated API · EN/RU/TJ.</td></tr>
+        <tr><td>Quality</td><td>218 automated tests (unit + end-to-end), accessibility (keyboard, colour-blind-safe scales), served from a CDN on Vercel.</td></tr>
+      </table>
+    </div>
+  </div>
+  <p class="muted" style="font-size:18px;margin:0">Base map: Esri World Imagery · relief: AWS Terrain Tiles · country names: Unicode CLDR. Code written with help of an AI coding assistant, reviewed and tested by the team.</p>
+  <div class="foot"><span>6 / 7</span><span>We acknowledge the use of data from NASA’s FIRMS, part of NASA’s ESDIS</span></div>
+</section>
+
+<!-- 7 · Impact -->
+<section class="slide dark">
+  <div class="kicker">Why it matters</div>
+  <h2 style="margin-top:14px;max-width:1300px">One sentence a fire officer can trust: <span class="ember">“Kazakhstan, October 2026: ×0.5 vs median of 25 Octobers — preliminary.”</span></h2>
+  <div class="row" style="margin-top:46px">
+    <div class="card" style="flex:1"><h3>Central Asia first</h3><p>Tajik and Russian interfaces, Tajikistan and Kazakhstan in focus — tools that are usually English-only.</p></div>
+    <div class="card" style="flex:1"><h3>Sensor or reality?</h3><p>Harmonization lets 26 years be compared fairly, so a trend is a trend, not a new satellite.</p></div>
+    <div class="card" style="flex:1"><h3>Next</h3><p>Live FIRMS feed, alerts for unusual months, drawn areas, district level for Tajikistan.</p></div>
+  </div>
+  <div style="margin-top:auto;font:600 30px 'IBM Plex Mono',monospace" class="ember">ember-almanac.vercel.app</div>
+  <div class="foot"><span>7 / 7</span><span>Adeptus Vulkanis · NASA Space Apps Challenge 2026 · Dushanbe</span></div>
+</section>
+
+</body>
+</html>

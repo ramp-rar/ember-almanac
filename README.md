@@ -1,98 +1,74 @@
-# FIRE TRACE
+# Ember Almanac
 
 > Did Earth burn more — or did our satellites just get better at seeing it?
 
-A sensor-harmonized burning-activity calendar for any area on Earth.
-NASA Space Apps 2026, challenge "Harmonization of MODIS and VIIRS Hot Spots".
+A harmonized MODIS × VIIRS burning calendar, 2000–2026, for 159 countries and Texas, in English,
+Russian and Tajik. NASA Space Apps Challenge 2026 · Dushanbe · challenge
+"Harmonization of MODIS and VIIRS Hot Spots" · team **Adeptus Vulkanis**.
 
-Status: **Phase 0 (foundation)**. The Burning Calendar (F02) and the rest of Phase 1 are
-described in [docs/SPEC.md](docs/SPEC.md) and scheduled in [docs/ROADMAP.md](docs/ROADMAP.md).
+- **Live:** https://ember-almanac.vercel.app
+- **Demo (7 slides, PDF):** https://ember-almanac.vercel.app/ember-almanac-demo.pdf
 
-## Run it locally
+## What it does
 
-Requirements: Node 24 (see `.nvmrc`) and pnpm 12.
+1. **Burning calendar** — rows are years, columns are months; one harmonized scale across the
+   2012 sensor change (MODIS → VIIRS).
+2. **Plain-language answer** for any month: "×0.5 vs median of 25 Octobers (2001–2025),
+   preliminary" with the absolute numbers and the percentile.
+3. **Honest statuses** on every value: checked, estimate (older satellite), preliminary, no data,
+   not yet. No data is never drawn as zero.
+4. **3D satellite map** with relief and the places where fire was detected in the selected month
+   (last 12 months) or in a typical year.
+5. **Trend** (Mann–Kendall + Theil–Sen; "no detectable trend" when p ≥ 0.05), anomalies, and the
+   data team's 6-month expected range — labelled "not a forecast", with a check of how often past
+   months fell inside it.
+6. **Export** of a CSV where every row carries its status, plus metadata.json.
 
-```bash
-pnpm install
-pnpm fixtures                                        # writes delivery/mock-2026-11-15a (MOCK data)
-pnpm contract:validate delivery/mock-2026-11-15a     # 16 checks, report in docs/reviews/
-pnpm dev                                             # http://localhost:3000
-```
+## Team
 
-With no database configured, a local server reads `meta.json` of the newest `delivery/mock-*`
-folder and shows a **MOCK DATA** banner. This fallback is never used on Vercel.
-
-To use a real database, copy `.env.example` to `.env.local`, fill in the Neon URLs, then:
-
-```bash
-pnpm db:migrate
-pnpm ingest delivery/mock-2026-11-15a --skip-blob    # drop --skip-blob once BLOB_READ_WRITE_TOKEN is set
-```
-
-| Command                                        | What it does                                                            |
-| ---------------------------------------------- | ----------------------------------------------------------------------- |
-| `pnpm dev` / `pnpm build` / `pnpm start`       | Next.js dev server / production build / serve the build                 |
-| `pnpm lint` / `pnpm typecheck` / `pnpm format` | ESLint / `tsc --noEmit` / Prettier                                      |
-| `pnpm test` / `pnpm test:coverage`             | Vitest unit and property tests (coverage gate on `lib/domain`)          |
-| `pnpm test:e2e`                                | Playwright; builds and starts the app, or targets `E2E_BASE_URL`        |
-| `pnpm db:generate` / `pnpm db:migrate`         | Drizzle: create a migration from `db/schema.ts` / apply migrations      |
-| `pnpm fixtures`                                | Deterministic mock delivery for Central Asia (`--cells N`)              |
-| `pnpm contract:validate <dir>`                 | Check a delivery against [docs/DATA_CONTRACT.md](docs/DATA_CONTRACT.md) |
-| `pnpm ingest <dir>`                            | Validate, then load a delivery into Postgres and make it active         |
-| `pnpm bench [url]`                             | autocannon against the API                                              |
+Azamat Israilov (team owner · data and harmonization) · Abubakr Damonov (full-stack web app) ·
+Ibrohim Yormahmadov · Muhammadjon Ashurzoda · Sumaiyo Isroilova.
 
 ## Architecture
 
-Decision record: [ADR 0001 — server-side aggregation on Postgres + CDN cache](docs/adr/0001-architecture.md).
-
 ```
-science team ──delivery/<version>/──▶ contract:validate ──▶ ingest ──▶ Postgres (Neon) + Vercel Blob
-                                                                            │
-browser ◀── JSON (cached at the CDN per dataset_version) ◀── Next.js route handlers
+NASA FIRMS (MODIS, VIIRS)  →  data team: harmonization, H3 grid, FastAPI (Docker)
+                           →  pnpm snapshot / snapshot:geo  →  data/snapshot, public/geo
+                           →  Next.js 16 route handlers (Zod-validated)  →  UI (React 19)
 ```
 
-- The science team harmonizes MODIS × VIIRS and delivers files; this repository validates,
-  stores, queries and presents them. It never re-implements the harmonization.
-- The server computes the calendar, series and metrics; the client only draws.
-- Every number is an `HonestValue` with a status: `final`, `estimate`, `preliminary`,
-  `no_data` or `future`. No data is never shown as zero. All data dates come from `meta.json`.
+- Without `FIRE_API_URL` the app serves the bundled snapshot (what runs on Vercel).
+- With `FIRE_API_URL=http://localhost:8000` it reads the live data service (custom areas too).
+- Domain logic (statuses, baselines, statistics) is pure TypeScript in `lib/domain`, tested.
 
+## Run it locally
+
+Requirements: Node 24, pnpm 12, Docker Desktop.
+
+```bash
+pnpm install
+pnpm dev                                   # http://localhost:3000, bundled real snapshot
+
+# live data service (the data team's API) + Mailpit
+echo "FIRE_API_DIR=D:/path/to/fire-calendar-api" > .env
+docker compose up -d --build
+FIRE_API_URL=http://localhost:8000 pnpm dev
+
+# refresh the bundled data from the service
+FIRE_API_URL=http://localhost:8000 pnpm snapshot
+pnpm snapshot:geo D:/path/to/fire-calendar-api/data/serving
 ```
-app/            routes and app/api/** route handlers
-components/     UI components
-lib/domain/     pure domain logic, no I/O: honest-value, status, baseline, stats, meta
-server/         database client, repositories, services (all I/O)
-db/             Drizzle schema and migrations
-scripts/        make-fixtures, validate-contract, ingest, bench
-tests/          unit/, e2e/, fixtures/
-docs/           SPEC, DATA_CONTRACT, ROADMAP, adr/, reviews/
-```
 
-## How the agent team works
+Quality gates: `pnpm typecheck`, `pnpm lint`, `pnpm test` (unit), `pnpm test:e2e` (Playwright,
+desktop + 390 px mobile). Decisions are recorded in [docs/adr](docs/adr).
 
-Development follows the `feature-cycle` skill in `docs/PROJECT_RULES.md`: spec → design → failing
-tests → implementation → self-review → two independent reviews → fixes → performance and
-accessibility gates → conventional commit. The git history shows each step.
+## Data and credits
 
-| Agent                                         | Role                                                             |
-| --------------------------------------------- | ---------------------------------------------------------------- |
-| `architect`                                   | Designs each feature before code; writes ADRs for real decisions |
-| `backend-engineer`, `frontend-engineer`       | Implement the design                                             |
-| `code-reviewer`                               | Independent review of every change                               |
-| `science-integrity-reviewer`                  | Checks every computed or displayed number and its status         |
-| `a11y-auditor`, `perf-auditor`, `qa-engineer` | Accessibility, performance budgets, end-to-end tests             |
-
-Agents are defined in `docs/PROJECT_RULES.md`; their reports are saved in [docs/reviews/](docs/reviews/).
-Project rules are in [docs/PROJECT_RULES.md](docs/PROJECT_RULES.md).
-
-## CI and deployment
-
-[.github/workflows/ci.yml](.github/workflows/ci.yml): format, lint, typecheck, unit tests with
-coverage, mock delivery against the contract, build; Playwright against each Vercel preview
-deployment; migrations on `main`. Deployment steps are in `docs/PROJECT_RULES.md`.
-
-## Data
-
-Fire detections come from NASA FIRMS (MODIS and VIIRS). We acknowledge the
-use of data and imagery from NASA's Fire Information for Resource Management System (FIRMS),
-part of NASA's Earth Science Data and Information System (ESDIS).
+- NASA FIRMS — MODIS and VIIRS active fire products. We acknowledge the use of data and imagery
+  from NASA's Fire Information for Resource Management System (FIRMS), part of NASA's Earth
+  Science Data and Information System (ESDIS).
+- Base map: Esri World Imagery and World Boundaries and Places. Relief: AWS Terrain Tiles
+  (Mapzen Terrarium). Country names: Unicode CLDR. Hexagon grid: Uber H3.
+- Libraries: Next.js, React, MapLibre GL JS, Apache ECharts, Zod, TanStack Query, Tailwind CSS.
+- Code was written with the help of an AI coding assistant; every change was
+  reviewed and covered by automated tests by the team.
