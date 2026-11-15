@@ -51,7 +51,10 @@ describe('theilSen()', () => {
         fc.double({ min: -1000, max: 1000, noNaN: true }),
         fc.integer({ min: 2, max: 30 }),
         (slope, intercept, n) => {
-          const pts = Array.from({ length: n }, (_, i) => ({ x: 2000 + i, y: slope * (2000 + i) + intercept }));
+          const pts = Array.from({ length: n }, (_, i) => ({
+            x: 2000 + i,
+            y: slope * (2000 + i) + intercept,
+          }));
           const fit = theilSen(pts)!;
           expect(fit.slope).toBeCloseTo(slope, 6);
         },

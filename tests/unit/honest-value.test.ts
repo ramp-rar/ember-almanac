@@ -80,7 +80,10 @@ describe('sumHonest()', () => {
     honest({ value, status, unit: 'fire_days_harm' });
 
   it('sums values and takes the worst status (a year with a preliminary month is preliminary)', () => {
-    const total = sumHonest([fd(10, 'final'), fd(5.5, 'preliminary'), fd(0, 'final')], 'fire_days_harm');
+    const total = sumHonest(
+      [fd(10, 'final'), fd(5.5, 'preliminary'), fd(0, 'final')],
+      'fire_days_harm',
+    );
     expect(total.value).toBeCloseTo(15.5);
     expect(total.status).toBe('preliminary');
   });

@@ -32,11 +32,23 @@ describe('DatasetMetaSchema (contract v1)', () => {
     ['impossible date', { standard_processing_through: '2026-02-30' }],
     ['non-ISO date', { nrt_through: '14/11/2026' }],
     ['NRT date before SP date', { nrt_through: '2026-01-01' }],
-    ['reversed baseline years', { harmonization: { ...rawContractMeta.harmonization, baseline_years: [2025, 2003] } }],
-    ['H3 resolution out of range', { harmonization: { ...rawContractMeta.harmonization, h3_resolution: 16 } }],
+    [
+      'reversed baseline years',
+      { harmonization: { ...rawContractMeta.harmonization, baseline_years: [2025, 2003] } },
+    ],
+    [
+      'H3 resolution out of range',
+      { harmonization: { ...rawContractMeta.harmonization, h3_resolution: 16 } },
+    ],
     ['bbox with west > east', { region_bbox: [88, 35, 46, 56] }],
-    ['coverage end before start', { coverage: { MODIS: { start: '2000-11-01', end: '1999-01-01' } } }],
-    ['missing day on an unknown platform', { missing_days: [{ date: '2016-02-11', platform: 'LANDSAT' }] }],
+    [
+      'coverage end before start',
+      { coverage: { MODIS: { start: '2000-11-01', end: '1999-01-01' } } },
+    ],
+    [
+      'missing day on an unknown platform',
+      { missing_days: [{ date: '2016-02-11', platform: 'LANDSAT' }] },
+    ],
   ])('rejects %s', (_name, patch) => {
     expect(parse(patch).success).toBe(false);
   });

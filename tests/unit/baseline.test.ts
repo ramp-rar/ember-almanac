@@ -62,13 +62,16 @@ describe('median / percentile / percentileRank', () => {
 
   it('median lies within the sample range and ignores order', () => {
     fc.assert(
-      fc.property(fc.array(fc.double({ min: 0, max: 1e6, noNaN: true }), { minLength: 1 }), (xs) => {
-        const m = median(xs)!;
-        expect(m).toBeGreaterThanOrEqual(Math.min(...xs));
-        expect(m).toBeLessThanOrEqual(Math.max(...xs));
-        expect(median([...xs].reverse())).toBe(m);
-        expect(percentile(xs, 50)).toBeCloseTo(m, 6);
-      }),
+      fc.property(
+        fc.array(fc.double({ min: 0, max: 1e6, noNaN: true }), { minLength: 1 }),
+        (xs) => {
+          const m = median(xs)!;
+          expect(m).toBeGreaterThanOrEqual(Math.min(...xs));
+          expect(m).toBeLessThanOrEqual(Math.max(...xs));
+          expect(median([...xs].reverse())).toBe(m);
+          expect(percentile(xs, 50)).toBeCloseTo(m, 6);
+        },
+      ),
     );
   });
 });
@@ -128,7 +131,11 @@ describe('ratioToMedian()', () => {
     const r = ratioToMedian(series, 2026, 11, BASELINE);
     expect(r.kind).toBe('insufficient_baseline');
     expect(r.n).toBe(9);
-    expect(r.ratio).toMatchObject({ value: null, status: 'preliminary', note: 'insufficient baseline' });
+    expect(r.ratio).toMatchObject({
+      value: null,
+      status: 'preliminary',
+      note: 'insufficient baseline',
+    });
     expect(r.median).toBeNull();
     expect(r.percentile).toBeNull();
   });
@@ -195,7 +202,12 @@ describe('ratioCopy()', () => {
   });
 
   it('explains the cases without a ratio', () => {
-    const zero = ratioToMedian(novembers(point(2026, 11, 4, 'final'), () => 0), 2026, 11, BASELINE);
+    const zero = ratioToMedian(
+      novembers(point(2026, 11, 4, 'final'), () => 0),
+      2026,
+      11,
+      BASELINE,
+    );
     expect(ratioCopy(zero, 'Novembers')).toBe('no usual activity in this month');
     const few = ratioToMedian([point(2026, 11, 4, 'final')], 2026, 11, BASELINE);
     expect(ratioCopy(few, 'Novembers')).toBe('insufficient baseline (0 of 10 years needed)');
