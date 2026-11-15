@@ -3,6 +3,8 @@ import { defineConfig, devices } from '@playwright/test';
 // E2E_BASE_URL points at a Vercel preview in CI; locally we build and start the app.
 const externalUrl = process.env.E2E_BASE_URL;
 const localUrl = 'http://127.0.0.1:3000';
+// Vercel protects preview deployments; this secret lets CI through (Protection Bypass for Automation).
+const bypass = externalUrl ? process.env.VERCEL_AUTOMATION_BYPASS_SECRET : undefined;
 
 export default defineConfig({
   testDir: './tests/e2e',
@@ -13,6 +15,9 @@ export default defineConfig({
   use: {
     baseURL: externalUrl ?? localUrl,
     trace: 'on-first-retry',
+    extraHTTPHeaders: bypass
+      ? { 'x-vercel-protection-bypass': bypass, 'x-vercel-set-bypass-cookie': 'true' }
+      : undefined,
   },
   projects: [
     { name: 'desktop', use: { ...devices['Desktop Chrome'] } },

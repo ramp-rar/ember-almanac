@@ -1,12 +1,18 @@
 /**
- * pnpm ingest <delivery-dir> [--skip-blob]
+ * pnpm ingest <delivery-dir> [--skip-blob] [--activate] [--allow-mock]
  *
  * Loads a validated delivery into Postgres (data-contract skill):
  *  a) uploads detections Parquet + regions to Vercel Blob under datasets/<version>/;
  *  b) loads cell_month, builds cell_month_r4 (parent cells) and region_month (country totals);
  *  c) inserts the dataset_version row and makes it active.
  * Everything in (b) and (c) is one transaction: a failed ingest leaves the database untouched.
- * Re-running an already active version is a no-op.
+ * Re-running a version that is already in the database changes nothing; making an older
+ * version active again (rollback) needs --activate. A mock-* delivery is refused once the
+ * database holds a real version, unless --allow-mock is given. The region set is replaced by
+ * the delivered regions.geojson, so regions of an earlier (or mock) delivery never linger.
+ *
+ * Known limit: cell_month is read into memory, which suits a pilot region; a continental
+ * delivery needs the COPY-into-staging path before it is ingested.
  */
 import { readdir, readFile } from 'node:fs/promises';
 import path from 'node:path';
@@ -88,10 +94,12 @@ async function uploadToBlob(dir: string, version: string): Promise<number> {
 async function main(): Promise<void> {
   const dir = process.argv[2];
   if (!dir || dir.startsWith('--')) {
-    console.error('Usage: pnpm ingest <delivery-dir> [--skip-blob]');
+    console.error('Usage: pnpm ingest <delivery-dir> [--skip-blob] [--activate] [--allow-mock]');
     process.exit(2);
   }
   const skipBlob = process.argv.includes('--skip-blob');
+  const activate = process.argv.includes('--activate');
+  const allowMock = process.argv.includes('--allow-mock');
 
   const report = await validateDelivery(dir);
   if (!report.ok || !report.meta) {
@@ -115,6 +123,40 @@ async function main(): Promise<void> {
       console.log(`${version} is already active — nothing to do.`);
       return;
     }
+    if (existing[0]) {
+      if (!activate) {
+        console.log(
+          `${version} is already ingested but not active — nothing to do. Pass --activate to roll back to it.`,
+        );
+        return;
+      }
+      await sql.begin(async (tx) => {
+        await tx`update dataset_version set is_active = false where is_active`;
+        await tx`update dataset_version set is_active = true where id = ${version}`;
+      });
+      console.log(`${version} is active again (rollback).`);
+      return;
+    }
+    if (version.startsWith('mock-') && !allowMock) {
+      const real = await sql`select id from dataset_version where id not like 'mock-%' limit 1`;
+      if (real.length > 0) {
+        throw new Error(
+          `Refusing to ingest ${version}: this database already holds real data (${real[0]!.id}). Pass --allow-mock to override.`,
+        );
+      }
+    }
+
+    let regions: z.infer<typeof RegionsSchema>['features'];
+    try {
+      const raw = await readFile(path.join(dir, 'regions.geojson'), 'utf8');
+      regions = RegionsSchema.parse(JSON.parse(raw)).features;
+    } catch (error) {
+      if ((error as NodeJS.ErrnoException).code !== 'ENOENT') throw error;
+      throw new Error(
+        'regions.geojson is missing. The geoBoundaries fallback (scripts/build-regions) does not exist yet, so a delivery must include its regions.',
+      );
+    }
+    if (regions.length === 0) throw new Error('regions.geojson has no features');
 
     if (skipBlob) console.log('Blob upload skipped (--skip-blob).');
     else if (!process.env.BLOB_READ_WRITE_TOKEN) {
@@ -152,17 +194,11 @@ async function main(): Promise<void> {
       }
     }
 
-    let regions: z.infer<typeof RegionsSchema>['features'] = [];
-    try {
-      const raw = await readFile(path.join(dir, 'regions.geojson'), 'utf8');
-      regions = RegionsSchema.parse(JSON.parse(raw)).features;
-    } catch (error) {
-      if ((error as NodeJS.ErrnoException).code !== 'ENOENT') throw error;
-      console.log('No regions.geojson in the delivery — regions are left as they are.');
-    }
-
     await sql.begin(async (tx) => {
-      await tx`delete from dataset_version where id = ${version}`; // leftovers of an inactive attempt
+      // One ingest at a time; re-check inside the lock so two runs cannot both proceed.
+      await tx`select pg_advisory_xact_lock(hashtext('fire-trace-ingest'))`;
+      const again = await tx`select 1 from dataset_version where id = ${version}`;
+      if (again.length > 0) throw new Error(`${version} was ingested by another run`);
       await tx`insert into dataset_version (id, meta, is_active)
                values (${version}, ${tx.json(meta as never)}, false)`;
 
@@ -188,6 +224,8 @@ async function main(): Promise<void> {
       console.log(`cell_month: ${await insertCells('cell_month', cells)} rows`);
       console.log(`cell_month_r4: ${await insertCells('cell_month_r4', coarse.values())} rows`);
 
+      // The delivered set replaces the previous one (cascades to their cells and month totals).
+      await tx`delete from region where iso3 not in ${tx(regions.map((r) => r.properties.iso3))}`;
       for (const feature of regions) {
         const { iso3, name_en, name_ru } = feature.properties;
         const polygons =
@@ -195,9 +233,14 @@ async function main(): Promise<void> {
             ? [feature.geometry.coordinates]
             : feature.geometry.coordinates;
         const points = polygons.flat(2);
-        const lons = points.map((p) => p[0]!);
-        const lats = points.map((p) => p[1]!);
-        const bbox = [Math.min(...lons), Math.min(...lats), Math.max(...lons), Math.max(...lats)];
+        const bbox = [Infinity, Infinity, -Infinity, -Infinity]; // west, south, east, north
+        for (const [lon, lat] of points) {
+          if (lon === undefined || lat === undefined) throw new Error(`Bad coordinate in ${iso3}`);
+          bbox[0] = Math.min(bbox[0]!, lon);
+          bbox[1] = Math.min(bbox[1]!, lat);
+          bbox[2] = Math.max(bbox[2]!, lon);
+          bbox[3] = Math.max(bbox[3]!, lat);
+        }
         const regionCells = new Set(
           polygons.flatMap((p) => polygonToCells(p, meta.harmonization.h3_resolution, true)),
         );

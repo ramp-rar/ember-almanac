@@ -144,8 +144,9 @@ export async function validateDelivery(dir: string): Promise<ValidationReport> {
   const lastMonth = Number(meta.nrt_through.slice(5, 7));
   const badRange = await count(
     `SELECT count(*) AS n FROM ${cm} WHERE year < 2000 OR year > ${lastYear} OR month < 1 OR month > 12
-       OR fire_days_harm < 0 OR det_modis_raw < 0 OR det_viirs_raw < 0 OR frp_sum_mw < 0
-       OR isnan(fire_days_harm) OR isnan(frp_sum_mw)`,
+       OR fire_days_harm < 0 OR fire_days_harm_lo < 0 OR det_modis_raw < 0 OR det_viirs_raw < 0 OR frp_sum_mw < 0
+       OR NOT isfinite(fire_days_harm) OR NOT isfinite(fire_days_harm_lo)
+       OR NOT isfinite(fire_days_harm_hi) OR NOT isfinite(frp_sum_mw)`,
   );
   add('cell_month: value ranges', badRange === 0, `${badRange} rows out of range`);
 

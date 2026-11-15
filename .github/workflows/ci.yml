@@ -9,7 +9,8 @@ on:
 
 concurrency:
   group: ci-${{ github.event_name }}-${{ github.ref }}-${{ github.event.deployment.id }}
-  cancel-in-progress: true
+  # Never cancel a run on main: it may be applying migrations.
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 permissions:
   contents: read
@@ -58,6 +59,8 @@ jobs:
       - run: pnpm test:e2e
         env:
           E2E_BASE_URL: ${{ github.event.deployment_status.environment_url }}
+          # Vercel → Settings → Deployment Protection → Protection Bypass for Automation
+          VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
       - uses: actions/upload-artifact@v4
         if: always()
         with:
