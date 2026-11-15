@@ -14,7 +14,7 @@ export const LOCALE_KEY = 'ft-lang';
 export const THEME_SCRIPT = `(function(){try{var k='${THEME_KEY}',d=document.documentElement,m=window.matchMedia('(prefers-color-scheme: dark)');function a(){var p=null;try{p=localStorage.getItem(k)}catch(e){}var t=p==='light'||p==='dark'?p:(m.matches?'dark':'light');d.setAttribute('data-theme',t);d.setAttribute('data-theme-pref',p==='light'||p==='dark'?p:'system')}a();m.addEventListener('change',a);window.__ftTheme=a}catch(e){}})();`;
 
 /**
- * Inlined in <head> before first paint: stored choice, else the browser language (ru / tg),
- * else English. Sets <html lang> and data-lang so screen readers and the UI agree.
+ * Inlined in <head> before first paint: the stored choice, else English (the judges' language;
+ * RU / TJ are one click away in the header). Sets <html lang> and data-lang so screen readers and the UI agree.
  */
-export const LOCALE_SCRIPT = `(function(){try{var k='${LOCALE_KEY}',d=document.documentElement,s=null;try{s=localStorage.getItem(k)}catch(e){}var ok=${JSON.stringify(LOCALES)};var n=(navigator.language||'en').slice(0,2).toLowerCase();var l=ok.indexOf(s)>=0?s:(n==='ru'||n==='tg'?n:'en');d.setAttribute('data-lang',l);d.setAttribute('lang',l)}catch(e){}})();`;
+export const LOCALE_SCRIPT = `(function(){try{var k='${LOCALE_KEY}',d=document.documentElement,s=null;try{s=localStorage.getItem(k)}catch(e){}var ok=${JSON.stringify(LOCALES)};var l=ok.indexOf(s)>=0?s:'en';d.setAttribute('data-lang',l);d.setAttribute('lang',l)}catch(e){}})();`;
