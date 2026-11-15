@@ -79,6 +79,7 @@ export function Explorer({ aoi }: { aoi: AoiRef | null }) {
   const { palette, setPalette, newestFirst, toggleOrder } = useUi();
 
   const data = query.data;
+  const mode: Mode = url.mode === 'raw' && data && !data.dataset.hasRaw ? 'harm' : url.mode;
   const selected = useMemo(() => {
     if (!data) return null;
     if (url.y && url.m && data.calendar.cells.some((c) => c.y === url.y && c.m === url.m)) {
@@ -172,21 +173,21 @@ export function Explorer({ aoi }: { aoi: AoiRef | null }) {
               aria-label="Colour by"
               className="border-line bg-panel-2 flex flex-wrap rounded-full border p-0.5"
             >
-              {MODES.map((m) => (
+              {MODES.filter((m) => m !== 'raw' || data.dataset.hasRaw).map((m) => (
                 <button
                   key={m}
                   type="button"
                   role="radio"
-                  aria-checked={url.mode === m}
+                  aria-checked={mode === m}
                   onClick={() => setUrl({ mode: m })}
                   title={MODE_HELP[m]}
-                  className={`min-h-9 rounded-full px-3 font-medium ${url.mode === m ? 'bg-text text-ink' : 'text-muted hover:text-text'}`}
+                  className={`min-h-9 rounded-full px-3 font-medium ${mode === m ? 'bg-text text-ink' : 'text-muted hover:text-text'}`}
                 >
                   {MODE_LABEL[m]}
                 </button>
               ))}
             </div>
-            {url.mode !== 'ratio' && (
+            {mode !== 'ratio' && (
               <button
                 type="button"
                 onClick={() => setPalette(palette === 'inferno' ? 'cividis' : 'inferno')}
@@ -204,7 +205,7 @@ export function Explorer({ aoi }: { aoi: AoiRef | null }) {
               {newestFirst ? 'newest first' : 'oldest first'}
             </button>
           </div>
-          <p className="text-muted mt-2 text-xs">{MODE_HELP[url.mode]}</p>
+          <p className="text-muted mt-2 text-xs">{MODE_HELP[mode]}</p>
 
           {calendar.empty && (
             <p
@@ -219,7 +220,7 @@ export function Explorer({ aoi }: { aoi: AoiRef | null }) {
           <div className="mt-4">
             <BurningCalendar
               data={data}
-              mode={url.mode}
+              mode={mode}
               palette={palette}
               newestFirst={newestFirst}
               selected={selected}
@@ -229,9 +230,9 @@ export function Explorer({ aoi }: { aoi: AoiRef | null }) {
           <div className="border-line mt-5 border-t pt-4">
             <Legend
               estimateBeforeYear={data.dataset.estimateBeforeYear}
-              mode={url.mode}
+              mode={mode}
               palette={palette}
-              breaks={url.mode === 'raw' ? calendar.breaks.raw : calendar.breaks.harm}
+              breaks={mode === 'raw' ? calendar.breaks.raw : calendar.breaks.harm}
             />
           </div>
         </section>

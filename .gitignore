@@ -30,3 +30,5 @@ next-env.d.ts
 
 # science-team deliveries and generated mock fixtures (large; regenerate with `pnpm fixtures`)
 /delivery
+
+.venv-fire-api/

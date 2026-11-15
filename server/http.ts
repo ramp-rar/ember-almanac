@@ -4,6 +4,7 @@ import {
   NoDatasetError,
   NotFoundError,
 } from '@/server/services/calendar-service';
+import { OutsideCoverageError, RemoteApiError } from '@/server/repositories/remote-api';
 
 export function jsonError(status: number, error: string, message: string): Response {
   return Response.json({ error, message }, { status, headers: { 'Cache-Control': 'no-store' } });
@@ -13,6 +14,11 @@ export function jsonError(status: number, error: string, message: string): Respo
 export function handleError(scope: string, error: unknown): Response {
   if (error instanceof NotFoundError) return jsonError(404, 'not_found', error.message);
   if (error instanceof NoDatasetError) return jsonError(503, 'no_active_dataset', error.message);
+  if (error instanceof OutsideCoverageError) return jsonError(404, 'no_coverage', error.message);
+  if (error instanceof RemoteApiError) {
+    console.error(`${scope}: data service`, error);
+    return jsonError(503, 'unavailable', error.message);
+  }
   if (error instanceof InvalidAreaError) return jsonError(400, 'invalid_area', error.message);
   console.error(`${scope}: failed`, error);
   // Database connection failures are outages (503); anything else is a bug (500).
@@ -45,7 +51,10 @@ export function parseYearMonth(
     y: intParam.pipe(z.number().int().min(2000).max(maxYear)),
     m: intParam.pipe(z.number().int().min(1).max(12)),
   });
-  const parsed = Query.safeParse({ y: params.get('y') ?? undefined, m: params.get('m') ?? undefined });
+  const parsed = Query.safeParse({
+    y: params.get('y') ?? undefined,
+    m: params.get('m') ?? undefined,
+  });
   if (!parsed.success) {
     return jsonError(
       400,

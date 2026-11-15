@@ -62,9 +62,7 @@ describe('buildHotspots()', () => {
       truncated: false,
       maxHarm: 1.235,
     });
-    expect(res.points).toEqual([
-      [Math.round(lon * 1e4) / 1e4, Math.round(lat * 1e4) / 1e4, 1.235],
-    ]);
+    expect(res.points).toEqual([[Math.round(lon * 1e4) / 1e4, Math.round(lat * 1e4) / 1e4, 1.235]]);
   });
 
   it('labels months with the domain status (estimate / preliminary)', async () => {
@@ -111,12 +109,7 @@ describe('buildHotspots()', () => {
   it('caps at MAX_HOTSPOTS keeping the strongest cells', async () => {
     const cells = gridDisk(CENTER, 40); // 4921 cells
     expect(cells.length).toBeGreaterThan(MAX_HOTSPOTS);
-    const res = await run(
-      fakeSource(cells.map((h3, i) => ({ h3, harm: i + 1 }))),
-      REGION,
-      2015,
-      8,
-    );
+    const res = await run(fakeSource(cells.map((h3, i) => ({ h3, harm: i + 1 }))), REGION, 2015, 8);
     expect(MAX_HOTSPOTS).toBe(4000);
     expect(res.points).toHaveLength(MAX_HOTSPOTS);
     expect(res.truncated).toBe(true);

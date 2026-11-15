@@ -22,12 +22,17 @@ export interface CalendarResponse {
   readonly dataset: {
     readonly version: string;
     readonly isMock: boolean;
-    readonly source: 'database' | 'local_fixture';
+    readonly source: 'database' | 'local_fixture' | 'remote_api';
+    /** false when the source has no per-sensor raw counts (the raw view is then unavailable). */
+    readonly hasRaw: boolean;
+    /** false when the source has no uncertainty range. */
+    readonly hasRange: boolean;
     readonly standardProcessingThrough: string;
     readonly nrtThrough: string;
     readonly baselineYears: readonly [number, number];
     readonly estimateBeforeYear: number;
     readonly method: string;
+    readonly unit: string;
     /** Sensor coverage from meta.json, for the era rail. */
     readonly coverage: Readonly<
       Record<string, { readonly start: string; readonly end: string | null }>

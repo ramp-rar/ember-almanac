@@ -11,6 +11,7 @@ import {
 import type { IsoDate } from './iso-date';
 import type { DatasetMeta } from './meta';
 import { buildMonthSeries } from './series';
+import { future, noData } from './honest-value';
 import { MIN_MANN_KENDALL_N, mannKendall, theilSen } from './stats';
 
 /**
@@ -22,10 +23,12 @@ export interface AoiMonthRow {
   readonly year: number;
   readonly month: number;
   readonly harm: number;
-  readonly harmLo: number;
-  readonly harmHi: number;
-  readonly rawModis: number;
-  readonly rawViirs: number;
+  /** null when the source does not provide an uncertainty range. */
+  readonly harmLo: number | null;
+  readonly harmHi: number | null;
+  /** null when the source does not provide raw per-sensor detection counts. */
+  readonly rawModis: number | null;
+  readonly rawViirs: number | null;
 }
 
 export type RatioKind = ReturnType<typeof ratioToMedian>['kind'];
@@ -185,13 +188,23 @@ export function buildCalendar(
     today,
     'fire_days_harm',
   );
-  const raw = buildMonthSeries(
-    rows.map((r) => ({ year: r.year, month: r.month, value: r.rawModis + r.rawViirs })),
-    meta,
-    today,
-    'detections_raw',
+  // Raw counts exist only if the source delivers them. Without them every month is "no data":
+  // an absent raw count must never be drawn as a real zero.
+  const rawRows = rows.flatMap((r) =>
+    r.rawModis === null || r.rawViirs === null
+      ? []
+      : [{ year: r.year, month: r.month, value: r.rawModis + r.rawViirs }],
   );
+  const raw =
+    rawRows.length > 0
+      ? buildMonthSeries(rawRows, meta, today, 'detections_raw')
+      : harm.map((p) => ({
+          ...p,
+          value: p.value.status === 'future' ? future('detections_raw') : noData('detections_raw'),
+        }));
   const baselineYears = meta.harmonization.baseline_years;
+  const hasRaw = rawRows.length > 0;
+  const hasRange = rows.some((r) => r.harmLo !== null && r.harmHi !== null);
 
   const cells: CalendarCell[] = harm.map((p) => {
     const row = byKey.get(p.year * 12 + p.month);
@@ -203,10 +216,10 @@ export function buildCalendar(
       s: p.value.status,
       cov: [p.coverage.observed, p.coverage.total],
       h: r3(p.value.value),
-      lo: observed ? r3(row?.harmLo ?? 0) : null,
-      hi: observed ? r3(row?.harmHi ?? 0) : null,
-      rm: observed ? (row?.rawModis ?? 0) : null,
-      rv: observed ? (row?.rawViirs ?? 0) : null,
+      lo: observed && row ? r3(row.harmLo) : observed && !hasRange ? null : observed ? 0 : null,
+      hi: observed && row ? r3(row.harmHi) : observed && !hasRange ? null : observed ? 0 : null,
+      rm: observed && row ? row.rawModis : observed && !hasRaw ? null : observed ? 0 : null,
+      rv: observed && row ? row.rawViirs : observed && !hasRaw ? null : observed ? 0 : null,
       r: {
         k: ratio.kind,
         v: ratio.ratio.value,

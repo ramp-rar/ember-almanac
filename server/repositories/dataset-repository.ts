@@ -4,8 +4,9 @@ import { eq, sql } from 'drizzle-orm';
 import { datasetVersion } from '@/db/schema';
 import { DatasetMetaSchema, type DatasetMeta } from '@/lib/domain/meta';
 import { getDb, isDatabaseConfigured } from '@/server/db/client';
+import { remoteApiBase, remoteMeta } from './remote-api';
 
-export type MetaSource = 'database' | 'local_fixture';
+export type MetaSource = 'database' | 'local_fixture' | 'remote_api';
 
 export interface ActiveDataset {
   readonly meta: DatasetMeta;
@@ -34,7 +35,7 @@ async function activeFromDatabase(): Promise<DatasetMeta | null> {
  * folder written by `pnpm fixtures`. Only mock deliveries are ever served this way.
  */
 export async function localDeliveryDir(): Promise<string | null> {
-  if (process.env.VERCEL || isDatabaseConfigured()) return null;
+  if (process.env.VERCEL || isDatabaseConfigured() || remoteApiBase()) return null;
   const root = path.join(process.cwd(), 'delivery');
   let names: string[];
   try {
@@ -61,6 +62,9 @@ async function activeFromLocalFixture(): Promise<DatasetMeta | null> {
 }
 
 export async function getActiveDataset(): Promise<ActiveDataset | null> {
+  // An explicitly configured data service wins over everything else.
+  const remote = remoteApiBase();
+  if (remote) return { meta: await remoteMeta(remote), source: 'remote_api' };
   if (isDatabaseConfigured()) {
     const meta = await activeFromDatabase();
     return meta ? { meta, source: 'database' } : null;

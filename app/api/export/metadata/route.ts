@@ -9,7 +9,7 @@ export async function GET(request: NextRequest): Promise<Response> {
   await connection();
   const param = request.nextUrl.searchParams.get('aoi') ?? '';
   let ref: AoiRef | null = null;
-  if (/^r:[A-Z]{3}$/.test(param)) ref = { kind: 'region', iso3: param.slice(2) };
+  if (/^r:[A-Z][A-Z0-9_]{1,59}$/.test(param)) ref = { kind: 'region', iso3: param.slice(2) };
   else if (param.startsWith('a:') && decodeAoi(param.slice(2)))
     ref = { kind: 'aoi', id: param.slice(2) };
   if (!ref) return jsonError(400, 'bad_request', 'aoi must be r:<ISO3> or a:<aoiId>.');

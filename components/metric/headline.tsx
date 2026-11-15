@@ -57,8 +57,11 @@ export function Headline({ cell }: { cell: CalendarCell | null }) {
           </span>
           {target.value !== null && (
             <span className="text-muted">
-              {fmt(target.value)} harmonized fire-days (range {fmt(cell.lo)}–{fmt(cell.hi)}) · raw
-              MODIS {fmt(cell.rm)}, VIIRS {fmt(cell.rv)}
+              {fmt(target.value)} harmonized fire-days
+              {cell.lo !== null && cell.hi !== null && ` (range ${fmt(cell.lo)}–${fmt(cell.hi)})`}
+              {cell.rm !== null &&
+                cell.rv !== null &&
+                ` · raw MODIS ${fmt(cell.rm)}, VIIRS ${fmt(cell.rv)}`}
             </span>
           )}
           {cell.h !== null && cell.cov[0] < cell.cov[1] && (

@@ -530,21 +530,27 @@ function CellTooltip({
           <dt className="text-muted">harmonized</dt>
           <dd>
             {fmt(c.h)}{' '}
-            <span className="text-muted">
-              ({fmt(c.lo)}–{fmt(c.hi)})
-            </span>
+            {c.lo !== null && c.hi !== null && (
+              <span className="text-muted">
+                ({fmt(c.lo)}–{fmt(c.hi)})
+              </span>
+            )}
           </dd>
           <dt className="text-muted">vs median</dt>
           <dd>
             {c.r.v !== null ? `×${c.r.v.toFixed(1)}` : (c.r.note ?? '—')}
             {c.r.v !== null && <span className="text-muted"> · n {c.r.n}</span>}
           </dd>
-          <dt className="text-muted">raw MODIS</dt>
-          <dd>{fmt(c.rm)}</dd>
-          <dt className="text-muted">raw VIIRS</dt>
-          <dd>{fmt(c.rv)}</dd>
-          <dt className="text-muted">raw total</dt>
-          <dd>{fmt(raw)}</dd>
+          {c.rm !== null && c.rv !== null && (
+            <>
+              <dt className="text-muted">raw MODIS</dt>
+              <dd>{fmt(c.rm)}</dd>
+              <dt className="text-muted">raw VIIRS</dt>
+              <dd>{fmt(c.rv)}</dd>
+              <dt className="text-muted">raw total</dt>
+              <dd>{fmt(raw)}</dd>
+            </>
+          )}
         </dl>
       ) : (
         <p className="text-muted mt-2">

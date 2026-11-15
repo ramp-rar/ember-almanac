@@ -1,0 +1,22 @@
+# Local services. Start Docker Desktop, then:  docker compose up -d
+#   fire-api  the data team's Fire Calendar API on http://localhost:8000  (docs at /docs)
+#   mailpit   catches every e-mail the app sends, UI on http://localhost:8025 (used by sign-up, later)
+#
+# FIRE_API_DIR = the data team's project folder (contains api/ and data/serving/).
+# Put it in .env (not committed):  FIRE_API_DIR=D:/00_Inbox/fire-calendar-api
+services:
+  fire-api:
+    build:
+      context: ${FIRE_API_DIR:?set FIRE_API_DIR in .env}
+      dockerfile: ${PWD:-.}/docker/fire-api/Dockerfile
+    ports:
+      - '127.0.0.1:8000:7860'
+    volumes:
+      - ${FIRE_API_DIR}/data/serving:/data:ro
+    restart: unless-stopped
+  mailpit:
+    image: axllent/mailpit:v1.21
+    ports:
+      - '127.0.0.1:8025:8025'
+      - '127.0.0.1:1025:1025'
+    restart: unless-stopped

@@ -8,8 +8,12 @@ export async function GET(
 ): Promise<Response> {
   await connection();
   const { iso3 } = await params;
-  if (!/^[A-Z]{3}$/.test(iso3))
-    return jsonError(400, 'bad_request', 'Region code must be 3 capital letters.');
+  if (!/^[A-Z][A-Z0-9_]{1,59}$/.test(iso3))
+    return jsonError(
+      400,
+      'bad_request',
+      'Region code must be capital letters, digits or underscore (2–60 characters).',
+    );
   try {
     const data = await getCalendar({ kind: 'region', iso3 }, todayUtc());
     return Response.json(data, { headers: { 'Cache-Control': CALENDAR_CACHE } });

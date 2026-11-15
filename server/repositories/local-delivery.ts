@@ -39,10 +39,10 @@ function addInto(sums: Map<number, Row>, row: Row): void {
       year: row.year,
       month: row.month,
       harm: s.harm + row.harm,
-      harmLo: s.harmLo + row.harmLo,
-      harmHi: s.harmHi + row.harmHi,
-      rawModis: s.rawModis + row.rawModis,
-      rawViirs: s.rawViirs + row.rawViirs,
+      harmLo: (s.harmLo ?? 0) + (row.harmLo ?? 0),
+      harmHi: (s.harmHi ?? 0) + (row.harmHi ?? 0),
+      rawModis: (s.rawModis ?? 0) + (row.rawModis ?? 0),
+      rawViirs: (s.rawViirs ?? 0) + (row.rawViirs ?? 0),
     });
   }
 }
