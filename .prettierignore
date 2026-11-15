@@ -7,3 +7,9 @@ test-results
 db/migrations
 pnpm-lock.yaml
 docs
+
+# Generated data (pnpm snapshot / snapshot:geo) and binary demo assets
+public/geo/
+data/snapshot/
+docs/demo/*.pdf
+public/*.pdf
