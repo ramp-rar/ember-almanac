@@ -36,8 +36,8 @@ async function activeFromDatabase(): Promise<DatasetMeta | null> {
  * folder written by `pnpm fixtures`. Only mock deliveries are ever served this way.
  */
 export async function localDeliveryDir(): Promise<string | null> {
-  if (process.env.VERCEL || isDatabaseConfigured() || remoteApiBase()) return null;
-  if (process.env.FIRE_DATA !== 'mock') return null;
+  // Generated fixtures only when asked for (tests), never on Vercel or with a live data service.
+  if (process.env.VERCEL || remoteApiBase() || process.env.FIRE_DATA !== 'mock') return null;
   const root = path.join(process.cwd(), 'delivery');
   let names: string[];
   try {
@@ -68,8 +68,9 @@ export async function getActiveDataset(): Promise<ActiveDataset | null> {
   const remote = remoteApiBase();
   if (remote) return { meta: await remoteMeta(remote), source: 'remote_api' };
   if (isDatabaseConfigured()) {
+    // The database may hold only accounts; without an ingested dataset the bundled snapshot serves.
     const meta = await activeFromDatabase();
-    return meta ? { meta, source: 'database' } : null;
+    if (meta) return { meta, source: 'database' };
   }
   // Real bundled data first; generated mock fixtures only when explicitly asked (FIRE_DATA=mock).
   if (process.env.FIRE_DATA !== 'mock') {

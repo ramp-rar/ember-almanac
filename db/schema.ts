@@ -114,3 +114,61 @@ export const aoi = pgTable('aoi', {
   areaKm2: doublePrecision('area_km2').notNull(),
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
 });
+
+/* ---------------------------------------------------------------- accounts (ADR 0005) */
+
+/** One account per e-mail (stored lower-case). Passwords: scrypt, never stored in clear. */
+export const appUser = pgTable(
+  'app_user',
+  {
+    id: text('id').primaryKey(),
+    email: varchar('email', { length: 254 }).notNull(),
+    passwordHash: text('password_hash').notNull(),
+    emailVerifiedAt: timestamp('email_verified_at', { withTimezone: true }),
+    locale: varchar('locale', { length: 2 }).notNull().default('en'),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [uniqueIndex('app_user_email_uq').on(t.email)],
+);
+
+/** Server-side sessions; only the SHA-256 of the cookie value is stored. */
+export const appSession = pgTable(
+  'app_session',
+  {
+    tokenHash: text('token_hash').primaryKey(),
+    userId: text('user_id')
+      .notNull()
+      .references(() => appUser.id, { onDelete: 'cascade' }),
+    expiresAt: timestamp('expires_at', { withTimezone: true }).notNull(),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [index('app_session_user_idx').on(t.userId)],
+);
+
+/** Single-use e-mail tokens (verification); only the SHA-256 is stored. */
+export const emailToken = pgTable(
+  'email_token',
+  {
+    tokenHash: text('token_hash').primaryKey(),
+    userId: text('user_id')
+      .notNull()
+      .references(() => appUser.id, { onDelete: 'cascade' }),
+    purpose: varchar('purpose', { length: 16 }).notNull(),
+    expiresAt: timestamp('expires_at', { withTimezone: true }).notNull(),
+    usedAt: timestamp('used_at', { withTimezone: true }),
+  },
+  (t) => [index('email_token_user_idx').on(t.userId)],
+);
+
+/** "My places": regions a user follows. */
+export const savedPlace = pgTable(
+  'saved_place',
+  {
+    userId: text('user_id')
+      .notNull()
+      .references(() => appUser.id, { onDelete: 'cascade' }),
+    placeId: varchar('place_id', { length: 80 }).notNull(),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [primaryKey({ columns: [t.userId, t.placeId] })],
+);

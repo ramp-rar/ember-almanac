@@ -1,6 +1,7 @@
 # Local services. Start Docker Desktop, then:  docker compose up -d --build
 #   fire-api  the data team's Fire Calendar API on http://localhost:8000  (docs at /docs)
-#   mailpit   catches every e-mail the app sends, UI on http://localhost:8025 (for sign-up, later)
+#   mailpit   catches every e-mail the app sends, UI on http://localhost:8025
+#   db        Postgres for accounts and saved places (DATABASE_URL in .env.local)
 #
 # FIRE_API_DIR = the data team's project folder (contains api/ and data/serving/).
 # Put it in .env (not committed):  FIRE_API_DIR=D:/00_Inbox/fire-calendar-api
@@ -32,3 +33,17 @@ services:
       - '127.0.0.1:8025:8025'
       - '127.0.0.1:1025:1025'
     restart: unless-stopped
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: ember
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-ember-local-only}
+      POSTGRES_DB: ember
+    ports:
+      - '127.0.0.1:5432:5432'
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  db-data:

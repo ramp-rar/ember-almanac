@@ -1,0 +1,210 @@
+import { randomUUID } from 'node:crypto';
+import { and, eq, gt, isNull } from 'drizzle-orm';
+import { z } from 'zod';
+import { appSession, appUser, emailToken, savedPlace } from '@/db/schema';
+import { getDb, isDatabaseConfigured } from '@/server/db/client';
+import { DUMMY_HASH, hashPassword, newToken, tokenHash, verifyPassword } from './crypto';
+import { mailConfigured, sendMail, verificationMail } from './mail';
+
+/** Account rules, ADR 0005. Every error message is generic: it never reveals which e-mails exist. */
+export const SESSION_DAYS = 30;
+const VERIFY_HOURS = 24;
+
+export class AuthError extends Error {
+  constructor(
+    readonly code:
+      | 'invalid_input'
+      | 'invalid_credentials'
+      | 'unverified'
+      | 'invalid_link'
+      | 'unavailable'
+      | 'rate_limited',
+    message: string,
+  ) {
+    super(message);
+  }
+}
+
+export const CredentialsSchema = z.object({
+  email: z
+    .string()
+    .trim()
+    .toLowerCase()
+    .max(254)
+    .pipe(z.email({ message: 'Enter a valid e-mail address.' })),
+  password: z
+    .string()
+    .min(10, { message: 'Use at least 10 characters.' })
+    .max(200, { message: 'Use at most 200 characters.' }),
+  locale: z.enum(['en', 'ru', 'tg']).default('en'),
+});
+export type Credentials = z.infer<typeof CredentialsSchema>;
+
+export function accountsAvailable(): boolean {
+  return isDatabaseConfigured();
+}
+
+function requireDb() {
+  if (!accountsAvailable()) {
+    throw new AuthError('unavailable', 'Accounts are not enabled on this deployment.');
+  }
+  return getDb();
+}
+
+/**
+ * Creates an unverified account and sends the confirmation link. If the e-mail is already
+ * registered, the response is the same (no enumeration) and no second account is made.
+ */
+export async function register(input: Credentials, appUrl: string): Promise<{ mailSent: boolean }> {
+  const db = requireDb();
+  const existing = await db
+    .select({ id: appUser.id, verified: appUser.emailVerifiedAt, locale: appUser.locale })
+    .from(appUser)
+    .where(eq(appUser.email, input.email))
+    .limit(1);
+  const found = existing[0];
+  if (found) {
+    await verifyPassword(input.password, DUMMY_HASH); // same work as the real path
+    // Not confirmed yet: send a fresh link (the route rate-limits this). Same answer either way.
+    if (!found.verified) {
+      await sendVerification(found.id, input.email, found.locale, appUrl).catch(() => false);
+    }
+    return { mailSent: mailConfigured() };
+  }
+  const id = randomUUID();
+  await db.insert(appUser).values({
+    id,
+    email: input.email,
+    passwordHash: await hashPassword(input.password),
+    locale: input.locale,
+  });
+  try {
+    return { mailSent: await sendVerification(id, input.email, input.locale, appUrl) };
+  } catch (error) {
+    // Do not leave an account nobody can confirm: undo it and ask to retry.
+    await db.delete(appUser).where(eq(appUser.id, id));
+    console.error('register: e-mail failed', error);
+    throw new AuthError('unavailable', 'We could not send the confirmation e-mail. Please retry.');
+  }
+}
+
+async function sendVerification(
+  userId: string,
+  email: string,
+  locale: string,
+  appUrl: string,
+): Promise<boolean> {
+  if (!mailConfigured()) return false;
+  const token = newToken();
+  await getDb()
+    .insert(emailToken)
+    .values({
+      tokenHash: tokenHash(token),
+      userId,
+      purpose: 'verify',
+      expiresAt: new Date(Date.now() + VERIFY_HOURS * 3600_000),
+    });
+  const link = `${appUrl}/api/auth/verify?token=${encodeURIComponent(token)}`;
+  const mail = verificationMail(locale, link);
+  await sendMail(email, mail.subject, mail.text);
+  return true;
+}
+
+/** Marks the e-mail verified; the link works once and expires. */
+export async function verifyEmail(token: string): Promise<void> {
+  const db = requireDb();
+  const now = new Date();
+  const rows = await db
+    .update(emailToken)
+    .set({ usedAt: now })
+    .where(
+      and(
+        eq(emailToken.tokenHash, tokenHash(token)),
+        eq(emailToken.purpose, 'verify'),
+        isNull(emailToken.usedAt),
+        gt(emailToken.expiresAt, now),
+      ),
+    )
+    .returning({ userId: emailToken.userId });
+  const row = rows[0];
+  if (!row) throw new AuthError('invalid_link', 'This link is invalid or has expired.');
+  await db.update(appUser).set({ emailVerifiedAt: now }).where(eq(appUser.id, row.userId));
+}
+
+/** Returns a new session token for the cookie. */
+export async function login(input: Credentials): Promise<{ token: string; expiresAt: Date }> {
+  const db = requireDb();
+  const rows = await db.select().from(appUser).where(eq(appUser.email, input.email)).limit(1);
+  const user = rows[0];
+  const ok = await verifyPassword(input.password, user?.passwordHash ?? DUMMY_HASH);
+  if (!user || !ok) throw new AuthError('invalid_credentials', 'Wrong e-mail or password.');
+  // Without a mail server nobody could ever verify, so verification is required only with mail.
+  if (!user.emailVerifiedAt && mailConfigured()) {
+    throw new AuthError('unverified', 'Confirm your e-mail first: we sent you a link.');
+  }
+  const token = newToken();
+  const expiresAt = new Date(Date.now() + SESSION_DAYS * 86_400_000);
+  await db.insert(appSession).values({ tokenHash: tokenHash(token), userId: user.id, expiresAt });
+  return { token, expiresAt };
+}
+
+export async function logout(token: string): Promise<void> {
+  if (!accountsAvailable()) return;
+  await getDb()
+    .delete(appSession)
+    .where(eq(appSession.tokenHash, tokenHash(token)));
+}
+
+export interface Me {
+  readonly email: string;
+  readonly verified: boolean;
+  readonly places: readonly string[];
+}
+
+export async function me(token: string | undefined): Promise<Me | null> {
+  if (!token || !accountsAvailable()) return null;
+  const db = getDb();
+  const rows = await db
+    .select({ id: appUser.id, email: appUser.email, verified: appUser.emailVerifiedAt })
+    .from(appSession)
+    .innerJoin(appUser, eq(appUser.id, appSession.userId))
+    .where(and(eq(appSession.tokenHash, tokenHash(token)), gt(appSession.expiresAt, new Date())))
+    .limit(1);
+  const user = rows[0];
+  if (!user) return null;
+  const places = await db
+    .select({ placeId: savedPlace.placeId })
+    .from(savedPlace)
+    .where(eq(savedPlace.userId, user.id))
+    .orderBy(savedPlace.createdAt);
+  return {
+    email: user.email,
+    verified: user.verified !== null,
+    places: places.map((p) => p.placeId),
+  };
+}
+
+export const PlaceIdSchema = z.string().regex(/^(r:[A-Z][A-Z0-9_]{1,59}|a:[a-z0-9_.-]{3,70})$/);
+
+export async function setPlace(token: string | undefined, placeId: string, saved: boolean) {
+  const user = token ? await userIdOf(token) : null;
+  if (!user) throw new AuthError('invalid_credentials', 'Sign in first.');
+  const db = getDb();
+  if (saved) {
+    await db.insert(savedPlace).values({ userId: user, placeId }).onConflictDoNothing();
+  } else {
+    await db
+      .delete(savedPlace)
+      .where(and(eq(savedPlace.userId, user), eq(savedPlace.placeId, placeId)));
+  }
+}
+
+async function userIdOf(token: string): Promise<string | null> {
+  if (!accountsAvailable()) return null;
+  const rows = await getDb()
+    .select({ userId: appSession.userId })
+    .from(appSession)
+    .where(and(eq(appSession.tokenHash, tokenHash(token)), gt(appSession.expiresAt, new Date())))
+    .limit(1);
+  return rows[0]?.userId ?? null;
+}

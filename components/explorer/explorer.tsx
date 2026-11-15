@@ -13,6 +13,7 @@ import { ExportPanel } from '@/components/export/export-panel';
 import { ForecastPanel } from '@/components/forecast/forecast-panel';
 import type { FireLayerState, MapFocus } from '@/components/map/aoi-map';
 import { Headline } from '@/components/metric/headline';
+import { useMe, useSavePlace } from '@/components/account/use-account';
 import { useUi } from '@/components/ui-store';
 import {
   aoiApiBase,
@@ -161,7 +162,10 @@ export function Explorer({ aoi }: { aoi: AoiRef | null }) {
           <p className="text-muted font-mono text-xs tracking-wide uppercase">
             {aoi.kind === 'region' ? ex.kindRegion : ex.kindAoi}
           </p>
-          <h1 className="font-display text-3xl tracking-tight sm:text-4xl">{label}</h1>
+          <div className="flex flex-wrap items-center gap-3">
+            <h1 className="font-display text-3xl tracking-tight sm:text-4xl">{label}</h1>
+            <SaveButton placeId={aoi.kind === 'region' ? `r:${aoi.iso3}` : `a:${aoi.id}`} />
+          </div>
           <p className="text-muted mt-1 text-sm">
             {data.aoi.areaKm2 !== null && `${ex.area(i.n(Math.round(data.aoi.areaKm2)))} · `}
             {ex.cells(i.n(data.aoi.cellsCount))}
@@ -372,6 +376,41 @@ export function Explorer({ aoi }: { aoi: AoiRef | null }) {
         </p>
       </footer>
     </Shell>
+  );
+}
+
+/** Shown only when accounts are enabled; signed-out users go to the sign-in page. */
+function SaveButton({ placeId }: { placeId: string }) {
+  const router = useRouter();
+  const { t } = useI18n();
+  const me = useMe();
+  const save = useSavePlace();
+  if (!me.data?.accounts) return null;
+  const saved = me.data.user?.places.includes(placeId) ?? false;
+  return (
+    <button
+      type="button"
+      aria-pressed={saved}
+      onClick={() =>
+        me.data?.user ? save.mutate({ placeId, saved: !saved }) : router.push('/account')
+      }
+      className={`flex min-h-9 items-center gap-1.5 rounded-full border px-3 text-sm font-medium ${
+        saved ? 'border-ember text-ember-text' : 'border-line text-muted hover:text-text'
+      }`}
+    >
+      <svg
+        viewBox="0 0 24 24"
+        width="16"
+        height="16"
+        aria-hidden="true"
+        fill={saved ? 'currentColor' : 'none'}
+        stroke="currentColor"
+        strokeWidth="1.8"
+      >
+        <path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z" />
+      </svg>
+      {saved ? t.account.saved : t.account.save}
+    </button>
   );
 }
 

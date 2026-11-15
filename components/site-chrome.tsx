@@ -1,6 +1,8 @@
 'use client';
 
 import { LOCALES, LOCALE_NAME, LOCALE_SHORT } from '@/lib/i18n/messages';
+import Link from 'next/link';
+import { useMe } from '@/components/account/use-account';
 import { setLocale, useI18n } from '@/lib/i18n/use-locale';
 import { ThemeToggle } from './theme';
 
@@ -64,8 +66,37 @@ export function HeaderControls() {
           </button>
         ))}
       </div>
+      <AccountLink />
       <ThemeToggle />
     </>
+  );
+}
+
+function AccountLink() {
+  const { t } = useI18n();
+  const me = useMe();
+  if (!me.data?.accounts) return null;
+  const signedIn = Boolean(me.data.user);
+  return (
+    <Link
+      href="/account"
+      className="border-line hover:border-ember flex min-h-9 items-center gap-1.5 rounded-full border px-3 text-xs font-medium"
+    >
+      <svg
+        viewBox="0 0 24 24"
+        width="15"
+        height="15"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        aria-hidden="true"
+      >
+        <circle cx="12" cy="8" r="4" />
+        <path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6" />
+      </svg>
+      <span className="hidden sm:inline">{signedIn ? t.account.myPlaces : t.account.signIn}</span>
+      <span className="sr-only sm:hidden">{signedIn ? t.account.myPlaces : t.account.signIn}</span>
+    </Link>
   );
 }
 

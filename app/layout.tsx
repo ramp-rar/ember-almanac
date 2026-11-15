@@ -52,7 +52,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <SkipLink />
         <Providers>
           <header className="border-line bg-ink/90 sticky top-0 z-40 border-b backdrop-blur">
-            <div className="mx-auto flex max-w-[88rem] items-center gap-4 px-4 py-2.5 sm:px-6">
+            <div className="mx-auto flex max-w-[88rem] flex-wrap items-center gap-x-3 gap-y-2 px-4 py-2.5 sm:gap-x-4 sm:px-6">
               <Link href="/" className="flex items-center gap-2" aria-label={APP_NAME}>
                 <Logo />
                 <span className="font-mono text-[15px] font-semibold tracking-tight">
