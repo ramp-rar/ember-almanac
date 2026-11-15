@@ -16,10 +16,16 @@ const RegionsSchema = z.object({
   features: z.array(
     z.object({
       properties: z.object({ iso3: z.string(), name_en: z.string() }),
-      geometry: z.object({
-        type: z.literal('Polygon'),
-        coordinates: z.array(z.array(z.array(z.number()))),
-      }),
+      geometry: z.discriminatedUnion('type', [
+        z.object({
+          type: z.literal('Polygon'),
+          coordinates: z.array(z.array(z.array(z.number()))),
+        }),
+        z.object({
+          type: z.literal('MultiPolygon'),
+          coordinates: z.array(z.array(z.array(z.array(z.number())))),
+        }),
+      ]),
     }),
   ),
 });
@@ -92,14 +98,21 @@ async function load(dir: string): Promise<FireSource> {
     JSON.parse(await readFile(path.join(dir, 'regions.geojson'), 'utf8')),
   );
   const regions = geo.features.map((f) => {
-    const ring = f.geometry.coordinates[0]!;
-    const lons = ring.map((p) => p[0]!);
-    const lats = ring.map((p) => p[1]!);
-    const cells = polygonToCells(f.geometry.coordinates, 6, true);
+    const polygons =
+      f.geometry.type === 'Polygon' ? [f.geometry.coordinates] : f.geometry.coordinates;
+    const points = polygons.flat(2);
+    const bbox = [Infinity, Infinity, -Infinity, -Infinity];
+    for (const [lon, lat] of points) {
+      bbox[0] = Math.min(bbox[0]!, lon!);
+      bbox[1] = Math.min(bbox[1]!, lat!);
+      bbox[2] = Math.max(bbox[2]!, lon!);
+      bbox[3] = Math.max(bbox[3]!, lat!);
+    }
+    const cells = [...new Set(polygons.flatMap((p) => polygonToCells(p, 6, true)))];
     return {
       iso3: f.properties.iso3,
       nameEn: f.properties.name_en,
-      bbox: [Math.min(...lons), Math.min(...lats), Math.max(...lons), Math.max(...lats)] as const,
+      bbox: [bbox[0]!, bbox[1]!, bbox[2]!, bbox[3]!] as const,
       cellsCount: cells.length,
       monthly: sumCells(fine, cells),
     };

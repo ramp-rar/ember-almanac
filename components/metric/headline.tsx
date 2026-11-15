@@ -17,22 +17,19 @@ export function Headline({ cell }: { cell: CalendarCell | null }) {
   );
   const note =
     cell.r.k === 'ratio' ? baselineNote({ baselineEstimateYears: cell.r.ne, n: cell.r.n }) : null;
-  const tone =
-    cell.r.v === null
-      ? 'text-text'
-      : cell.r.v >= 1.25
-        ? 'text-ember'
-        : cell.r.v <= 0.8
-          ? 'text-[#7fb0e0]'
-          : 'text-text';
-
   return (
     <div aria-live="polite">
       <p className="font-display text-muted text-sm">
         {monthLong(cell.m)} {cell.y}
       </p>
-      <p className={`font-display mt-1 text-2xl font-semibold tracking-tight sm:text-3xl ${tone}`}>
+      <p className={`font-display mt-1 text-2xl font-semibold tracking-tight sm:text-3xl`}>
         {copy}
+        {cell.r.k === 'ratio' && cell.h !== null && cell.r.md !== null && (
+          <span className="text-muted text-lg font-normal">
+            {' '}
+            ({fmt(cell.h)} vs usual {fmt(cell.r.md)} fire-days)
+          </span>
+        )}
         {cell.r.p !== null && cell.r.k === 'ratio' && (
           <span className="text-muted text-lg font-normal"> · P{cell.r.p}</span>
         )}
@@ -54,7 +51,6 @@ export function Headline({ cell }: { cell: CalendarCell | null }) {
             {cell.cov[0]} of {cell.cov[1]} days observed so far
           </span>
         )}
-        {cell.r.md !== null && <span className="text-muted">median {fmt(cell.r.md)}</span>}
       </p>
       {note && <p className="text-muted mt-1 text-xs">{note}</p>}
     </div>

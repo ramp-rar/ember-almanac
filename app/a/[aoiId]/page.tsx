@@ -11,5 +11,11 @@ export default function AoiPage({ params }: { params: Promise<{ aoiId: string }>
 
 async function AoiExplorer({ params }: { params: Promise<{ aoiId: string }> }) {
   const { aoiId } = await params;
-  return <Explorer aoi={{ kind: 'aoi', id: decodeURIComponent(aoiId) }} />;
+  let id = aoiId;
+  try {
+    id = decodeURIComponent(aoiId);
+  } catch {
+    // keep the raw segment; the API rejects it with a readable error
+  }
+  return <Explorer aoi={{ kind: 'aoi', id }} />;
 }

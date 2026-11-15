@@ -55,7 +55,10 @@ export default function AoiMap({ aoi }: { aoi: CalendarResponse['aoi'] }) {
         paint: { 'line-color': '#ff6a2b', 'line-width': 2 },
       });
     });
-    m.on('click', (e: MapMouseEvent) => setDraftPoint({ lat: e.lngLat.lat, lon: e.lngLat.lng }));
+    m.on('click', (e: MapMouseEvent) => {
+      const p = e.lngLat.wrap();
+      setDraftPoint({ lat: p.lat, lon: p.lng });
+    });
     map.current = m;
     return () => {
       m.remove();

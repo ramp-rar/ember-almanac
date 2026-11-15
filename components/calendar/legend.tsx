@@ -35,7 +35,9 @@ export function Legend({
   mode,
   palette,
   breaks,
+  estimateBeforeYear,
 }: {
+  estimateBeforeYear: number;
   mode: Mode;
   palette: PaletteName;
   breaks: readonly number[];
@@ -61,7 +63,7 @@ export function Legend({
           {mode === 'ratio'
             ? 'ratio to median of the same month'
             : mode === 'harm'
-              ? 'harmonized fire-days (classes of this area)'
+              ? 'harmonized fire-days (classes of this area — compare areas by numbers, not colours)'
               : 'raw detections, MODIS + VIIRS (classes of this area)'}
         </p>
         <ul className="grid grid-cols-2 gap-1.5 font-mono">
@@ -93,8 +95,8 @@ export function Legend({
         </ul>
         {mode === 'raw' && (
           <p className="text-muted mt-2">
-            Raw counts jump when VIIRS starts (2012) because the sensor sees more, not because more
-            burned. Use harmonized values to compare years.
+            Raw counts jump when VIIRS starts ({estimateBeforeYear}) because the sensor sees more,
+            not because more burned. Use harmonized values to compare years.
           </p>
         )}
       </div>

@@ -19,8 +19,18 @@ export function ExportPanel({ aoi }: { aoi: AoiRef }) {
             <span className="text-muted font-mono text-xs">monthly · with status</span>
           </a>
         </li>
+        <li>
+          <a
+            href={`/api/export/metadata?aoi=${encodeURIComponent(param)}`}
+            download
+            className="border-line flex items-center justify-between rounded-md border px-3 py-2 hover:border-[var(--color-ember)]"
+          >
+            <span>metadata.json</span>
+            <span className="text-muted font-mono text-xs">method · AOI · version</span>
+          </a>
+        </li>
         <li className="border-line text-muted flex items-center justify-between rounded-md border border-dashed px-3 py-2">
-          <span>detections.csv + metadata.json (ZIP)</span>
+          <span>detections.csv (ZIP)</span>
           <span className="font-mono text-xs">after ADR 0002</span>
         </li>
       </ul>

@@ -406,7 +406,7 @@ export function BurningCalendar({
               ) : (
                 <>
                   <rect x={x0} y={top + 3} width={w} height={CH - 6} fill="#8b96a3" />
-                  {v.s !== 'final' && (
+                  {v.s === 'preliminary' && (
                     <rect x={x0} y={top + 3} width={w} height={CH - 6} fill="url(#ft-hatch)" />
                   )}
                 </>
@@ -459,7 +459,7 @@ export function BurningCalendar({
           textAnchor="end"
           className="fill-[var(--color-muted)] font-mono text-[8.5px]"
         >
-          median
+          {mode === 'raw' ? 'harm. median' : 'median'}
         </text>
       </svg>
 

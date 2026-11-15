@@ -11,7 +11,7 @@ import {
 import type { IsoDate } from './iso-date';
 import type { DatasetMeta } from './meta';
 import { buildMonthSeries } from './series';
-import { mannKendall, theilSen } from './stats';
+import { MIN_MANN_KENDALL_N, mannKendall, theilSen } from './stats';
 
 /**
  * Everything the Burning Calendar, the headline metric and the yearly charts need, computed on
@@ -77,6 +77,22 @@ export interface YearPoint {
   readonly anomaly: number | null;
 }
 
+export interface TrendFit {
+  readonly slope: number;
+  readonly intercept: number;
+  readonly n: number;
+  readonly from: number;
+  readonly to: number;
+  readonly p: number;
+  /** Mann–Kendall two-sided p < SIGNIFICANCE */
+  readonly significant: boolean;
+  /** How many of the fitted years are MODIS-only estimates. */
+  readonly estimateYears: number;
+}
+
+/** Conventional two-sided significance level, stated in the UI copy. */
+export const SIGNIFICANCE = 0.05;
+
 export interface CalendarData {
   readonly cells: readonly CalendarCell[];
   readonly yearTotals: readonly YearTotal[];
@@ -88,13 +104,10 @@ export interface CalendarData {
   readonly empty: boolean;
   readonly series: {
     readonly years: readonly YearPoint[];
-    readonly trend: {
-      readonly slope: number;
-      readonly intercept: number;
-      readonly n: number;
-      readonly from: number;
-      readonly to: number;
-    } | null;
+    /** null below 10 complete years (no p-value is reported there). */
+    readonly trend: TrendFit | null;
+    /** Same fit over complete `final` years only (no MODIS-only estimates), when ≥ 10 exist. */
+    readonly finalOnly: TrendFit | null;
     readonly mk: { readonly p: number | null; readonly tau: number; readonly n: number } | null;
     readonly anomalyBase: {
       readonly from: number;
@@ -297,20 +310,27 @@ export function yearlySeries(
     };
   });
 
-  const points = complete.map((t) => ({ x: t.y, y: t.harm.v as number }));
-  const fit = theilSen(points);
-  const mk = points.length > 0 ? mannKendall(points.map((p) => p.y)) : null;
+  const fitYears = (subset: readonly YearTotal[]): TrendFit | null => {
+    if (subset.length < MIN_MANN_KENDALL_N) return null;
+    const points = subset.map((t) => ({ x: t.y, y: t.harm.v as number }));
+    const fit = theilSen(points);
+    const test = mannKendall(points.map((p) => p.y));
+    if (!fit || test.p === null) return null;
+    return {
+      ...fit,
+      from: points[0]!.x,
+      to: points[points.length - 1]!.x,
+      p: test.p,
+      significant: test.p < SIGNIFICANCE,
+      estimateYears: subset.filter((t) => t.harm.s === 'estimate').length,
+    };
+  };
+  const mk = complete.length > 0 ? mannKendall(complete.map((t) => t.harm.v as number)) : null;
 
   return {
     years,
-    trend:
-      fit && points.length >= 2
-        ? {
-            ...fit,
-            from: points[0]!.x,
-            to: points[points.length - 1]!.x,
-          }
-        : null,
+    trend: fitYears(complete),
+    finalOnly: fitYears(complete.filter((t) => t.harm.s === 'final')),
     mk: mk ? { p: mk.p, tau: mk.tau, n: mk.n } : null,
     anomalyBase:
       mean !== null
@@ -329,4 +349,18 @@ export function formatP(p: number | null): string {
   if (p === null) return 'not computed';
   if (p < 0.001) return 'p < 0.001';
   return `p = ${Number(p.toPrecision(2))}`;
+}
+
+/** One plain sentence that says only what the test supports. */
+export function trendVerdict(series: CalendarData['series']): string {
+  const t = series.trend;
+  if (!t) {
+    const n = series.mk?.n ?? 0;
+    return `Not enough complete years for a trend (${n} of ${MIN_MANN_KENDALL_N} needed).`;
+  }
+  if (!t.significant) {
+    return `No statistically detectable trend in harmonized fire-days (${formatP(t.p)}, n = ${t.n}, ${t.from}–${t.to}).`;
+  }
+  const dir = t.slope > 0 ? 'Upward' : 'Downward';
+  return `${dir} trend in harmonized fire-days (Mann–Kendall ${formatP(t.p)} < ${SIGNIFICANCE}, n = ${t.n}, ${t.from}–${t.to}).`;
 }

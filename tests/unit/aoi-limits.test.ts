@@ -11,8 +11,8 @@ import {
 /** Review 2026-11-15 (skeleton code review B1, M1, M2, m3, m4). */
 describe('AOI limits', () => {
   it('B1: rejects areas above the limit with a readable error, before computing cells', () => {
-    const world = { kind: 'bbox', west: -89, south: -80, east: 89, north: 80 } as const;
-    expect(validateAoi(world).join(' ')).toMatch(/too large/);
+    const huge = { kind: 'bbox', west: 0, south: -60, east: 90, north: 60 } as const;
+    expect(validateAoi(huge).join(' ')).toMatch(/too large/);
     expect(decodeAoi('bb_-89_-80_89_80')).toBeNull();
     expect(aoiAreaKm2({ kind: 'bbox', west: 46, south: 40, east: 87, north: 55 })).toBeLessThan(
       MAX_AREA_KM2,

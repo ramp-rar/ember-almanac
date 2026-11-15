@@ -37,10 +37,15 @@ function useChart(
 ) {
   const el = useRef<HTMLDivElement>(null);
   const chart = useRef<echarts.ECharts | null>(null);
+  const click = useRef(onClick);
+  useEffect(() => {
+    click.current = onClick;
+  });
   useEffect(() => {
     if (!el.current) return;
     const c = echarts.init(el.current, undefined, { renderer: 'svg' });
     chart.current = c;
+    c.on('click', (p) => click.current?.(Number(p.name)));
     const ro = new ResizeObserver(() => c.resize());
     ro.observe(el.current);
     return () => {
@@ -53,8 +58,6 @@ function useChart(
     const c = chart.current;
     if (!c) return;
     c.setOption(build(), true);
-    c.off('click');
-    if (onClick) c.on('click', (p) => onClick(Number(p.name)));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps);
   return el;
@@ -71,6 +74,20 @@ export default function YearlyCharts({
   onSelectYear: (year: number) => void;
 }) {
   const years = series.years.map((y) => String(y.y));
+  const withheld = series.years
+    .filter((p) => p.total === null)
+    .map((p) => [{ xAxis: String(p.y) }, { xAxis: String(p.y) }]);
+  const withheldBands = {
+    silent: true,
+    itemStyle: {
+      color: 'rgba(75,83,93,0.35)',
+      borderColor: '#4b535d',
+      borderType: 'dashed',
+      borderWidth: 1,
+    },
+    label: { show: false },
+    data: withheld,
+  };
   const decalOf = (s: string) =>
     s === 'preliminary' ? HATCH : s === 'estimate' ? DOTS : undefined;
 
@@ -84,7 +101,9 @@ export default function YearlyCharts({
         textStyle: { color: '#e6eaef', fontSize: 11 },
         formatter: (ps: { dataIndex: number }[]) => {
           const p = series.years[ps[0]!.dataIndex]!;
-          return `${p.y}: ${p.total === null ? '—' : fmt(p.total)} fire-days<br/>${STATUS_LABEL[p.s]}${p.complete ? '' : ' · not in trend'}`;
+          return p.total === null
+            ? `${p.y}: no total (incomplete year) · ${STATUS_LABEL[p.s]}`
+            : `${p.y}: ${fmt(p.total)} fire-days<br/>${STATUS_LABEL[p.s]}${p.complete ? '' : ' · not in trend'}`;
         },
       },
       xAxis: {
@@ -106,13 +125,17 @@ export default function YearlyCharts({
               borderWidth: p.y === selectedYear ? 2 : 0,
             },
           })),
+          markArea: withheldBands,
         },
         ...(series.trend
           ? [
               {
                 type: 'line',
                 showSymbol: false,
-                lineStyle: { color: '#ff6a2b', width: 2 },
+                // Solid ember only when Mann–Kendall finds a trend; otherwise a dashed grey line.
+                lineStyle: series.trend.significant
+                  ? { color: '#ff6a2b', width: 2 }
+                  : { color: '#8b96a3', width: 1.5, type: 'dashed' },
                 data: series.years.map((p) =>
                   p.y >= series.trend!.from && p.y <= series.trend!.to
                     ? series.trend!.intercept + series.trend!.slope * p.y
@@ -167,6 +190,7 @@ export default function YearlyCharts({
             lineStyle: { color: '#8b96a3' },
             label: { show: false },
           },
+          markArea: withheldBands,
         },
       ],
     }),
@@ -182,7 +206,7 @@ export default function YearlyCharts({
           ref={totals}
           className="mt-2 h-56 w-full"
           role="img"
-          aria-label="Bar chart of yearly harmonized fire-days with a Theil–Sen trend line"
+          aria-label="Bar chart of yearly harmonized fire-days with a Theil–Sen trend line; shaded columns are incomplete years without a total"
         />
       </figure>
       <figure>
@@ -198,7 +222,7 @@ export default function YearlyCharts({
           ref={anomalies}
           className="mt-2 h-56 w-full"
           role="img"
-          aria-label="Bar chart of each year minus the multi-year mean; orange above, blue below"
+          aria-label="Bar chart of each year minus the multi-year mean; orange above, blue below; shaded columns are incomplete years"
         />
       </figure>
     </div>

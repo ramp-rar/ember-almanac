@@ -3,7 +3,7 @@ import { trendVerdict, yearlySeries, type YearTotal } from '@/lib/domain/calenda
 
 /** Science review 2026-11-15, M2: the trend speaks only when the test allows it. */
 function totals(
-  values: [number, number | null, 'final' | 'estimate' | 'preliminary'][],
+  values: readonly (readonly [number, number | null, 'final' | 'estimate' | 'preliminary'])[],
 ): YearTotal[] {
   return values.map(([y, v, s]) => ({
     y,

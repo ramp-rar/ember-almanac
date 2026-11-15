@@ -4,6 +4,7 @@ import {
   FINE_RESOLUTION,
   MAX_FINE_CELLS,
   aoiRing,
+  estimateFineCells,
   type AoiInput,
 } from './aoi-id';
 
@@ -17,12 +18,16 @@ export interface AoiCells {
   readonly coarse: boolean;
 }
 
-/** H3 cells covering the AOI (cell centres inside), switching to r4 above 50 000 r6 cells. */
+/**
+ * H3 cells covering the AOI (cell centres inside). The resolution is chosen from the estimated
+ * cell count, so a large area never materialises millions of r6 cells first.
+ * Callers must validate the input first (validateAoi).
+ */
 export function aoiCells(input: AoiInput): AoiCells {
   const ring = aoiRing(input);
-  let resolution = FINE_RESOLUTION;
+  let resolution = estimateFineCells(input) > MAX_FINE_CELLS ? COARSE_RESOLUTION : FINE_RESOLUTION;
   let cells = polygonToCells([ring], resolution, true);
-  if (cells.length > MAX_FINE_CELLS) {
+  if (resolution === FINE_RESOLUTION && cells.length > MAX_FINE_CELLS) {
     resolution = COARSE_RESOLUTION;
     cells = polygonToCells([ring], resolution, true);
   }

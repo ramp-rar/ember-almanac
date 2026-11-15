@@ -19,7 +19,7 @@ import {
   type CalendarResponse,
   type RegionItem,
 } from '@/lib/api/types';
-import { formatP } from '@/lib/domain/calendar';
+import { formatP, trendVerdict } from '@/lib/domain/calendar';
 import { fmt, fmtSigned } from '@/lib/format';
 
 const AoiMap = dynamic(() => import('@/components/map/aoi-map'), {
@@ -108,11 +108,22 @@ export function Explorer({ aoi }: { aoi: AoiRef | null }) {
     );
   }
 
+  if (aoi === null && first.data && first.data.length === 0) {
+    return (
+      <Shell>
+        <p role="status" className="border-line bg-panel rounded-lg border p-6">
+          No regions are loaded yet. Generate the mock delivery (pnpm fixtures) or ingest a
+          delivery.
+        </p>
+      </Shell>
+    );
+  }
+
   if (!data || !aoi) return <ExplorerSkeleton />;
 
   const { calendar } = data;
   const trend = calendar.series.trend;
-  const mk = calendar.series.mk;
+  const finalOnly = calendar.series.finalOnly;
 
   return (
     <Shell>
@@ -209,6 +220,7 @@ export function Explorer({ aoi }: { aoi: AoiRef | null }) {
           </div>
           <div className="border-line mt-4 border-t pt-4">
             <Legend
+              estimateBeforeYear={data.dataset.estimateBeforeYear}
               mode={url.mode}
               palette={palette}
               breaks={url.mode === 'raw' ? calendar.breaks.raw : calendar.breaks.harm}
@@ -228,21 +240,25 @@ export function Explorer({ aoi }: { aoi: AoiRef | null }) {
         className="border-line bg-panel mt-5 rounded-lg border p-4 sm:p-5"
       >
         <h2 id="charts-h" className="font-display text-lg font-medium">
-          Is burning increasing?
+          Yearly burning activity and trend
         </h2>
-        <p className="text-muted mt-1 text-sm">
-          {trend && mk ? (
-            <>
-              Theil–Sen trend over complete years {trend.from}–{trend.to}:{' '}
-              <span className="text-text font-mono">{fmtSigned(trend.slope)} fire-days / year</span>{' '}
-              · Mann–Kendall <span className="font-mono">{formatP(mk.p)}</span>, n = {mk.n}.{' '}
-              {trend.from < data.dataset.estimateBeforeYear &&
-                `Includes MODIS-only estimate years before ${data.dataset.estimateBeforeYear}. `}
-              Incomplete years (grey) are not in the trend.
-            </>
-          ) : (
-            'Not enough complete years for a trend.'
-          )}
+        <p className="mt-1 text-sm">{trendVerdict(calendar.series)}</p>
+        {trend && (
+          <p className="text-muted mt-1 text-sm">
+            Theil–Sen slope{' '}
+            <span className="font-mono">{fmtSigned(trend.slope)} fire-days / year</span> over
+            complete years {trend.from}–{trend.to}
+            {trend.estimateYears > 0 &&
+              `; includes ${trend.estimateYears} MODIS-only estimate years of ${trend.n}`}
+            .{' '}
+            {finalOnly
+              ? `Standard-processed years only (${finalOnly.from}–${finalOnly.to}, n = ${finalOnly.n}): ${fmtSigned(finalOnly.slope)} fire-days / year, Mann–Kendall ${formatP(finalOnly.p)}.`
+              : 'Too few standard-processed years for a separate check.'}
+          </p>
+        )}
+        <p className="text-muted mt-1 text-xs">
+          Shaded columns are incomplete years without a total; grey years are preliminary. Neither
+          is in the trend. Significance level 0.05.
         </p>
         <div className="mt-4">
           <YearlyCharts

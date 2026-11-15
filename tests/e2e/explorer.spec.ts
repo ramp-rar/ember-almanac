@@ -96,16 +96,49 @@ test('summary.csv: every row has a status and no data is never 0', async ({ requ
     expect.arrayContaining([
       'year',
       'month',
-      'harmonized',
+      'harmonized_fire_days',
       'ratio_to_median',
-      'percentile',
+      'percentile_rank',
       'status',
+      'dataset_version',
     ]),
   );
   const at = (row: string, col: string) => row.split(',')[cols.indexOf(col)];
   const march2000 = rows.find((r) => r.startsWith('2000,3,'))!;
   expect(at(march2000, 'status')).toBe('no_data');
-  expect(at(march2000, 'harmonized')).toBe('');
+  expect(at(march2000, 'harmonized_fire_days')).toBe('');
   for (const row of rows)
     expect(at(row, 'status')).toMatch(/^(final|estimate|preliminary|no_data)$/);
+});
+
+test.describe('API status codes (skeleton review B1, M2)', () => {
+  test('polar, huge and non-canonical areas are 400 with a readable message', async ({
+    request,
+  }) => {
+    const polar = await request.post('/api/aoi', {
+      data: { kind: 'point', lat: 89, lon: 0, radiusKm: 200 },
+    });
+    expect(polar.status()).toBe(400);
+    expect((await polar.json()).message).toMatch(/pole/);
+
+    const huge = await request.post('/api/aoi', {
+      data: { kind: 'bbox', west: 0, south: -60, east: 90, north: 60 },
+    });
+    expect(huge.status()).toBe(400);
+    expect((await huge.json()).message).toMatch(/too large/);
+
+    for (const id of ['bb_-89_-80_89_80', 'pt_1e1_70_50', 'pt_89_0_200']) {
+      expect((await request.get(`/api/aoi/${id}/calendar`)).status()).toBe(400);
+    }
+  });
+
+  test('unknown region is 404; metadata.json describes the export', async ({ request }) => {
+    expect((await request.get('/api/regions/XXX/calendar')).status()).toBe(404);
+    const meta = await request.get('/api/export/metadata?aoi=r:ZZB');
+    expect(meta.status()).toBe(200);
+    const body = await meta.json();
+    expect(body.dataset_version).toMatch(/^mock-/);
+    expect(body.is_mock).toBe(true);
+    expect(body.acknowledgement).toContain('FIRMS');
+  });
 });

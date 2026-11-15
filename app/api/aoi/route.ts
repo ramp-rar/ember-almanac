@@ -1,7 +1,8 @@
 import { connection } from 'next/server';
 import { z } from 'zod';
-import { aoiCells, encodeAoi, validateAoi, type AoiInput } from '@/lib/h3/aoi';
-import { jsonError } from '@/server/http';
+import { decodeAoi, encodeAoi, validateAoi, type AoiInput } from '@/lib/h3/aoi';
+import { handleError, jsonError } from '@/server/http';
+import { cellsOrThrow } from '@/server/services/calendar-service';
 
 const Body = z.discriminatedUnion('kind', [
   z.object({ kind: z.literal('point'), lat: z.number(), lon: z.number(), radiusKm: z.number() }),
@@ -30,10 +31,19 @@ export async function POST(request: Request): Promise<Response> {
   const problems = validateAoi(input);
   if (problems.length > 0) return jsonError(400, 'invalid_area', problems.join(' '));
 
-  const cells = aoiCells(input);
+  // The id is rounded; validate what the calendar GET will see.
+  const aoiId = encodeAoi(input);
+  const canonical = decodeAoi(aoiId);
+  if (!canonical) return jsonError(400, 'invalid_area', 'This area is not valid after rounding.');
+  let cells;
+  try {
+    cells = cellsOrThrow(canonical);
+  } catch (error) {
+    return handleError('aoi', error);
+  }
   return Response.json(
     {
-      aoiId: encodeAoi(input),
+      aoiId,
       cellsCount: cells.cells.length,
       areaKm2: cells.areaKm2,
       resolution: cells.resolution,
