@@ -40,12 +40,29 @@ export const CredentialsSchema = z.object({
 });
 export type Credentials = z.infer<typeof CredentialsSchema>;
 
-export function accountsAvailable(): boolean {
-  return isDatabaseConfigured();
+let tablesReady: Promise<boolean> | null = null;
+
+/**
+ * Accounts are on when a database is configured AND migrated (ADR 0005). Checked once per server
+ * instance; a failed check is retried on the next request.
+ */
+export async function accountsAvailable(): Promise<boolean> {
+  if (!isDatabaseConfigured()) return false;
+  tablesReady ??= getDb()
+    .select({ id: appUser.id })
+    .from(appUser)
+    .limit(1)
+    .then(() => true)
+    .catch((error: unknown) => {
+      console.error('accounts: tables not available', error);
+      tablesReady = null;
+      return false;
+    });
+  return tablesReady;
 }
 
-function requireDb() {
-  if (!accountsAvailable()) {
+async function requireDb() {
+  if (!(await accountsAvailable())) {
     throw new AuthError('unavailable', 'Accounts are not enabled on this deployment.');
   }
   return getDb();
@@ -56,7 +73,7 @@ function requireDb() {
  * registered, the response is the same (no enumeration) and no second account is made.
  */
 export async function register(input: Credentials, appUrl: string): Promise<{ mailSent: boolean }> {
-  const db = requireDb();
+  const db = await requireDb();
   const existing = await db
     .select({ id: appUser.id, verified: appUser.emailVerifiedAt, locale: appUser.locale })
     .from(appUser)
@@ -112,7 +129,7 @@ async function sendVerification(
 
 /** Marks the e-mail verified; the link works once and expires. */
 export async function verifyEmail(token: string): Promise<void> {
-  const db = requireDb();
+  const db = await requireDb();
   const now = new Date();
   const rows = await db
     .update(emailToken)
@@ -133,7 +150,7 @@ export async function verifyEmail(token: string): Promise<void> {
 
 /** Returns a new session token for the cookie. */
 export async function login(input: Credentials): Promise<{ token: string; expiresAt: Date }> {
-  const db = requireDb();
+  const db = await requireDb();
   const rows = await db.select().from(appUser).where(eq(appUser.email, input.email)).limit(1);
   const user = rows[0];
   const ok = await verifyPassword(input.password, user?.passwordHash ?? DUMMY_HASH);
@@ -149,7 +166,7 @@ export async function login(input: Credentials): Promise<{ token: string; expire
 }
 
 export async function logout(token: string): Promise<void> {
-  if (!accountsAvailable()) return;
+  if (!(await accountsAvailable())) return;
   await getDb()
     .delete(appSession)
     .where(eq(appSession.tokenHash, tokenHash(token)));
@@ -162,7 +179,7 @@ export interface Me {
 }
 
 export async function me(token: string | undefined): Promise<Me | null> {
-  if (!token || !accountsAvailable()) return null;
+  if (!token || !(await accountsAvailable())) return null;
   const db = getDb();
   const rows = await db
     .select({ id: appUser.id, email: appUser.email, verified: appUser.emailVerifiedAt })
@@ -200,7 +217,7 @@ export async function setPlace(token: string | undefined, placeId: string, saved
 }
 
 async function userIdOf(token: string): Promise<string | null> {
-  if (!accountsAvailable()) return null;
+  if (!(await accountsAvailable())) return null;
   const rows = await getDb()
     .select({ userId: appSession.userId })
     .from(appSession)

@@ -68,8 +68,12 @@ export async function getActiveDataset(): Promise<ActiveDataset | null> {
   const remote = remoteApiBase();
   if (remote) return { meta: await remoteMeta(remote), source: 'remote_api' };
   if (isDatabaseConfigured()) {
-    // The database may hold only accounts; without an ingested dataset the bundled snapshot serves.
-    const meta = await activeFromDatabase();
+    // The database may hold only accounts (or not be migrated yet): then the bundled snapshot
+    // serves. A database problem must never take the fire data down.
+    const meta = await activeFromDatabase().catch((error: unknown) => {
+      console.error('dataset: database unavailable, using the snapshot', error);
+      return null;
+    });
     if (meta) return { meta, source: 'database' };
   }
   // Real bundled data first; generated mock fixtures only when explicitly asked (FIRE_DATA=mock).

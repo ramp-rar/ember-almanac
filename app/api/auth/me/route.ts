@@ -8,7 +8,7 @@ export async function GET(): Promise<Response> {
   try {
     const user = await me(await sessionToken());
     return Response.json(
-      { accounts: accountsAvailable(), user },
+      { accounts: await accountsAvailable(), user },
       { headers: { 'Cache-Control': 'private, no-store' } },
     );
   } catch (error) {
