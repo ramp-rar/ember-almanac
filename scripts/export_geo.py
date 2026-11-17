@@ -66,6 +66,8 @@ def export(region_dir: Path, meta: dict) -> dict:
         "typical": {"from": y0, "to": y1, "per": "year", "pts": typical, "truncated": t_trunc},
         "recent": recent,
         "partial_month": meta["last_month"] if meta["last_month"] > meta["last_full_month"] else None,
+        # Months inside this window without a file had no cell above MIN_VALUE (not "no data").
+        "window": [first.strftime("%Y-%m"), last.strftime("%Y-%m")],
     }
 
 

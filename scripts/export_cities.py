@@ -147,6 +147,7 @@ def main() -> None:
                     "min_value": MIN_VALUE,
                     "typical": {"from": y0, "to": y1, "per": "year", **layer(typical, CAP_TYPICAL)},
                     "months": sorted(months),
+                    "window": [first.strftime("%Y-%m"), last.strftime("%Y-%m")],
                     "partial_month": calendar[-1]["month"] if partial else None,
                 },
                 separators=(",", ":"),

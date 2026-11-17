@@ -65,7 +65,7 @@ const en = {
       future: 'not yet observed',
     } satisfies Record<Status, S>,
     help: {
-      final: 'checked data: NASA has finished standard processing, it will not change.',
+      final: 'checked data: NASA has finished standard processing; it is not expected to change.',
       estimate:
         'before the newer VIIRS satellite, only MODIS saw fires; its counts are scaled to VIIRS units. Close, but less certain.',
       preliminary:
@@ -77,7 +77,8 @@ const en = {
   explorer: {
     kindRegion: 'country / region',
     kindAoi: 'custom area',
-    kindCity: 'city · 50 km circle around the centre',
+    kindCity:
+      'city · 50 km circle around the centre, inside this country only — fires across a border are not counted',
     area: (km2: S) => `${km2} km²`,
     cells: (n: S) => `${n} map cells`,
     coarse: ' (coarser grid: the area is very large)',
@@ -89,7 +90,7 @@ const en = {
     ytdVs: (x: S, n: number, from: number, to: number) =>
       `${x} vs the same months in a usual year (median of ${n} years, ${from}–${to})`,
     ytdNoBase: (n: number) => `no usual value yet (${n} of 10 comparable years)`,
-    ytdZero: 'usually no fire in these months',
+    ytdZero: 'usually no fire activity detected in these months',
     calTitle: 'Burning calendar',
     calDesc:
       'Each row is a year, each column a month. The brighter the square, the more fire activity. Click any square.',
@@ -152,7 +153,7 @@ const en = {
       ['Estimate', 'Years before VIIRS: MODIS counts scaled to VIIRS units. Less certain.'],
       [
         'P74',
-        'Percentile: this month had more activity than 74% of the same months in other years.',
+        'Percentile rank: this month was above about 74% of the same months in other years (equal months count half).',
       ],
     ] as [S, S][],
     method: (m: S, from: number, to: number, sp: S, nrt: S) =>
@@ -163,7 +164,7 @@ const en = {
     loading: 'Loading the calendar',
     honesty: [
       'Satellite detections are not a count of fires',
-      'The expected range is not a forecast',
+      'The range for coming months comes from a statistical model; it does not predict fires',
       'No data is never shown as zero',
     ] as S[],
   },
@@ -173,7 +174,8 @@ const en = {
       `${x} vs median of ${n} ${month}s (${from}–${to})`,
     prelim: ' (preliminary)',
     vsUsual: (h: S, md: S) => ` (${h} vs usual ${md} fire-days)`,
-    percentile: (p: number) => `More activity than ${p}% of the same months in other years`,
+    percentile: (p: number) =>
+      `Percentile rank ${p}: above about ${p}% of the same months in other years (equal months count half)`,
     notYet: 'not yet observed',
     noData: 'no data',
     insufficient: (n: number, need: number) =>
@@ -271,7 +273,7 @@ const en = {
     note: 'Every row carries its status. No-data months are empty cells, never 0.',
   },
   forecast: {
-    title: 'What to expect in the coming months',
+    title: 'Statistical range for the next months — not a prediction',
     intro1: 'A statistical range based on how this place behaved in past years. It is ',
     introStrong: 'not a forecast of any particular fire',
     intro2:
@@ -279,18 +281,18 @@ const en = {
     caption:
       'Expected range of harmonized fire-days for each of the next months, with the usual value for that month in past years',
     colMonth: 'Month',
-    colRange: 'Range (dark: likely · light: almost certain)',
-    colLikely: 'Likely range',
+    colRange: 'Range (dark: 80% band · light: 95% band)',
+    colLikely: '80% band',
     colUsual: 'Usual',
     middle: (v: S) => `middle estimate ${v}`,
     usual: (v: S) => `usual ${v}`,
     checkTitle: 'How often did the real month fall inside the range?',
     checkLine: (inside: number, n: number, pct: number, target: number) =>
       `${inside} of ${n} past months (${pct}%; the model aims at ${target}%)`,
-    checkLikely: 'Dark (likely) range',
-    checkSure: 'Light (almost certain) range',
+    checkLikely: '80% band',
+    checkSure: '95% band',
     checkNote: (from: S, to: S) =>
-      `Months ${from} to ${to}. The model was fitted on these same months, so in advance it would do no better than this — likely a bit worse.`,
+      `Months ${from} to ${to}. The model was fitted on these same months, so this check is optimistic; used in advance it would probably do worse.`,
     foot: 'Solid mark = middle estimate · dashed line = usual month (median of past years). The ranges come from the data team’s model (method still to be documented). Each row has its own scale; compare months by the numbers. The current month is only partly observed.',
   },
   charts: {
@@ -346,6 +348,9 @@ const en = {
     watchHigh: 'unusually high',
     watchLow: 'unusually low',
     watchUsual: 'within the usual range',
+    watchNoUsual: (v: S, n: number) =>
+      `${v} fire-days; usually none in this month (median of ${n} years is 0)`,
+    watchSmall: 'Small numbers: a few fire-days more or less change the ratio a lot.',
     watchNote:
       'Unusual = more activity than 90% of the same months in other years, or less than 10%.',
     errors: {
@@ -365,15 +370,18 @@ const en = {
     backToArea: 'Back to the area',
     fireMonth: (m: S) => `Where fire was detected in ${m}`,
     fireTypical: (from: number, to: number) =>
-      `Where it usually burns: average year ${from}–${to} (the selected month is older than the last 12 months)`,
+      `Average year ${from}–${to}: where fire was detected (per year)`,
     fireNone: 'No fire map for this area yet.',
+    monthEmpty: (m: S) => `No hexagon reached the map threshold in ${m} (≥ 0.5 fire-days)`,
+    topItemAvg: (lat: S, lon: S, v: S) => `${lat}, ${lon} · ${v} fire-days per year (average)`,
+    popupAvg: (v: S) => `${v} fire-days per year on average in this hexagon (~250 km²)`,
     fireLoading: 'Loading fire locations…',
     fireLegend:
       'Brighter = more fire-days. Each dot is a hexagon of about 250 km²; zoom in to see them one by one.',
-    fireCount: (n: number) => `${n} hexagons with fire`,
+    fireCount: (n: number) => `${n} hexagons with ≥ 0.5 fire-days`,
     fireTruncated: 'only the strongest are shown',
     firePartial: 'this month is not over yet',
-    topTitle: 'Strongest fire areas — click to fly there',
+    topTitle: 'Hexagons with the most fire-days — click to fly there',
     topItem: (lat: S, lon: S, v: S) => `${lat}, ${lon} · ${v} fire-days`,
     hemi: { n: 'N', s: 'S', e: 'E', w: 'W' },
     popup: (v: S) => `${v} fire-days in this hexagon (~250 km²)`,
@@ -388,7 +396,7 @@ const en = {
   },
   errors: {
     no_coverage:
-      'There is no fire data for this place in this version. Pick Kazakhstan or Texas from the country list.',
+      'There is no fire data for this place in this version. Pick a country or city from the list.',
     not_found: 'This place was not found.',
     invalid_area:
       'This area cannot be computed. Try a smaller area or move it away from the poles.',
@@ -454,7 +462,7 @@ const ru: Messages = {
       future: 'ещё не наблюдалось',
     },
     help: {
-      final: 'проверенные данные: NASA завершило стандартную обработку, значение не изменится.',
+      final: 'проверенные данные: NASA завершило стандартную обработку; изменений не ожидается.',
       estimate:
         'до нового спутника VIIRS пожары видел только MODIS; его счёт пересчитан в единицы VIIRS. Близко, но менее точно.',
       preliminary:
@@ -466,7 +474,8 @@ const ru: Messages = {
   explorer: {
     kindRegion: 'страна / регион',
     kindAoi: 'своя область',
-    kindCity: 'город · круг 50 км вокруг центра',
+    kindCity:
+      'город · круг 50 км вокруг центра, только внутри страны — пожары за границей не учитываются',
     area: (km2) => `${km2} км²`,
     cells: (n) => `${n} ячеек карты`,
     coarse: ' (крупная сетка: область очень большая)',
@@ -478,7 +487,7 @@ const ru: Messages = {
     ytdVs: (x, n, from, to) =>
       `${x} к тем же месяцам обычного года (медиана ${n} лет, ${from}–${to})`,
     ytdNoBase: (n) => `нормы пока нет (${n} из 10 сравнимых лет)`,
-    ytdZero: 'обычно в эти месяцы пожаров нет',
+    ytdZero: 'обычно в эти месяцы огонь не обнаруживается',
     calTitle: 'Календарь пожаров',
     calDesc:
       'Каждая строка — год, каждый столбец — месяц. Чем ярче квадрат, тем больше пожарной активности. Нажмите на любой квадрат.',
@@ -541,7 +550,10 @@ const ru: Messages = {
         'Оперативные данные, которые NASA перепроверяет через несколько месяцев; могут немного измениться.',
       ],
       ['Оценка', 'Годы до VIIRS: счёт MODIS, пересчитанный в единицы VIIRS. Менее точно.'],
-      ['P74', 'Процентиль: в этом месяце активность выше, чем в 74% таких же месяцев других лет.'],
+      [
+        'P74',
+        'Процентильный ранг: этот месяц выше примерно 74% таких же месяцев других лет (равные считаются наполовину).',
+      ],
     ],
     method: (m, from, to, sp, nrt) =>
       `Метод: ${m}. Обычный месяц = медиана ${from}–${to}. Проверенные данные до ${sp}; оперативные до ${nrt}.`,
@@ -551,7 +563,7 @@ const ru: Messages = {
     loading: 'Загружаем календарь',
     honesty: [
       'Спутниковые обнаружения — это не число пожаров',
-      'Ожидаемый диапазон — не прогноз',
+      'Диапазон на ближайшие месяцы — статистическая модель, а не предсказание пожаров',
       '«Нет данных» никогда не показывается как ноль',
     ],
   },
@@ -561,7 +573,8 @@ const ru: Messages = {
       `${x} к медиане месяца «${month}» за ${n} лет (${from}–${to})`,
     prelim: ' (предварительно)',
     vsUsual: (h, md) => ` (${h} против обычных ${md} пожарных дней)`,
-    percentile: (p) => `Активнее, чем ${p}% таких же месяцев в другие годы`,
+    percentile: (p) =>
+      `Процентильный ранг ${p}: выше примерно ${p}% таких же месяцев других лет (равные считаются наполовину)`,
     notYet: 'ещё не наблюдалось',
     noData: 'нет данных',
     insufficient: (n, need) => `мало лет для сравнения (${n} из ${need} нужных)`,
@@ -655,7 +668,7 @@ const ru: Messages = {
     note: 'У каждой строки есть статус. Месяцы без данных — пустые ячейки, никогда не 0.',
   },
   forecast: {
-    title: 'Чего ожидать в ближайшие месяцы',
+    title: 'Статистический диапазон на ближайшие месяцы — не предсказание',
     intro1: 'Статистический диапазон по тому, как это место вело себя в прошлые годы. Это ',
     introStrong: 'не прогноз конкретного пожара',
     intro2:
@@ -663,18 +676,18 @@ const ru: Messages = {
     caption:
       'Ожидаемый диапазон гармонизированных пожарных дней на ближайшие месяцы и обычное значение этого месяца в прошлые годы',
     colMonth: 'Месяц',
-    colRange: 'Диапазон (тёмный: вероятно · светлый: почти наверняка)',
-    colLikely: 'Вероятный диапазон',
+    colRange: 'Диапазон (тёмный: 80% · светлый: 95%)',
+    colLikely: 'Диапазон 80%',
     colUsual: 'Обычно',
     middle: (v) => `средняя оценка ${v}`,
     usual: (v) => `обычно ${v}`,
     checkTitle: 'Как часто реальный месяц попадал в диапазон?',
     checkLine: (inside, n, pct, target) =>
       `${inside} из ${n} прошлых месяцев (${pct}%; модель рассчитана на ${target}%)`,
-    checkLikely: 'Тёмный (вероятный) диапазон',
-    checkSure: 'Светлый (почти наверняка) диапазон',
+    checkLikely: 'Диапазон 80%',
+    checkSure: 'Диапазон 95%',
     checkNote: (from, to) =>
-      `Месяцы с ${from} по ${to}. Модель обучалась на этих же месяцах, поэтому заранее она сработала бы не лучше — скорее чуть хуже.`,
+      `Месяцы ${from}–${to}. Модель обучалась на этих же месяцах, поэтому проверка оптимистична: заранее она, вероятно, сработала бы хуже.`,
     foot: 'Сплошная метка — средняя оценка · пунктир — обычный месяц (медиана прошлых лет). Диапазоны взяты из модели команды данных (метод ещё описывается). У каждой строки своя шкала: сравнивайте месяцы по числам. Текущий месяц наблюдается не полностью.',
   },
   charts: {
@@ -729,6 +742,9 @@ const ru: Messages = {
     watchHigh: 'необычно высоко',
     watchLow: 'необычно низко',
     watchUsual: 'в пределах обычного',
+    watchNoUsual: (v, n) =>
+      `${v} пожарных дней; обычно в этом месяце активности нет (медиана ${n} лет — 0)`,
+    watchSmall: 'Малые числа: несколько пожарных дней больше или меньше сильно меняют отношение.',
     watchNote: 'Необычно — активнее, чем 90% таких же месяцев в другие годы, или слабее, чем 10%.',
     errors: {
       invalid_credentials: 'Неверная почта или пароль.',
@@ -746,16 +762,18 @@ const ru: Messages = {
     globe: 'Вся планета',
     backToArea: 'Назад к месту',
     fireMonth: (m) => `Где замечен огонь: ${m}`,
-    fireTypical: (from, to) =>
-      `Где обычно горит: средний год ${from}–${to} (выбранный месяц старше последних 12 месяцев)`,
+    fireTypical: (from, to) => `Средний год ${from}–${to}: где замечали огонь (в год)`,
     fireNone: 'Для этой области карты пожаров пока нет.',
+    monthEmpty: (m) => `В ${m} ни один шестиугольник не достиг порога карты (≥ 0,5 пожарного дня)`,
+    topItemAvg: (lat, lon, v) => `${lat}, ${lon} · ${v} пожарных дней в год (в среднем)`,
+    popupAvg: (v) => `в среднем ${v} пожарных дней в год в этом шестиугольнике (~250 км²)`,
     fireLoading: 'Загружаем места пожаров…',
     fireLegend:
       'Ярче — больше пожарных дней. Каждая точка — шестиугольник около 250 км²; приблизьте, чтобы увидеть их по отдельности.',
-    fireCount: (n) => `шестиугольников с огнём: ${n}`,
+    fireCount: (n) => `шестиугольников с ≥ 0,5 пожарного дня: ${n}`,
     fireTruncated: 'показаны только самые сильные',
     firePartial: 'месяц ещё не закончился',
-    topTitle: 'Самые сильные очаги — нажмите, чтобы перелететь',
+    topTitle: 'Шестиугольники с наибольшим числом пожарных дней — нажмите, чтобы перелететь',
     topItem: (lat, lon, v) => `${lat}, ${lon} · ${v} пожарных дней`,
     hemi: { n: 'с. ш.', s: 'ю. ш.', e: 'в. д.', w: 'з. д.' },
     popup: (v) => `${v} пожарных дней в этом шестиугольнике (~250 км²)`,
@@ -770,7 +788,7 @@ const ru: Messages = {
   },
   errors: {
     no_coverage:
-      'Для этого места в этой версии нет данных о пожарах. Выберите Казахстан или Техас в списке стран.',
+      'Для этого места в этой версии нет данных о пожарах. Выберите страну или город из списка.',
     not_found: 'Это место не найдено.',
     invalid_area: 'Эту область нельзя посчитать. Уменьшите её или отодвиньте от полюсов.',
     bad_request: 'Запрос не распознан.',
@@ -834,7 +852,8 @@ const tg: Messages = {
       future: 'ҳанӯз мушоҳида нашудааст',
     },
     help: {
-      final: 'маълумоти санҷидашуда: NASA коркарди стандартиро анҷом дод, рақам дигар намешавад.',
+      final:
+        'маълумоти санҷидашуда: NASA коркарди стандартиро анҷом дод; тағйир интизор намеравад.',
       estimate:
         'то моҳвораи навтари VIIRS сӯхторҳоро танҳо MODIS медид; ҳисоби он ба воҳидҳои VIIRS табдил дода шудааст. Наздик, вале камтар дақиқ.',
       preliminary:
@@ -846,7 +865,8 @@ const tg: Messages = {
   explorer: {
     kindRegion: 'кишвар / минтақа',
     kindAoi: 'минтақаи худӣ',
-    kindCity: 'шаҳр · доираи 50 км атрофи марказ',
+    kindCity:
+      'шаҳр · доираи 50 км атрофи марказ, танҳо дар дохили кишвар — сӯхторҳои он сӯи сарҳад ҳисоб намешаванд',
     area: (km2) => `${km2} км²`,
     cells: (n) => `${n} чашмаки харита`,
     coarse: ' (тӯри калон: минтақа хеле бузург аст)',
@@ -858,7 +878,7 @@ const tg: Messages = {
     ytdVs: (x, n, from, to) =>
       `${x} нисбат ба ҳамин моҳҳои соли муқаррарӣ (медианаи ${n} сол, ${from}–${to})`,
     ytdNoBase: (n) => `меъёр ҳоло нест (${n} аз 10 соли муқоисашаванда)`,
-    ytdZero: 'одатан дар ин моҳҳо сӯхтор нест',
+    ytdZero: 'одатан дар ин моҳҳо оташ ошкор намешавад',
     calTitle: 'Тақвими сӯхтор',
     calDesc:
       'Ҳар сатр — сол, ҳар сутун — моҳ. Ҳар қадар мураббаъ равшантар бошад, фаъолияти сӯхтор ҳамон қадар зиёд аст. Ягон мураббаъро пахш кунед.',
@@ -914,7 +934,7 @@ const tg: Messages = {
       ],
       [
         'Медиана',
-        'Қимати миёна: дар нисфи солҳо бештар, дар нисфи дигар камтар буд. Як соли истисноӣ онро вайрон намекунад.',
+        'Қимати мобайнӣ: дар нисфи солҳо бештар, дар нисфи дигар камтар буд. Як соли истисноӣ онро вайрон намекунад.',
       ],
       [
         'Пешакӣ',
@@ -924,7 +944,10 @@ const tg: Messages = {
         'Баҳо',
         'Солҳои пеш аз VIIRS: ҳисоби MODIS, ки ба воҳидҳои VIIRS табдил дода шудааст. Камтар дақиқ.',
       ],
-      ['P74', 'Персентил: дар ин моҳ фаъолият аз 74% ҳамин моҳҳои солҳои дигар зиёдтар буд.'],
+      [
+        'P74',
+        'Рутбаи персентилӣ: ин моҳ аз тақрибан 74% ҳамин моҳҳои солҳои дигар болотар буд (баробарҳо нисф ҳисоб мешаванд).',
+      ],
     ],
     method: (m, from, to, sp, nrt) =>
       `Усул: ${m}. Моҳи муқаррарӣ = медианаи ${from}–${to}. Маълумоти санҷидашуда то ${sp}; фаврӣ то ${nrt}.`,
@@ -934,7 +957,7 @@ const tg: Messages = {
     loading: 'Тақвим бор мешавад',
     honesty: [
       'Ошкоркуниҳои моҳвораӣ шумораи сӯхторҳо нестанд',
-      'Диапазони интизорӣ пешгӯӣ нест',
+      'Диапазон барои моҳҳои наздик модели оморист, на пешгӯии сӯхторҳо',
       '«Маълумот нест» ҳеҷ гоҳ ҳамчун сифр нишон дода намешавад',
     ],
   },
@@ -944,7 +967,8 @@ const tg: Messages = {
       `${x} нисбат ба медианаи моҳи ${month} дар ${n} сол (${from}–${to})`,
     prelim: ' (пешакӣ)',
     vsUsual: (h, md) => ` (${h} нисбат ба ${md} рӯзи сӯхтори муқаррарӣ)`,
-    percentile: (p) => `Фаъолтар аз ${p}% ҳамин моҳҳо дар солҳои дигар`,
+    percentile: (p) =>
+      `Рутбаи персентилӣ ${p}: аз тақрибан ${p}% ҳамин моҳҳои солҳои дигар болотар (баробарҳо нисф ҳисоб мешаванд)`,
     notYet: 'ҳанӯз мушоҳида нашудааст',
     noData: 'маълумот нест',
     insufficient: (n, need) => `барои муқоиса солҳо кам аст (${n} аз ${need} лозимӣ)`,
@@ -1040,7 +1064,7 @@ const tg: Messages = {
     note: 'Ҳар сатр вазъи худро дорад. Моҳҳои бе маълумот — чашмакҳои холӣ, ҳеҷ гоҳ 0 нестанд.',
   },
   forecast: {
-    title: 'Дар моҳҳои наздик чӣ интизор аст',
+    title: 'Диапазони оморӣ барои моҳҳои наздик — пешгӯӣ нест',
     intro1: 'Диапазони оморӣ аз рӯи он, ки ин ҷой дар солҳои гузашта чӣ гуна буд. Ин ',
     introStrong: 'пешгӯии ягон сӯхтори мушаххас нест',
     intro2:
@@ -1048,18 +1072,18 @@ const tg: Messages = {
     caption:
       'Диапазони интизории рӯзҳои сӯхтори ҳамоҳангшуда барои моҳҳои наздик ва қимати муқаррарии ҳамон моҳ дар солҳои гузашта',
     colMonth: 'Моҳ',
-    colRange: 'Диапазон (торик: эҳтимолӣ · равшан: қариб яқин)',
-    colLikely: 'Диапазони эҳтимолӣ',
+    colRange: 'Диапазон (торик: 80% · равшан: 95%)',
+    colLikely: 'Диапазони 80%',
     colUsual: 'Муқаррарӣ',
     middle: (v) => `баҳои миёна ${v}`,
     usual: (v) => `муқаррарӣ ${v}`,
     checkTitle: 'Моҳи воқеӣ чанд маротиба ба диапазон даромад?',
     checkLine: (inside, n, pct, target) =>
       `${inside} аз ${n} моҳи гузашта (${pct}%; модел ба ${target}% ҳисоб шудааст)`,
-    checkLikely: 'Диапазони торик (эҳтимолӣ)',
-    checkSure: 'Диапазони равшан (қариб яқин)',
+    checkLikely: 'Диапазони 80%',
+    checkSure: 'Диапазони 95%',
     checkNote: (from, to) =>
-      `Моҳҳо аз ${from} то ${to}. Модел дар ҳамин моҳҳо омӯхта шудааст, бинобар ин пешакӣ на беҳтар аз ин — эҳтимол каме бадтар — кор мекард.`,
+      `Моҳҳо ${from}–${to}. Модел дар ҳамин моҳҳо омӯхта шудааст, бинобар ин санҷиш хушбинона аст: пешакӣ эҳтимол бадтар кор мекард.`,
     foot: 'Аломати пурра — баҳои миёна · хати нуқтадор — моҳи муқаррарӣ (медианаи солҳои гузашта). Диапазонҳо аз модели гурӯҳи маълумот гирифта шудаанд (усул ҳанӯз тавсиф мешавад). Ҳар сатр миқёси худро дорад: моҳҳоро аз рӯи рақамҳо муқоиса кунед. Моҳи ҷорӣ пурра мушоҳида нашудааст.',
   },
   charts: {
@@ -1114,6 +1138,9 @@ const tg: Messages = {
     watchHigh: 'ғайриоддӣ баланд',
     watchLow: 'ғайриоддӣ паст',
     watchUsual: 'дар доираи муқаррарӣ',
+    watchNoUsual: (v, n) =>
+      `${v} рӯзи сӯхтор; одатан дар ин моҳ фаъолият нест (медианаи ${n} сол — 0)`,
+    watchSmall: 'Рақамҳои хурд: чанд рӯзи сӯхтор зиёд ё кам таносубро хеле тағйир медиҳад.',
     watchNote: 'Ғайриоддӣ — фаъолтар аз 90% ҳамин моҳҳо дар солҳои дигар ё сусттар аз 10%.',
     errors: {
       invalid_credentials: 'Почта ё рамз нодуруст аст.',
@@ -1131,16 +1158,18 @@ const tg: Messages = {
     globe: 'Тамоми сайёра',
     backToArea: 'Бозгашт ба ҷой',
     fireMonth: (m) => `Дар куҷо оташ дида шуд: ${m}`,
-    fireTypical: (from, to) =>
-      `Дар куҷо одатан месӯзад: соли миёна ${from}–${to} (моҳи интихобшуда аз 12 моҳи охир кӯҳнатар аст)`,
+    fireTypical: (from, to) => `Соли миёна ${from}–${to}: дар куҷо оташ дида мешуд (дар як сол)`,
     fireNone: 'Барои ин минтақа ҳоло харитаи сӯхтор нест.',
+    monthEmpty: (m) => `Дар ${m} ягон шашкунҷа ба ҳадди харита нарасид (≥ 0,5 рӯзи сӯхтор)`,
+    topItemAvg: (lat, lon, v) => `${lat}, ${lon} · ${v} рӯзи сӯхтор дар як сол (миёна)`,
+    popupAvg: (v) => `ба ҳисоби миёна ${v} рӯзи сӯхтор дар як сол дар ин шашкунҷа (~250 км²)`,
     fireLoading: 'Ҷойҳои сӯхтор бор мешаванд…',
     fireLegend:
       'Равшантар — рӯзҳои сӯхтор бештар. Ҳар нуқта — шашкунҷаи тақрибан 250 км²; барои дидани ҳар яке наздик кунед.',
-    fireCount: (n) => `шашкунҷаҳо бо оташ: ${n}`,
+    fireCount: (n) => `шашкунҷаҳо бо ≥ 0,5 рӯзи сӯхтор: ${n}`,
     fireTruncated: 'танҳо пурзӯртаринҳо нишон дода шудаанд',
     firePartial: 'моҳ ҳанӯз тамом нашудааст',
-    topTitle: 'Пурзӯртарин минтақаҳои сӯхтор — барои парвоз пахш кунед',
+    topTitle: 'Шашкунҷаҳо бо бештарин рӯзҳои сӯхтор — барои парвоз пахш кунед',
     topItem: (lat, lon, v) => `${lat}, ${lon} · ${v} рӯзи сӯхтор`,
     hemi: { n: 'а. ш.', s: 'а. ҷ.', e: 'т. ш.', w: 'т. ғ.' },
     popup: (v) => `${v} рӯзи сӯхтор дар ин шашкунҷа (~250 км²)`,
@@ -1155,7 +1184,7 @@ const tg: Messages = {
   },
   errors: {
     no_coverage:
-      'Барои ин ҷой дар ин версия маълумоти сӯхтор нест. Аз рӯйхати кишварҳо Қазоқистон ё Техасро интихоб кунед.',
+      'Барои ин ҷой дар ин версия маълумоти сӯхтор нест. Аз рӯйхат кишвар ё шаҳрро интихоб кунед.',
     not_found: 'Ин ҷой ёфт нашуд.',
     invalid_area:
       'Ин минтақаро ҳисоб кардан ғайриимкон аст. Онро хурдтар кунед ё аз қутбҳо дур гузоред.',

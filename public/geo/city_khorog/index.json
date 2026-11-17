@@ -1,1 +1,1 @@
-{"v":1,"id":"city_khorog","unit":"harmonized cell-days per H3 res-5 cell (~250 km2)","min_value":0.5,"typical":{"from":2013,"to":2025,"per":"year","pts":[[71.538,37.568,0.5]],"truncated":false},"months":["2026-03","2026-06","2026-09","2026-11"],"partial_month":"2026-11"}
+{"v":1,"id":"city_khorog","unit":"harmonized cell-days per H3 res-5 cell (~250 km2)","min_value":0.5,"typical":{"from":2013,"to":2025,"per":"year","pts":[[71.538,37.568,0.5]],"truncated":false},"months":["2026-03","2026-06","2026-09","2026-11"],"window":["2025-12","2026-11"],"partial_month":"2026-11"}
