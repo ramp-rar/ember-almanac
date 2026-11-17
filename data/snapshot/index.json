@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-15T17:03:40Z",
+ "generated_at": "2026-11-17T13:37:40Z",
  "source": "fire-calendar-api (data team) at http://localhost:8000",
  "meta": {
   "contract_version": "1",
@@ -388,7 +388,7 @@
     "en": "Benin",
     "ru": "Бенин",
     "tg": "Бенин",
-    "iso2": "DY"
+    "iso2": "BJ"
    }
   },
   {
@@ -535,7 +535,7 @@
     "en": "Burkina Faso",
     "ru": "Буркина-Фасо",
     "tg": "Буркина-Фасо",
-    "iso2": "HV"
+    "iso2": "BF"
    }
   },
   {
@@ -1102,7 +1102,7 @@
     "en": "France",
     "ru": "Франция",
     "tg": "Фаронса",
-    "iso2": "FX"
+    "iso2": "FR"
    }
   },
   {
@@ -2698,7 +2698,7 @@
     "en": "Serbia",
     "ru": "Сербия",
     "tg": "Сербия",
-    "iso2": "YU"
+    "iso2": "RS"
    }
   },
   {
@@ -3244,7 +3244,7 @@
     "en": "United Kingdom",
     "ru": "Великобритания",
     "tg": "Шоҳигарии Муттаҳида",
-    "iso2": "UK"
+    "iso2": "GB"
    }
   },
   {
@@ -3307,7 +3307,7 @@
     "en": "Vanuatu",
     "ru": "Вануату",
     "tg": "Вануату",
-    "iso2": "VU"
+    "iso2": "NH"
    }
   },
   {
@@ -3791,6 +3791,3366 @@
     "en": "San Antonio · 50 km",
     "ru": "Сан-Антонио · 50 км",
     "tg": "Сан-Антонио · 50 км"
+   }
+  },
+  {
+   "id": "city_port_of_spain",
+   "name": "Port of Spain (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -61.974,
+    10.2028,
+    -61.06,
+    11.1012
+   ],
+   "hexes_r5": 38,
+   "group": "city",
+   "country": "trinidad_and_tobago",
+   "names": {
+    "en": "Port of Spain · 50 km",
+    "ru": "Порт-оф-Спейн · 50 км",
+    "tg": "Порт-оф-Спейн · 50 км"
+   }
+  },
+  {
+   "id": "city_kigali",
+   "name": "Kigali (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    29.6092,
+    -2.4008,
+    30.508,
+    -1.5024
+   ],
+   "hexes_r5": 26,
+   "group": "city",
+   "country": "rwanda",
+   "names": {
+    "en": "Kigali · 50 km",
+    "ru": "Кигали · 50 км",
+    "tg": "Кигали · 50 км"
+   }
+  },
+  {
+   "id": "city_mbabane",
+   "name": "Mbabane (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    30.6322,
+    -26.7659,
+    31.6344,
+    -25.8675
+   ],
+   "hexes_r5": 27,
+   "group": "city",
+   "country": "swaziland",
+   "names": {
+    "en": "Mbabane · 50 km",
+    "ru": "Мбабане · 50 км",
+    "tg": "Мбабане · 50 км"
+   }
+  },
+  {
+   "id": "city_bratislava",
+   "name": "Bratislava (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    16.4438,
+    47.7008,
+    17.7902,
+    48.5992
+   ],
+   "hexes_r5": 31,
+   "group": "city",
+   "country": "slovakia",
+   "names": {
+    "en": "Bratislava · 50 km",
+    "ru": "Братислава · 50 км",
+    "tg": "Братислава · 50 км"
+   }
+  },
+  {
+   "id": "city_doha",
+   "name": "Doha (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    51.0362,
+    24.8374,
+    52.0298,
+    25.7358
+   ],
+   "hexes_r5": 34,
+   "group": "city",
+   "country": "qatar",
+   "names": {
+    "en": "Doha · 50 km",
+    "ru": "Доха · 50 км",
+    "tg": "Доҳа · 50 км"
+   }
+  },
+  {
+   "id": "city_podgorica",
+   "name": "Podgorica (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    18.6574,
+    42.0168,
+    19.8752,
+    42.9152
+   ],
+   "hexes_r5": 29,
+   "group": "city",
+   "country": "montenegro",
+   "names": {
+    "en": "Podgorica · 50 km",
+    "ru": "Подгорица · 50 км",
+    "tg": "Подгорица · 50 км"
+   }
+  },
+  {
+   "id": "city_bern",
+   "name": "Bern (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    6.8094,
+    46.4675,
+    8.1246,
+    47.3659
+   ],
+   "hexes_r5": 33,
+   "group": "city",
+   "country": "switzerland",
+   "names": {
+    "en": "Bern · 50 km",
+    "ru": "Берн · 50 км",
+    "tg": "Берн · 50 км"
+   }
+  },
+  {
+   "id": "city_banjul",
+   "name": "Banjul (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -17.0535,
+    13.0047,
+    -16.1299,
+    13.9031
+   ],
+   "hexes_r5": 32,
+   "group": "city",
+   "country": "the_gambia",
+   "names": {
+    "en": "Banjul · 50 km",
+    "ru": "Банжул · 50 км",
+    "tg": "Банжул · 50 км"
+   }
+  },
+  {
+   "id": "city_skopje",
+   "name": "Skopje (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    20.8291,
+    41.5508,
+    22.0379,
+    42.4492
+   ],
+   "hexes_r5": 28,
+   "group": "city",
+   "country": "macedonia_former_yugoslav_republic_of",
+   "names": {
+    "en": "Skopje · 50 km",
+    "ru": "Скопье · 50 км",
+    "tg": "Скопье · 50 км"
+   }
+  },
+  {
+   "id": "city_bujumbura",
+   "name": "Bujumbura (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    28.9101,
+    -3.8253,
+    29.8099,
+    -2.9269
+   ],
+   "hexes_r5": 28,
+   "group": "city",
+   "country": "burundi",
+   "names": {
+    "en": "Bujumbura · 50 km",
+    "ru": "Бужумбура · 50 км",
+    "tg": "Бужумбура · 50 км"
+   }
+  },
+  {
+   "id": "city_montevideo",
+   "name": "Montevideo (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -56.7204,
+    -35.3053,
+    -55.6256,
+    -34.4069
+   ],
+   "hexes_r5": 41,
+   "group": "city",
+   "country": "uruguay",
+   "names": {
+    "en": "Montevideo · 50 km",
+    "ru": "Монтевидео · 50 км",
+    "tg": "Монтевидео · 50 км"
+   }
+  },
+  {
+   "id": "city_lome",
+   "name": "Lomé (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    0.7691,
+    5.6847,
+    1.6725,
+    6.5831
+   ],
+   "hexes_r5": 40,
+   "group": "city",
+   "country": "togo",
+   "names": {
+    "en": "Lomé · 50 km",
+    "ru": "Ломе · 50 км",
+    "tg": "Ломе · 50 км"
+   }
+  },
+  {
+   "id": "city_tunis",
+   "name": "Tunis (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    9.6187,
+    36.3536,
+    10.7407,
+    37.252
+   ],
+   "hexes_r5": 28,
+   "group": "city",
+   "country": "tunisia",
+   "names": {
+    "en": "Tunis · 50 km",
+    "ru": "Тунис · 50 км",
+    "tg": "Тунис · 50 км"
+   }
+  },
+  {
+   "id": "city_abu_dhabi",
+   "name": "Abu Dhabi (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    53.8731,
+    24.0175,
+    54.8601,
+    24.9159
+   ],
+   "hexes_r5": 36,
+   "group": "city",
+   "country": "united_arab_emirates",
+   "names": {
+    "en": "Abu Dhabi · 50 km",
+    "ru": "Абу-Даби · 50 км",
+    "tg": "Абузабӣ · 50 км"
+   }
+  },
+  {
+   "id": "city_ashgabat",
+   "name": "Ashgabat (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    57.8137,
+    37.5008,
+    58.9529,
+    38.3992
+   ],
+   "hexes_r5": 27,
+   "group": "city",
+   "country": "turkmenistan",
+   "names": {
+    "en": "Ashgabat · 50 km",
+    "ru": "Ашхабад · 50 км",
+    "tg": "Ашқобод · 50 км"
+   }
+  },
+  {
+   "id": "city_harare",
+   "name": "Harare (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    30.571,
+    -18.265,
+    31.5146,
+    -17.3666
+   ],
+   "hexes_r5": 27,
+   "group": "city",
+   "country": "zimbabwe",
+   "names": {
+    "en": "Harare · 50 km",
+    "ru": "Хараре · 50 км",
+    "tg": "Хараре · 50 км"
+   }
+  },
+  {
+   "id": "city_dili",
+   "name": "Dili (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    125.1253,
+    -9.0086,
+    126.0337,
+    -8.1102
+   ],
+   "hexes_r5": 31,
+   "group": "city",
+   "country": "timor_leste",
+   "names": {
+    "en": "Dili · 50 km",
+    "ru": "Дили · 50 км",
+    "tg": "Дили · 50 км"
+   }
+  },
+  {
+   "id": "city_tegucigalpa",
+   "name": "Tegucigalpa (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -87.6826,
+    13.6548,
+    -86.7564,
+    14.5532
+   ],
+   "hexes_r5": 33,
+   "group": "city",
+   "country": "honduras",
+   "names": {
+    "en": "Tegucigalpa · 50 km",
+    "ru": "Тегусигальпа · 50 км",
+    "tg": "Тегусигальпа · 50 км"
+   }
+  },
+  {
+   "id": "city_georgetown",
+   "name": "Georgetown (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -58.6193,
+    6.3528,
+    -57.7147,
+    7.2512
+   ],
+   "hexes_r5": 30,
+   "group": "city",
+   "country": "guyana",
+   "names": {
+    "en": "Georgetown · 50 km",
+    "ru": "Джорджтаун · 50 км",
+    "tg": "Джорджтаун · 50 км"
+   }
+  },
+  {
+   "id": "city_reykjavik",
+   "name": "Reykjavík (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -22.9801,
+    63.7008,
+    -20.9199,
+    64.5992
+   ],
+   "hexes_r5": 33,
+   "group": "city",
+   "country": "iceland",
+   "names": {
+    "en": "Reykjavík · 50 km",
+    "ru": "Рейкьявик · 50 км",
+    "tg": "Рейкьявик · 50 км"
+   }
+  },
+  {
+   "id": "city_port_au_prince",
+   "name": "Port-au-Prince (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -72.8118,
+    18.0938,
+    -71.8642,
+    18.9922
+   ],
+   "hexes_r5": 40,
+   "group": "city",
+   "country": "haiti",
+   "names": {
+    "en": "Port-au-Prince · 50 km",
+    "ru": "Порт-о-Пренс · 50 км",
+    "tg": "Порт-о-Пренс · 50 км"
+   }
+  },
+  {
+   "id": "city_kampala",
+   "name": "Kampala (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    32.1322,
+    -0.1306,
+    33.0306,
+    0.7678
+   ],
+   "hexes_r5": 27,
+   "group": "city",
+   "country": "uganda",
+   "names": {
+    "en": "Kampala · 50 km",
+    "ru": "Кампала · 50 км",
+    "tg": "Кампала · 50 км"
+   }
+  },
+  {
+   "id": "city_paramaribo",
+   "name": "Paramaribo (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -55.6185,
+    5.3858,
+    -54.7155,
+    6.2842
+   ],
+   "hexes_r5": 30,
+   "group": "city",
+   "country": "suriname",
+   "names": {
+    "en": "Paramaribo · 50 km",
+    "ru": "Парамарибо · 50 км",
+    "tg": "Парамарибо · 50 км"
+   }
+  },
+  {
+   "id": "city_niamey",
+   "name": "Niamey (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    1.6527,
+    13.0695,
+    2.5767,
+    13.9679
+   ],
+   "hexes_r5": 32,
+   "group": "city",
+   "country": "niger",
+   "names": {
+    "en": "Niamey · 50 km",
+    "ru": "Ниамей · 50 км",
+    "tg": "Ниамей · 50 км"
+   }
+  },
+  {
+   "id": "city_asuncion",
+   "name": "Asunción (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -58.1403,
+    -25.7437,
+    -57.1467,
+    -24.8453
+   ],
+   "hexes_r5": 34,
+   "group": "city",
+   "country": "paraguay",
+   "names": {
+    "en": "Asunción · 50 km",
+    "ru": "Асунсьон · 50 км",
+    "tg": "Асунсьон · 50 км"
+   }
+  },
+  {
+   "id": "city_managua",
+   "name": "Managua (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -86.7299,
+    11.7058,
+    -85.8109,
+    12.6042
+   ],
+   "hexes_r5": 33,
+   "group": "city",
+   "country": "nicaragua",
+   "names": {
+    "en": "Managua · 50 km",
+    "ru": "Манагуа · 50 км",
+    "tg": "Манагуа · 50 км"
+   }
+  },
+  {
+   "id": "city_freetown",
+   "name": "Freetown (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -13.6903,
+    8.0228,
+    -12.7821,
+    8.9212
+   ],
+   "hexes_r5": 38,
+   "group": "city",
+   "country": "sierra_leone",
+   "names": {
+    "en": "Freetown · 50 km",
+    "ru": "Фритаун · 50 км",
+    "tg": "Фритаун · 50 км"
+   }
+  },
+  {
+   "id": "city_islamabad",
+   "name": "Islamabad (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    72.6248,
+    33.2527,
+    73.7046,
+    34.1511
+   ],
+   "hexes_r5": 27,
+   "group": "city",
+   "country": "pakistan",
+   "names": {
+    "en": "Islamabad · 50 km",
+    "ru": "Исламабад · 50 км",
+    "tg": "Исломобод · 50 км"
+   }
+  },
+  {
+   "id": "city_kathmandu",
+   "name": "Kathmandu (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    84.8073,
+    27.2694,
+    85.8221,
+    28.1678
+   ],
+   "hexes_r5": 32,
+   "group": "city",
+   "country": "nepal",
+   "names": {
+    "en": "Kathmandu · 50 km",
+    "ru": "Катманду · 50 км",
+    "tg": "Катманду · 50 км"
+   }
+  },
+  {
+   "id": "city_bloemfontein",
+   "name": "Bloemfontein (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    25.7158,
+    -29.5692,
+    26.744,
+    -28.6708
+   ],
+   "hexes_r5": 27,
+   "group": "city",
+   "country": "south_africa",
+   "names": {
+    "en": "Bloemfontein · 50 km",
+    "ru": "Блумфонтейн · 50 км",
+    "tg": "Блумфонтейн · 50 км"
+   }
+  },
+  {
+   "id": "city_pretoria",
+   "name": "Pretoria (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    27.729,
+    -26.1542,
+    28.726,
+    -25.2558
+   ],
+   "hexes_r5": 29,
+   "group": "city",
+   "country": "south_africa",
+   "names": {
+    "en": "Pretoria · 50 km",
+    "ru": "Претория · 50 км",
+    "tg": "Претория · 50 км"
+   }
+  },
+  {
+   "id": "city_port_moresby",
+   "name": "Port Moresby (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    146.7371,
+    -9.9139,
+    147.6479,
+    -9.0155
+   ],
+   "hexes_r5": 29,
+   "group": "city",
+   "country": "papua_new_guinea",
+   "names": {
+    "en": "Port Moresby · 50 km",
+    "ru": "Порт-Морсби · 50 км",
+    "tg": "Порт-Морсби · 50 км"
+   }
+  },
+  {
+   "id": "city_panama_city",
+   "name": "Panama City (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -79.9897,
+    8.5208,
+    -79.0803,
+    9.4192
+   ],
+   "hexes_r5": 32,
+   "group": "city",
+   "country": "panama",
+   "names": {
+    "en": "Panama City · 50 km",
+    "ru": "Панама · 50 км",
+    "tg": "Панама · 50 км"
+   }
+  },
+  {
+   "id": "city_rabat",
+   "name": "Rabat (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -7.3783,
+    33.5761,
+    -6.2945,
+    34.4745
+   ],
+   "hexes_r5": 28,
+   "group": "city",
+   "country": "morocco",
+   "names": {
+    "en": "Rabat · 50 km",
+    "ru": "Рабат · 50 км",
+    "tg": "Рабат · 50 км"
+   }
+  },
+  {
+   "id": "city_chisinau",
+   "name": "Chișinău (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    28.1991,
+    46.5558,
+    29.5163,
+    47.4542
+   ],
+   "hexes_r5": 29,
+   "group": "city",
+   "country": "moldova",
+   "names": {
+    "en": "Chișinău · 50 km",
+    "ru": "Кишинёв · 50 км",
+    "tg": "Кишинёв · 50 км"
+   }
+  },
+  {
+   "id": "city_maputo",
+   "name": "Maputo (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    32.0877,
+    -26.4025,
+    33.0867,
+    -25.5041
+   ],
+   "hexes_r5": 27,
+   "group": "city",
+   "country": "mozambique",
+   "names": {
+    "en": "Maputo · 50 km",
+    "ru": "Мапуту · 50 км",
+    "tg": "Мапуту · 50 км"
+   }
+  },
+  {
+   "id": "city_mogadishu",
+   "name": "Mogadishu (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    44.9153,
+    1.6194,
+    45.8141,
+    2.5178
+   ],
+   "hexes_r5": 35,
+   "group": "city",
+   "country": "somalia",
+   "names": {
+    "en": "Mogadishu · 50 km",
+    "ru": "Могадишо · 50 км",
+    "tg": "Могадишо · 50 км"
+   }
+  },
+  {
+   "id": "city_muscat",
+   "name": "Muscat (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    58.1031,
+    23.1641,
+    59.0835,
+    24.0625
+   ],
+   "hexes_r5": 33,
+   "group": "city",
+   "country": "oman",
+   "names": {
+    "en": "Muscat · 50 km",
+    "ru": "Маскат · 50 км",
+    "tg": "Масқат · 50 км"
+   }
+  },
+  {
+   "id": "city_colombo",
+   "name": "Colombo (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    79.4053,
+    6.4828,
+    80.3103,
+    7.3812
+   ],
+   "hexes_r5": 29,
+   "group": "city",
+   "country": "sri_lanka",
+   "names": {
+    "en": "Colombo · 50 km",
+    "ru": "Коломбо · 50 км",
+    "tg": "Коломбо · 50 км"
+   }
+  },
+  {
+   "id": "city_ulaanbaatar",
+   "name": "Ulaanbaatar (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    106.2445,
+    47.4694,
+    107.5849,
+    48.3678
+   ],
+   "hexes_r5": 33,
+   "group": "city",
+   "country": "mongolia",
+   "names": {
+    "en": "Ulaanbaatar · 50 km",
+    "ru": "Улан-Батор · 50 км",
+    "tg": "Улан-Батор · 50 км"
+   }
+  },
+  {
+   "id": "city_windhoek",
+   "name": "Windhoek (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    16.5971,
+    -23.0192,
+    17.5699,
+    -22.1208
+   ],
+   "hexes_r5": 28,
+   "group": "city",
+   "country": "namibia",
+   "names": {
+    "en": "Windhoek · 50 km",
+    "ru": "Виндхук · 50 км",
+    "tg": "Виндхук · 50 км"
+   }
+  },
+  {
+   "id": "city_abuja",
+   "name": "Abuja (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    7.0765,
+    8.6361,
+    7.9863,
+    9.5345
+   ],
+   "hexes_r5": 33,
+   "group": "city",
+   "country": "nigeria",
+   "names": {
+    "en": "Abuja · 50 km",
+    "ru": "Абуджа · 50 км",
+    "tg": "Абуджа · 50 км"
+   }
+  },
+  {
+   "id": "city_bissau",
+   "name": "Bissau (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -16.0574,
+    11.4158,
+    -15.1394,
+    12.3142
+   ],
+   "hexes_r5": 34,
+   "group": "city",
+   "country": "guinea_bissau",
+   "names": {
+    "en": "Bissau · 50 km",
+    "ru": "Бисау · 50 км",
+    "tg": "Бисау · 50 км"
+   }
+  },
+  {
+   "id": "city_vilnius",
+   "name": "Vilnius (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    24.5396,
+    54.2342,
+    26.0936,
+    55.1326
+   ],
+   "hexes_r5": 34,
+   "group": "city",
+   "country": "lithuania",
+   "names": {
+    "en": "Vilnius · 50 km",
+    "ru": "Вильнюс · 50 км",
+    "tg": "Вильнюс · 50 км"
+   }
+  },
+  {
+   "id": "city_riga",
+   "name": "Riga (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    23.2764,
+    56.5008,
+    24.9236,
+    57.3992
+   ],
+   "hexes_r5": 37,
+   "group": "city",
+   "country": "latvia",
+   "names": {
+    "en": "Riga · 50 km",
+    "ru": "Рига · 50 км",
+    "tg": "Рига · 50 км"
+   }
+  },
+  {
+   "id": "city_maseru",
+   "name": "Maseru (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    26.9682,
+    -29.7659,
+    27.9984,
+    -28.8675
+   ],
+   "hexes_r5": 28,
+   "group": "city",
+   "country": "lesotho",
+   "names": {
+    "en": "Maseru · 50 km",
+    "ru": "Масеру · 50 км",
+    "tg": "Масеру · 50 км"
+   }
+  },
+  {
+   "id": "city_antananarivo",
+   "name": "Antananarivo (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    47.0399,
+    -19.3639,
+    47.9895,
+    -18.4655
+   ],
+   "hexes_r5": 32,
+   "group": "city",
+   "country": "madagascar",
+   "names": {
+    "en": "Antananarivo · 50 km",
+    "ru": "Антананариву · 50 км",
+    "tg": "Антананариву · 50 км"
+   }
+  },
+  {
+   "id": "city_quito",
+   "name": "Quito (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -78.9512,
+    -0.6622,
+    -78.0528,
+    0.2362
+   ],
+   "hexes_r5": 28,
+   "group": "city",
+   "country": "ecuador",
+   "names": {
+    "en": "Quito · 50 km",
+    "ru": "Кито · 50 км",
+    "tg": "Кито · 50 км"
+   }
+  },
+  {
+   "id": "city_san_jose",
+   "name": "San José (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -84.542,
+    9.4878,
+    -83.63,
+    10.3862
+   ],
+   "hexes_r5": 30,
+   "group": "city",
+   "country": "costa_rica",
+   "names": {
+    "en": "San José · 50 km",
+    "ru": "Сан-Хосе · 50 км",
+    "tg": "Сан-Хосе · 50 км"
+   }
+  },
+  {
+   "id": "city_san_salvador",
+   "name": "San Salvador (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -89.6673,
+    13.2627,
+    -88.7427,
+    14.1611
+   ],
+   "hexes_r5": 31,
+   "group": "city",
+   "country": "el_salvador",
+   "names": {
+    "en": "San Salvador · 50 km",
+    "ru": "Сан-Сальвадор · 50 км",
+    "tg": "Сан-Сальвадор · 50 км"
+   }
+  },
+  {
+   "id": "city_kingston",
+   "name": "Kingston (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -77.2396,
+    17.5279,
+    -76.2952,
+    18.4263
+   ],
+   "hexes_r5": 39,
+   "group": "city",
+   "country": "jamaica",
+   "names": {
+    "en": "Kingston · 50 km",
+    "ru": "Кингстон · 50 км",
+    "tg": "Кингстон · 50 км"
+   }
+  },
+  {
+   "id": "city_n_djamena",
+   "name": "N'Djamena (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    14.5878,
+    11.6658,
+    15.5066,
+    12.5642
+   ],
+   "hexes_r5": 30,
+   "group": "city",
+   "country": "chad",
+   "names": {
+    "en": "N'Djamena · 50 km",
+    "ru": "Нджамена · 50 км",
+    "tg": "Нджамена · 50 км"
+   }
+  },
+  {
+   "id": "city_malabo",
+   "name": "Malabo (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    8.3332,
+    3.3008,
+    9.2334,
+    4.1992
+   ],
+   "hexes_r5": 36,
+   "group": "city",
+   "country": "equatorial_guinea",
+   "names": {
+    "en": "Malabo · 50 km",
+    "ru": "Малабо · 50 км",
+    "tg": "Малабо · 50 км"
+   }
+  },
+  {
+   "id": "city_asmara",
+   "name": "Asmara (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    38.4676,
+    14.8841,
+    39.399,
+    15.7825
+   ],
+   "hexes_r5": 31,
+   "group": "city",
+   "country": "eritrea",
+   "names": {
+    "en": "Asmara · 50 km",
+    "ru": "Асмэра · 50 км",
+    "tg": "Асмэра · 50 км"
+   }
+  },
+  {
+   "id": "city_zagreb",
+   "name": "Zagreb (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    15.3557,
+    45.3508,
+    16.6443,
+    46.2492
+   ],
+   "hexes_r5": 32,
+   "group": "city",
+   "country": "croatia",
+   "names": {
+    "en": "Zagreb · 50 km",
+    "ru": "Загреб · 50 км",
+    "tg": "Загреб · 50 км"
+   }
+  },
+  {
+   "id": "city_lilongwe",
+   "name": "Lilongwe (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    33.3204,
+    -14.4325,
+    34.2462,
+    -13.5341
+   ],
+   "hexes_r5": 26,
+   "group": "city",
+   "country": "malawi",
+   "names": {
+    "en": "Lilongwe · 50 km",
+    "ru": "Лилонгве · 50 км",
+    "tg": "Лилонгве · 50 км"
+   }
+  },
+  {
+   "id": "city_guatemala_city",
+   "name": "Guatemala City (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -90.9931,
+    14.1739,
+    -90.0647,
+    15.0723
+   ],
+   "hexes_r5": 29,
+   "group": "city",
+   "country": "guatemala",
+   "names": {
+    "en": "Guatemala City · 50 km",
+    "ru": "Гватемала · 50 км",
+    "tg": "Гватемала · 50 км"
+   }
+  },
+  {
+   "id": "city_libreville",
+   "name": "Libreville (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    9.0088,
+    -0.0638,
+    9.9072,
+    0.8346
+   ],
+   "hexes_r5": 32,
+   "group": "city",
+   "country": "gabon",
+   "names": {
+    "en": "Libreville · 50 km",
+    "ru": "Либревиль · 50 км",
+    "tg": "Либревиль · 50 км"
+   }
+  },
+  {
+   "id": "city_suva",
+   "name": "Suva (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    177.9691,
+    -18.5822,
+    178.9143,
+    -17.6838
+   ],
+   "hexes_r5": 36,
+   "group": "city",
+   "country": "fiji",
+   "names": {
+    "en": "Suva · 50 km",
+    "ru": "Сува · 50 км",
+    "tg": "Сува · 50 км"
+   }
+  },
+  {
+   "id": "city_nouakchott",
+   "name": "Nouakchott (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -16.4478,
+    17.6372,
+    -15.5028,
+    18.5356
+   ],
+   "hexes_r5": 28,
+   "group": "city",
+   "country": "mauritania",
+   "names": {
+    "en": "Nouakchott · 50 km",
+    "ru": "Нуакшот · 50 км",
+    "tg": "Нуакшот · 50 км"
+   }
+  },
+  {
+   "id": "city_bamako",
+   "name": "Bamako (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -8.4623,
+    12.2028,
+    -7.5417,
+    13.1012
+   ],
+   "hexes_r5": 39,
+   "group": "city",
+   "country": "mali",
+   "names": {
+    "en": "Bamako · 50 km",
+    "ru": "Бамако · 50 км",
+    "tg": "Бамако · 50 км"
+   }
+  },
+  {
+   "id": "city_beirut",
+   "name": "Beirut (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    34.9668,
+    33.4247,
+    36.0488,
+    34.3231
+   ],
+   "hexes_r5": 27,
+   "group": "city",
+   "country": "lebanon",
+   "names": {
+    "en": "Beirut · 50 km",
+    "ru": "Бейрут · 50 км",
+    "tg": "Бейрут · 50 км"
+   }
+  },
+  {
+   "id": "city_tbilisi",
+   "name": "Tbilisi (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    44.187,
+    41.2778,
+    45.3906,
+    42.1762
+   ],
+   "hexes_r5": 33,
+   "group": "city",
+   "country": "georgia",
+   "names": {
+    "en": "Tbilisi · 50 km",
+    "ru": "Тбилиси · 50 км",
+    "tg": "Тбилиси · 50 км"
+   }
+  },
+  {
+   "id": "city_vientiane",
+   "name": "Vientiane (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    102.1278,
+    17.5175,
+    103.0722,
+    18.4159
+   ],
+   "hexes_r5": 28,
+   "group": "city",
+   "country": "lao_pdr",
+   "names": {
+    "en": "Vientiane · 50 km",
+    "ru": "Вьентьян · 50 км",
+    "tg": "Вьентьян · 50 км"
+   }
+  },
+  {
+   "id": "city_brazzaville",
+   "name": "Brazzaville (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    14.8323,
+    -4.7064,
+    15.7331,
+    -3.808
+   ],
+   "hexes_r5": 28,
+   "group": "city",
+   "country": "republic_of_congo",
+   "names": {
+    "en": "Brazzaville · 50 km",
+    "ru": "Браззавиль · 50 км",
+    "tg": "Браззавиль · 50 км"
+   }
+  },
+  {
+   "id": "city_conakry",
+   "name": "Conakry (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -14.1376,
+    9.0843,
+    -13.2268,
+    9.9827
+   ],
+   "hexes_r5": 37,
+   "group": "city",
+   "country": "guinea",
+   "names": {
+    "en": "Conakry · 50 km",
+    "ru": "Конакри · 50 км",
+    "tg": "Конакри · 50 км"
+   }
+  },
+  {
+   "id": "city_yamoussoukro",
+   "name": "Yamoussoukro (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -5.7279,
+    6.3692,
+    -4.8231,
+    7.2676
+   ],
+   "hexes_r5": 43,
+   "group": "city",
+   "country": "cote_d_ivoire",
+   "names": {
+    "en": "Yamoussoukro · 50 km",
+    "ru": "Ямусукро · 50 км",
+    "tg": "Ямусукро · 50 км"
+   }
+  },
+  {
+   "id": "city_ottawa",
+   "name": "Ottawa (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -76.3419,
+    44.9694,
+    -75.0621,
+    45.8678
+   ],
+   "hexes_r5": 29,
+   "group": "city",
+   "country": "canada",
+   "names": {
+    "en": "Ottawa · 50 km",
+    "ru": "Оттава · 50 км",
+    "tg": "Оттава · 50 км"
+   }
+  },
+  {
+   "id": "city_belgrade",
+   "name": "Belgrade (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    19.8328,
+    44.3714,
+    21.0992,
+    45.2698
+   ],
+   "hexes_r5": 29,
+   "group": "city",
+   "country": "serbia",
+   "names": {
+    "en": "Belgrade · 50 km",
+    "ru": "Белград · 50 км",
+    "tg": "Белград · 50 км"
+   }
+  },
+  {
+   "id": "city_sucre",
+   "name": "Sucre (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -65.7347,
+    -19.4902,
+    -64.7843,
+    -18.5918
+   ],
+   "hexes_r5": 32,
+   "group": "city",
+   "country": "bolivia",
+   "names": {
+    "en": "Sucre · 50 km",
+    "ru": "Сукре · 50 км",
+    "tg": "Сукре · 50 км"
+   }
+  },
+  {
+   "id": "city_belmopan",
+   "name": "Belmopan (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -89.2374,
+    16.8028,
+    -88.2968,
+    17.7012
+   ],
+   "hexes_r5": 30,
+   "group": "city",
+   "country": "belize",
+   "names": {
+    "en": "Belmopan · 50 km",
+    "ru": "Бельмопан · 50 км",
+    "tg": "Бельмопан · 50 км"
+   }
+  },
+  {
+   "id": "city_bangui",
+   "name": "Bangui (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    18.1078,
+    3.9174,
+    19.0088,
+    4.8158
+   ],
+   "hexes_r5": 29,
+   "group": "city",
+   "country": "central_african_republic",
+   "names": {
+    "en": "Bangui · 50 km",
+    "ru": "Банги · 50 км",
+    "tg": "Банги · 50 км"
+   }
+  },
+  {
+   "id": "city_yaounde",
+   "name": "Yaoundé (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    11.0645,
+    3.4194,
+    11.9649,
+    4.3178
+   ],
+   "hexes_r5": 33,
+   "group": "city",
+   "country": "cameroon",
+   "names": {
+    "en": "Yaoundé · 50 km",
+    "ru": "Яунде · 50 км",
+    "tg": "Яунде · 50 км"
+   }
+  },
+  {
+   "id": "city_tirana",
+   "name": "Tirana (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    19.2208,
+    40.8783,
+    20.417,
+    41.7767
+   ],
+   "hexes_r5": 28,
+   "group": "city",
+   "country": "albania",
+   "names": {
+    "en": "Tirana · 50 km",
+    "ru": "Тирана · 50 км",
+    "tg": "Тирана · 50 км"
+   }
+  },
+  {
+   "id": "city_yerevan",
+   "name": "Yerevan (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    43.9237,
+    39.7339,
+    45.0995,
+    40.6323
+   ],
+   "hexes_r5": 30,
+   "group": "city",
+   "country": "armenia",
+   "names": {
+    "en": "Yerevan · 50 km",
+    "ru": "Ереван · 50 км",
+    "tg": "Ереван · 50 км"
+   }
+  },
+  {
+   "id": "city_baku",
+   "name": "Baku (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    49.2705,
+    39.948,
+    50.4501,
+    40.8464
+   ],
+   "hexes_r5": 30,
+   "group": "city",
+   "country": "azerbaijan",
+   "names": {
+    "en": "Baku · 50 km",
+    "ru": "Баку · 50 км",
+    "tg": "Боку · 50 км"
+   }
+  },
+  {
+   "id": "city_phnom_penh",
+   "name": "Phnom Penh (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    104.4563,
+    11.1028,
+    105.3731,
+    12.0012
+   ],
+   "hexes_r5": 27,
+   "group": "city",
+   "country": "cambodia",
+   "names": {
+    "en": "Phnom Penh · 50 km",
+    "ru": "Пномпень · 50 км",
+    "tg": "Пномпень · 50 км"
+   }
+  },
+  {
+   "id": "city_la_paz",
+   "name": "La Paz (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -68.6203,
+    -16.9452,
+    -67.6835,
+    -16.0468
+   ],
+   "hexes_r5": 29,
+   "group": "city",
+   "country": "bolivia",
+   "names": {
+    "en": "La Paz · 50 km",
+    "ru": "Ла-Пас · 50 км",
+    "tg": "Ла-Пас · 50 км"
+   }
+  },
+  {
+   "id": "city_cotonou",
+   "name": "Cotonou (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    2.066,
+    5.9528,
+    2.97,
+    6.8512
+   ],
+   "hexes_r5": 39,
+   "group": "city",
+   "country": "benin",
+   "names": {
+    "en": "Cotonou · 50 km",
+    "ru": "Котону · 50 км",
+    "tg": "Котону · 50 км"
+   }
+  },
+  {
+   "id": "city_sofia",
+   "name": "Sofia (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    22.7037,
+    42.2361,
+    23.9257,
+    43.1345
+   ],
+   "hexes_r5": 27,
+   "group": "city",
+   "country": "bulgaria",
+   "names": {
+    "en": "Sofia · 50 km",
+    "ru": "София · 50 км",
+    "tg": "София · 50 км"
+   }
+  },
+  {
+   "id": "city_minsk",
+   "name": "Minsk (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    26.8023,
+    53.4527,
+    28.3271,
+    54.3511
+   ],
+   "hexes_r5": 34,
+   "group": "city",
+   "country": "belarus",
+   "names": {
+    "en": "Minsk · 50 km",
+    "ru": "Минск · 50 км",
+    "tg": "Минск · 50 км"
+   }
+  },
+  {
+   "id": "city_thimphu",
+   "name": "Thimphu (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    89.1328,
+    27.0238,
+    90.1452,
+    27.9222
+   ],
+   "hexes_r5": 33,
+   "group": "city",
+   "country": "bhutan",
+   "names": {
+    "en": "Thimphu · 50 km",
+    "ru": "Тхимпху · 50 км",
+    "tg": "Тхимпху · 50 км"
+   }
+  },
+  {
+   "id": "city_gaborone",
+   "name": "Gaborone (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    25.4177,
+    -25.0955,
+    26.4061,
+    -24.1971
+   ],
+   "hexes_r5": 27,
+   "group": "city",
+   "country": "botswana",
+   "names": {
+    "en": "Gaborone · 50 km",
+    "ru": "Габороне · 50 км",
+    "tg": "Габороне · 50 км"
+   }
+  },
+  {
+   "id": "city_canberra",
+   "name": "Canberra (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    148.5788,
+    -35.7322,
+    149.6792,
+    -34.8338
+   ],
+   "hexes_r5": 25,
+   "group": "city",
+   "country": "australia",
+   "names": {
+    "en": "Canberra · 50 km",
+    "ru": "Канберра · 50 км",
+    "tg": "Канберра · 50 км"
+   }
+  },
+  {
+   "id": "city_ouagadougou",
+   "name": "Ouagadougou (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -1.9865,
+    11.9231,
+    -1.0669,
+    12.8215
+   ],
+   "hexes_r5": 37,
+   "group": "city",
+   "country": "burkina_faso",
+   "names": {
+    "en": "Ouagadougou · 50 km",
+    "ru": "Уагадугу · 50 км",
+    "tg": "Уагадугу · 50 км"
+   }
+  },
+  {
+   "id": "city_sarajevo",
+   "name": "Sarajevo (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    17.7602,
+    43.4008,
+    19.0058,
+    44.2992
+   ],
+   "hexes_r5": 29,
+   "group": "city",
+   "country": "bosnia_and_herzegovina",
+   "names": {
+    "en": "Sarajevo · 50 km",
+    "ru": "Сараево · 50 км",
+    "tg": "Сараево · 50 км"
+   }
+  },
+  {
+   "id": "city_naypyidaw",
+   "name": "Naypyidaw (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    95.6394,
+    19.3193,
+    96.594,
+    20.2177
+   ],
+   "hexes_r5": 29,
+   "group": "city",
+   "country": "myanmar",
+   "names": {
+    "en": "Naypyidaw · 50 km",
+    "ru": "Нейпьидо · 50 км",
+    "tg": "Нейпьидо · 50 км"
+   }
+  },
+  {
+   "id": "city_jerusalem",
+   "name": "Jerusalem (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    34.6782,
+    31.3292,
+    35.735,
+    32.2276
+   ],
+   "hexes_r5": 27,
+   "group": "city",
+   "country": "israel",
+   "names": {
+    "en": "Jerusalem · 50 km",
+    "ru": "Иерусалим · 50 км",
+    "tg": "Иерусалим · 50 км"
+   }
+  },
+  {
+   "id": "city_nassau",
+   "name": "Nassau (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -77.8459,
+    24.6342,
+    -76.8541,
+    25.5326
+   ],
+   "hexes_r5": 37,
+   "group": "city",
+   "country": "bahamas",
+   "names": {
+    "en": "Nassau · 50 km",
+    "ru": "Нассау · 50 км",
+    "tg": "Нассау · 50 км"
+   }
+  },
+  {
+   "id": "city_nicosia",
+   "name": "Nicosia (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    32.8172,
+    34.7175,
+    33.916,
+    35.6159
+   ],
+   "hexes_r5": 27,
+   "group": "city",
+   "country": "cyprus",
+   "names": {
+    "en": "Nicosia · 50 km",
+    "ru": "Никосия · 50 км",
+    "tg": "Никосия · 50 км"
+   }
+  },
+  {
+   "id": "city_wellington",
+   "name": "Wellington (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    174.1854,
+    -41.7492,
+    175.3812,
+    -40.8508
+   ],
+   "hexes_r5": 29,
+   "group": "city",
+   "country": "new_zealand",
+   "names": {
+    "en": "Wellington · 50 km",
+    "ru": "Веллингтон · 50 км",
+    "tg": "Веллингтон · 50 км"
+   }
+  },
+  {
+   "id": "city_hanoi",
+   "name": "Hanoi (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    105.3669,
+    20.5861,
+    106.3293,
+    21.4845
+   ],
+   "hexes_r5": 28,
+   "group": "city",
+   "country": "vietnam",
+   "names": {
+    "en": "Hanoi · 50 km",
+    "ru": "Ханой · 50 км",
+    "tg": "Ханой · 50 км"
+   }
+  },
+  {
+   "id": "city_ankara",
+   "name": "Ankara (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    32.2767,
+    39.48,
+    33.4481,
+    40.3784
+   ],
+   "hexes_r5": 28,
+   "group": "city",
+   "country": "turkey",
+   "names": {
+    "en": "Ankara · 50 km",
+    "ru": "Анкара · 50 км",
+    "tg": "Анқара · 50 км"
+   }
+  },
+  {
+   "id": "city_budapest",
+   "name": "Budapest (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    18.4165,
+    47.0528,
+    19.7463,
+    47.9512
+   ],
+   "hexes_r5": 30,
+   "group": "city",
+   "country": "hungary",
+   "names": {
+    "en": "Budapest · 50 km",
+    "ru": "Будапешт · 50 км",
+    "tg": "Будапешт · 50 км"
+   }
+  },
+  {
+   "id": "city_sanaa",
+   "name": "Sanaa (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    43.7388,
+    14.9075,
+    44.6704,
+    15.8059
+   ],
+   "hexes_r5": 35,
+   "group": "city",
+   "country": "yemen",
+   "names": {
+    "en": "Sanaa · 50 km",
+    "ru": "Сана · 50 км",
+    "tg": "Санъо · 50 км"
+   }
+  },
+  {
+   "id": "city_bucharest",
+   "name": "Bucharest (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    25.469,
+    43.9861,
+    26.727,
+    44.8845
+   ],
+   "hexes_r5": 29,
+   "group": "city",
+   "country": "romania",
+   "names": {
+    "en": "Bucharest · 50 km",
+    "ru": "Бухарест · 50 км",
+    "tg": "Бухарест · 50 км"
+   }
+  },
+  {
+   "id": "city_damascus",
+   "name": "Damascus (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    35.7595,
+    33.0528,
+    36.8367,
+    33.9512
+   ],
+   "hexes_r5": 27,
+   "group": "city",
+   "country": "syria",
+   "names": {
+    "en": "Damascus · 50 km",
+    "ru": "Дамаск · 50 км",
+    "tg": "Димишқ · 50 км"
+   }
+  },
+  {
+   "id": "city_lisbon",
+   "name": "Lisbon (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -9.7225,
+    38.2755,
+    -8.5711,
+    39.1739
+   ],
+   "hexes_r5": 27,
+   "group": "city",
+   "country": "portugal",
+   "names": {
+    "en": "Lisbon · 50 km",
+    "ru": "Лиссабон · 50 км",
+    "tg": "Лиссабон · 50 км"
+   }
+  },
+  {
+   "id": "city_khartoum",
+   "name": "Khartoum (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    32.0659,
+    15.1408,
+    32.9985,
+    16.0392
+   ],
+   "hexes_r5": 28,
+   "group": "city",
+   "country": "sudan",
+   "names": {
+    "en": "Khartoum · 50 km",
+    "ru": "Хартум · 50 км",
+    "tg": "Хартум · 50 км"
+   }
+  },
+  {
+   "id": "city_oslo",
+   "name": "Oslo (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    9.8519,
+    59.4694,
+    11.6441,
+    60.3678
+   ],
+   "hexes_r5": 42,
+   "group": "city",
+   "country": "norway",
+   "names": {
+    "en": "Oslo · 50 km",
+    "ru": "Осло · 50 км",
+    "tg": "Осло · 50 км"
+   }
+  },
+  {
+   "id": "city_warsaw",
+   "name": "Warsaw (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    20.2644,
+    51.8027,
+    21.7318,
+    52.7011
+   ],
+   "hexes_r5": 35,
+   "group": "city",
+   "country": "poland",
+   "names": {
+    "en": "Warsaw · 50 km",
+    "ru": "Варшава · 50 км",
+    "tg": "Варшава · 50 км"
+   }
+  },
+  {
+   "id": "city_pyongyang",
+   "name": "Pyongyang (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    125.1746,
+    38.5722,
+    126.3308,
+    39.4706
+   ],
+   "hexes_r5": 49,
+   "group": "city",
+   "country": "dem_rep_korea",
+   "names": {
+    "en": "Pyongyang · 50 km",
+    "ru": "Пхеньян · 50 км",
+    "tg": "Пхеньян · 50 км"
+   }
+  },
+  {
+   "id": "city_dublin",
+   "name": "Dublin (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -7.0031,
+    52.8858,
+    -5.4987,
+    53.7842
+   ],
+   "hexes_r5": 32,
+   "group": "city",
+   "country": "ireland",
+   "names": {
+    "en": "Dublin · 50 km",
+    "ru": "Дублин · 50 км",
+    "tg": "Дублин · 50 км"
+   }
+  },
+  {
+   "id": "city_monrovia",
+   "name": "Monrovia (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -11.2516,
+    5.8654,
+    -10.3478,
+    6.7638
+   ],
+   "hexes_r5": 42,
+   "group": "city",
+   "country": "liberia",
+   "names": {
+    "en": "Monrovia · 50 km",
+    "ru": "Монровия · 50 км",
+    "tg": "Монровия · 50 км"
+   }
+  },
+  {
+   "id": "city_kuala_lumpur",
+   "name": "Kuala Lumpur (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    101.2482,
+    2.7194,
+    102.1478,
+    3.6178
+   ],
+   "hexes_r5": 26,
+   "group": "city",
+   "country": "malaysia",
+   "names": {
+    "en": "Kuala Lumpur · 50 km",
+    "ru": "Куала-Лумпур · 50 км",
+    "tg": "Куала-Лумпур · 50 км"
+   }
+  },
+  {
+   "id": "city_havana",
+   "name": "Havana (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -82.8545,
+    22.6847,
+    -81.8777,
+    23.5831
+   ],
+   "hexes_r5": 30,
+   "group": "city",
+   "country": "cuba",
+   "names": {
+    "en": "Havana · 50 km",
+    "ru": "Гавана · 50 км",
+    "tg": "Гавана · 50 км"
+   }
+  },
+  {
+   "id": "city_prague",
+   "name": "Prague (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    13.764,
+    49.6361,
+    15.164,
+    50.5345
+   ],
+   "hexes_r5": 35,
+   "group": "city",
+   "country": "czech_republic",
+   "names": {
+    "en": "Prague · 50 km",
+    "ru": "Прага · 50 км",
+    "tg": "Прага · 50 км"
+   }
+  },
+  {
+   "id": "city_kuwait_city",
+   "name": "Kuwait City (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    47.461,
+    28.9225,
+    48.4918,
+    29.8209
+   ],
+   "hexes_r5": 35,
+   "group": "city",
+   "country": "kuwait",
+   "names": {
+    "en": "Kuwait City · 50 km",
+    "ru": "Эль-Кувейт · 50 км",
+    "tg": "Кувайт · 50 км"
+   }
+  },
+  {
+   "id": "city_santo_domingo",
+   "name": "Santo Domingo (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -70.3756,
+    18.0228,
+    -69.4284,
+    18.9212
+   ],
+   "hexes_r5": 41,
+   "group": "city",
+   "country": "dominican_republic",
+   "names": {
+    "en": "Santo Domingo · 50 km",
+    "ru": "Санто-Доминго · 50 км",
+    "tg": "Санто-Доминго · 50 км"
+   }
+  },
+  {
+   "id": "city_accra",
+   "name": "Accra (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -0.67,
+    5.1028,
+    0.2326,
+    6.0012
+   ],
+   "hexes_r5": 39,
+   "group": "city",
+   "country": "ghana",
+   "names": {
+    "en": "Accra · 50 km",
+    "ru": "Аккра · 50 км",
+    "tg": "Аккра · 50 км"
+   }
+  },
+  {
+   "id": "city_tripoli",
+   "name": "Tripoli (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    12.6451,
+    32.4433,
+    13.7149,
+    33.3417
+   ],
+   "hexes_r5": 27,
+   "group": "city",
+   "country": "libya",
+   "names": {
+    "en": "Tripoli · 50 km",
+    "ru": "Триполи · 50 км",
+    "tg": "Триполи · 50 км"
+   }
+  },
+  {
+   "id": "city_helsinki",
+   "name": "Helsinki (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    24.029,
+    59.7283,
+    25.8354,
+    60.6267
+   ],
+   "hexes_r5": 40,
+   "group": "city",
+   "country": "finland",
+   "names": {
+    "en": "Helsinki · 50 km",
+    "ru": "Хельсинки · 50 км",
+    "tg": "Хельсинки · 50 км"
+   }
+  },
+  {
+   "id": "city_copenhagen",
+   "name": "Copenhagen (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    11.7649,
+    55.2313,
+    13.3581,
+    56.1297
+   ],
+   "hexes_r5": 40,
+   "group": "city",
+   "country": "denmark",
+   "names": {
+    "en": "Copenhagen · 50 km",
+    "ru": "Копенгаген · 50 км",
+    "tg": "Копенгаген · 50 км"
+   }
+  },
+  {
+   "id": "city_abidjan",
+   "name": "Abidjan (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -4.4931,
+    4.8727,
+    -3.5909,
+    5.7711
+   ],
+   "hexes_r5": 45,
+   "group": "city",
+   "country": "cote_d_ivoire",
+   "names": {
+    "en": "Abidjan · 50 km",
+    "ru": "Абиджан · 50 км",
+    "tg": "Абиджан · 50 км"
+   }
+  },
+  {
+   "id": "city_brasilia",
+   "name": "Brasília (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -48.3847,
+    -16.2306,
+    -47.4513,
+    -15.3322
+   ],
+   "hexes_r5": 27,
+   "group": "city",
+   "country": "brazil",
+   "names": {
+    "en": "Brasília · 50 km",
+    "ru": "Бразилиа · 50 км",
+    "tg": "Бразилиа · 50 км"
+   }
+  },
+  {
+   "id": "city_brussels",
+   "name": "Brussels (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    3.6202,
+    50.3861,
+    5.0426,
+    51.2845
+   ],
+   "hexes_r5": 36,
+   "group": "city",
+   "country": "belgium",
+   "names": {
+    "en": "Brussels · 50 km",
+    "ru": "Брюссель · 50 км",
+    "tg": "Брюссель · 50 км"
+   }
+  },
+  {
+   "id": "city_dhaka",
+   "name": "Dhaka (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    89.916,
+    23.2758,
+    90.8972,
+    24.1742
+   ],
+   "hexes_r5": 28,
+   "group": "city",
+   "country": "bangladesh",
+   "names": {
+    "en": "Dhaka · 50 km",
+    "ru": "Дакка · 50 км",
+    "tg": "Дакка · 50 км"
+   }
+  },
+  {
+   "id": "city_luanda",
+   "name": "Luanda (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    12.7779,
+    -9.2855,
+    13.6871,
+    -8.3871
+   ],
+   "hexes_r5": 31,
+   "group": "city",
+   "country": "angola",
+   "names": {
+    "en": "Luanda · 50 km",
+    "ru": "Луанда · 50 км",
+    "tg": "Луанда · 50 км"
+   }
+  },
+  {
+   "id": "city_algiers",
+   "name": "Algiers (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    2.4879,
+    36.3158,
+    3.6093,
+    37.2142
+   ],
+   "hexes_r5": 31,
+   "group": "city",
+   "country": "algeria",
+   "names": {
+    "en": "Algiers · 50 km",
+    "ru": "Алжир · 50 км",
+    "tg": "Алжир · 50 км"
+   }
+  },
+  {
+   "id": "city_caracas",
+   "name": "Caracas (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -67.3758,
+    10.0537,
+    -66.4622,
+    10.9521
+   ],
+   "hexes_r5": 36,
+   "group": "city",
+   "country": "venezuela",
+   "names": {
+    "en": "Caracas · 50 km",
+    "ru": "Каракас · 50 км",
+    "tg": "Каракас · 50 км"
+   }
+  },
+  {
+   "id": "city_kyiv",
+   "name": "Kyiv (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    29.8095,
+    49.9861,
+    31.2199,
+    50.8845
+   ],
+   "hexes_r5": 33,
+   "group": "city",
+   "country": "ukraine",
+   "names": {
+    "en": "Kyiv · 50 km",
+    "ru": "Киев · 50 км",
+    "tg": "Киев · 50 км"
+   }
+  },
+  {
+   "id": "city_madrid",
+   "name": "Madrid (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -4.2751,
+    39.9528,
+    -3.0955,
+    40.8512
+   ],
+   "hexes_r5": 29,
+   "group": "city",
+   "country": "spain",
+   "names": {
+    "en": "Madrid · 50 km",
+    "ru": "Мадрид · 50 км",
+    "tg": "Мадрид · 50 км"
+   }
+  },
+  {
+   "id": "city_stockholm",
+   "name": "Stockholm (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    17.2143,
+    58.9035,
+    18.9765,
+    59.8019
+   ],
+   "hexes_r5": 44,
+   "group": "city",
+   "country": "sweden",
+   "names": {
+    "en": "Stockholm · 50 km",
+    "ru": "Стокгольм · 50 км",
+    "tg": "Стокгольм · 50 км"
+   }
+  },
+  {
+   "id": "city_bangkok",
+   "name": "Bangkok (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    100.0523,
+    13.3027,
+    100.9771,
+    14.2011
+   ],
+   "hexes_r5": 26,
+   "group": "city",
+   "country": "thailand",
+   "names": {
+    "en": "Bangkok · 50 km",
+    "ru": "Бангкок · 50 км",
+    "tg": "Бангкок · 50 км"
+   }
+  },
+  {
+   "id": "city_lima",
+   "name": "Lima (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -77.5113,
+    -12.4953,
+    -76.5927,
+    -11.5969
+   ],
+   "hexes_r5": 26,
+   "group": "city",
+   "country": "peru",
+   "names": {
+    "en": "Lima · 50 km",
+    "ru": "Лима · 50 км",
+    "tg": "Лима · 50 км"
+   }
+  },
+  {
+   "id": "city_dakar",
+   "name": "Dakar (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -17.9395,
+    14.2686,
+    -17.0107,
+    15.167
+   ],
+   "hexes_r5": 34,
+   "group": "city",
+   "country": "senegal",
+   "names": {
+    "en": "Dakar · 50 km",
+    "ru": "Дакар · 50 км",
+    "tg": "Дакар · 50 км"
+   }
+  },
+  {
+   "id": "city_amsterdam",
+   "name": "Amsterdam (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    4.1794,
+    51.9027,
+    5.65,
+    52.8011
+   ],
+   "hexes_r5": 37,
+   "group": "city",
+   "country": "netherlands",
+   "names": {
+    "en": "Amsterdam · 50 km",
+    "ru": "Амстердам · 50 км",
+    "tg": "Амстердам · 50 км"
+   }
+  },
+  {
+   "id": "city_seoul",
+   "name": "Seoul (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    126.4311,
+    37.1191,
+    127.5645,
+    38.0175
+   ],
+   "hexes_r5": 44,
+   "group": "city",
+   "country": "republic_of_korea",
+   "names": {
+    "en": "Seoul · 50 km",
+    "ru": "Сеул · 50 км",
+    "tg": "Сеул · 50 км"
+   }
+  },
+  {
+   "id": "city_manila",
+   "name": "Manila (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    120.5161,
+    14.1569,
+    121.4445,
+    15.0553
+   ],
+   "hexes_r5": 33,
+   "group": "city",
+   "country": "philippines",
+   "names": {
+    "en": "Manila · 50 km",
+    "ru": "Манила · 50 км",
+    "tg": "Манила · 50 км"
+   }
+  },
+  {
+   "id": "city_berlin",
+   "name": "Berlin (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    12.6614,
+    52.0746,
+    14.1378,
+    52.973
+   ],
+   "hexes_r5": 33,
+   "group": "city",
+   "country": "germany",
+   "names": {
+    "en": "Berlin · 50 km",
+    "ru": "Берлин · 50 км",
+    "tg": "Берлин · 50 км"
+   }
+  },
+  {
+   "id": "city_new_delhi",
+   "name": "New Delhi (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    76.6884,
+    28.1508,
+    77.7116,
+    29.0492
+   ],
+   "hexes_r5": 31,
+   "group": "city",
+   "country": "india",
+   "names": {
+    "en": "New Delhi · 50 km",
+    "ru": "Нью-Дели · 50 км",
+    "tg": "Деҳлии Нав · 50 км"
+   }
+  },
+  {
+   "id": "city_athens",
+   "name": "Athens (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    23.1615,
+    37.5361,
+    24.3013,
+    38.4345
+   ],
+   "hexes_r5": 27,
+   "group": "city",
+   "country": "greece",
+   "names": {
+    "en": "Athens · 50 km",
+    "ru": "Афины · 50 км",
+    "tg": "Афины · 50 км"
+   }
+  },
+  {
+   "id": "city_baghdad",
+   "name": "Baghdad (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    43.8543,
+    32.8914,
+    44.9295,
+    33.7898
+   ],
+   "hexes_r5": 33,
+   "group": "city",
+   "country": "iraq",
+   "names": {
+    "en": "Baghdad · 50 km",
+    "ru": "Багдад · 50 км",
+    "tg": "Бағдод · 50 км"
+   }
+  },
+  {
+   "id": "city_addis_ababa",
+   "name": "Addis Ababa (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    38.2433,
+    8.5861,
+    39.1529,
+    9.4845
+   ],
+   "hexes_r5": 35,
+   "group": "city",
+   "country": "ethiopia",
+   "names": {
+    "en": "Addis Ababa · 50 km",
+    "ru": "Аддис-Абеба · 50 км",
+    "tg": "Аддис-Абеба · 50 км"
+   }
+  },
+  {
+   "id": "city_tehran",
+   "name": "Tehran (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    50.8695,
+    35.2247,
+    51.9753,
+    36.1231
+   ],
+   "hexes_r5": 31,
+   "group": "city",
+   "country": "iran",
+   "names": {
+    "en": "Tehran · 50 km",
+    "ru": "Тегеран · 50 км",
+    "tg": "Теҳрон · 50 км"
+   }
+  },
+  {
+   "id": "city_buenos_aires",
+   "name": "Buenos Aires (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -58.9452,
+    -35.0498,
+    -57.8538,
+    -34.1514
+   ],
+   "hexes_r5": 43,
+   "group": "city",
+   "country": "argentina",
+   "names": {
+    "en": "Buenos Aires · 50 km",
+    "ru": "Буэнос-Айрес · 50 км",
+    "tg": "Буэнос-Айрес · 50 км"
+   }
+  },
+  {
+   "id": "city_kabul",
+   "name": "Kabul (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    68.6362,
+    34.0694,
+    69.7264,
+    34.9678
+   ],
+   "hexes_r5": 28,
+   "group": "city",
+   "country": "afghanistan",
+   "names": {
+    "en": "Kabul · 50 km",
+    "ru": "Кабул · 50 км",
+    "tg": "Кобул · 50 км"
+   }
+  },
+  {
+   "id": "city_vienna",
+   "name": "Vienna (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    15.6908,
+    47.7528,
+    17.0386,
+    48.6512
+   ],
+   "hexes_r5": 33,
+   "group": "city",
+   "country": "austria",
+   "names": {
+    "en": "Vienna · 50 km",
+    "ru": "Вена · 50 км",
+    "tg": "Вена · 50 км"
+   }
+  },
+  {
+   "id": "city_taipei",
+   "name": "Taipei (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    121.0726,
+    24.5866,
+    122.064,
+    25.485
+   ],
+   "hexes_r5": 36,
+   "group": "city",
+   "country": "taiwan",
+   "names": {
+    "en": "Taipei · 50 km",
+    "ru": "Тайбэй · 50 км",
+    "tg": "Тайбэй · 50 км"
+   }
+  },
+  {
+   "id": "city_london",
+   "name": "London (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -0.8402,
+    51.0527,
+    0.6028,
+    51.9511
+   ],
+   "hexes_r5": 32,
+   "group": "city",
+   "country": "united_kingdom",
+   "names": {
+    "en": "London · 50 km",
+    "ru": "Лондон · 50 км",
+    "tg": "Лондон · 50 км"
+   }
+  },
+  {
+   "id": "city_riyadh",
+   "name": "Riyadh (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    46.2766,
+    24.1936,
+    47.265,
+    25.092
+   ],
+   "hexes_r5": 33,
+   "group": "city",
+   "country": "saudi_arabia",
+   "names": {
+    "en": "Riyadh · 50 km",
+    "ru": "Эр-Рияд · 50 км",
+    "tg": "Риёз · 50 км"
+   }
+  },
+  {
+   "id": "city_cape_town",
+   "name": "Cape Town (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    17.8917,
+    -34.3673,
+    18.9743,
+    -33.4689
+   ],
+   "hexes_r5": 34,
+   "group": "city",
+   "country": "south_africa",
+   "names": {
+    "en": "Cape Town · 50 km",
+    "ru": "Кейптаун · 50 км",
+    "tg": "Кейптаун · 50 км"
+   }
+  },
+  {
+   "id": "city_mexico_city",
+   "name": "Mexico City (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -99.6092,
+    18.9952,
+    -98.6566,
+    19.8936
+   ],
+   "hexes_r5": 29,
+   "group": "city",
+   "country": "mexico",
+   "names": {
+    "en": "Mexico City · 50 km",
+    "ru": "Мехико · 50 км",
+    "tg": "Мехико · 50 км"
+   }
+  },
+  {
+   "id": "city_rome",
+   "name": "Rome (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    11.8779,
+    41.4487,
+    13.0847,
+    42.3471
+   ],
+   "hexes_r5": 29,
+   "group": "city",
+   "country": "italy",
+   "names": {
+    "en": "Rome · 50 km",
+    "ru": "Рим · 50 км",
+    "tg": "Рим · 50 км"
+   }
+  },
+  {
+   "id": "city_beijing",
+   "name": "Beijing (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    115.8006,
+    39.4816,
+    116.972,
+    40.38
+   ],
+   "hexes_r5": 46,
+   "group": "city",
+   "country": "china",
+   "names": {
+    "en": "Beijing · 50 km",
+    "ru": "Пекин · 50 км",
+    "tg": "Пекин · 50 км"
+   }
+  },
+  {
+   "id": "city_nairobi",
+   "name": "Nairobi (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    36.3654,
+    -1.7306,
+    37.264,
+    -0.8322
+   ],
+   "hexes_r5": 28,
+   "group": "city",
+   "country": "kenya",
+   "names": {
+    "en": "Nairobi · 50 km",
+    "ru": "Найроби · 50 км",
+    "tg": "Найроби · 50 км"
+   }
+  },
+  {
+   "id": "city_jakarta",
+   "name": "Jakarta (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    106.3757,
+    -6.6217,
+    107.2793,
+    -5.7233
+   ],
+   "hexes_r5": 29,
+   "group": "city",
+   "country": "indonesia",
+   "names": {
+    "en": "Jakarta · 50 km",
+    "ru": "Джакарта · 50 км",
+    "tg": "Джакарта · 50 км"
+   }
+  },
+  {
+   "id": "city_bogota",
+   "name": "Bogotá (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -74.5359,
+    4.1492,
+    -73.6347,
+    5.0476
+   ],
+   "hexes_r5": 30,
+   "group": "city",
+   "country": "colombia",
+   "names": {
+    "en": "Bogotá · 50 km",
+    "ru": "Богота · 50 км",
+    "tg": "Богота · 50 км"
+   }
+  },
+  {
+   "id": "city_cairo",
+   "name": "Cairo (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    30.7291,
+    29.6027,
+    31.7669,
+    30.5011
+   ],
+   "hexes_r5": 27,
+   "group": "city",
+   "country": "egypt",
+   "names": {
+    "en": "Cairo · 50 km",
+    "ru": "Каир · 50 км",
+    "tg": "Қоҳира · 50 км"
+   }
+  },
+  {
+   "id": "city_tokyo",
+   "name": "Tokyo (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    139.1965,
+    35.2378,
+    140.3025,
+    36.1362
+   ],
+   "hexes_r5": 32,
+   "group": "city",
+   "country": "japan",
+   "names": {
+    "en": "Tokyo · 50 km",
+    "ru": "Токио · 50 км",
+    "tg": "Токио · 50 км"
+   }
+  },
+  {
+   "id": "city_paris",
+   "name": "Paris (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    1.6486,
+    48.4194,
+    3.0142,
+    49.3178
+   ],
+   "hexes_r5": 32,
+   "group": "city",
+   "country": "france",
+   "names": {
+    "en": "Paris · 50 km",
+    "ru": "Париж · 50 км",
+    "tg": "Париж · 50 км"
+   }
+  },
+  {
+   "id": "city_santiago",
+   "name": "Santiago (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -71.2073,
+    -33.8973,
+    -70.1307,
+    -32.9989
+   ],
+   "hexes_r5": 36,
+   "group": "city",
+   "country": "chile",
+   "names": {
+    "en": "Santiago · 50 km",
+    "ru": "Сантьяго · 50 км",
+    "tg": "Сантьяго · 50 км"
+   }
+  },
+  {
+   "id": "city_vahdat",
+   "name": "Vahdat (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    68.4446,
+    38.1068,
+    69.5934,
+    39.0052
+   ],
+   "hexes_r5": 26,
+   "group": "city",
+   "country": "tajikistan",
+   "names": {
+    "en": "Vahdat · 50 km",
+    "ru": "Вахдат · 50 км",
+    "tg": "Ваҳдат · 50 км"
+   }
+  },
+  {
+   "id": "city_hisor",
+   "name": "Hisor (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    67.9769,
+    38.0768,
+    69.1251,
+    38.9752
+   ],
+   "hexes_r5": 26,
+   "group": "city",
+   "country": "tajikistan",
+   "names": {
+    "en": "Hisor · 50 km",
+    "ru": "Гиссар · 50 км",
+    "tg": "Ҳисор · 50 км"
+   }
+  },
+  {
+   "id": "city_konibodom",
+   "name": "Konibodom (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    69.8371,
+    39.8448,
+    71.0149,
+    40.7432
+   ],
+   "hexes_r5": 27,
+   "group": "city",
+   "country": "tajikistan",
+   "names": {
+    "en": "Konibodom · 50 km",
+    "ru": "Канибадам · 50 км",
+    "tg": "Конибодом · 50 км"
+   }
+  },
+  {
+   "id": "city_isfara",
+   "name": "Isfara (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    70.0376,
+    39.6768,
+    71.2124,
+    40.5752
+   ],
+   "hexes_r5": 26,
+   "group": "city",
+   "country": "tajikistan",
+   "names": {
+    "en": "Isfara · 50 km",
+    "ru": "Исфара · 50 км",
+    "tg": "Исфара · 50 км"
+   }
+  },
+  {
+   "id": "city_danghara",
+   "name": "Danghara (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    68.7612,
+    37.6488,
+    69.9028,
+    38.5472
+   ],
+   "hexes_r5": 25,
+   "group": "city",
+   "country": "tajikistan",
+   "names": {
+    "en": "Danghara · 50 km",
+    "ru": "Дангара · 50 км",
+    "tg": "Данғара · 50 км"
+   }
+  },
+  {
+   "id": "city_rasht",
+   "name": "Rasht (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    69.8017,
+    38.5908,
+    70.9583,
+    39.4892
+   ],
+   "hexes_r5": 26,
+   "group": "city",
+   "country": "tajikistan",
+   "names": {
+    "en": "Rasht · 50 km",
+    "ru": "Рашт · 50 км",
+    "tg": "Рашт · 50 км"
+   }
+  },
+  {
+   "id": "city_murghob",
+   "name": "Murghob (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    73.3927,
+    37.7208,
+    74.5353,
+    38.6192
+   ],
+   "hexes_r5": 26,
+   "group": "city",
+   "country": "tajikistan",
+   "names": {
+    "en": "Murghob · 50 km",
+    "ru": "Мургаб · 50 км",
+    "tg": "Мурғоб · 50 км"
+   }
+  },
+  {
+   "id": "city_shahritus",
+   "name": "Shahritus (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    67.5737,
+    36.8118,
+    68.7023,
+    37.7102
+   ],
+   "hexes_r5": 27,
+   "group": "city",
+   "country": "tajikistan",
+   "names": {
+    "en": "Shahritus · 50 km",
+    "ru": "Шаартуз · 50 км",
+    "tg": "Шаҳритус · 50 км"
    }
   }
  ]

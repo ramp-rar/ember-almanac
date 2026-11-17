@@ -1,7 +1,7 @@
 import { connection, type NextRequest } from 'next/server';
 import { z } from 'zod';
 import { getActiveSource } from '@/server/repositories/fire-source';
-import { handleError, jsonError } from '@/server/http';
+import { DATA_CACHE_HEADERS, handleError, jsonError } from '@/server/http';
 
 const Query = z.object({ q: z.string().max(64).default('') });
 
@@ -13,7 +13,7 @@ export async function GET(request: NextRequest): Promise<Response> {
     const active = await getActiveSource();
     if (!active) return jsonError(503, 'no_active_dataset', 'No dataset has been ingested yet.');
     const regions = await active.source.listRegions(parsed.data.q);
-    return Response.json(regions, { headers: { 'Cache-Control': 'public, s-maxage=3600' } });
+    return Response.json(regions, { headers: DATA_CACHE_HEADERS });
   } catch (error) {
     return handleError('regions', error);
   }

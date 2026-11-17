@@ -94,13 +94,16 @@ describe('cities', () => {
     }
   });
 
-  it('each city centre lies inside its country box', () => {
+  // 0.5° slack: coastal or border capitals (e.g. Lomé) sit on the edge of the data's box; a city
+  // attached to the wrong country is far outside and still fails.
+  it('each city centre lies inside (or at the edge of) its country box', () => {
     for (const c of cities) {
       const country = index.regions.find((r) => r.id === c.country)!;
       const [w, s, e, n] = c.bbox;
       const [lon, lat] = [(w + e) / 2, (s + n) / 2];
       const [cw, cs, ce, cn] = country.bbox;
-      expect(lon >= cw && lon <= ce && lat >= cs && lat <= cn, c.id).toBe(true);
+      const m = 0.5;
+      expect(lon >= cw - m && lon <= ce + m && lat >= cs - m && lat <= cn + m, c.id).toBe(true);
     }
   });
 });

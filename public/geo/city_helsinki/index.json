@@ -1,0 +1,1 @@
+{"v":1,"id":"city_helsinki","unit":"harmonized cell-days per H3 res-5 cell (~250 km2)","min_value":0.5,"typical":{"from":2013,"to":2025,"per":"year","pts":[[25.087,60.339,1.1],[24.834,60.323,0.8],[24.977,60.206,0.8],[24.725,60.19,0.5]],"truncated":false},"months":["2026-05","2026-08","2026-09","2026-11"],"partial_month":"2026-11"}

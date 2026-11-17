@@ -51,6 +51,19 @@ CITIES = [
 ]
 
 
+def all_cities() -> list:
+    """The curated list above, then capitals and towns from scripts/data/cities_world.json
+    (build_city_list.py), skipping any within 20 km of a city already listed."""
+    out = list(CITIES)
+    extra = ROOT / "scripts" / "data" / "cities_world.json"
+    if extra.exists():
+        for c in json.loads(extra.read_text(encoding="utf-8")):
+            if any(o[0] == c["id"] or km(o[2], o[3], c["lat"], c["lon"]) < 20 for o in out):
+                continue
+            out.append((c["id"], c["country"], c["lat"], c["lon"], tuple(c["names"])))
+    return out
+
+
 def km(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
     p1, p2 = math.radians(lat1), math.radians(lat2)
     d = math.sin((p2 - p1) / 2) ** 2 + math.cos(p1) * math.cos(p2) * math.sin(math.radians(lon2 - lon1) / 2) ** 2
@@ -77,7 +90,7 @@ def main() -> None:
     regions = [r for r in index["regions"] if not r["id"].startswith("city_")]
     by_id = {r["id"]: r for r in regions}
     added = []
-    for cid, country, lat, lon, (en, ru, tg) in CITIES:
+    for cid, country, lat, lon, (en, ru, tg) in all_cities():
         if country not in by_id:
             print(f"skip {cid}: country {country} not in snapshot")
             continue

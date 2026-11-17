@@ -2,7 +2,7 @@
 
 > Did Earth burn more — or did our satellites just get better at seeing it?
 
-A harmonized MODIS × VIIRS burning calendar, 2000–2026, for 159 countries and Texas, in English,
+A harmonized MODIS × VIIRS burning calendar, 2000–2026, for 159 countries, Texas and 179 cities, in English,
 Russian and Tajik. NASA Space Apps Challenge 2026 · Dushanbe · challenge
 "Harmonization of MODIS and VIIRS Hot Spots" · team **Adeptus Vulkanis**.
 
@@ -68,6 +68,8 @@ desktop + 390 px mobile). Decisions are recorded in [docs/adr](docs/adr).
 - NASA FIRMS — MODIS and VIIRS active fire products. We acknowledge the use of data and imagery
   from NASA's Fire Information for Resource Management System (FIRMS), part of NASA's Earth
   Science Data and Information System (ESDIS).
+- City centres and names: Natural Earth populated places v5.1.2 (public domain); city areas are
+  50 km circles computed from the data team's H3 cells (`scripts/export_cities.py`).
 - Base map: Esri World Imagery and World Boundaries and Places. Relief: AWS Terrain Tiles
   (Mapzen Terrarium). Country names: Unicode CLDR. Hexagon grid: Uber H3.
 - Libraries: Next.js, React, MapLibre GL JS, Apache ECharts, Zod, TanStack Query, Tailwind CSS.

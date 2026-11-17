@@ -1,0 +1,1 @@
+{"v":1,"id":"city_reykjavik","unit":"harmonized cell-days per H3 res-5 cell (~250 km2)","min_value":0.5,"typical":{"from":2013,"to":2025,"per":"year","pts":[[-22.554,63.964,14.7],[-22.243,64.008,3.3],[-22.335,63.86,2.7],[-22.026,63.903,0.7],[-21.31,64.134,0.5]],"truncated":false},"months":["2026-11"],"partial_month":"2026-11"}

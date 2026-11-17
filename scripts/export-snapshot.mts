@@ -64,12 +64,18 @@ const norm = (s: string) =>
     .replace(/^_|_$/g, '');
 
 const enNames = new Intl.DisplayNames(['en'], { type: 'region' });
+/** Deprecated, exceptional or grouping codes that share names with real countries (ISO 3166-3). */
+const NOT_COUNTRIES = new Set(
+  'AN BU CS DD DY EU EZ FX HV NT QO RH SU TP UK UN VD XA XB YD YU ZR'.split(' '),
+);
 const byName = new Map<string, string>();
 for (let a = 65; a <= 90; a++) {
   for (let b = 65; b <= 90; b++) {
     const code = String.fromCharCode(a, b);
     const name = enNames.of(code);
-    if (name && name !== code) byName.set(norm(name), code);
+    // First (official) code wins: deprecated codes (FX, UK, YU, DY…) share names and come later.
+    if (NOT_COUNTRIES.has(code)) continue;
+    if (name && name !== code && !byName.has(norm(name))) byName.set(norm(name), code);
   }
 }
 

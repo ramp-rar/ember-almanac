@@ -1,0 +1,1150 @@
+[
+  {
+    "id": "port_of_spain",
+    "country": "trinidad_and_tobago",
+    "lat": 10.652,
+    "lon": -61.517,
+    "names": ["Port of Spain", "Порт-оф-Спейн", "Порт-оф-Спейн"]
+  },
+  {
+    "id": "kigali",
+    "country": "rwanda",
+    "lat": -1.9516,
+    "lon": 30.0586,
+    "names": ["Kigali", "Кигали", "Кигали"]
+  },
+  {
+    "id": "mbabane",
+    "country": "swaziland",
+    "lat": -26.3167,
+    "lon": 31.1333,
+    "names": ["Mbabane", "Мбабане", "Мбабане"]
+  },
+  {
+    "id": "bratislava",
+    "country": "slovakia",
+    "lat": 48.15,
+    "lon": 17.117,
+    "names": ["Bratislava", "Братислава", "Братислава"]
+  },
+  {
+    "id": "doha",
+    "country": "qatar",
+    "lat": 25.2866,
+    "lon": 51.533,
+    "names": ["Doha", "Доха", "Доҳа"]
+  },
+  {
+    "id": "podgorica",
+    "country": "montenegro",
+    "lat": 42.466,
+    "lon": 19.2663,
+    "names": ["Podgorica", "Подгорица", "Подгорица"]
+  },
+  {
+    "id": "bern",
+    "country": "switzerland",
+    "lat": 46.9167,
+    "lon": 7.467,
+    "names": ["Bern", "Берн", "Берн"]
+  },
+  {
+    "id": "banjul",
+    "country": "the_gambia",
+    "lat": 13.4539,
+    "lon": -16.5917,
+    "names": ["Banjul", "Банжул", "Банжул"]
+  },
+  {
+    "id": "skopje",
+    "country": "macedonia_former_yugoslav_republic_of",
+    "lat": 42.0,
+    "lon": 21.4335,
+    "names": ["Skopje", "Скопье", "Скопье"]
+  },
+  {
+    "id": "bujumbura",
+    "country": "burundi",
+    "lat": -3.3761,
+    "lon": 29.36,
+    "names": ["Bujumbura", "Бужумбура", "Бужумбура"]
+  },
+  {
+    "id": "montevideo",
+    "country": "uruguay",
+    "lat": -34.8561,
+    "lon": -56.173,
+    "names": ["Montevideo", "Монтевидео", "Монтевидео"]
+  },
+  {
+    "id": "lome",
+    "country": "togo",
+    "lat": 6.1339,
+    "lon": 1.2208,
+    "names": ["Lomé", "Ломе", "Ломе"]
+  },
+  {
+    "id": "tunis",
+    "country": "tunisia",
+    "lat": 36.8028,
+    "lon": 10.1797,
+    "names": ["Tunis", "Тунис", "Тунис"]
+  },
+  {
+    "id": "abu_dhabi",
+    "country": "united_arab_emirates",
+    "lat": 24.4667,
+    "lon": 54.3666,
+    "names": ["Abu Dhabi", "Абу-Даби", "Абузабӣ"]
+  },
+  {
+    "id": "ashgabat",
+    "country": "turkmenistan",
+    "lat": 37.95,
+    "lon": 58.3833,
+    "names": ["Ashgabat", "Ашхабад", "Ашқобод"]
+  },
+  {
+    "id": "harare",
+    "country": "zimbabwe",
+    "lat": -17.8158,
+    "lon": 31.0428,
+    "names": ["Harare", "Хараре", "Хараре"]
+  },
+  {
+    "id": "dili",
+    "country": "timor_leste",
+    "lat": -8.5594,
+    "lon": 125.5795,
+    "names": ["Dili", "Дили", "Дили"]
+  },
+  {
+    "id": "tegucigalpa",
+    "country": "honduras",
+    "lat": 14.104,
+    "lon": -87.2195,
+    "names": ["Tegucigalpa", "Тегусигальпа", "Тегусигальпа"]
+  },
+  {
+    "id": "georgetown",
+    "country": "guyana",
+    "lat": 6.802,
+    "lon": -58.167,
+    "names": ["Georgetown", "Джорджтаун", "Джорджтаун"]
+  },
+  {
+    "id": "reykjavik",
+    "country": "iceland",
+    "lat": 64.15,
+    "lon": -21.95,
+    "names": ["Reykjavík", "Рейкьявик", "Рейкьявик"]
+  },
+  {
+    "id": "port_au_prince",
+    "country": "haiti",
+    "lat": 18.543,
+    "lon": -72.338,
+    "names": ["Port-au-Prince", "Порт-о-Пренс", "Порт-о-Пренс"]
+  },
+  {
+    "id": "kampala",
+    "country": "uganda",
+    "lat": 0.3186,
+    "lon": 32.5814,
+    "names": ["Kampala", "Кампала", "Кампала"]
+  },
+  {
+    "id": "paramaribo",
+    "country": "suriname",
+    "lat": 5.835,
+    "lon": -55.167,
+    "names": ["Paramaribo", "Парамарибо", "Парамарибо"]
+  },
+  {
+    "id": "niamey",
+    "country": "niger",
+    "lat": 13.5187,
+    "lon": 2.1147,
+    "names": ["Niamey", "Ниамей", "Ниамей"]
+  },
+  {
+    "id": "dushanbe",
+    "country": "tajikistan",
+    "lat": 38.56,
+    "lon": 68.7739,
+    "names": ["Dushanbe", "Душанбе", "Душанбе"]
+  },
+  {
+    "id": "asuncion",
+    "country": "paraguay",
+    "lat": -25.2945,
+    "lon": -57.6435,
+    "names": ["Asunción", "Асунсьон", "Асунсьон"]
+  },
+  {
+    "id": "managua",
+    "country": "nicaragua",
+    "lat": 12.155,
+    "lon": -86.2704,
+    "names": ["Managua", "Манагуа", "Манагуа"]
+  },
+  {
+    "id": "freetown",
+    "country": "sierra_leone",
+    "lat": 8.472,
+    "lon": -13.2362,
+    "names": ["Freetown", "Фритаун", "Фритаун"]
+  },
+  {
+    "id": "islamabad",
+    "country": "pakistan",
+    "lat": 33.7019,
+    "lon": 73.1647,
+    "names": ["Islamabad", "Исламабад", "Исломобод"]
+  },
+  {
+    "id": "kathmandu",
+    "country": "nepal",
+    "lat": 27.7186,
+    "lon": 85.3147,
+    "names": ["Kathmandu", "Катманду", "Катманду"]
+  },
+  {
+    "id": "bloemfontein",
+    "country": "south_africa",
+    "lat": -29.12,
+    "lon": 26.2299,
+    "names": ["Bloemfontein", "Блумфонтейн", "Блумфонтейн"]
+  },
+  {
+    "id": "pretoria",
+    "country": "south_africa",
+    "lat": -25.705,
+    "lon": 28.2275,
+    "names": ["Pretoria", "Претория", "Претория"]
+  },
+  {
+    "id": "port_moresby",
+    "country": "papua_new_guinea",
+    "lat": -9.4647,
+    "lon": 147.1925,
+    "names": ["Port Moresby", "Порт-Морсби", "Порт-Морсби"]
+  },
+  {
+    "id": "panama_city",
+    "country": "panama",
+    "lat": 8.97,
+    "lon": -79.535,
+    "names": ["Panama City", "Панама", "Панама"]
+  },
+  {
+    "id": "rabat",
+    "country": "morocco",
+    "lat": 34.0253,
+    "lon": -6.8364,
+    "names": ["Rabat", "Рабат", "Рабат"]
+  },
+  {
+    "id": "chisinau",
+    "country": "moldova",
+    "lat": 47.005,
+    "lon": 28.8577,
+    "names": ["Chișinău", "Кишинёв", "Кишинёв"]
+  },
+  {
+    "id": "maputo",
+    "country": "mozambique",
+    "lat": -25.9533,
+    "lon": 32.5872,
+    "names": ["Maputo", "Мапуту", "Мапуту"]
+  },
+  {
+    "id": "mogadishu",
+    "country": "somalia",
+    "lat": 2.0686,
+    "lon": 45.3647,
+    "names": ["Mogadishu", "Могадишо", "Могадишо"]
+  },
+  {
+    "id": "muscat",
+    "country": "oman",
+    "lat": 23.6133,
+    "lon": 58.5933,
+    "names": ["Muscat", "Маскат", "Масқат"]
+  },
+  {
+    "id": "colombo",
+    "country": "sri_lanka",
+    "lat": 6.932,
+    "lon": 79.8578,
+    "names": ["Colombo", "Коломбо", "Коломбо"]
+  },
+  {
+    "id": "ulaanbaatar",
+    "country": "mongolia",
+    "lat": 47.9186,
+    "lon": 106.9147,
+    "names": ["Ulaanbaatar", "Улан-Батор", "Улан-Батор"]
+  },
+  {
+    "id": "windhoek",
+    "country": "namibia",
+    "lat": -22.57,
+    "lon": 17.0835,
+    "names": ["Windhoek", "Виндхук", "Виндхук"]
+  },
+  {
+    "id": "abuja",
+    "country": "nigeria",
+    "lat": 9.0853,
+    "lon": 7.5314,
+    "names": ["Abuja", "Абуджа", "Абуджа"]
+  },
+  {
+    "id": "bissau",
+    "country": "guinea_bissau",
+    "lat": 11.865,
+    "lon": -15.5984,
+    "names": ["Bissau", "Бисау", "Бисау"]
+  },
+  {
+    "id": "vilnius",
+    "country": "lithuania",
+    "lat": 54.6834,
+    "lon": 25.3166,
+    "names": ["Vilnius", "Вильнюс", "Вильнюс"]
+  },
+  {
+    "id": "riga",
+    "country": "latvia",
+    "lat": 56.95,
+    "lon": 24.1,
+    "names": ["Riga", "Рига", "Рига"]
+  },
+  {
+    "id": "bishkek",
+    "country": "kyrgyzstan",
+    "lat": 42.875,
+    "lon": 74.5833,
+    "names": ["Bishkek", "Бишкек", "Бишкек"]
+  },
+  {
+    "id": "maseru",
+    "country": "lesotho",
+    "lat": -29.3167,
+    "lon": 27.4833,
+    "names": ["Maseru", "Масеру", "Масеру"]
+  },
+  {
+    "id": "antananarivo",
+    "country": "madagascar",
+    "lat": -18.9147,
+    "lon": 47.5147,
+    "names": ["Antananarivo", "Антананариву", "Антананариву"]
+  },
+  {
+    "id": "quito",
+    "country": "ecuador",
+    "lat": -0.213,
+    "lon": -78.502,
+    "names": ["Quito", "Кито", "Кито"]
+  },
+  {
+    "id": "san_jose",
+    "country": "costa_rica",
+    "lat": 9.937,
+    "lon": -84.086,
+    "names": ["San José", "Сан-Хосе", "Сан-Хосе"]
+  },
+  {
+    "id": "san_salvador",
+    "country": "el_salvador",
+    "lat": 13.7119,
+    "lon": -89.205,
+    "names": ["San Salvador", "Сан-Сальвадор", "Сан-Сальвадор"]
+  },
+  {
+    "id": "kingston",
+    "country": "jamaica",
+    "lat": 17.9771,
+    "lon": -76.7674,
+    "names": ["Kingston", "Кингстон", "Кингстон"]
+  },
+  {
+    "id": "n_djamena",
+    "country": "chad",
+    "lat": 12.115,
+    "lon": 15.0472,
+    "names": ["N'Djamena", "Нджамена", "Нджамена"]
+  },
+  {
+    "id": "malabo",
+    "country": "equatorial_guinea",
+    "lat": 3.75,
+    "lon": 8.7833,
+    "names": ["Malabo", "Малабо", "Малабо"]
+  },
+  {
+    "id": "asmara",
+    "country": "eritrea",
+    "lat": 15.3333,
+    "lon": 38.9333,
+    "names": ["Asmara", "Асмэра", "Асмэра"]
+  },
+  {
+    "id": "zagreb",
+    "country": "croatia",
+    "lat": 45.8,
+    "lon": 16.0,
+    "names": ["Zagreb", "Загреб", "Загреб"]
+  },
+  {
+    "id": "lilongwe",
+    "country": "malawi",
+    "lat": -13.9833,
+    "lon": 33.7833,
+    "names": ["Lilongwe", "Лилонгве", "Лилонгве"]
+  },
+  {
+    "id": "guatemala_city",
+    "country": "guatemala",
+    "lat": 14.6231,
+    "lon": -90.5289,
+    "names": ["Guatemala City", "Гватемала", "Гватемала"]
+  },
+  {
+    "id": "libreville",
+    "country": "gabon",
+    "lat": 0.3854,
+    "lon": 9.458,
+    "names": ["Libreville", "Либревиль", "Либревиль"]
+  },
+  {
+    "id": "suva",
+    "country": "fiji",
+    "lat": -18.133,
+    "lon": 178.4417,
+    "names": ["Suva", "Сува", "Сува"]
+  },
+  {
+    "id": "nouakchott",
+    "country": "mauritania",
+    "lat": 18.0864,
+    "lon": -15.9753,
+    "names": ["Nouakchott", "Нуакшот", "Нуакшот"]
+  },
+  {
+    "id": "bamako",
+    "country": "mali",
+    "lat": 12.652,
+    "lon": -8.002,
+    "names": ["Bamako", "Бамако", "Бамако"]
+  },
+  {
+    "id": "beirut",
+    "country": "lebanon",
+    "lat": 33.8739,
+    "lon": 35.5078,
+    "names": ["Beirut", "Бейрут", "Бейрут"]
+  },
+  {
+    "id": "tbilisi",
+    "country": "georgia",
+    "lat": 41.727,
+    "lon": 44.7888,
+    "names": ["Tbilisi", "Тбилиси", "Тбилиси"]
+  },
+  {
+    "id": "nur_sultan",
+    "country": "kazakhstan",
+    "lat": 51.1811,
+    "lon": 71.4278,
+    "names": ["Nur-Sultan", "Нур-Султан", "Нур-Султан"]
+  },
+  {
+    "id": "vientiane",
+    "country": "lao_pdr",
+    "lat": 17.9667,
+    "lon": 102.6,
+    "names": ["Vientiane", "Вьентьян", "Вьентьян"]
+  },
+  {
+    "id": "brazzaville",
+    "country": "republic_of_congo",
+    "lat": -4.2572,
+    "lon": 15.2827,
+    "names": ["Brazzaville", "Браззавиль", "Браззавиль"]
+  },
+  {
+    "id": "conakry",
+    "country": "guinea",
+    "lat": 9.5335,
+    "lon": -13.6822,
+    "names": ["Conakry", "Конакри", "Конакри"]
+  },
+  {
+    "id": "yamoussoukro",
+    "country": "cote_d_ivoire",
+    "lat": 6.8184,
+    "lon": -5.2755,
+    "names": ["Yamoussoukro", "Ямусукро", "Ямусукро"]
+  },
+  {
+    "id": "ottawa",
+    "country": "canada",
+    "lat": 45.4186,
+    "lon": -75.702,
+    "names": ["Ottawa", "Оттава", "Оттава"]
+  },
+  {
+    "id": "belgrade",
+    "country": "serbia",
+    "lat": 44.8206,
+    "lon": 20.466,
+    "names": ["Belgrade", "Белград", "Белград"]
+  },
+  {
+    "id": "sucre",
+    "country": "bolivia",
+    "lat": -19.041,
+    "lon": -65.2595,
+    "names": ["Sucre", "Сукре", "Сукре"]
+  },
+  {
+    "id": "belmopan",
+    "country": "belize",
+    "lat": 17.252,
+    "lon": -88.7671,
+    "names": ["Belmopan", "Бельмопан", "Бельмопан"]
+  },
+  {
+    "id": "bangui",
+    "country": "central_african_republic",
+    "lat": 4.3666,
+    "lon": 18.5583,
+    "names": ["Bangui", "Банги", "Банги"]
+  },
+  {
+    "id": "yaounde",
+    "country": "cameroon",
+    "lat": 3.8686,
+    "lon": 11.5147,
+    "names": ["Yaoundé", "Яунде", "Яунде"]
+  },
+  {
+    "id": "tirana",
+    "country": "albania",
+    "lat": 41.3275,
+    "lon": 19.8189,
+    "names": ["Tirana", "Тирана", "Тирана"]
+  },
+  {
+    "id": "yerevan",
+    "country": "armenia",
+    "lat": 40.1831,
+    "lon": 44.5116,
+    "names": ["Yerevan", "Ереван", "Ереван"]
+  },
+  {
+    "id": "baku",
+    "country": "azerbaijan",
+    "lat": 40.3972,
+    "lon": 49.8603,
+    "names": ["Baku", "Баку", "Боку"]
+  },
+  {
+    "id": "phnom_penh",
+    "country": "cambodia",
+    "lat": 11.552,
+    "lon": 104.9147,
+    "names": ["Phnom Penh", "Пномпень", "Пномпень"]
+  },
+  {
+    "id": "la_paz",
+    "country": "bolivia",
+    "lat": -16.496,
+    "lon": -68.1519,
+    "names": ["La Paz", "Ла-Пас", "Ла-Пас"]
+  },
+  {
+    "id": "cotonou",
+    "country": "benin",
+    "lat": 6.402,
+    "lon": 2.518,
+    "names": ["Cotonou", "Котону", "Котону"]
+  },
+  {
+    "id": "sofia",
+    "country": "bulgaria",
+    "lat": 42.6853,
+    "lon": 23.3147,
+    "names": ["Sofia", "София", "София"]
+  },
+  {
+    "id": "minsk",
+    "country": "belarus",
+    "lat": 53.9019,
+    "lon": 27.5647,
+    "names": ["Minsk", "Минск", "Минск"]
+  },
+  {
+    "id": "thimphu",
+    "country": "bhutan",
+    "lat": 27.473,
+    "lon": 89.639,
+    "names": ["Thimphu", "Тхимпху", "Тхимпху"]
+  },
+  {
+    "id": "gaborone",
+    "country": "botswana",
+    "lat": -24.6463,
+    "lon": 25.9119,
+    "names": ["Gaborone", "Габороне", "Габороне"]
+  },
+  {
+    "id": "canberra",
+    "country": "australia",
+    "lat": -35.283,
+    "lon": 149.129,
+    "names": ["Canberra", "Канберра", "Канберра"]
+  },
+  {
+    "id": "ouagadougou",
+    "country": "burkina_faso",
+    "lat": 12.3723,
+    "lon": -1.5267,
+    "names": ["Ouagadougou", "Уагадугу", "Уагадугу"]
+  },
+  {
+    "id": "sarajevo",
+    "country": "bosnia_and_herzegovina",
+    "lat": 43.85,
+    "lon": 18.383,
+    "names": ["Sarajevo", "Сараево", "Сараево"]
+  },
+  {
+    "id": "naypyidaw",
+    "country": "myanmar",
+    "lat": 19.7685,
+    "lon": 96.1167,
+    "names": ["Naypyidaw", "Нейпьидо", "Нейпьидо"]
+  },
+  {
+    "id": "jerusalem",
+    "country": "israel",
+    "lat": 31.7784,
+    "lon": 35.2066,
+    "names": ["Jerusalem", "Иерусалим", "Иерусалим"]
+  },
+  {
+    "id": "nassau",
+    "country": "bahamas",
+    "lat": 25.0834,
+    "lon": -77.35,
+    "names": ["Nassau", "Нассау", "Нассау"]
+  },
+  {
+    "id": "nicosia",
+    "country": "cyprus",
+    "lat": 35.1667,
+    "lon": 33.3666,
+    "names": ["Nicosia", "Никосия", "Никосия"]
+  },
+  {
+    "id": "wellington",
+    "country": "new_zealand",
+    "lat": -41.3,
+    "lon": 174.7833,
+    "names": ["Wellington", "Веллингтон", "Веллингтон"]
+  },
+  {
+    "id": "hanoi",
+    "country": "vietnam",
+    "lat": 21.0353,
+    "lon": 105.8481,
+    "names": ["Hanoi", "Ханой", "Ханой"]
+  },
+  {
+    "id": "ankara",
+    "country": "turkey",
+    "lat": 39.9292,
+    "lon": 32.8624,
+    "names": ["Ankara", "Анкара", "Анқара"]
+  },
+  {
+    "id": "budapest",
+    "country": "hungary",
+    "lat": 47.502,
+    "lon": 19.0814,
+    "names": ["Budapest", "Будапешт", "Будапешт"]
+  },
+  {
+    "id": "sanaa",
+    "country": "yemen",
+    "lat": 15.3567,
+    "lon": 44.2046,
+    "names": ["Sanaa", "Сана", "Санъо"]
+  },
+  {
+    "id": "bucharest",
+    "country": "romania",
+    "lat": 44.4353,
+    "lon": 26.098,
+    "names": ["Bucharest", "Бухарест", "Бухарест"]
+  },
+  {
+    "id": "damascus",
+    "country": "syria",
+    "lat": 33.502,
+    "lon": 36.2981,
+    "names": ["Damascus", "Дамаск", "Димишқ"]
+  },
+  {
+    "id": "lisbon",
+    "country": "portugal",
+    "lat": 38.7247,
+    "lon": -9.1468,
+    "names": ["Lisbon", "Лиссабон", "Лиссабон"]
+  },
+  {
+    "id": "khartoum",
+    "country": "sudan",
+    "lat": 15.59,
+    "lon": 32.5322,
+    "names": ["Khartoum", "Хартум", "Хартум"]
+  },
+  {
+    "id": "oslo",
+    "country": "norway",
+    "lat": 59.9186,
+    "lon": 10.748,
+    "names": ["Oslo", "Осло", "Осло"]
+  },
+  {
+    "id": "warsaw",
+    "country": "poland",
+    "lat": 52.2519,
+    "lon": 20.9981,
+    "names": ["Warsaw", "Варшава", "Варшава"]
+  },
+  {
+    "id": "pyongyang",
+    "country": "dem_rep_korea",
+    "lat": 39.0214,
+    "lon": 125.7527,
+    "names": ["Pyongyang", "Пхеньян", "Пхеньян"]
+  },
+  {
+    "id": "dublin",
+    "country": "ireland",
+    "lat": 53.335,
+    "lon": -6.2509,
+    "names": ["Dublin", "Дублин", "Дублин"]
+  },
+  {
+    "id": "monrovia",
+    "country": "liberia",
+    "lat": 6.3146,
+    "lon": -10.7997,
+    "names": ["Monrovia", "Монровия", "Монровия"]
+  },
+  {
+    "id": "kuala_lumpur",
+    "country": "malaysia",
+    "lat": 3.1686,
+    "lon": 101.698,
+    "names": ["Kuala Lumpur", "Куала-Лумпур", "Куала-Лумпур"]
+  },
+  {
+    "id": "havana",
+    "country": "cuba",
+    "lat": 23.1339,
+    "lon": -82.3661,
+    "names": ["Havana", "Гавана", "Гавана"]
+  },
+  {
+    "id": "prague",
+    "country": "czech_republic",
+    "lat": 50.0853,
+    "lon": 14.464,
+    "names": ["Prague", "Прага", "Прага"]
+  },
+  {
+    "id": "kuwait_city",
+    "country": "kuwait",
+    "lat": 29.3717,
+    "lon": 47.9764,
+    "names": ["Kuwait City", "Эль-Кувейт", "Кувайт"]
+  },
+  {
+    "id": "santo_domingo",
+    "country": "dominican_republic",
+    "lat": 18.472,
+    "lon": -69.902,
+    "names": ["Santo Domingo", "Санто-Доминго", "Санто-Доминго"]
+  },
+  {
+    "id": "accra",
+    "country": "ghana",
+    "lat": 5.552,
+    "lon": -0.2187,
+    "names": ["Accra", "Аккра", "Аккра"]
+  },
+  {
+    "id": "tripoli",
+    "country": "libya",
+    "lat": 32.8925,
+    "lon": 13.18,
+    "names": ["Tripoli", "Триполи", "Триполи"]
+  },
+  {
+    "id": "helsinki",
+    "country": "finland",
+    "lat": 60.1775,
+    "lon": 24.9322,
+    "names": ["Helsinki", "Хельсинки", "Хельсинки"]
+  },
+  {
+    "id": "copenhagen",
+    "country": "denmark",
+    "lat": 55.6805,
+    "lon": 12.5615,
+    "names": ["Copenhagen", "Копенгаген", "Копенгаген"]
+  },
+  {
+    "id": "abidjan",
+    "country": "cote_d_ivoire",
+    "lat": 5.3219,
+    "lon": -4.042,
+    "names": ["Abidjan", "Абиджан", "Абиджан"]
+  },
+  {
+    "id": "brasilia",
+    "country": "brazil",
+    "lat": -15.7814,
+    "lon": -47.918,
+    "names": ["Brasília", "Бразилиа", "Бразилиа"]
+  },
+  {
+    "id": "brussels",
+    "country": "belgium",
+    "lat": 50.8353,
+    "lon": 4.3314,
+    "names": ["Brussels", "Брюссель", "Брюссель"]
+  },
+  {
+    "id": "dhaka",
+    "country": "bangladesh",
+    "lat": 23.725,
+    "lon": 90.4066,
+    "names": ["Dhaka", "Дакка", "Дакка"]
+  },
+  {
+    "id": "luanda",
+    "country": "angola",
+    "lat": -8.8363,
+    "lon": 13.2325,
+    "names": ["Luanda", "Луанда", "Луанда"]
+  },
+  {
+    "id": "algiers",
+    "country": "algeria",
+    "lat": 36.765,
+    "lon": 3.0486,
+    "names": ["Algiers", "Алжир", "Алжир"]
+  },
+  {
+    "id": "caracas",
+    "country": "venezuela",
+    "lat": 10.5029,
+    "lon": -66.919,
+    "names": ["Caracas", "Каракас", "Каракас"]
+  },
+  {
+    "id": "kyiv",
+    "country": "ukraine",
+    "lat": 50.4353,
+    "lon": 30.5147,
+    "names": ["Kyiv", "Киев", "Киев"]
+  },
+  {
+    "id": "tashkent",
+    "country": "uzbekistan",
+    "lat": 41.3136,
+    "lon": 69.293,
+    "names": ["Tashkent", "Ташкент", "Ташкент"]
+  },
+  {
+    "id": "madrid",
+    "country": "spain",
+    "lat": 40.402,
+    "lon": -3.6853,
+    "names": ["Madrid", "Мадрид", "Мадрид"]
+  },
+  {
+    "id": "stockholm",
+    "country": "sweden",
+    "lat": 59.3527,
+    "lon": 18.0954,
+    "names": ["Stockholm", "Стокгольм", "Стокгольм"]
+  },
+  {
+    "id": "bangkok",
+    "country": "thailand",
+    "lat": 13.7519,
+    "lon": 100.5147,
+    "names": ["Bangkok", "Бангкок", "Бангкок"]
+  },
+  {
+    "id": "lima",
+    "country": "peru",
+    "lat": -12.0461,
+    "lon": -77.052,
+    "names": ["Lima", "Лима", "Лима"]
+  },
+  {
+    "id": "dakar",
+    "country": "senegal",
+    "lat": 14.7178,
+    "lon": -17.4751,
+    "names": ["Dakar", "Дакар", "Дакар"]
+  },
+  {
+    "id": "amsterdam",
+    "country": "netherlands",
+    "lat": 52.3519,
+    "lon": 4.9147,
+    "names": ["Amsterdam", "Амстердам", "Амстердам"]
+  },
+  {
+    "id": "seoul",
+    "country": "republic_of_korea",
+    "lat": 37.5683,
+    "lon": 126.9978,
+    "names": ["Seoul", "Сеул", "Сеул"]
+  },
+  {
+    "id": "manila",
+    "country": "philippines",
+    "lat": 14.6061,
+    "lon": 120.9803,
+    "names": ["Manila", "Манила", "Манила"]
+  },
+  {
+    "id": "berlin",
+    "country": "germany",
+    "lat": 52.5238,
+    "lon": 13.3996,
+    "names": ["Berlin", "Берлин", "Берлин"]
+  },
+  {
+    "id": "new_delhi",
+    "country": "india",
+    "lat": 28.6,
+    "lon": 77.2,
+    "names": ["New Delhi", "Нью-Дели", "Деҳлии Нав"]
+  },
+  {
+    "id": "athens",
+    "country": "greece",
+    "lat": 37.9853,
+    "lon": 23.7314,
+    "names": ["Athens", "Афины", "Афины"]
+  },
+  {
+    "id": "baghdad",
+    "country": "iraq",
+    "lat": 33.3406,
+    "lon": 44.3919,
+    "names": ["Baghdad", "Багдад", "Бағдод"]
+  },
+  {
+    "id": "addis_ababa",
+    "country": "ethiopia",
+    "lat": 9.0353,
+    "lon": 38.6981,
+    "names": ["Addis Ababa", "Аддис-Абеба", "Аддис-Абеба"]
+  },
+  {
+    "id": "tehran",
+    "country": "iran",
+    "lat": 35.6739,
+    "lon": 51.4224,
+    "names": ["Tehran", "Тегеран", "Теҳрон"]
+  },
+  {
+    "id": "buenos_aires",
+    "country": "argentina",
+    "lat": -34.6006,
+    "lon": -58.3995,
+    "names": ["Buenos Aires", "Буэнос-Айрес", "Буэнос-Айрес"]
+  },
+  {
+    "id": "kabul",
+    "country": "afghanistan",
+    "lat": 34.5186,
+    "lon": 69.1813,
+    "names": ["Kabul", "Кабул", "Кобул"]
+  },
+  {
+    "id": "vienna",
+    "country": "austria",
+    "lat": 48.202,
+    "lon": 16.3647,
+    "names": ["Vienna", "Вена", "Вена"]
+  },
+  {
+    "id": "taipei",
+    "country": "taiwan",
+    "lat": 25.0358,
+    "lon": 121.5683,
+    "names": ["Taipei", "Тайбэй", "Тайбэй"]
+  },
+  {
+    "id": "london",
+    "country": "united_kingdom",
+    "lat": 51.5019,
+    "lon": -0.1187,
+    "names": ["London", "Лондон", "Лондон"]
+  },
+  {
+    "id": "riyadh",
+    "country": "saudi_arabia",
+    "lat": 24.6428,
+    "lon": 46.7708,
+    "names": ["Riyadh", "Эр-Рияд", "Риёз"]
+  },
+  {
+    "id": "cape_town",
+    "country": "south_africa",
+    "lat": -33.9181,
+    "lon": 18.433,
+    "names": ["Cape Town", "Кейптаун", "Кейптаун"]
+  },
+  {
+    "id": "mexico_city",
+    "country": "mexico",
+    "lat": 19.4444,
+    "lon": -99.1329,
+    "names": ["Mexico City", "Мехико", "Мехико"]
+  },
+  {
+    "id": "rome",
+    "country": "italy",
+    "lat": 41.8979,
+    "lon": 12.4813,
+    "names": ["Rome", "Рим", "Рим"]
+  },
+  {
+    "id": "beijing",
+    "country": "china",
+    "lat": 39.9308,
+    "lon": 116.3863,
+    "names": ["Beijing", "Пекин", "Пекин"]
+  },
+  {
+    "id": "nairobi",
+    "country": "kenya",
+    "lat": -1.2814,
+    "lon": 36.8147,
+    "names": ["Nairobi", "Найроби", "Найроби"]
+  },
+  {
+    "id": "jakarta",
+    "country": "indonesia",
+    "lat": -6.1725,
+    "lon": 106.8275,
+    "names": ["Jakarta", "Джакарта", "Джакарта"]
+  },
+  {
+    "id": "bogota",
+    "country": "colombia",
+    "lat": 4.5984,
+    "lon": -74.0853,
+    "names": ["Bogotá", "Богота", "Богота"]
+  },
+  {
+    "id": "cairo",
+    "country": "egypt",
+    "lat": 30.0519,
+    "lon": 31.248,
+    "names": ["Cairo", "Каир", "Қоҳира"]
+  },
+  {
+    "id": "tokyo",
+    "country": "japan",
+    "lat": 35.687,
+    "lon": 139.7495,
+    "names": ["Tokyo", "Токио", "Токио"]
+  },
+  {
+    "id": "paris",
+    "country": "france",
+    "lat": 48.8686,
+    "lon": 2.3314,
+    "names": ["Paris", "Париж", "Париж"]
+  },
+  {
+    "id": "santiago",
+    "country": "chile",
+    "lat": -33.4481,
+    "lon": -70.669,
+    "names": ["Santiago", "Сантьяго", "Сантьяго"]
+  },
+  {
+    "id": "vahdat",
+    "country": "tajikistan",
+    "lat": 38.556,
+    "lon": 69.019,
+    "names": ["Vahdat", "Вахдат", "Ваҳдат"]
+  },
+  {
+    "id": "hisor",
+    "country": "tajikistan",
+    "lat": 38.526,
+    "lon": 68.551,
+    "names": ["Hisor", "Гиссар", "Ҳисор"]
+  },
+  {
+    "id": "konibodom",
+    "country": "tajikistan",
+    "lat": 40.294,
+    "lon": 70.426,
+    "names": ["Konibodom", "Канибадам", "Конибодом"]
+  },
+  {
+    "id": "isfara",
+    "country": "tajikistan",
+    "lat": 40.126,
+    "lon": 70.625,
+    "names": ["Isfara", "Исфара", "Исфара"]
+  },
+  {
+    "id": "danghara",
+    "country": "tajikistan",
+    "lat": 38.098,
+    "lon": 69.332,
+    "names": ["Danghara", "Дангара", "Данғара"]
+  },
+  {
+    "id": "rasht",
+    "country": "tajikistan",
+    "lat": 39.04,
+    "lon": 70.38,
+    "names": ["Rasht", "Рашт", "Рашт"]
+  },
+  {
+    "id": "murghob",
+    "country": "tajikistan",
+    "lat": 38.17,
+    "lon": 73.964,
+    "names": ["Murghob", "Мургаб", "Мурғоб"]
+  },
+  {
+    "id": "shahritus",
+    "country": "tajikistan",
+    "lat": 37.261,
+    "lon": 68.138,
+    "names": ["Shahritus", "Шаартуз", "Шаҳритус"]
+  }
+]
