@@ -77,6 +77,7 @@ const en = {
   explorer: {
     kindRegion: 'country / region',
     kindAoi: 'custom area',
+    kindCity: 'city · 50 km circle around the centre',
     area: (km2: S) => `${km2} km²`,
     cells: (n: S) => `${n} map cells`,
     coarse: ' (coarser grid: the area is very large)',
@@ -337,14 +338,16 @@ const en = {
     saved: 'Saved',
     unavailable: 'Accounts are not enabled on this deployment.',
     deleteTitle: 'Delete account',
-    deleteLead: 'This permanently removes your account and saved places. Enter your password to confirm.',
+    deleteLead:
+      'This permanently removes your account and saved places. Enter your password to confirm.',
     deleteConfirm: 'Delete my account',
     deleted: 'Your account has been deleted.',
     watchTitle: 'Latest month in your places',
     watchHigh: 'unusually high',
     watchLow: 'unusually low',
     watchUsual: 'within the usual range',
-    watchNote: 'Unusual = more activity than 90% of the same months in other years, or less than 10%.',
+    watchNote:
+      'Unusual = more activity than 90% of the same months in other years, or less than 10%.',
     errors: {
       invalid_credentials: 'Wrong e-mail or password.',
       unverified: 'Confirm your e-mail first: we sent you a link.',
@@ -460,6 +463,7 @@ const ru: Messages = {
   explorer: {
     kindRegion: 'страна / регион',
     kindAoi: 'своя область',
+    kindCity: 'город · круг 50 км вокруг центра',
     area: (km2) => `${km2} км²`,
     cells: (n) => `${n} ячеек карты`,
     coarse: ' (крупная сетка: область очень большая)',
@@ -714,7 +718,8 @@ const ru: Messages = {
     saved: 'Сохранено',
     unavailable: 'Аккаунты в этой версии сайта не включены.',
     deleteTitle: 'Удалить аккаунт',
-    deleteLead: 'Аккаунт и сохранённые места будут удалены навсегда. Введите пароль для подтверждения.',
+    deleteLead:
+      'Аккаунт и сохранённые места будут удалены навсегда. Введите пароль для подтверждения.',
     deleteConfirm: 'Удалить мой аккаунт',
     deleted: 'Ваш аккаунт удалён.',
     watchTitle: 'Последний месяц в ваших местах',
@@ -835,6 +840,7 @@ const tg: Messages = {
   explorer: {
     kindRegion: 'кишвар / минтақа',
     kindAoi: 'минтақаи худӣ',
+    kindCity: 'шаҳр · доираи 50 км атрофи марказ',
     area: (km2) => `${km2} км²`,
     cells: (n) => `${n} чашмаки харита`,
     coarse: ' (тӯри калон: минтақа хеле бузург аст)',
@@ -1094,7 +1100,8 @@ const tg: Messages = {
     saved: 'Нигоҳ дошта шуд',
     unavailable: 'Ҳисобҳо дар ин версияи сайт фаъол нестанд.',
     deleteTitle: 'Нест кардани ҳисоб',
-    deleteLead: 'Ҳисоб ва ҷойҳои нигоҳдошта абадан нест карда мешаванд. Барои тасдиқ рамзро ворид кунед.',
+    deleteLead:
+      'Ҳисоб ва ҷойҳои нигоҳдошта абадан нест карда мешаванд. Барои тасдиқ рамзро ворид кунед.',
     deleteConfirm: 'Ҳисоби маро нест кунед',
     deleted: 'Ҳисоби шумо нест карда шуд.',
     watchTitle: 'Моҳи охирин дар ҷойҳои шумо',

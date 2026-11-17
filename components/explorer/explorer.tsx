@@ -160,7 +160,11 @@ export function Explorer({ aoi }: { aoi: AoiRef | null }) {
       <section className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="text-muted font-mono text-xs tracking-wide uppercase">
-            {aoi.kind === 'region' ? ex.kindRegion : ex.kindAoi}
+            {aoi.kind === 'region'
+              ? aoi.iso3.startsWith('CITY_')
+                ? ex.kindCity
+                : ex.kindRegion
+              : ex.kindAoi}
           </p>
           <div className="flex flex-wrap items-center gap-3">
             <h1 className="font-display text-3xl tracking-tight sm:text-4xl">{label}</h1>

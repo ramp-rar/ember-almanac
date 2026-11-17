@@ -70,3 +70,37 @@ describe('regionAt', () => {
     expect(regionAt(regions, 38.56, 68.79)).toBeNull(); // Dushanbe is outside both boxes
   });
 });
+
+describe('cities', () => {
+  const cities = index.regions.filter((r) => r.id.startsWith('city_')) as (IndexRegion & {
+    country: string;
+  })[];
+
+  it('ships Central Asian and Texas cities with data, a fire-map layer and names', () => {
+    expect(cities.length).toBeGreaterThanOrEqual(15);
+    for (const id of ['city_dushanbe', 'city_khujand', 'city_almaty', 'city_tashkent']) {
+      expect(
+        cities.some((c) => c.id === id),
+        id,
+      ).toBe(true);
+    }
+    for (const c of cities) {
+      expect(files.has(c.id), c.id).toBe(true);
+      expect(
+        readdirSync(path.join(process.cwd(), 'public/geo', c.id)).includes('index.json'),
+        c.id,
+      ).toBe(true);
+      expect(c.names.tg).toMatch(/· 50 км$/);
+    }
+  });
+
+  it('each city centre lies inside its country box', () => {
+    for (const c of cities) {
+      const country = index.regions.find((r) => r.id === c.country)!;
+      const [w, s, e, n] = c.bbox;
+      const [lon, lat] = [(w + e) / 2, (s + n) / 2];
+      const [cw, cs, ce, cn] = country.bbox;
+      expect(lon >= cw && lon <= ce && lat >= cs && lat <= cn, c.id).toBe(true);
+    }
+  });
+});

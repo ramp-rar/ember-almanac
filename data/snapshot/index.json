@@ -1,2590 +1,3797 @@
 {
-  "generated_at": "2026-11-15T17:03:40Z",
-  "source": "fire-calendar-api (data team) at http://localhost:8000",
-  "meta": {
-    "contract_version": "1",
-    "dataset_version": "snapshot-2026-11-15",
-    "harmonization": {
-      "method": "Fire Calendar API (data team): MODIS-based estimate before 2012-02, VIIRS S-NPP observed after; unit = cell-days of ~1 km cells",
-      "unit": "harmonized cell-days, VIIRS S-NPP equivalent",
-      "h3_resolution": 5,
-      "baseline_years": [2001, 2025]
-    },
-    "coverage": {
-      "MODIS": {
-        "start": "2000-11-01",
-        "end": null
-      },
-      "VIIRS_SNPP": {
-        "start": "2012-02-01",
-        "end": null
-      }
-    },
-    "standard_processing_through": "2026-07-31",
-    "nrt_through": "2026-11-15",
-    "estimate_before_year": 2012,
-    "missing_days": [],
-    "region_bbox": [-179.91, -54.91, 179.98, 82.56]
+ "generated_at": "2026-11-15T17:03:40Z",
+ "source": "fire-calendar-api (data team) at http://localhost:8000",
+ "meta": {
+  "contract_version": "1",
+  "dataset_version": "snapshot-2026-11-15",
+  "harmonization": {
+   "method": "Fire Calendar API (data team): MODIS-based estimate before 2012-02, VIIRS S-NPP observed after; unit = cell-days of ~1 km cells",
+   "unit": "harmonized cell-days, VIIRS S-NPP equivalent",
+   "h3_resolution": 5,
+   "baseline_years": [
+    2001,
+    2025
+   ]
   },
-  "regions": [
-    {
-      "id": "kazakhstan",
-      "name": "Kazakhstan",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [46.46, 40.56, 86.76, 55.47],
-      "hexes_r5": 7947,
-      "group": "demo",
-      "names": {
-        "en": "Kazakhstan",
-        "ru": "Казахстан",
-        "tg": "Қазоқистон",
-        "iso2": "KZ"
-      }
-    },
-    {
-      "id": "texas",
-      "name": "Texas",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [-106.69, 25.89, -93.48, 36.54],
-      "hexes_r5": 2474,
-      "group": "demo",
-      "names": {
-        "en": "Texas (USA)",
-        "ru": "Техас (США)",
-        "tg": "Техас (ИМА)"
-      }
-    },
-    {
-      "id": "afghanistan",
-      "name": "Afghanistan",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [60.81, 29.48, 74.05, 38.5],
-      "hexes_r5": 1160,
-      "group": "world",
-      "names": {
-        "en": "Afghanistan",
-        "ru": "Афганистан",
-        "tg": "Афғонистон",
-        "iso2": "AF"
-      }
-    },
-    {
-      "id": "albania",
-      "name": "Albania",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [19.29, 39.62, 21.03, 42.67],
-      "hexes_r5": 131,
-      "group": "world",
-      "names": {
-        "en": "Albania",
-        "ru": "Албания",
-        "tg": "Албания",
-        "iso2": "AL"
-      }
-    },
-    {
-      "id": "algeria",
-      "name": "Algeria",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [-8.45, 19.38, 10.94, 37.14],
-      "hexes_r5": 1791,
-      "group": "world",
-      "names": {
-        "en": "Algeria",
-        "ru": "Алжир",
-        "tg": "Алҷазоир",
-        "iso2": "DZ"
-      }
-    },
-    {
-      "id": "angola",
-      "name": "Angola",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [11.75, -18.06, 24.12, -4.35],
-      "hexes_r5": 4577,
-      "group": "world",
-      "names": {
-        "en": "Angola",
-        "ru": "Ангола",
-        "tg": "Ангола",
-        "iso2": "AO"
-      }
-    },
-    {
-      "id": "argentina",
-      "name": "Argentina",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [-73.15, -54.91, -53.55, -21.75],
-      "hexes_r5": 11839,
-      "group": "world",
-      "names": {
-        "en": "Argentina",
-        "ru": "Аргентина",
-        "tg": "Аргентина",
-        "iso2": "AR"
-      }
-    },
-    {
-      "id": "armenia",
-      "name": "Armenia",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [43.48, 38.85, 46.63, 41.32],
-      "hexes_r5": 151,
-      "group": "world",
-      "names": {
-        "en": "Armenia",
-        "ru": "Армения",
-        "tg": "Арманистон",
-        "iso2": "AM"
-      }
-    },
-    {
-      "id": "australia",
-      "name": "Australia",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [113.37, -43.66, 153.67, -9.27],
-      "hexes_r5": 28120,
-      "group": "world",
-      "names": {
-        "en": "Australia",
-        "ru": "Австралия",
-        "tg": "Австралия",
-        "iso2": "AU"
-      }
-    },
-    {
-      "id": "austria",
-      "name": "Austria",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [9.49, 46.43, 17.13, 48.94],
-      "hexes_r5": 311,
-      "group": "world",
-      "names": {
-        "en": "Austria",
-        "ru": "Австрия",
-        "tg": "Австрия",
-        "iso2": "AT"
-      }
-    },
-    {
-      "id": "azerbaijan",
-      "name": "Azerbaijan",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [44.73, 38.37, 50.39, 41.87],
-      "hexes_r5": 398,
-      "group": "world",
-      "names": {
-        "en": "Azerbaijan",
-        "ru": "Азербайджан",
-        "tg": "Озарбойҷон",
-        "iso2": "AZ"
-      }
-    },
-    {
-      "id": "bahamas",
-      "name": "Bahamas",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [-79.34, 20.97, -72.99, 26.93],
-      "hexes_r5": 126,
-      "group": "world",
-      "names": {
-        "en": "Bahamas",
-        "ru": "Багамы",
-        "tg": "Багам",
-        "iso2": "BS"
-      }
-    },
-    {
-      "id": "bangladesh",
-      "name": "Bangladesh",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [88.02, 20.85, 92.68, 26.62],
-      "hexes_r5": 574,
-      "group": "world",
-      "names": {
-        "en": "Bangladesh",
-        "ru": "Бангладеш",
-        "tg": "Бангладеш",
-        "iso2": "BD"
-      }
-    },
-    {
-      "id": "belarus",
-      "name": "Belarus",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [23.2, 51.23, 32.81, 56.18],
-      "hexes_r5": 1008,
-      "group": "world",
-      "names": {
-        "en": "Belarus",
-        "ru": "Беларусь",
-        "tg": "Белорус",
-        "iso2": "BY"
-      }
-    },
-    {
-      "id": "belgium",
-      "name": "Belgium",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [2.51, 49.47, 6.43, 51.5],
-      "hexes_r5": 165,
-      "group": "world",
-      "names": {
-        "en": "Belgium",
-        "ru": "Бельгия",
-        "tg": "Белгия",
-        "iso2": "BE"
-      }
-    },
-    {
-      "id": "belize",
-      "name": "Belize",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [-89.26, 15.85, -87.82, 18.55],
-      "hexes_r5": 113,
-      "group": "world",
-      "names": {
-        "en": "Belize",
-        "ru": "Белиз",
-        "tg": "Белиз",
-        "iso2": "BZ"
-      }
-    },
-    {
-      "id": "benin",
-      "name": "Benin",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [0.71, 6.26, 3.86, 12.44],
-      "hexes_r5": 621,
-      "group": "world",
-      "names": {
-        "en": "Benin",
-        "ru": "Бенин",
-        "tg": "Бенин",
-        "iso2": "DY"
-      }
-    },
-    {
-      "id": "bhutan",
-      "name": "Bhutan",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [88.74, 26.66, 92.15, 28.25],
-      "hexes_r5": 171,
-      "group": "world",
-      "names": {
-        "en": "Bhutan",
-        "ru": "Бутан",
-        "tg": "Бутон",
-        "iso2": "BT"
-      }
-    },
-    {
-      "id": "bolivia",
-      "name": "Bolivia",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [-69.64, -22.89, -57.49, -9.69],
-      "hexes_r5": 4346,
-      "group": "world",
-      "names": {
-        "en": "Bolivia",
-        "ru": "Боливия",
-        "tg": "Боливия",
-        "iso2": "BO"
-      }
-    },
-    {
-      "id": "bosnia_and_herzegovina",
-      "name": "Bosnia and Herzegovina",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [15.7, 42.53, 19.67, 45.33],
-      "hexes_r5": 233,
-      "group": "world",
-      "names": {
-        "en": "Bosnia & Herzegovina",
-        "ru": "Босния и Герцеговина",
-        "tg": "Босния ва Ҳерсеговина",
-        "iso2": "BA"
-      }
-    },
-    {
-      "id": "botswana",
-      "name": "Botswana",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [19.9, -26.91, 29.34, -17.8],
-      "hexes_r5": 2108,
-      "group": "world",
-      "names": {
-        "en": "Botswana",
-        "ru": "Ботсвана",
-        "tg": "Ботсвана",
-        "iso2": "BW"
-      }
-    },
-    {
-      "id": "brazil",
-      "name": "Brazil",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [-73.9, -33.79, -32.43, 5.25],
-      "hexes_r5": 28605,
-      "group": "world",
-      "names": {
-        "en": "Brazil",
-        "ru": "Бразилия",
-        "tg": "Бразилия",
-        "iso2": "BR"
-      }
-    },
-    {
-      "id": "bulgaria",
-      "name": "Bulgaria",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [22.36, 41.17, 28.66, 44.28],
-      "hexes_r5": 464,
-      "group": "world",
-      "names": {
-        "en": "Bulgaria",
-        "ru": "Болгария",
-        "tg": "Булғория",
-        "iso2": "BG"
-      }
-    },
-    {
-      "id": "burkina_faso",
-      "name": "Burkina Faso",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [-5.56, 9.36, 2.46, 15.08],
-      "hexes_r5": 1416,
-      "group": "world",
-      "names": {
-        "en": "Burkina Faso",
-        "ru": "Буркина-Фасо",
-        "tg": "Буркина-Фасо",
-        "iso2": "HV"
-      }
-    },
-    {
-      "id": "burundi",
-      "name": "Burundi",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [28.98, -4.56, 30.87, -2.29],
-      "hexes_r5": 117,
-      "group": "world",
-      "names": {
-        "en": "Burundi",
-        "ru": "Бурунди",
-        "tg": "Бурунди",
-        "iso2": "BI"
-      }
-    },
-    {
-      "id": "cambodia",
-      "name": "Cambodia",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [102.24, 10.41, 107.67, 14.69],
-      "hexes_r5": 704,
-      "group": "world",
-      "names": {
-        "en": "Cambodia",
-        "ru": "Камбоджа",
-        "tg": "Камбоҷа",
-        "iso2": "KH"
-      }
-    },
-    {
-      "id": "cameroon",
-      "name": "Cameroon",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [8.52, 1.71, 16.22, 13.05],
-      "hexes_r5": 1995,
-      "group": "world",
-      "names": {
-        "en": "Cameroon",
-        "ru": "Камерун",
-        "tg": "Камерун",
-        "iso2": "CM"
-      }
-    },
-    {
-      "id": "canada",
-      "name": "Canada",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [-141.19, 41.73, -52.7, 82.56],
-      "hexes_r5": 20204,
-      "group": "world",
-      "names": {
-        "en": "Canada",
-        "ru": "Канада",
-        "tg": "Канада",
-        "iso2": "CA"
-      }
-    },
-    {
-      "id": "central_african_republic",
-      "name": "Central African Republic",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [14.34, 2.51, 27.46, 11.03],
-      "hexes_r5": 2654,
-      "group": "world",
-      "names": {
-        "en": "Central African Republic",
-        "ru": "Центрально-Африканская Республика",
-        "tg": "Ҷумҳурии Африқои Марказӣ",
-        "iso2": "CF"
-      }
-    },
-    {
-      "id": "chad",
-      "name": "Chad",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [13.45, 7.41, 23.93, 23.15],
-      "hexes_r5": 2591,
-      "group": "world",
-      "names": {
-        "en": "Chad",
-        "ru": "Чад",
-        "tg": "Чад",
-        "iso2": "TD"
-      }
-    },
-    {
-      "id": "chile",
-      "name": "Chile",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [-109.43, -53.92, -67.06, -17.57],
-      "hexes_r5": 2319,
-      "group": "world",
-      "names": {
-        "en": "Chile",
-        "ru": "Чили",
-        "tg": "Чили",
-        "iso2": "CL"
-      }
-    },
-    {
-      "id": "china",
-      "name": "China",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [74.16, 18.24, 134.81, 53.55],
-      "hexes_r5": 28021,
-      "group": "world",
-      "names": {
-        "en": "China",
-        "ru": "Китай",
-        "tg": "Хитой",
-        "iso2": "CN"
-      }
-    },
-    {
-      "id": "colombia",
-      "name": "Colombia",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [-81.68, -4.13, -66.89, 13.4],
-      "hexes_r5": 3645,
-      "group": "world",
-      "names": {
-        "en": "Colombia",
-        "ru": "Колумбия",
-        "tg": "Колумбия",
-        "iso2": "CO"
-      }
-    },
-    {
-      "id": "costa_rica",
-      "name": "Costa Rica",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [-85.93, 8.07, -82.59, 11.22],
-      "hexes_r5": 247,
-      "group": "world",
-      "names": {
-        "en": "Costa Rica",
-        "ru": "Коста-Рика",
-        "tg": "Коста-Рика",
-        "iso2": "CR"
-      }
-    },
-    {
-      "id": "cote_d_ivoire",
-      "name": "Cote D Ivoire",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [-8.64, 4.35, -2.44, 10.74],
-      "hexes_r5": 1881,
-      "group": "world",
-      "names": {
-        "en": "Côte d’Ivoire",
-        "ru": "Кот-д’Ивуар",
-        "tg": "Кот-д’Ивуар",
-        "iso2": "CI"
-      }
-    },
-    {
-      "id": "croatia",
-      "name": "Croatia",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [13.54, 42.52, 19.34, 46.51],
-      "hexes_r5": 296,
-      "group": "world",
-      "names": {
-        "en": "Croatia",
-        "ru": "Хорватия",
-        "tg": "Хорватия",
-        "iso2": "HR"
-      }
-    },
-    {
-      "id": "cuba",
-      "name": "Cuba",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [-84.9, 19.82, -74.13, 23.19],
-      "hexes_r5": 610,
-      "group": "world",
-      "names": {
-        "en": "Cuba",
-        "ru": "Куба",
-        "tg": "Куба",
-        "iso2": "CU"
-      }
-    },
-    {
-      "id": "cyprus",
-      "name": "Cyprus",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [32.29, 34.6, 34.04, 35.37],
-      "hexes_r5": 36,
-      "group": "world",
-      "names": {
-        "en": "Cyprus",
-        "ru": "Кипр",
-        "tg": "Кипр",
-        "iso2": "CY"
-      }
-    },
-    {
-      "id": "czech_republic",
-      "name": "Czech Republic",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [12.25, 48.49, 18.78, 51.04],
-      "hexes_r5": 345,
-      "group": "world",
-      "names": {
-        "en": "Czechia",
-        "ru": "Чехия",
-        "tg": "Ҷумҳурии Чех",
-        "iso2": "CZ"
-      }
-    },
-    {
-      "id": "dem_rep_korea",
-      "name": "Dem Rep Korea",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [124.16, 37.7, 130.65, 43.02],
-      "hexes_r5": 786,
-      "group": "world",
-      "names": {
-        "en": "North Korea",
-        "ru": "КНДР",
-        "tg": "Кореяи Шимолӣ",
-        "iso2": "KP"
-      }
-    },
-    {
-      "id": "denmark",
-      "name": "Denmark",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [8.06, 54.66, 15.15, 57.76],
-      "hexes_r5": 287,
-      "group": "world",
-      "names": {
-        "en": "Denmark",
-        "ru": "Дания",
-        "tg": "Дания",
-        "iso2": "DK"
-      }
-    },
-    {
-      "id": "dominican_republic",
-      "name": "Dominican Republic",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [-71.93, 17.65, -68.29, 19.97],
-      "hexes_r5": 309,
-      "group": "world",
-      "names": {
-        "en": "Dominican Republic",
-        "ru": "Доминиканская Республика",
-        "tg": "Ҷумҳурии Доминикан",
-        "iso2": "DO"
-      }
-    },
-    {
-      "id": "ecuador",
-      "name": "Ecuador",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [-91.55, -5, -75.25, 1.42],
-      "hexes_r5": 824,
-      "group": "world",
-      "names": {
-        "en": "Ecuador",
-        "ru": "Эквадор",
-        "tg": "Эквадор",
-        "iso2": "EC"
-      }
-    },
-    {
-      "id": "egypt",
-      "name": "Egypt",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [25.01, 22, 35.65, 31.62],
-      "hexes_r5": 825,
-      "group": "world",
-      "names": {
-        "en": "Egypt",
-        "ru": "Египет",
-        "tg": "Миср",
-        "iso2": "EG"
-      }
-    },
-    {
-      "id": "el_salvador",
-      "name": "El Salvador",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [-90.1, 13.11, -87.65, 14.46],
-      "hexes_r5": 111,
-      "group": "world",
-      "names": {
-        "en": "El Salvador",
-        "ru": "Сальвадор",
-        "tg": "Эл-Салвадор",
-        "iso2": "SV"
-      }
-    },
-    {
-      "id": "equatorial_guinea",
-      "name": "Equatorial Guinea",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [8.52, 0.84, 11.41, 3.8],
-      "hexes_r5": 132,
-      "group": "world",
-      "names": {
-        "en": "Equatorial Guinea",
-        "ru": "Экваториальная Гвинея",
-        "tg": "Гвинеяи Экваторӣ",
-        "iso2": "GQ"
-      }
-    },
-    {
-      "id": "eritrea",
-      "name": "Eritrea",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [36.36, 12.55, 43.05, 17.73],
-      "hexes_r5": 320,
-      "group": "world",
-      "names": {
-        "en": "Eritrea",
-        "ru": "Эритрея",
-        "tg": "Эритрея",
-        "iso2": "ER"
-      }
-    },
-    {
-      "id": "ethiopia",
-      "name": "Ethiopia",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [32.97, 3.36, 47.43, 14.91],
-      "hexes_r5": 4323,
-      "group": "world",
-      "names": {
-        "en": "Ethiopia",
-        "ru": "Эфиопия",
-        "tg": "Эфиопия",
-        "iso2": "ET"
-      }
-    },
-    {
-      "id": "fiji",
-      "name": "Fiji",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [-179.91, -19.15, 179.98, -16.18],
-      "hexes_r5": 144,
-      "group": "world",
-      "names": {
-        "en": "Fiji",
-        "ru": "Фиджи",
-        "tg": "Фиҷи",
-        "iso2": "FJ"
-      }
-    },
-    {
-      "id": "finland",
-      "name": "Finland",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [20.76, 59.82, 31.54, 69.85],
-      "hexes_r5": 1143,
-      "group": "world",
-      "names": {
-        "en": "Finland",
-        "ru": "Финляндия",
-        "tg": "Финляндия",
-        "iso2": "FI"
-      }
-    },
-    {
-      "id": "france",
-      "name": "France",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [-4.76, 41.23, 9.63, 51.03],
-      "hexes_r5": 2417,
-      "group": "world",
-      "names": {
-        "en": "France",
-        "ru": "Франция",
-        "tg": "Фаронса",
-        "iso2": "FX"
-      }
-    },
-    {
-      "id": "french_guiana",
-      "name": "French Guiana",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [-54.53, 2.19, -51.62, 5.76],
-      "hexes_r5": 161,
-      "group": "world",
-      "names": {
-        "en": "French Guiana",
-        "ru": "Французская Гвиана",
-        "tg": "Гвианаи Фаронса",
-        "iso2": "GF"
-      }
-    },
-    {
-      "id": "gabon",
-      "name": "Gabon",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [8.62, -3.94, 14.57, 2.31],
-      "hexes_r5": 751,
-      "group": "world",
-      "names": {
-        "en": "Gabon",
-        "ru": "Габон",
-        "tg": "Габон",
-        "iso2": "GA"
-      }
-    },
-    {
-      "id": "georgia",
-      "name": "Georgia",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [39.88, 41.08, 46.79, 43.49],
-      "hexes_r5": 294,
-      "group": "world",
-      "names": {
-        "en": "Georgia",
-        "ru": "Грузия",
-        "tg": "Гурҷистон",
-        "iso2": "GE"
-      }
-    },
-    {
-      "id": "germany",
-      "name": "Germany",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [5.84, 47.44, 14.98, 54.92],
-      "hexes_r5": 1617,
-      "group": "world",
-      "names": {
-        "en": "Germany",
-        "ru": "Германия",
-        "tg": "Германия",
-        "iso2": "DE"
-      }
-    },
-    {
-      "id": "ghana",
-      "name": "Ghana",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [-3.27, 4.76, 1.15, 11.17],
-      "hexes_r5": 1327,
-      "group": "world",
-      "names": {
-        "en": "Ghana",
-        "ru": "Гана",
-        "tg": "Гана",
-        "iso2": "GH"
-      }
-    },
-    {
-      "id": "greece",
-      "name": "Greece",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [19.72, 34.83, 28.3, 41.82],
-      "hexes_r5": 679,
-      "group": "world",
-      "names": {
-        "en": "Greece",
-        "ru": "Греция",
-        "tg": "Юнон",
-        "iso2": "GR"
-      }
-    },
-    {
-      "id": "guatemala",
-      "name": "Guatemala",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [-92.3, 13.71, -88.2, 17.9],
-      "hexes_r5": 476,
-      "group": "world",
-      "names": {
-        "en": "Guatemala",
-        "ru": "Гватемала",
-        "tg": "Гватемала",
-        "iso2": "GT"
-      }
-    },
-    {
-      "id": "guinea",
-      "name": "Guinea",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [-15.04, 7.17, -7.62, 12.77],
-      "hexes_r5": 1305,
-      "group": "world",
-      "names": {
-        "en": "Guinea",
-        "ru": "Гвинея",
-        "tg": "Гвинея",
-        "iso2": "GN"
-      }
-    },
-    {
-      "id": "guinea_bissau",
-      "name": "Guinea Bissau",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [-16.73, 10.95, -13.65, 12.75],
-      "hexes_r5": 207,
-      "group": "world",
-      "names": {
-        "en": "Guinea-Bissau",
-        "ru": "Гвинея-Бисау",
-        "tg": "Гвинея-Бисау",
-        "iso2": "GW"
-      }
-    },
-    {
-      "id": "guyana",
-      "name": "Guyana",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [-61.29, 1.3, -57.06, 8.42],
-      "hexes_r5": 609,
-      "group": "world",
-      "names": {
-        "en": "Guyana",
-        "ru": "Гайана",
-        "tg": "Гайана",
-        "iso2": "GY"
-      }
-    },
-    {
-      "id": "haiti",
-      "name": "Haiti",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [-74.46, 18.01, -71.6, 20.1],
-      "hexes_r5": 196,
-      "group": "world",
-      "names": {
-        "en": "Haiti",
-        "ru": "Гаити",
-        "tg": "Гаити",
-        "iso2": "HT"
-      }
-    },
-    {
-      "id": "honduras",
-      "name": "Honduras",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [-89.42, 12.97, -83.17, 16.46],
-      "hexes_r5": 546,
-      "group": "world",
-      "names": {
-        "en": "Honduras",
-        "ru": "Гондурас",
-        "tg": "Гондурас",
-        "iso2": "HN"
-      }
-    },
-    {
-      "id": "hungary",
-      "name": "Hungary",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [16.22, 45.76, 22.93, 48.65],
-      "hexes_r5": 409,
-      "group": "world",
-      "names": {
-        "en": "Hungary",
-        "ru": "Венгрия",
-        "tg": "Маҷористон",
-        "iso2": "HU"
-      }
-    },
-    {
-      "id": "iceland",
-      "name": "Iceland",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [-23.95, 63.46, -14.28, 66.23],
-      "hexes_r5": 90,
-      "group": "world",
-      "names": {
-        "en": "Iceland",
-        "ru": "Исландия",
-        "tg": "Исландия",
-        "iso2": "IS"
-      }
-    },
-    {
-      "id": "india",
-      "name": "India",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [68.55, 6.86, 97.39, 35.15],
-      "hexes_r5": 12273,
-      "group": "world",
-      "names": {
-        "en": "India",
-        "ru": "Индия",
-        "tg": "Ҳиндустон",
-        "iso2": "IN"
-      }
-    },
-    {
-      "id": "indonesia",
-      "name": "Indonesia",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [95, -11.02, 141.07, 5.92],
-      "hexes_r5": 7736,
-      "group": "world",
-      "names": {
-        "en": "Indonesia",
-        "ru": "Индонезия",
-        "tg": "Индонезия",
-        "iso2": "ID"
-      }
-    },
-    {
-      "id": "iran",
-      "name": "Iran",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [44.13, 25.28, 63.22, 39.76],
-      "hexes_r5": 4487,
-      "group": "world",
-      "names": {
-        "en": "Iran",
-        "ru": "Иран",
-        "tg": "Эрон",
-        "iso2": "IR"
-      }
-    },
-    {
-      "id": "iraq",
-      "name": "Iraq",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [38.9, 29.14, 48.57, 37.44],
-      "hexes_r5": 1151,
-      "group": "world",
-      "names": {
-        "en": "Iraq",
-        "ru": "Ирак",
-        "tg": "Ироқ",
-        "iso2": "IQ"
-      }
-    },
-    {
-      "id": "ireland",
-      "name": "Ireland",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [-10.45, 51.44, -5.97, 55.4],
-      "hexes_r5": 340,
-      "group": "world",
-      "names": {
-        "en": "Ireland",
-        "ru": "Ирландия",
-        "tg": "Ирландия",
-        "iso2": "IE"
-      }
-    },
-    {
-      "id": "israel",
-      "name": "Israel",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [34.25, 29.44, 35.97, 33.38],
-      "hexes_r5": 89,
-      "group": "world",
-      "names": {
-        "en": "Israel",
-        "ru": "Израиль",
-        "tg": "Исроил",
-        "iso2": "IL"
-      }
-    },
-    {
-      "id": "italy",
-      "name": "Italy",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [6.8, 35.46, 18.54, 46.88],
-      "hexes_r5": 1273,
-      "group": "world",
-      "names": {
-        "en": "Italy",
-        "ru": "Италия",
-        "tg": "Италия",
-        "iso2": "IT"
-      }
-    },
-    {
-      "id": "jamaica",
-      "name": "Jamaica",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [-78.34, 17.77, -76.23, 18.55],
-      "hexes_r5": 72,
-      "group": "world",
-      "names": {
-        "en": "Jamaica",
-        "ru": "Ямайка",
-        "tg": "Ямайка",
-        "iso2": "JM"
-      }
-    },
-    {
-      "id": "japan",
-      "name": "Japan",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [123.96, 24.25, 145.62, 45.25],
-      "hexes_r5": 1514,
-      "group": "world",
-      "names": {
-        "en": "Japan",
-        "ru": "Япония",
-        "tg": "Япония",
-        "iso2": "JP"
-      }
-    },
-    {
-      "id": "kenya",
-      "name": "Kenya",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [33.95, -4.69, 41.9, 5.06],
-      "hexes_r5": 2093,
-      "group": "world",
-      "names": {
-        "en": "Kenya",
-        "ru": "Кения",
-        "tg": "Кения",
-        "iso2": "KE"
-      }
-    },
-    {
-      "id": "kosovo",
-      "name": "Kosovo",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [19.98, 41.85, 21.87, 43.22],
-      "hexes_r5": 58,
-      "group": "world",
-      "names": {
-        "en": "Kosovo",
-        "ru": "Косово",
-        "tg": "Косово",
-        "iso2": "XK"
-      }
-    },
-    {
-      "id": "kuwait",
-      "name": "Kuwait",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [46.87, 28.5, 48.42, 30.15],
-      "hexes_r5": 65,
-      "group": "world",
-      "names": {
-        "en": "Kuwait",
-        "ru": "Кувейт",
-        "tg": "Қувайт",
-        "iso2": "KW"
-      }
-    },
-    {
-      "id": "kyrgyzstan",
-      "name": "Kyrgyzstan",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [69.23, 39.3, 79.53, 43.29],
-      "hexes_r5": 481,
-      "group": "world",
-      "names": {
-        "en": "Kyrgyzstan",
-        "ru": "Киргизия",
-        "tg": "Қирғизистон",
-        "iso2": "KG"
-      }
-    },
-    {
-      "id": "lao_pdr",
-      "name": "Lao Pdr",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [100.09, 13.9, 107.62, 22.49],
-      "hexes_r5": 932,
-      "group": "world",
-      "names": {
-        "en": "Laos",
-        "ru": "Лаос",
-        "tg": "Лаос",
-        "iso2": "LA"
-      }
-    },
-    {
-      "id": "latvia",
-      "name": "Latvia",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [20.95, 55.69, 28.2, 58.01],
-      "hexes_r5": 343,
-      "group": "world",
-      "names": {
-        "en": "Latvia",
-        "ru": "Латвия",
-        "tg": "Латвия",
-        "iso2": "LV"
-      }
-    },
-    {
-      "id": "lebanon",
-      "name": "Lebanon",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [35.13, 33, 36.6, 34.73],
-      "hexes_r5": 52,
-      "group": "world",
-      "names": {
-        "en": "Lebanon",
-        "ru": "Ливан",
-        "tg": "Лубнон",
-        "iso2": "LB"
-      }
-    },
-    {
-      "id": "lesotho",
-      "name": "Lesotho",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [26.94, -30.64, 29.47, -28.5],
-      "hexes_r5": 141,
-      "group": "world",
-      "names": {
-        "en": "Lesotho",
-        "ru": "Лесото",
-        "tg": "Лесото",
-        "iso2": "LS"
-      }
-    },
-    {
-      "id": "liberia",
-      "name": "Liberia",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [-11.56, 4.38, -7.36, 8.58],
-      "hexes_r5": 573,
-      "group": "world",
-      "names": {
-        "en": "Liberia",
-        "ru": "Либерия",
-        "tg": "Либерия",
-        "iso2": "LR"
-      }
-    },
-    {
-      "id": "libya",
-      "name": "Libya",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [9.36, 21.38, 25.07, 33.12],
-      "hexes_r5": 725,
-      "group": "world",
-      "names": {
-        "en": "Libya",
-        "ru": "Ливия",
-        "tg": "Либия",
-        "iso2": "LY"
-      }
-    },
-    {
-      "id": "lithuania",
-      "name": "Lithuania",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [21.05, 53.91, 26.86, 56.44],
-      "hexes_r5": 333,
-      "group": "world",
-      "names": {
-        "en": "Lithuania",
-        "ru": "Литва",
-        "tg": "Литва",
-        "iso2": "LT"
-      }
-    },
-    {
-      "id": "macedonia_former_yugoslav_republic_of",
-      "name": "Macedonia Former Yugoslav Republic Of",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [20.4, 40.87, 23.04, 42.38],
-      "hexes_r5": 110,
-      "group": "world",
-      "names": {
-        "en": "North Macedonia",
-        "ru": "Северная Македония",
-        "tg": "Македонияи Шимолӣ",
-        "iso2": "MK"
-      }
-    },
-    {
-      "id": "madagascar",
-      "name": "Madagascar",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [43.2, -25.6, 50.48, -11.93],
-      "hexes_r5": 2427,
-      "group": "world",
-      "names": {
-        "en": "Madagascar",
-        "ru": "Мадагаскар",
-        "tg": "Мадагаскар",
-        "iso2": "MG"
-      }
-    },
-    {
-      "id": "malawi",
-      "name": "Malawi",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [32.64, -17.1, 35.98, -9.32],
-      "hexes_r5": 434,
-      "group": "world",
-      "names": {
-        "en": "Malawi",
-        "ru": "Малави",
-        "tg": "Малави",
-        "iso2": "MW"
-      }
-    },
-    {
-      "id": "malaysia",
-      "name": "Malaysia",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [99.61, 0.86, 119.32, 7.38],
-      "hexes_r5": 1333,
-      "group": "world",
-      "names": {
-        "en": "Malaysia",
-        "ru": "Малайзия",
-        "tg": "Малайзия",
-        "iso2": "MY"
-      }
-    },
-    {
-      "id": "mali",
-      "name": "Mali",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [-12.26, 10.1, 4.23, 24.98],
-      "hexes_r5": 3134,
-      "group": "world",
-      "names": {
-        "en": "Mali",
-        "ru": "Мали",
-        "tg": "Мали",
-        "iso2": "ML"
-      }
-    },
-    {
-      "id": "mauritania",
-      "name": "Mauritania",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [-16.98, 14.7, -5.36, 25.75],
-      "hexes_r5": 845,
-      "group": "world",
-      "names": {
-        "en": "Mauritania",
-        "ru": "Мавритания",
-        "tg": "Мавритания",
-        "iso2": "MR"
-      }
-    },
-    {
-      "id": "mexico",
-      "name": "Mexico",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [-118.35, 14.45, -86.76, 32.78],
-      "hexes_r5": 6499,
-      "group": "world",
-      "names": {
-        "en": "Mexico",
-        "ru": "Мексика",
-        "tg": "Мексика",
-        "iso2": "MX"
-      }
-    },
-    {
-      "id": "moldova",
-      "name": "Moldova",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [26.65, 45.47, 30.05, 48.55],
-      "hexes_r5": 173,
-      "group": "world",
-      "names": {
-        "en": "Moldova",
-        "ru": "Молдова",
-        "tg": "Молдова",
-        "iso2": "MD"
-      }
-    },
-    {
-      "id": "mongolia",
-      "name": "Mongolia",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [87.88, 41.82, 119.94, 51.9],
-      "hexes_r5": 2397,
-      "group": "world",
-      "names": {
-        "en": "Mongolia",
-        "ru": "Монголия",
-        "tg": "Муғулистон",
-        "iso2": "MN"
-      }
-    },
-    {
-      "id": "montenegro",
-      "name": "Montenegro",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [18.32, 41.85, 20.32, 43.49],
-      "hexes_r5": 71,
-      "group": "world",
-      "names": {
-        "en": "Montenegro",
-        "ru": "Черногория",
-        "tg": "Черногория",
-        "iso2": "ME"
-      }
-    },
-    {
-      "id": "morocco",
-      "name": "Morocco",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [-16.76, 21.66, -1.75, 35.95],
-      "hexes_r5": 971,
-      "group": "world",
-      "names": {
-        "en": "Morocco",
-        "ru": "Марокко",
-        "tg": "Марокаш",
-        "iso2": "MA"
-      }
-    },
-    {
-      "id": "mozambique",
-      "name": "Mozambique",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [30.15, -26.86, 40.83, -10.4],
-      "hexes_r5": 2909,
-      "group": "world",
-      "names": {
-        "en": "Mozambique",
-        "ru": "Мозамбик",
-        "tg": "Мозамбик",
-        "iso2": "MZ"
-      }
-    },
-    {
-      "id": "myanmar",
-      "name": "Myanmar",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [92.12, 9.96, 101.16, 28.38],
-      "hexes_r5": 2586,
-      "group": "world",
-      "names": {
-        "en": "Myanmar (Burma)",
-        "ru": "Мьянма (Бирма)",
-        "tg": "Мянма",
-        "iso2": "MM"
-      }
-    },
-    {
-      "id": "namibia",
-      "name": "Namibia",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [11.71, -28.97, 25.24, -16.92],
-      "hexes_r5": 3021,
-      "group": "world",
-      "names": {
-        "en": "Namibia",
-        "ru": "Намибия",
-        "tg": "Намибия",
-        "iso2": "NA"
-      }
-    },
-    {
-      "id": "nepal",
-      "name": "Nepal",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [79.97, 26.28, 88.19, 30.3],
-      "hexes_r5": 620,
-      "group": "world",
-      "names": {
-        "en": "Nepal",
-        "ru": "Непал",
-        "tg": "Непал",
-        "iso2": "NP"
-      }
-    },
-    {
-      "id": "netherlands",
-      "name": "Netherlands",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [-68.39, 12.13, 7.26, 53.51],
-      "hexes_r5": 213,
-      "group": "world",
-      "names": {
-        "en": "Netherlands",
-        "ru": "Нидерланды",
-        "tg": "Нидерландия",
-        "iso2": "NL"
-      }
-    },
-    {
-      "id": "new_caledonia",
-      "name": "New Caledonia",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [163.67, -22.72, 168.14, -19.67],
-      "hexes_r5": 111,
-      "group": "world",
-      "names": {
-        "en": "New Caledonia",
-        "ru": "Новая Каледония",
-        "tg": "Каледонияи Нав",
-        "iso2": "NC"
-      }
-    },
-    {
-      "id": "new_zealand",
-      "name": "New Zealand",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [-176.61, -46.87, 178.54, -34.41],
-      "hexes_r5": 965,
-      "group": "world",
-      "names": {
-        "en": "New Zealand",
-        "ru": "Новая Зеландия",
-        "tg": "Зеландияи Нав",
-        "iso2": "NZ"
-      }
-    },
-    {
-      "id": "nicaragua",
-      "name": "Nicaragua",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [-87.7, 10.67, -82.98, 15.03],
-      "hexes_r5": 595,
-      "group": "world",
-      "names": {
-        "en": "Nicaragua",
-        "ru": "Никарагуа",
-        "tg": "Никарагуа",
-        "iso2": "NI"
-      }
-    },
-    {
-      "id": "niger",
-      "name": "Niger",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [0.15, 11.69, 15.43, 22.53],
-      "hexes_r5": 1766,
-      "group": "world",
-      "names": {
-        "en": "Niger",
-        "ru": "Нигер",
-        "tg": "Нигер",
-        "iso2": "NE"
-      }
-    },
-    {
-      "id": "nigeria",
-      "name": "Nigeria",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [2.63, 4.24, 14.76, 13.85],
-      "hexes_r5": 4043,
-      "group": "world",
-      "names": {
-        "en": "Nigeria",
-        "ru": "Нигерия",
-        "tg": "Нигерия",
-        "iso2": "NG"
-      }
-    },
-    {
-      "id": "norway",
-      "name": "Norway",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [-9.08, 57.98, 31.17, 71.1],
-      "hexes_r5": 728,
-      "group": "world",
-      "names": {
-        "en": "Norway",
-        "ru": "Норвегия",
-        "tg": "Норвегия",
-        "iso2": "NO"
-      }
-    },
-    {
-      "id": "oman",
-      "name": "Oman",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [52.23, 16.74, 59.81, 26.4],
-      "hexes_r5": 515,
-      "group": "world",
-      "names": {
-        "en": "Oman",
-        "ru": "Оман",
-        "tg": "Умон",
-        "iso2": "OM"
-      }
-    },
-    {
-      "id": "pakistan",
-      "name": "Pakistan",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [60.97, 24.01, 76.56, 36.78],
-      "hexes_r5": 2526,
-      "group": "world",
-      "names": {
-        "en": "Pakistan",
-        "ru": "Пакистан",
-        "tg": "Покистон",
-        "iso2": "PK"
-      }
-    },
-    {
-      "id": "palestine",
-      "name": "Palestine",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [34.25, 31.24, 35.64, 32.59],
-      "hexes_r5": 38,
-      "group": "world",
-      "names": {
-        "en": "Palestinian Territories",
-        "ru": "Палестинские территории",
-        "tg": "Қаламравҳои Фаластинӣ",
-        "iso2": "PS"
-      }
-    },
-    {
-      "id": "panama",
-      "name": "Panama",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [-83.03, 7.14, -77.32, 9.67],
-      "hexes_r5": 347,
-      "group": "world",
-      "names": {
-        "en": "Panama",
-        "ru": "Панама",
-        "tg": "Панама",
-        "iso2": "PA"
-      }
-    },
-    {
-      "id": "papua_new_guinea",
-      "name": "Papua New Guinea",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [140.83, -11.69, 155.94, -1.33],
-      "hexes_r5": 1771,
-      "group": "world",
-      "names": {
-        "en": "Papua New Guinea",
-        "ru": "Папуа — Новая Гвинея",
-        "tg": "Папуа Гвинеяи Нав",
-        "iso2": "PG"
-      }
-    },
-    {
-      "id": "paraguay",
-      "name": "Paraguay",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [-62.71, -27.51, -54.33, -19.22],
-      "hexes_r5": 1852,
-      "group": "world",
-      "names": {
-        "en": "Paraguay",
-        "ru": "Парагвай",
-        "tg": "Парагвай",
-        "iso2": "PY"
-      }
-    },
-    {
-      "id": "peru",
-      "name": "Peru",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [-81.33, -18.35, -68.73, 0.03],
-      "hexes_r5": 3922,
-      "group": "world",
-      "names": {
-        "en": "Peru",
-        "ru": "Перу",
-        "tg": "Перу",
-        "iso2": "PE"
-      }
-    },
-    {
-      "id": "philippines",
-      "name": "Philippines",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [116.95, 4.68, 126.63, 20.87],
-      "hexes_r5": 1613,
-      "group": "world",
-      "names": {
-        "en": "Philippines",
-        "ru": "Филиппины",
-        "tg": "Филиппин",
-        "iso2": "PH"
-      }
-    },
-    {
-      "id": "poland",
-      "name": "Poland",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [14.13, 49.14, 24.18, 54.87],
-      "hexes_r5": 1388,
-      "group": "world",
-      "names": {
-        "en": "Poland",
-        "ru": "Польша",
-        "tg": "Лаҳистон",
-        "iso2": "PL"
-      }
-    },
-    {
-      "id": "portugal",
-      "name": "Portugal",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [-28.85, 32.61, -6.12, 42.19],
-      "hexes_r5": 409,
-      "group": "world",
-      "names": {
-        "en": "Portugal",
-        "ru": "Португалия",
-        "tg": "Португалия",
-        "iso2": "PT"
-      }
-    },
-    {
-      "id": "puerto_rico",
-      "name": "Puerto Rico",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [-67.3, 17.9, -65.24, 18.54],
-      "hexes_r5": 70,
-      "group": "world",
-      "names": {
-        "en": "Puerto Rico",
-        "ru": "Пуэрто-Рико",
-        "tg": "Пуэрто-Рико",
-        "iso2": "PR"
-      }
-    },
-    {
-      "id": "qatar",
-      "name": "Qatar",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [50.75, 24.58, 51.59, 26.12],
-      "hexes_r5": 39,
-      "group": "world",
-      "names": {
-        "en": "Qatar",
-        "ru": "Катар",
-        "tg": "Қатар",
-        "iso2": "QA"
-      }
-    },
-    {
-      "id": "republic_of_congo",
-      "name": "Republic of Congo",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [11.12, -4.98, 18.71, 3.65],
-      "hexes_r5": 1223,
-      "group": "world",
-      "names": {
-        "en": "Congo - Brazzaville",
-        "ru": "Конго - Браззавиль",
-        "tg": "Конго - Браззавил",
-        "iso2": "CG"
-      }
-    },
-    {
-      "id": "republic_of_korea",
-      "name": "Republic of Korea",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [124.65, 33.21, 130.92, 38.65],
-      "hexes_r5": 623,
-      "group": "world",
-      "names": {
-        "en": "South Korea",
-        "ru": "Республика Корея",
-        "tg": "Кореяи Ҷанубӣ",
-        "iso2": "KR"
-      }
-    },
-    {
-      "id": "reunion",
-      "name": "Reunion",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [55.26, -21.33, 55.86, -20.88],
-      "hexes_r5": 14,
-      "group": "world",
-      "names": {
-        "en": "Réunion",
-        "ru": "Реюньон",
-        "tg": "Реюнион",
-        "iso2": "RE"
-      }
-    },
-    {
-      "id": "romania",
-      "name": "Romania",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [20.27, 43.64, 29.77, 48.24],
-      "hexes_r5": 970,
-      "group": "world",
-      "names": {
-        "en": "Romania",
-        "ru": "Румыния",
-        "tg": "Руминия",
-        "iso2": "RO"
-      }
-    },
-    {
-      "id": "rwanda",
-      "name": "Rwanda",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [28.82, -2.84, 30.92, -1.05],
-      "hexes_r5": 107,
-      "group": "world",
-      "names": {
-        "en": "Rwanda",
-        "ru": "Руанда",
-        "tg": "Руанда",
-        "iso2": "RW"
-      }
-    },
-    {
-      "id": "saudi_arabia",
-      "name": "Saudi Arabia",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [34.64, 16.35, 55.36, 31.98],
-      "hexes_r5": 2250,
-      "group": "world",
-      "names": {
-        "en": "Saudi Arabia",
-        "ru": "Саудовская Аравия",
-        "tg": "Арабистони Саудӣ",
-        "iso2": "SA"
-      }
-    },
-    {
-      "id": "senegal",
-      "name": "Senegal",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [-17.5, 12.3, -11.36, 16.71],
-      "hexes_r5": 913,
-      "group": "world",
-      "names": {
-        "en": "Senegal",
-        "ru": "Сенегал",
-        "tg": "Сенегал",
-        "iso2": "SN"
-      }
-    },
-    {
-      "id": "serbia",
-      "name": "Serbia",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [18.77, 42.25, 23.01, 46.17],
-      "hexes_r5": 344,
-      "group": "world",
-      "names": {
-        "en": "Serbia",
-        "ru": "Сербия",
-        "tg": "Сербия",
-        "iso2": "YU"
-      }
-    },
-    {
-      "id": "sierra_leone",
-      "name": "Sierra Leone",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [-13.34, 6.93, -10.27, 10.04],
-      "hexes_r5": 408,
-      "group": "world",
-      "names": {
-        "en": "Sierra Leone",
-        "ru": "Сьерра-Леоне",
-        "tg": "Сиерра-Леоне",
-        "iso2": "SL"
-      }
-    },
-    {
-      "id": "slovakia",
-      "name": "Slovakia",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [16.76, 47.72, 22.38, 49.54],
-      "hexes_r5": 225,
-      "group": "world",
-      "names": {
-        "en": "Slovakia",
-        "ru": "Словакия",
-        "tg": "Словакия",
-        "iso2": "SK"
-      }
-    },
-    {
-      "id": "somalia",
-      "name": "Somalia",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [40.96, -1.59, 51.39, 11.94],
-      "hexes_r5": 1715,
-      "group": "world",
-      "names": {
-        "en": "Somalia",
-        "ru": "Сомали",
-        "tg": "Сомалӣ",
-        "iso2": "SO"
-      }
-    },
-    {
-      "id": "south_africa",
-      "name": "South Africa",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [16.56, -34.78, 32.92, -22.11],
-      "hexes_r5": 4386,
-      "group": "world",
-      "names": {
-        "en": "South Africa",
-        "ru": "Южно-Африканская Республика",
-        "tg": "Африкаи Ҷанубӣ",
-        "iso2": "ZA"
-      }
-    },
-    {
-      "id": "spain",
-      "name": "Spain",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [-18.15, 27.69, 4.3, 43.76],
-      "hexes_r5": 2086,
-      "group": "world",
-      "names": {
-        "en": "Spain",
-        "ru": "Испания",
-        "tg": "Испания",
-        "iso2": "ES"
-      }
-    },
-    {
-      "id": "sri_lanka",
-      "name": "Sri Lanka",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [79.66, 5.89, 81.93, 9.89],
-      "hexes_r5": 280,
-      "group": "world",
-      "names": {
-        "en": "Sri Lanka",
-        "ru": "Шри-Ланка",
-        "tg": "Шри-Ланка",
-        "iso2": "LK"
-      }
-    },
-    {
-      "id": "sudan",
-      "name": "Sudan",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [21.78, 8.72, 38.4, 22.12],
-      "hexes_r5": 3886,
-      "group": "world",
-      "names": {
-        "en": "Sudan",
-        "ru": "Судан",
-        "tg": "Судон",
-        "iso2": "SD"
-      }
-    },
-    {
-      "id": "suriname",
-      "name": "Suriname",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [-57.92, 1.83, -53.94, 6],
-      "hexes_r5": 316,
-      "group": "world",
-      "names": {
-        "en": "Suriname",
-        "ru": "Суринам",
-        "tg": "Суринам",
-        "iso2": "SR"
-      }
-    },
-    {
-      "id": "swaziland",
-      "name": "Swaziland",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [30.73, -27.39, 32.2, -25.71],
-      "hexes_r5": 85,
-      "group": "world",
-      "names": {
-        "en": "Eswatini",
-        "ru": "Эсватини",
-        "tg": "Эсватини",
-        "iso2": "SZ"
-      }
-    },
-    {
-      "id": "sweden",
-      "name": "Sweden",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [11.18, 55.35, 24.06, 68.48],
-      "hexes_r5": 1621,
-      "group": "world",
-      "names": {
-        "en": "Sweden",
-        "ru": "Швеция",
-        "tg": "Шветсия",
-        "iso2": "SE"
-      }
-    },
-    {
-      "id": "switzerland",
-      "name": "Switzerland",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [5.96, 45.88, 10.03, 47.77],
-      "hexes_r5": 149,
-      "group": "world",
-      "names": {
-        "en": "Switzerland",
-        "ru": "Швейцария",
-        "tg": "Швейтсария",
-        "iso2": "CH"
-      }
-    },
-    {
-      "id": "syria",
-      "name": "Syria",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [35.73, 32.38, 42.44, 37.29],
-      "hexes_r5": 594,
-      "group": "world",
-      "names": {
-        "en": "Syria",
-        "ru": "Сирия",
-        "tg": "Сурия",
-        "iso2": "SY"
-      }
-    },
-    {
-      "id": "taiwan",
-      "name": "Taiwan",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [118.28, 21.91, 121.94, 25.32],
-      "hexes_r5": 169,
-      "group": "world",
-      "names": {
-        "en": "Taiwan",
-        "ru": "Тайвань",
-        "tg": "Тайван",
-        "iso2": "TW"
-      }
-    },
-    {
-      "id": "tajikistan",
-      "name": "Tajikistan",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [67.34, 36.66, 74.12, 41.02],
-      "hexes_r5": 256,
-      "group": "world",
-      "names": {
-        "en": "Tajikistan",
-        "ru": "Таджикистан",
-        "tg": "Тоҷикистон",
-        "iso2": "TJ"
-      }
-    },
-    {
-      "id": "thailand",
-      "name": "Thailand",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [97.32, 5.58, 105.72, 20.5],
-      "hexes_r5": 1969,
-      "group": "world",
-      "names": {
-        "en": "Thailand",
-        "ru": "Таиланд",
-        "tg": "Таиланд",
-        "iso2": "TH"
-      }
-    },
-    {
-      "id": "the_gambia",
-      "name": "The Gambia",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [-16.82, 13.09, -13.75, 13.84],
-      "hexes_r5": 80,
-      "group": "world",
-      "names": {
-        "en": "Gambia",
-        "ru": "Гамбия",
-        "tg": "Гамбия",
-        "iso2": "GM"
-      }
-    },
-    {
-      "id": "timor_leste",
-      "name": "Timor Leste",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [123.96, -9.53, 127.29, -8.11],
-      "hexes_r5": 92,
-      "group": "world",
-      "names": {
-        "en": "Timor-Leste",
-        "ru": "Восточный Тимор",
-        "tg": "Тимор-Лесте",
-        "iso2": "TL"
-      }
-    },
-    {
-      "id": "togo",
-      "name": "Togo",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [-0.12, 6.14, 1.8, 11.18],
-      "hexes_r5": 345,
-      "group": "world",
-      "names": {
-        "en": "Togo",
-        "ru": "Того",
-        "tg": "Того",
-        "iso2": "TG"
-      }
-    },
-    {
-      "id": "trinidad_and_tobago",
-      "name": "Trinidad and Tobago",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [-61.86, 10.01, -60.52, 11.32],
-      "hexes_r5": 37,
-      "group": "world",
-      "names": {
-        "en": "Trinidad & Tobago",
-        "ru": "Тринидад и Тобаго",
-        "tg": "Тринидад ва Тобаго",
-        "iso2": "TT"
-      }
-    },
-    {
-      "id": "tunisia",
-      "name": "Tunisia",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [7.58, 30.26, 11.3, 37.38],
-      "hexes_r5": 380,
-      "group": "world",
-      "names": {
-        "en": "Tunisia",
-        "ru": "Тунис",
-        "tg": "Тунис",
-        "iso2": "TN"
-      }
-    },
-    {
-      "id": "turkey",
-      "name": "Turkey",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [25.78, 35.78, 44.86, 42.1],
-      "hexes_r5": 2989,
-      "group": "world",
-      "names": {
-        "en": "Türkiye",
-        "ru": "Турция",
-        "tg": "Туркия",
-        "iso2": "TR"
-      }
-    },
-    {
-      "id": "turkmenistan",
-      "name": "Turkmenistan",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [52.53, 35.13, 66.61, 42.76],
-      "hexes_r5": 861,
-      "group": "world",
-      "names": {
-        "en": "Turkmenistan",
-        "ru": "Туркменистан",
-        "tg": "Туркманистон",
-        "iso2": "TM"
-      }
-    },
-    {
-      "id": "uganda",
-      "name": "Uganda",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [29.48, -1.45, 35.01, 4.23],
-      "hexes_r5": 868,
-      "group": "world",
-      "names": {
-        "en": "Uganda",
-        "ru": "Уганда",
-        "tg": "Уганда",
-        "iso2": "UG"
-      }
-    },
-    {
-      "id": "ukraine",
-      "name": "Ukraine",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [22.12, 44.4, 40.25, 52.44],
-      "hexes_r5": 2644,
-      "group": "world",
-      "names": {
-        "en": "Ukraine",
-        "ru": "Украина",
-        "tg": "Украина",
-        "iso2": "UA"
-      }
-    },
-    {
-      "id": "united_arab_emirates",
-      "name": "United Arab Emirates",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [51.55, 22.74, 56.4, 26.15],
-      "hexes_r5": 201,
-      "group": "world",
-      "names": {
-        "en": "United Arab Emirates",
-        "ru": "ОАЭ",
-        "tg": "Аморатҳои Муттаҳидаи Араб",
-        "iso2": "AE"
-      }
-    },
-    {
-      "id": "united_kingdom",
-      "name": "United Kingdom",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [-8.16, 49.91, 1.75, 60.47],
-      "hexes_r5": 1253,
-      "group": "world",
-      "names": {
-        "en": "United Kingdom",
-        "ru": "Великобритания",
-        "tg": "Шоҳигарии Муттаҳида",
-        "iso2": "UK"
-      }
-    },
-    {
-      "id": "uruguay",
-      "name": "Uruguay",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [-58.4, -34.98, -53.24, -30.06],
-      "hexes_r5": 978,
-      "group": "world",
-      "names": {
-        "en": "Uruguay",
-        "ru": "Уругвай",
-        "tg": "Уругвай",
-        "iso2": "UY"
-      }
-    },
-    {
-      "id": "uzbekistan",
-      "name": "Uzbekistan",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [56.1, 37.16, 73.12, 45.5],
-      "hexes_r5": 872,
-      "group": "world",
-      "names": {
-        "en": "Uzbekistan",
-        "ru": "Узбекистан",
-        "tg": "Ӯзбекистон",
-        "iso2": "UZ"
-      }
-    },
-    {
-      "id": "vanuatu",
-      "name": "Vanuatu",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [166.51, -20.22, 169.85, -13.51],
-      "hexes_r5": 89,
-      "group": "world",
-      "names": {
-        "en": "Vanuatu",
-        "ru": "Вануату",
-        "tg": "Вануату",
-        "iso2": "VU"
-      }
-    },
-    {
-      "id": "venezuela",
-      "name": "Venezuela",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [-73.44, 0.7, -59.88, 12.2],
-      "hexes_r5": 3600,
-      "group": "world",
-      "names": {
-        "en": "Venezuela",
-        "ru": "Венесуэла",
-        "tg": "Венесуэла",
-        "iso2": "VE"
-      }
-    },
-    {
-      "id": "vietnam",
-      "name": "Vietnam",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [102.05, 8.6, 109.48, 23.45],
-      "hexes_r5": 1370,
-      "group": "world",
-      "names": {
-        "en": "Vietnam",
-        "ru": "Вьетнам",
-        "tg": "Ветнам",
-        "iso2": "VN"
-      }
-    },
-    {
-      "id": "yemen",
-      "name": "Yemen",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [42.6, 12.42, 54.18, 18.81],
-      "hexes_r5": 664,
-      "group": "world",
-      "names": {
-        "en": "Yemen",
-        "ru": "Йемен",
-        "tg": "Яман",
-        "iso2": "YE"
-      }
-    },
-    {
-      "id": "zimbabwe",
-      "name": "Zimbabwe",
-      "data_end": "2026-11-15",
-      "last_full_month": "2026-10",
-      "first_month": "2000-11",
-      "bbox": [25.22, -22.47, 33.11, -15.62],
-      "hexes_r5": 1377,
-      "group": "world",
-      "names": {
-        "en": "Zimbabwe",
-        "ru": "Зимбабве",
-        "tg": "Зимбабве",
-        "iso2": "ZW"
-      }
-    }
+  "coverage": {
+   "MODIS": {
+    "start": "2000-11-01",
+    "end": null
+   },
+   "VIIRS_SNPP": {
+    "start": "2012-02-01",
+    "end": null
+   }
+  },
+  "standard_processing_through": "2026-07-31",
+  "nrt_through": "2026-11-15",
+  "estimate_before_year": 2012,
+  "missing_days": [],
+  "region_bbox": [
+   -179.91,
+   -54.91,
+   179.98,
+   82.56
   ]
+ },
+ "regions": [
+  {
+   "id": "kazakhstan",
+   "name": "Kazakhstan",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    46.46,
+    40.56,
+    86.76,
+    55.47
+   ],
+   "hexes_r5": 7947,
+   "group": "demo",
+   "names": {
+    "en": "Kazakhstan",
+    "ru": "Казахстан",
+    "tg": "Қазоқистон",
+    "iso2": "KZ"
+   }
+  },
+  {
+   "id": "texas",
+   "name": "Texas",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -106.69,
+    25.89,
+    -93.48,
+    36.54
+   ],
+   "hexes_r5": 2474,
+   "group": "demo",
+   "names": {
+    "en": "Texas (USA)",
+    "ru": "Техас (США)",
+    "tg": "Техас (ИМА)"
+   }
+  },
+  {
+   "id": "afghanistan",
+   "name": "Afghanistan",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    60.81,
+    29.48,
+    74.05,
+    38.5
+   ],
+   "hexes_r5": 1160,
+   "group": "world",
+   "names": {
+    "en": "Afghanistan",
+    "ru": "Афганистан",
+    "tg": "Афғонистон",
+    "iso2": "AF"
+   }
+  },
+  {
+   "id": "albania",
+   "name": "Albania",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    19.29,
+    39.62,
+    21.03,
+    42.67
+   ],
+   "hexes_r5": 131,
+   "group": "world",
+   "names": {
+    "en": "Albania",
+    "ru": "Албания",
+    "tg": "Албания",
+    "iso2": "AL"
+   }
+  },
+  {
+   "id": "algeria",
+   "name": "Algeria",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -8.45,
+    19.38,
+    10.94,
+    37.14
+   ],
+   "hexes_r5": 1791,
+   "group": "world",
+   "names": {
+    "en": "Algeria",
+    "ru": "Алжир",
+    "tg": "Алҷазоир",
+    "iso2": "DZ"
+   }
+  },
+  {
+   "id": "angola",
+   "name": "Angola",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    11.75,
+    -18.06,
+    24.12,
+    -4.35
+   ],
+   "hexes_r5": 4577,
+   "group": "world",
+   "names": {
+    "en": "Angola",
+    "ru": "Ангола",
+    "tg": "Ангола",
+    "iso2": "AO"
+   }
+  },
+  {
+   "id": "argentina",
+   "name": "Argentina",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -73.15,
+    -54.91,
+    -53.55,
+    -21.75
+   ],
+   "hexes_r5": 11839,
+   "group": "world",
+   "names": {
+    "en": "Argentina",
+    "ru": "Аргентина",
+    "tg": "Аргентина",
+    "iso2": "AR"
+   }
+  },
+  {
+   "id": "armenia",
+   "name": "Armenia",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    43.48,
+    38.85,
+    46.63,
+    41.32
+   ],
+   "hexes_r5": 151,
+   "group": "world",
+   "names": {
+    "en": "Armenia",
+    "ru": "Армения",
+    "tg": "Арманистон",
+    "iso2": "AM"
+   }
+  },
+  {
+   "id": "australia",
+   "name": "Australia",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    113.37,
+    -43.66,
+    153.67,
+    -9.27
+   ],
+   "hexes_r5": 28120,
+   "group": "world",
+   "names": {
+    "en": "Australia",
+    "ru": "Австралия",
+    "tg": "Австралия",
+    "iso2": "AU"
+   }
+  },
+  {
+   "id": "austria",
+   "name": "Austria",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    9.49,
+    46.43,
+    17.13,
+    48.94
+   ],
+   "hexes_r5": 311,
+   "group": "world",
+   "names": {
+    "en": "Austria",
+    "ru": "Австрия",
+    "tg": "Австрия",
+    "iso2": "AT"
+   }
+  },
+  {
+   "id": "azerbaijan",
+   "name": "Azerbaijan",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    44.73,
+    38.37,
+    50.39,
+    41.87
+   ],
+   "hexes_r5": 398,
+   "group": "world",
+   "names": {
+    "en": "Azerbaijan",
+    "ru": "Азербайджан",
+    "tg": "Озарбойҷон",
+    "iso2": "AZ"
+   }
+  },
+  {
+   "id": "bahamas",
+   "name": "Bahamas",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -79.34,
+    20.97,
+    -72.99,
+    26.93
+   ],
+   "hexes_r5": 126,
+   "group": "world",
+   "names": {
+    "en": "Bahamas",
+    "ru": "Багамы",
+    "tg": "Багам",
+    "iso2": "BS"
+   }
+  },
+  {
+   "id": "bangladesh",
+   "name": "Bangladesh",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    88.02,
+    20.85,
+    92.68,
+    26.62
+   ],
+   "hexes_r5": 574,
+   "group": "world",
+   "names": {
+    "en": "Bangladesh",
+    "ru": "Бангладеш",
+    "tg": "Бангладеш",
+    "iso2": "BD"
+   }
+  },
+  {
+   "id": "belarus",
+   "name": "Belarus",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    23.2,
+    51.23,
+    32.81,
+    56.18
+   ],
+   "hexes_r5": 1008,
+   "group": "world",
+   "names": {
+    "en": "Belarus",
+    "ru": "Беларусь",
+    "tg": "Белорус",
+    "iso2": "BY"
+   }
+  },
+  {
+   "id": "belgium",
+   "name": "Belgium",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    2.51,
+    49.47,
+    6.43,
+    51.5
+   ],
+   "hexes_r5": 165,
+   "group": "world",
+   "names": {
+    "en": "Belgium",
+    "ru": "Бельгия",
+    "tg": "Белгия",
+    "iso2": "BE"
+   }
+  },
+  {
+   "id": "belize",
+   "name": "Belize",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -89.26,
+    15.85,
+    -87.82,
+    18.55
+   ],
+   "hexes_r5": 113,
+   "group": "world",
+   "names": {
+    "en": "Belize",
+    "ru": "Белиз",
+    "tg": "Белиз",
+    "iso2": "BZ"
+   }
+  },
+  {
+   "id": "benin",
+   "name": "Benin",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    0.71,
+    6.26,
+    3.86,
+    12.44
+   ],
+   "hexes_r5": 621,
+   "group": "world",
+   "names": {
+    "en": "Benin",
+    "ru": "Бенин",
+    "tg": "Бенин",
+    "iso2": "DY"
+   }
+  },
+  {
+   "id": "bhutan",
+   "name": "Bhutan",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    88.74,
+    26.66,
+    92.15,
+    28.25
+   ],
+   "hexes_r5": 171,
+   "group": "world",
+   "names": {
+    "en": "Bhutan",
+    "ru": "Бутан",
+    "tg": "Бутон",
+    "iso2": "BT"
+   }
+  },
+  {
+   "id": "bolivia",
+   "name": "Bolivia",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -69.64,
+    -22.89,
+    -57.49,
+    -9.69
+   ],
+   "hexes_r5": 4346,
+   "group": "world",
+   "names": {
+    "en": "Bolivia",
+    "ru": "Боливия",
+    "tg": "Боливия",
+    "iso2": "BO"
+   }
+  },
+  {
+   "id": "bosnia_and_herzegovina",
+   "name": "Bosnia and Herzegovina",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    15.7,
+    42.53,
+    19.67,
+    45.33
+   ],
+   "hexes_r5": 233,
+   "group": "world",
+   "names": {
+    "en": "Bosnia & Herzegovina",
+    "ru": "Босния и Герцеговина",
+    "tg": "Босния ва Ҳерсеговина",
+    "iso2": "BA"
+   }
+  },
+  {
+   "id": "botswana",
+   "name": "Botswana",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    19.9,
+    -26.91,
+    29.34,
+    -17.8
+   ],
+   "hexes_r5": 2108,
+   "group": "world",
+   "names": {
+    "en": "Botswana",
+    "ru": "Ботсвана",
+    "tg": "Ботсвана",
+    "iso2": "BW"
+   }
+  },
+  {
+   "id": "brazil",
+   "name": "Brazil",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -73.9,
+    -33.79,
+    -32.43,
+    5.25
+   ],
+   "hexes_r5": 28605,
+   "group": "world",
+   "names": {
+    "en": "Brazil",
+    "ru": "Бразилия",
+    "tg": "Бразилия",
+    "iso2": "BR"
+   }
+  },
+  {
+   "id": "bulgaria",
+   "name": "Bulgaria",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    22.36,
+    41.17,
+    28.66,
+    44.28
+   ],
+   "hexes_r5": 464,
+   "group": "world",
+   "names": {
+    "en": "Bulgaria",
+    "ru": "Болгария",
+    "tg": "Булғория",
+    "iso2": "BG"
+   }
+  },
+  {
+   "id": "burkina_faso",
+   "name": "Burkina Faso",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -5.56,
+    9.36,
+    2.46,
+    15.08
+   ],
+   "hexes_r5": 1416,
+   "group": "world",
+   "names": {
+    "en": "Burkina Faso",
+    "ru": "Буркина-Фасо",
+    "tg": "Буркина-Фасо",
+    "iso2": "HV"
+   }
+  },
+  {
+   "id": "burundi",
+   "name": "Burundi",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    28.98,
+    -4.56,
+    30.87,
+    -2.29
+   ],
+   "hexes_r5": 117,
+   "group": "world",
+   "names": {
+    "en": "Burundi",
+    "ru": "Бурунди",
+    "tg": "Бурунди",
+    "iso2": "BI"
+   }
+  },
+  {
+   "id": "cambodia",
+   "name": "Cambodia",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    102.24,
+    10.41,
+    107.67,
+    14.69
+   ],
+   "hexes_r5": 704,
+   "group": "world",
+   "names": {
+    "en": "Cambodia",
+    "ru": "Камбоджа",
+    "tg": "Камбоҷа",
+    "iso2": "KH"
+   }
+  },
+  {
+   "id": "cameroon",
+   "name": "Cameroon",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    8.52,
+    1.71,
+    16.22,
+    13.05
+   ],
+   "hexes_r5": 1995,
+   "group": "world",
+   "names": {
+    "en": "Cameroon",
+    "ru": "Камерун",
+    "tg": "Камерун",
+    "iso2": "CM"
+   }
+  },
+  {
+   "id": "canada",
+   "name": "Canada",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -141.19,
+    41.73,
+    -52.7,
+    82.56
+   ],
+   "hexes_r5": 20204,
+   "group": "world",
+   "names": {
+    "en": "Canada",
+    "ru": "Канада",
+    "tg": "Канада",
+    "iso2": "CA"
+   }
+  },
+  {
+   "id": "central_african_republic",
+   "name": "Central African Republic",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    14.34,
+    2.51,
+    27.46,
+    11.03
+   ],
+   "hexes_r5": 2654,
+   "group": "world",
+   "names": {
+    "en": "Central African Republic",
+    "ru": "Центрально-Африканская Республика",
+    "tg": "Ҷумҳурии Африқои Марказӣ",
+    "iso2": "CF"
+   }
+  },
+  {
+   "id": "chad",
+   "name": "Chad",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    13.45,
+    7.41,
+    23.93,
+    23.15
+   ],
+   "hexes_r5": 2591,
+   "group": "world",
+   "names": {
+    "en": "Chad",
+    "ru": "Чад",
+    "tg": "Чад",
+    "iso2": "TD"
+   }
+  },
+  {
+   "id": "chile",
+   "name": "Chile",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -109.43,
+    -53.92,
+    -67.06,
+    -17.57
+   ],
+   "hexes_r5": 2319,
+   "group": "world",
+   "names": {
+    "en": "Chile",
+    "ru": "Чили",
+    "tg": "Чили",
+    "iso2": "CL"
+   }
+  },
+  {
+   "id": "china",
+   "name": "China",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    74.16,
+    18.24,
+    134.81,
+    53.55
+   ],
+   "hexes_r5": 28021,
+   "group": "world",
+   "names": {
+    "en": "China",
+    "ru": "Китай",
+    "tg": "Хитой",
+    "iso2": "CN"
+   }
+  },
+  {
+   "id": "colombia",
+   "name": "Colombia",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -81.68,
+    -4.13,
+    -66.89,
+    13.4
+   ],
+   "hexes_r5": 3645,
+   "group": "world",
+   "names": {
+    "en": "Colombia",
+    "ru": "Колумбия",
+    "tg": "Колумбия",
+    "iso2": "CO"
+   }
+  },
+  {
+   "id": "costa_rica",
+   "name": "Costa Rica",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -85.93,
+    8.07,
+    -82.59,
+    11.22
+   ],
+   "hexes_r5": 247,
+   "group": "world",
+   "names": {
+    "en": "Costa Rica",
+    "ru": "Коста-Рика",
+    "tg": "Коста-Рика",
+    "iso2": "CR"
+   }
+  },
+  {
+   "id": "cote_d_ivoire",
+   "name": "Cote D Ivoire",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -8.64,
+    4.35,
+    -2.44,
+    10.74
+   ],
+   "hexes_r5": 1881,
+   "group": "world",
+   "names": {
+    "en": "Côte d’Ivoire",
+    "ru": "Кот-д’Ивуар",
+    "tg": "Кот-д’Ивуар",
+    "iso2": "CI"
+   }
+  },
+  {
+   "id": "croatia",
+   "name": "Croatia",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    13.54,
+    42.52,
+    19.34,
+    46.51
+   ],
+   "hexes_r5": 296,
+   "group": "world",
+   "names": {
+    "en": "Croatia",
+    "ru": "Хорватия",
+    "tg": "Хорватия",
+    "iso2": "HR"
+   }
+  },
+  {
+   "id": "cuba",
+   "name": "Cuba",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -84.9,
+    19.82,
+    -74.13,
+    23.19
+   ],
+   "hexes_r5": 610,
+   "group": "world",
+   "names": {
+    "en": "Cuba",
+    "ru": "Куба",
+    "tg": "Куба",
+    "iso2": "CU"
+   }
+  },
+  {
+   "id": "cyprus",
+   "name": "Cyprus",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    32.29,
+    34.6,
+    34.04,
+    35.37
+   ],
+   "hexes_r5": 36,
+   "group": "world",
+   "names": {
+    "en": "Cyprus",
+    "ru": "Кипр",
+    "tg": "Кипр",
+    "iso2": "CY"
+   }
+  },
+  {
+   "id": "czech_republic",
+   "name": "Czech Republic",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    12.25,
+    48.49,
+    18.78,
+    51.04
+   ],
+   "hexes_r5": 345,
+   "group": "world",
+   "names": {
+    "en": "Czechia",
+    "ru": "Чехия",
+    "tg": "Ҷумҳурии Чех",
+    "iso2": "CZ"
+   }
+  },
+  {
+   "id": "dem_rep_korea",
+   "name": "Dem Rep Korea",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    124.16,
+    37.7,
+    130.65,
+    43.02
+   ],
+   "hexes_r5": 786,
+   "group": "world",
+   "names": {
+    "en": "North Korea",
+    "ru": "КНДР",
+    "tg": "Кореяи Шимолӣ",
+    "iso2": "KP"
+   }
+  },
+  {
+   "id": "denmark",
+   "name": "Denmark",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    8.06,
+    54.66,
+    15.15,
+    57.76
+   ],
+   "hexes_r5": 287,
+   "group": "world",
+   "names": {
+    "en": "Denmark",
+    "ru": "Дания",
+    "tg": "Дания",
+    "iso2": "DK"
+   }
+  },
+  {
+   "id": "dominican_republic",
+   "name": "Dominican Republic",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -71.93,
+    17.65,
+    -68.29,
+    19.97
+   ],
+   "hexes_r5": 309,
+   "group": "world",
+   "names": {
+    "en": "Dominican Republic",
+    "ru": "Доминиканская Республика",
+    "tg": "Ҷумҳурии Доминикан",
+    "iso2": "DO"
+   }
+  },
+  {
+   "id": "ecuador",
+   "name": "Ecuador",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -91.55,
+    -5,
+    -75.25,
+    1.42
+   ],
+   "hexes_r5": 824,
+   "group": "world",
+   "names": {
+    "en": "Ecuador",
+    "ru": "Эквадор",
+    "tg": "Эквадор",
+    "iso2": "EC"
+   }
+  },
+  {
+   "id": "egypt",
+   "name": "Egypt",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    25.01,
+    22,
+    35.65,
+    31.62
+   ],
+   "hexes_r5": 825,
+   "group": "world",
+   "names": {
+    "en": "Egypt",
+    "ru": "Египет",
+    "tg": "Миср",
+    "iso2": "EG"
+   }
+  },
+  {
+   "id": "el_salvador",
+   "name": "El Salvador",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -90.1,
+    13.11,
+    -87.65,
+    14.46
+   ],
+   "hexes_r5": 111,
+   "group": "world",
+   "names": {
+    "en": "El Salvador",
+    "ru": "Сальвадор",
+    "tg": "Эл-Салвадор",
+    "iso2": "SV"
+   }
+  },
+  {
+   "id": "equatorial_guinea",
+   "name": "Equatorial Guinea",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    8.52,
+    0.84,
+    11.41,
+    3.8
+   ],
+   "hexes_r5": 132,
+   "group": "world",
+   "names": {
+    "en": "Equatorial Guinea",
+    "ru": "Экваториальная Гвинея",
+    "tg": "Гвинеяи Экваторӣ",
+    "iso2": "GQ"
+   }
+  },
+  {
+   "id": "eritrea",
+   "name": "Eritrea",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    36.36,
+    12.55,
+    43.05,
+    17.73
+   ],
+   "hexes_r5": 320,
+   "group": "world",
+   "names": {
+    "en": "Eritrea",
+    "ru": "Эритрея",
+    "tg": "Эритрея",
+    "iso2": "ER"
+   }
+  },
+  {
+   "id": "ethiopia",
+   "name": "Ethiopia",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    32.97,
+    3.36,
+    47.43,
+    14.91
+   ],
+   "hexes_r5": 4323,
+   "group": "world",
+   "names": {
+    "en": "Ethiopia",
+    "ru": "Эфиопия",
+    "tg": "Эфиопия",
+    "iso2": "ET"
+   }
+  },
+  {
+   "id": "fiji",
+   "name": "Fiji",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -179.91,
+    -19.15,
+    179.98,
+    -16.18
+   ],
+   "hexes_r5": 144,
+   "group": "world",
+   "names": {
+    "en": "Fiji",
+    "ru": "Фиджи",
+    "tg": "Фиҷи",
+    "iso2": "FJ"
+   }
+  },
+  {
+   "id": "finland",
+   "name": "Finland",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    20.76,
+    59.82,
+    31.54,
+    69.85
+   ],
+   "hexes_r5": 1143,
+   "group": "world",
+   "names": {
+    "en": "Finland",
+    "ru": "Финляндия",
+    "tg": "Финляндия",
+    "iso2": "FI"
+   }
+  },
+  {
+   "id": "france",
+   "name": "France",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -4.76,
+    41.23,
+    9.63,
+    51.03
+   ],
+   "hexes_r5": 2417,
+   "group": "world",
+   "names": {
+    "en": "France",
+    "ru": "Франция",
+    "tg": "Фаронса",
+    "iso2": "FX"
+   }
+  },
+  {
+   "id": "french_guiana",
+   "name": "French Guiana",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -54.53,
+    2.19,
+    -51.62,
+    5.76
+   ],
+   "hexes_r5": 161,
+   "group": "world",
+   "names": {
+    "en": "French Guiana",
+    "ru": "Французская Гвиана",
+    "tg": "Гвианаи Фаронса",
+    "iso2": "GF"
+   }
+  },
+  {
+   "id": "gabon",
+   "name": "Gabon",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    8.62,
+    -3.94,
+    14.57,
+    2.31
+   ],
+   "hexes_r5": 751,
+   "group": "world",
+   "names": {
+    "en": "Gabon",
+    "ru": "Габон",
+    "tg": "Габон",
+    "iso2": "GA"
+   }
+  },
+  {
+   "id": "georgia",
+   "name": "Georgia",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    39.88,
+    41.08,
+    46.79,
+    43.49
+   ],
+   "hexes_r5": 294,
+   "group": "world",
+   "names": {
+    "en": "Georgia",
+    "ru": "Грузия",
+    "tg": "Гурҷистон",
+    "iso2": "GE"
+   }
+  },
+  {
+   "id": "germany",
+   "name": "Germany",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    5.84,
+    47.44,
+    14.98,
+    54.92
+   ],
+   "hexes_r5": 1617,
+   "group": "world",
+   "names": {
+    "en": "Germany",
+    "ru": "Германия",
+    "tg": "Германия",
+    "iso2": "DE"
+   }
+  },
+  {
+   "id": "ghana",
+   "name": "Ghana",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -3.27,
+    4.76,
+    1.15,
+    11.17
+   ],
+   "hexes_r5": 1327,
+   "group": "world",
+   "names": {
+    "en": "Ghana",
+    "ru": "Гана",
+    "tg": "Гана",
+    "iso2": "GH"
+   }
+  },
+  {
+   "id": "greece",
+   "name": "Greece",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    19.72,
+    34.83,
+    28.3,
+    41.82
+   ],
+   "hexes_r5": 679,
+   "group": "world",
+   "names": {
+    "en": "Greece",
+    "ru": "Греция",
+    "tg": "Юнон",
+    "iso2": "GR"
+   }
+  },
+  {
+   "id": "guatemala",
+   "name": "Guatemala",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -92.3,
+    13.71,
+    -88.2,
+    17.9
+   ],
+   "hexes_r5": 476,
+   "group": "world",
+   "names": {
+    "en": "Guatemala",
+    "ru": "Гватемала",
+    "tg": "Гватемала",
+    "iso2": "GT"
+   }
+  },
+  {
+   "id": "guinea",
+   "name": "Guinea",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -15.04,
+    7.17,
+    -7.62,
+    12.77
+   ],
+   "hexes_r5": 1305,
+   "group": "world",
+   "names": {
+    "en": "Guinea",
+    "ru": "Гвинея",
+    "tg": "Гвинея",
+    "iso2": "GN"
+   }
+  },
+  {
+   "id": "guinea_bissau",
+   "name": "Guinea Bissau",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -16.73,
+    10.95,
+    -13.65,
+    12.75
+   ],
+   "hexes_r5": 207,
+   "group": "world",
+   "names": {
+    "en": "Guinea-Bissau",
+    "ru": "Гвинея-Бисау",
+    "tg": "Гвинея-Бисау",
+    "iso2": "GW"
+   }
+  },
+  {
+   "id": "guyana",
+   "name": "Guyana",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -61.29,
+    1.3,
+    -57.06,
+    8.42
+   ],
+   "hexes_r5": 609,
+   "group": "world",
+   "names": {
+    "en": "Guyana",
+    "ru": "Гайана",
+    "tg": "Гайана",
+    "iso2": "GY"
+   }
+  },
+  {
+   "id": "haiti",
+   "name": "Haiti",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -74.46,
+    18.01,
+    -71.6,
+    20.1
+   ],
+   "hexes_r5": 196,
+   "group": "world",
+   "names": {
+    "en": "Haiti",
+    "ru": "Гаити",
+    "tg": "Гаити",
+    "iso2": "HT"
+   }
+  },
+  {
+   "id": "honduras",
+   "name": "Honduras",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -89.42,
+    12.97,
+    -83.17,
+    16.46
+   ],
+   "hexes_r5": 546,
+   "group": "world",
+   "names": {
+    "en": "Honduras",
+    "ru": "Гондурас",
+    "tg": "Гондурас",
+    "iso2": "HN"
+   }
+  },
+  {
+   "id": "hungary",
+   "name": "Hungary",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    16.22,
+    45.76,
+    22.93,
+    48.65
+   ],
+   "hexes_r5": 409,
+   "group": "world",
+   "names": {
+    "en": "Hungary",
+    "ru": "Венгрия",
+    "tg": "Маҷористон",
+    "iso2": "HU"
+   }
+  },
+  {
+   "id": "iceland",
+   "name": "Iceland",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -23.95,
+    63.46,
+    -14.28,
+    66.23
+   ],
+   "hexes_r5": 90,
+   "group": "world",
+   "names": {
+    "en": "Iceland",
+    "ru": "Исландия",
+    "tg": "Исландия",
+    "iso2": "IS"
+   }
+  },
+  {
+   "id": "india",
+   "name": "India",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    68.55,
+    6.86,
+    97.39,
+    35.15
+   ],
+   "hexes_r5": 12273,
+   "group": "world",
+   "names": {
+    "en": "India",
+    "ru": "Индия",
+    "tg": "Ҳиндустон",
+    "iso2": "IN"
+   }
+  },
+  {
+   "id": "indonesia",
+   "name": "Indonesia",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    95,
+    -11.02,
+    141.07,
+    5.92
+   ],
+   "hexes_r5": 7736,
+   "group": "world",
+   "names": {
+    "en": "Indonesia",
+    "ru": "Индонезия",
+    "tg": "Индонезия",
+    "iso2": "ID"
+   }
+  },
+  {
+   "id": "iran",
+   "name": "Iran",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    44.13,
+    25.28,
+    63.22,
+    39.76
+   ],
+   "hexes_r5": 4487,
+   "group": "world",
+   "names": {
+    "en": "Iran",
+    "ru": "Иран",
+    "tg": "Эрон",
+    "iso2": "IR"
+   }
+  },
+  {
+   "id": "iraq",
+   "name": "Iraq",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    38.9,
+    29.14,
+    48.57,
+    37.44
+   ],
+   "hexes_r5": 1151,
+   "group": "world",
+   "names": {
+    "en": "Iraq",
+    "ru": "Ирак",
+    "tg": "Ироқ",
+    "iso2": "IQ"
+   }
+  },
+  {
+   "id": "ireland",
+   "name": "Ireland",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -10.45,
+    51.44,
+    -5.97,
+    55.4
+   ],
+   "hexes_r5": 340,
+   "group": "world",
+   "names": {
+    "en": "Ireland",
+    "ru": "Ирландия",
+    "tg": "Ирландия",
+    "iso2": "IE"
+   }
+  },
+  {
+   "id": "israel",
+   "name": "Israel",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    34.25,
+    29.44,
+    35.97,
+    33.38
+   ],
+   "hexes_r5": 89,
+   "group": "world",
+   "names": {
+    "en": "Israel",
+    "ru": "Израиль",
+    "tg": "Исроил",
+    "iso2": "IL"
+   }
+  },
+  {
+   "id": "italy",
+   "name": "Italy",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    6.8,
+    35.46,
+    18.54,
+    46.88
+   ],
+   "hexes_r5": 1273,
+   "group": "world",
+   "names": {
+    "en": "Italy",
+    "ru": "Италия",
+    "tg": "Италия",
+    "iso2": "IT"
+   }
+  },
+  {
+   "id": "jamaica",
+   "name": "Jamaica",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -78.34,
+    17.77,
+    -76.23,
+    18.55
+   ],
+   "hexes_r5": 72,
+   "group": "world",
+   "names": {
+    "en": "Jamaica",
+    "ru": "Ямайка",
+    "tg": "Ямайка",
+    "iso2": "JM"
+   }
+  },
+  {
+   "id": "japan",
+   "name": "Japan",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    123.96,
+    24.25,
+    145.62,
+    45.25
+   ],
+   "hexes_r5": 1514,
+   "group": "world",
+   "names": {
+    "en": "Japan",
+    "ru": "Япония",
+    "tg": "Япония",
+    "iso2": "JP"
+   }
+  },
+  {
+   "id": "kenya",
+   "name": "Kenya",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    33.95,
+    -4.69,
+    41.9,
+    5.06
+   ],
+   "hexes_r5": 2093,
+   "group": "world",
+   "names": {
+    "en": "Kenya",
+    "ru": "Кения",
+    "tg": "Кения",
+    "iso2": "KE"
+   }
+  },
+  {
+   "id": "kosovo",
+   "name": "Kosovo",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    19.98,
+    41.85,
+    21.87,
+    43.22
+   ],
+   "hexes_r5": 58,
+   "group": "world",
+   "names": {
+    "en": "Kosovo",
+    "ru": "Косово",
+    "tg": "Косово",
+    "iso2": "XK"
+   }
+  },
+  {
+   "id": "kuwait",
+   "name": "Kuwait",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    46.87,
+    28.5,
+    48.42,
+    30.15
+   ],
+   "hexes_r5": 65,
+   "group": "world",
+   "names": {
+    "en": "Kuwait",
+    "ru": "Кувейт",
+    "tg": "Қувайт",
+    "iso2": "KW"
+   }
+  },
+  {
+   "id": "kyrgyzstan",
+   "name": "Kyrgyzstan",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    69.23,
+    39.3,
+    79.53,
+    43.29
+   ],
+   "hexes_r5": 481,
+   "group": "world",
+   "names": {
+    "en": "Kyrgyzstan",
+    "ru": "Киргизия",
+    "tg": "Қирғизистон",
+    "iso2": "KG"
+   }
+  },
+  {
+   "id": "lao_pdr",
+   "name": "Lao Pdr",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    100.09,
+    13.9,
+    107.62,
+    22.49
+   ],
+   "hexes_r5": 932,
+   "group": "world",
+   "names": {
+    "en": "Laos",
+    "ru": "Лаос",
+    "tg": "Лаос",
+    "iso2": "LA"
+   }
+  },
+  {
+   "id": "latvia",
+   "name": "Latvia",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    20.95,
+    55.69,
+    28.2,
+    58.01
+   ],
+   "hexes_r5": 343,
+   "group": "world",
+   "names": {
+    "en": "Latvia",
+    "ru": "Латвия",
+    "tg": "Латвия",
+    "iso2": "LV"
+   }
+  },
+  {
+   "id": "lebanon",
+   "name": "Lebanon",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    35.13,
+    33,
+    36.6,
+    34.73
+   ],
+   "hexes_r5": 52,
+   "group": "world",
+   "names": {
+    "en": "Lebanon",
+    "ru": "Ливан",
+    "tg": "Лубнон",
+    "iso2": "LB"
+   }
+  },
+  {
+   "id": "lesotho",
+   "name": "Lesotho",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    26.94,
+    -30.64,
+    29.47,
+    -28.5
+   ],
+   "hexes_r5": 141,
+   "group": "world",
+   "names": {
+    "en": "Lesotho",
+    "ru": "Лесото",
+    "tg": "Лесото",
+    "iso2": "LS"
+   }
+  },
+  {
+   "id": "liberia",
+   "name": "Liberia",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -11.56,
+    4.38,
+    -7.36,
+    8.58
+   ],
+   "hexes_r5": 573,
+   "group": "world",
+   "names": {
+    "en": "Liberia",
+    "ru": "Либерия",
+    "tg": "Либерия",
+    "iso2": "LR"
+   }
+  },
+  {
+   "id": "libya",
+   "name": "Libya",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    9.36,
+    21.38,
+    25.07,
+    33.12
+   ],
+   "hexes_r5": 725,
+   "group": "world",
+   "names": {
+    "en": "Libya",
+    "ru": "Ливия",
+    "tg": "Либия",
+    "iso2": "LY"
+   }
+  },
+  {
+   "id": "lithuania",
+   "name": "Lithuania",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    21.05,
+    53.91,
+    26.86,
+    56.44
+   ],
+   "hexes_r5": 333,
+   "group": "world",
+   "names": {
+    "en": "Lithuania",
+    "ru": "Литва",
+    "tg": "Литва",
+    "iso2": "LT"
+   }
+  },
+  {
+   "id": "macedonia_former_yugoslav_republic_of",
+   "name": "Macedonia Former Yugoslav Republic Of",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    20.4,
+    40.87,
+    23.04,
+    42.38
+   ],
+   "hexes_r5": 110,
+   "group": "world",
+   "names": {
+    "en": "North Macedonia",
+    "ru": "Северная Македония",
+    "tg": "Македонияи Шимолӣ",
+    "iso2": "MK"
+   }
+  },
+  {
+   "id": "madagascar",
+   "name": "Madagascar",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    43.2,
+    -25.6,
+    50.48,
+    -11.93
+   ],
+   "hexes_r5": 2427,
+   "group": "world",
+   "names": {
+    "en": "Madagascar",
+    "ru": "Мадагаскар",
+    "tg": "Мадагаскар",
+    "iso2": "MG"
+   }
+  },
+  {
+   "id": "malawi",
+   "name": "Malawi",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    32.64,
+    -17.1,
+    35.98,
+    -9.32
+   ],
+   "hexes_r5": 434,
+   "group": "world",
+   "names": {
+    "en": "Malawi",
+    "ru": "Малави",
+    "tg": "Малави",
+    "iso2": "MW"
+   }
+  },
+  {
+   "id": "malaysia",
+   "name": "Malaysia",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    99.61,
+    0.86,
+    119.32,
+    7.38
+   ],
+   "hexes_r5": 1333,
+   "group": "world",
+   "names": {
+    "en": "Malaysia",
+    "ru": "Малайзия",
+    "tg": "Малайзия",
+    "iso2": "MY"
+   }
+  },
+  {
+   "id": "mali",
+   "name": "Mali",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -12.26,
+    10.1,
+    4.23,
+    24.98
+   ],
+   "hexes_r5": 3134,
+   "group": "world",
+   "names": {
+    "en": "Mali",
+    "ru": "Мали",
+    "tg": "Мали",
+    "iso2": "ML"
+   }
+  },
+  {
+   "id": "mauritania",
+   "name": "Mauritania",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -16.98,
+    14.7,
+    -5.36,
+    25.75
+   ],
+   "hexes_r5": 845,
+   "group": "world",
+   "names": {
+    "en": "Mauritania",
+    "ru": "Мавритания",
+    "tg": "Мавритания",
+    "iso2": "MR"
+   }
+  },
+  {
+   "id": "mexico",
+   "name": "Mexico",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -118.35,
+    14.45,
+    -86.76,
+    32.78
+   ],
+   "hexes_r5": 6499,
+   "group": "world",
+   "names": {
+    "en": "Mexico",
+    "ru": "Мексика",
+    "tg": "Мексика",
+    "iso2": "MX"
+   }
+  },
+  {
+   "id": "moldova",
+   "name": "Moldova",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    26.65,
+    45.47,
+    30.05,
+    48.55
+   ],
+   "hexes_r5": 173,
+   "group": "world",
+   "names": {
+    "en": "Moldova",
+    "ru": "Молдова",
+    "tg": "Молдова",
+    "iso2": "MD"
+   }
+  },
+  {
+   "id": "mongolia",
+   "name": "Mongolia",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    87.88,
+    41.82,
+    119.94,
+    51.9
+   ],
+   "hexes_r5": 2397,
+   "group": "world",
+   "names": {
+    "en": "Mongolia",
+    "ru": "Монголия",
+    "tg": "Муғулистон",
+    "iso2": "MN"
+   }
+  },
+  {
+   "id": "montenegro",
+   "name": "Montenegro",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    18.32,
+    41.85,
+    20.32,
+    43.49
+   ],
+   "hexes_r5": 71,
+   "group": "world",
+   "names": {
+    "en": "Montenegro",
+    "ru": "Черногория",
+    "tg": "Черногория",
+    "iso2": "ME"
+   }
+  },
+  {
+   "id": "morocco",
+   "name": "Morocco",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -16.76,
+    21.66,
+    -1.75,
+    35.95
+   ],
+   "hexes_r5": 971,
+   "group": "world",
+   "names": {
+    "en": "Morocco",
+    "ru": "Марокко",
+    "tg": "Марокаш",
+    "iso2": "MA"
+   }
+  },
+  {
+   "id": "mozambique",
+   "name": "Mozambique",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    30.15,
+    -26.86,
+    40.83,
+    -10.4
+   ],
+   "hexes_r5": 2909,
+   "group": "world",
+   "names": {
+    "en": "Mozambique",
+    "ru": "Мозамбик",
+    "tg": "Мозамбик",
+    "iso2": "MZ"
+   }
+  },
+  {
+   "id": "myanmar",
+   "name": "Myanmar",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    92.12,
+    9.96,
+    101.16,
+    28.38
+   ],
+   "hexes_r5": 2586,
+   "group": "world",
+   "names": {
+    "en": "Myanmar (Burma)",
+    "ru": "Мьянма (Бирма)",
+    "tg": "Мянма",
+    "iso2": "MM"
+   }
+  },
+  {
+   "id": "namibia",
+   "name": "Namibia",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    11.71,
+    -28.97,
+    25.24,
+    -16.92
+   ],
+   "hexes_r5": 3021,
+   "group": "world",
+   "names": {
+    "en": "Namibia",
+    "ru": "Намибия",
+    "tg": "Намибия",
+    "iso2": "NA"
+   }
+  },
+  {
+   "id": "nepal",
+   "name": "Nepal",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    79.97,
+    26.28,
+    88.19,
+    30.3
+   ],
+   "hexes_r5": 620,
+   "group": "world",
+   "names": {
+    "en": "Nepal",
+    "ru": "Непал",
+    "tg": "Непал",
+    "iso2": "NP"
+   }
+  },
+  {
+   "id": "netherlands",
+   "name": "Netherlands",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -68.39,
+    12.13,
+    7.26,
+    53.51
+   ],
+   "hexes_r5": 213,
+   "group": "world",
+   "names": {
+    "en": "Netherlands",
+    "ru": "Нидерланды",
+    "tg": "Нидерландия",
+    "iso2": "NL"
+   }
+  },
+  {
+   "id": "new_caledonia",
+   "name": "New Caledonia",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    163.67,
+    -22.72,
+    168.14,
+    -19.67
+   ],
+   "hexes_r5": 111,
+   "group": "world",
+   "names": {
+    "en": "New Caledonia",
+    "ru": "Новая Каледония",
+    "tg": "Каледонияи Нав",
+    "iso2": "NC"
+   }
+  },
+  {
+   "id": "new_zealand",
+   "name": "New Zealand",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -176.61,
+    -46.87,
+    178.54,
+    -34.41
+   ],
+   "hexes_r5": 965,
+   "group": "world",
+   "names": {
+    "en": "New Zealand",
+    "ru": "Новая Зеландия",
+    "tg": "Зеландияи Нав",
+    "iso2": "NZ"
+   }
+  },
+  {
+   "id": "nicaragua",
+   "name": "Nicaragua",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -87.7,
+    10.67,
+    -82.98,
+    15.03
+   ],
+   "hexes_r5": 595,
+   "group": "world",
+   "names": {
+    "en": "Nicaragua",
+    "ru": "Никарагуа",
+    "tg": "Никарагуа",
+    "iso2": "NI"
+   }
+  },
+  {
+   "id": "niger",
+   "name": "Niger",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    0.15,
+    11.69,
+    15.43,
+    22.53
+   ],
+   "hexes_r5": 1766,
+   "group": "world",
+   "names": {
+    "en": "Niger",
+    "ru": "Нигер",
+    "tg": "Нигер",
+    "iso2": "NE"
+   }
+  },
+  {
+   "id": "nigeria",
+   "name": "Nigeria",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    2.63,
+    4.24,
+    14.76,
+    13.85
+   ],
+   "hexes_r5": 4043,
+   "group": "world",
+   "names": {
+    "en": "Nigeria",
+    "ru": "Нигерия",
+    "tg": "Нигерия",
+    "iso2": "NG"
+   }
+  },
+  {
+   "id": "norway",
+   "name": "Norway",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -9.08,
+    57.98,
+    31.17,
+    71.1
+   ],
+   "hexes_r5": 728,
+   "group": "world",
+   "names": {
+    "en": "Norway",
+    "ru": "Норвегия",
+    "tg": "Норвегия",
+    "iso2": "NO"
+   }
+  },
+  {
+   "id": "oman",
+   "name": "Oman",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    52.23,
+    16.74,
+    59.81,
+    26.4
+   ],
+   "hexes_r5": 515,
+   "group": "world",
+   "names": {
+    "en": "Oman",
+    "ru": "Оман",
+    "tg": "Умон",
+    "iso2": "OM"
+   }
+  },
+  {
+   "id": "pakistan",
+   "name": "Pakistan",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    60.97,
+    24.01,
+    76.56,
+    36.78
+   ],
+   "hexes_r5": 2526,
+   "group": "world",
+   "names": {
+    "en": "Pakistan",
+    "ru": "Пакистан",
+    "tg": "Покистон",
+    "iso2": "PK"
+   }
+  },
+  {
+   "id": "palestine",
+   "name": "Palestine",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    34.25,
+    31.24,
+    35.64,
+    32.59
+   ],
+   "hexes_r5": 38,
+   "group": "world",
+   "names": {
+    "en": "Palestinian Territories",
+    "ru": "Палестинские территории",
+    "tg": "Қаламравҳои Фаластинӣ",
+    "iso2": "PS"
+   }
+  },
+  {
+   "id": "panama",
+   "name": "Panama",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -83.03,
+    7.14,
+    -77.32,
+    9.67
+   ],
+   "hexes_r5": 347,
+   "group": "world",
+   "names": {
+    "en": "Panama",
+    "ru": "Панама",
+    "tg": "Панама",
+    "iso2": "PA"
+   }
+  },
+  {
+   "id": "papua_new_guinea",
+   "name": "Papua New Guinea",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    140.83,
+    -11.69,
+    155.94,
+    -1.33
+   ],
+   "hexes_r5": 1771,
+   "group": "world",
+   "names": {
+    "en": "Papua New Guinea",
+    "ru": "Папуа — Новая Гвинея",
+    "tg": "Папуа Гвинеяи Нав",
+    "iso2": "PG"
+   }
+  },
+  {
+   "id": "paraguay",
+   "name": "Paraguay",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -62.71,
+    -27.51,
+    -54.33,
+    -19.22
+   ],
+   "hexes_r5": 1852,
+   "group": "world",
+   "names": {
+    "en": "Paraguay",
+    "ru": "Парагвай",
+    "tg": "Парагвай",
+    "iso2": "PY"
+   }
+  },
+  {
+   "id": "peru",
+   "name": "Peru",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -81.33,
+    -18.35,
+    -68.73,
+    0.03
+   ],
+   "hexes_r5": 3922,
+   "group": "world",
+   "names": {
+    "en": "Peru",
+    "ru": "Перу",
+    "tg": "Перу",
+    "iso2": "PE"
+   }
+  },
+  {
+   "id": "philippines",
+   "name": "Philippines",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    116.95,
+    4.68,
+    126.63,
+    20.87
+   ],
+   "hexes_r5": 1613,
+   "group": "world",
+   "names": {
+    "en": "Philippines",
+    "ru": "Филиппины",
+    "tg": "Филиппин",
+    "iso2": "PH"
+   }
+  },
+  {
+   "id": "poland",
+   "name": "Poland",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    14.13,
+    49.14,
+    24.18,
+    54.87
+   ],
+   "hexes_r5": 1388,
+   "group": "world",
+   "names": {
+    "en": "Poland",
+    "ru": "Польша",
+    "tg": "Лаҳистон",
+    "iso2": "PL"
+   }
+  },
+  {
+   "id": "portugal",
+   "name": "Portugal",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -28.85,
+    32.61,
+    -6.12,
+    42.19
+   ],
+   "hexes_r5": 409,
+   "group": "world",
+   "names": {
+    "en": "Portugal",
+    "ru": "Португалия",
+    "tg": "Португалия",
+    "iso2": "PT"
+   }
+  },
+  {
+   "id": "puerto_rico",
+   "name": "Puerto Rico",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -67.3,
+    17.9,
+    -65.24,
+    18.54
+   ],
+   "hexes_r5": 70,
+   "group": "world",
+   "names": {
+    "en": "Puerto Rico",
+    "ru": "Пуэрто-Рико",
+    "tg": "Пуэрто-Рико",
+    "iso2": "PR"
+   }
+  },
+  {
+   "id": "qatar",
+   "name": "Qatar",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    50.75,
+    24.58,
+    51.59,
+    26.12
+   ],
+   "hexes_r5": 39,
+   "group": "world",
+   "names": {
+    "en": "Qatar",
+    "ru": "Катар",
+    "tg": "Қатар",
+    "iso2": "QA"
+   }
+  },
+  {
+   "id": "republic_of_congo",
+   "name": "Republic of Congo",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    11.12,
+    -4.98,
+    18.71,
+    3.65
+   ],
+   "hexes_r5": 1223,
+   "group": "world",
+   "names": {
+    "en": "Congo - Brazzaville",
+    "ru": "Конго - Браззавиль",
+    "tg": "Конго - Браззавил",
+    "iso2": "CG"
+   }
+  },
+  {
+   "id": "republic_of_korea",
+   "name": "Republic of Korea",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    124.65,
+    33.21,
+    130.92,
+    38.65
+   ],
+   "hexes_r5": 623,
+   "group": "world",
+   "names": {
+    "en": "South Korea",
+    "ru": "Республика Корея",
+    "tg": "Кореяи Ҷанубӣ",
+    "iso2": "KR"
+   }
+  },
+  {
+   "id": "reunion",
+   "name": "Reunion",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    55.26,
+    -21.33,
+    55.86,
+    -20.88
+   ],
+   "hexes_r5": 14,
+   "group": "world",
+   "names": {
+    "en": "Réunion",
+    "ru": "Реюньон",
+    "tg": "Реюнион",
+    "iso2": "RE"
+   }
+  },
+  {
+   "id": "romania",
+   "name": "Romania",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    20.27,
+    43.64,
+    29.77,
+    48.24
+   ],
+   "hexes_r5": 970,
+   "group": "world",
+   "names": {
+    "en": "Romania",
+    "ru": "Румыния",
+    "tg": "Руминия",
+    "iso2": "RO"
+   }
+  },
+  {
+   "id": "rwanda",
+   "name": "Rwanda",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    28.82,
+    -2.84,
+    30.92,
+    -1.05
+   ],
+   "hexes_r5": 107,
+   "group": "world",
+   "names": {
+    "en": "Rwanda",
+    "ru": "Руанда",
+    "tg": "Руанда",
+    "iso2": "RW"
+   }
+  },
+  {
+   "id": "saudi_arabia",
+   "name": "Saudi Arabia",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    34.64,
+    16.35,
+    55.36,
+    31.98
+   ],
+   "hexes_r5": 2250,
+   "group": "world",
+   "names": {
+    "en": "Saudi Arabia",
+    "ru": "Саудовская Аравия",
+    "tg": "Арабистони Саудӣ",
+    "iso2": "SA"
+   }
+  },
+  {
+   "id": "senegal",
+   "name": "Senegal",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -17.5,
+    12.3,
+    -11.36,
+    16.71
+   ],
+   "hexes_r5": 913,
+   "group": "world",
+   "names": {
+    "en": "Senegal",
+    "ru": "Сенегал",
+    "tg": "Сенегал",
+    "iso2": "SN"
+   }
+  },
+  {
+   "id": "serbia",
+   "name": "Serbia",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    18.77,
+    42.25,
+    23.01,
+    46.17
+   ],
+   "hexes_r5": 344,
+   "group": "world",
+   "names": {
+    "en": "Serbia",
+    "ru": "Сербия",
+    "tg": "Сербия",
+    "iso2": "YU"
+   }
+  },
+  {
+   "id": "sierra_leone",
+   "name": "Sierra Leone",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -13.34,
+    6.93,
+    -10.27,
+    10.04
+   ],
+   "hexes_r5": 408,
+   "group": "world",
+   "names": {
+    "en": "Sierra Leone",
+    "ru": "Сьерра-Леоне",
+    "tg": "Сиерра-Леоне",
+    "iso2": "SL"
+   }
+  },
+  {
+   "id": "slovakia",
+   "name": "Slovakia",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    16.76,
+    47.72,
+    22.38,
+    49.54
+   ],
+   "hexes_r5": 225,
+   "group": "world",
+   "names": {
+    "en": "Slovakia",
+    "ru": "Словакия",
+    "tg": "Словакия",
+    "iso2": "SK"
+   }
+  },
+  {
+   "id": "somalia",
+   "name": "Somalia",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    40.96,
+    -1.59,
+    51.39,
+    11.94
+   ],
+   "hexes_r5": 1715,
+   "group": "world",
+   "names": {
+    "en": "Somalia",
+    "ru": "Сомали",
+    "tg": "Сомалӣ",
+    "iso2": "SO"
+   }
+  },
+  {
+   "id": "south_africa",
+   "name": "South Africa",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    16.56,
+    -34.78,
+    32.92,
+    -22.11
+   ],
+   "hexes_r5": 4386,
+   "group": "world",
+   "names": {
+    "en": "South Africa",
+    "ru": "Южно-Африканская Республика",
+    "tg": "Африкаи Ҷанубӣ",
+    "iso2": "ZA"
+   }
+  },
+  {
+   "id": "spain",
+   "name": "Spain",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -18.15,
+    27.69,
+    4.3,
+    43.76
+   ],
+   "hexes_r5": 2086,
+   "group": "world",
+   "names": {
+    "en": "Spain",
+    "ru": "Испания",
+    "tg": "Испания",
+    "iso2": "ES"
+   }
+  },
+  {
+   "id": "sri_lanka",
+   "name": "Sri Lanka",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    79.66,
+    5.89,
+    81.93,
+    9.89
+   ],
+   "hexes_r5": 280,
+   "group": "world",
+   "names": {
+    "en": "Sri Lanka",
+    "ru": "Шри-Ланка",
+    "tg": "Шри-Ланка",
+    "iso2": "LK"
+   }
+  },
+  {
+   "id": "sudan",
+   "name": "Sudan",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    21.78,
+    8.72,
+    38.4,
+    22.12
+   ],
+   "hexes_r5": 3886,
+   "group": "world",
+   "names": {
+    "en": "Sudan",
+    "ru": "Судан",
+    "tg": "Судон",
+    "iso2": "SD"
+   }
+  },
+  {
+   "id": "suriname",
+   "name": "Suriname",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -57.92,
+    1.83,
+    -53.94,
+    6
+   ],
+   "hexes_r5": 316,
+   "group": "world",
+   "names": {
+    "en": "Suriname",
+    "ru": "Суринам",
+    "tg": "Суринам",
+    "iso2": "SR"
+   }
+  },
+  {
+   "id": "swaziland",
+   "name": "Swaziland",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    30.73,
+    -27.39,
+    32.2,
+    -25.71
+   ],
+   "hexes_r5": 85,
+   "group": "world",
+   "names": {
+    "en": "Eswatini",
+    "ru": "Эсватини",
+    "tg": "Эсватини",
+    "iso2": "SZ"
+   }
+  },
+  {
+   "id": "sweden",
+   "name": "Sweden",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    11.18,
+    55.35,
+    24.06,
+    68.48
+   ],
+   "hexes_r5": 1621,
+   "group": "world",
+   "names": {
+    "en": "Sweden",
+    "ru": "Швеция",
+    "tg": "Шветсия",
+    "iso2": "SE"
+   }
+  },
+  {
+   "id": "switzerland",
+   "name": "Switzerland",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    5.96,
+    45.88,
+    10.03,
+    47.77
+   ],
+   "hexes_r5": 149,
+   "group": "world",
+   "names": {
+    "en": "Switzerland",
+    "ru": "Швейцария",
+    "tg": "Швейтсария",
+    "iso2": "CH"
+   }
+  },
+  {
+   "id": "syria",
+   "name": "Syria",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    35.73,
+    32.38,
+    42.44,
+    37.29
+   ],
+   "hexes_r5": 594,
+   "group": "world",
+   "names": {
+    "en": "Syria",
+    "ru": "Сирия",
+    "tg": "Сурия",
+    "iso2": "SY"
+   }
+  },
+  {
+   "id": "taiwan",
+   "name": "Taiwan",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    118.28,
+    21.91,
+    121.94,
+    25.32
+   ],
+   "hexes_r5": 169,
+   "group": "world",
+   "names": {
+    "en": "Taiwan",
+    "ru": "Тайвань",
+    "tg": "Тайван",
+    "iso2": "TW"
+   }
+  },
+  {
+   "id": "tajikistan",
+   "name": "Tajikistan",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    67.34,
+    36.66,
+    74.12,
+    41.02
+   ],
+   "hexes_r5": 256,
+   "group": "world",
+   "names": {
+    "en": "Tajikistan",
+    "ru": "Таджикистан",
+    "tg": "Тоҷикистон",
+    "iso2": "TJ"
+   }
+  },
+  {
+   "id": "thailand",
+   "name": "Thailand",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    97.32,
+    5.58,
+    105.72,
+    20.5
+   ],
+   "hexes_r5": 1969,
+   "group": "world",
+   "names": {
+    "en": "Thailand",
+    "ru": "Таиланд",
+    "tg": "Таиланд",
+    "iso2": "TH"
+   }
+  },
+  {
+   "id": "the_gambia",
+   "name": "The Gambia",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -16.82,
+    13.09,
+    -13.75,
+    13.84
+   ],
+   "hexes_r5": 80,
+   "group": "world",
+   "names": {
+    "en": "Gambia",
+    "ru": "Гамбия",
+    "tg": "Гамбия",
+    "iso2": "GM"
+   }
+  },
+  {
+   "id": "timor_leste",
+   "name": "Timor Leste",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    123.96,
+    -9.53,
+    127.29,
+    -8.11
+   ],
+   "hexes_r5": 92,
+   "group": "world",
+   "names": {
+    "en": "Timor-Leste",
+    "ru": "Восточный Тимор",
+    "tg": "Тимор-Лесте",
+    "iso2": "TL"
+   }
+  },
+  {
+   "id": "togo",
+   "name": "Togo",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -0.12,
+    6.14,
+    1.8,
+    11.18
+   ],
+   "hexes_r5": 345,
+   "group": "world",
+   "names": {
+    "en": "Togo",
+    "ru": "Того",
+    "tg": "Того",
+    "iso2": "TG"
+   }
+  },
+  {
+   "id": "trinidad_and_tobago",
+   "name": "Trinidad and Tobago",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -61.86,
+    10.01,
+    -60.52,
+    11.32
+   ],
+   "hexes_r5": 37,
+   "group": "world",
+   "names": {
+    "en": "Trinidad & Tobago",
+    "ru": "Тринидад и Тобаго",
+    "tg": "Тринидад ва Тобаго",
+    "iso2": "TT"
+   }
+  },
+  {
+   "id": "tunisia",
+   "name": "Tunisia",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    7.58,
+    30.26,
+    11.3,
+    37.38
+   ],
+   "hexes_r5": 380,
+   "group": "world",
+   "names": {
+    "en": "Tunisia",
+    "ru": "Тунис",
+    "tg": "Тунис",
+    "iso2": "TN"
+   }
+  },
+  {
+   "id": "turkey",
+   "name": "Turkey",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    25.78,
+    35.78,
+    44.86,
+    42.1
+   ],
+   "hexes_r5": 2989,
+   "group": "world",
+   "names": {
+    "en": "Türkiye",
+    "ru": "Турция",
+    "tg": "Туркия",
+    "iso2": "TR"
+   }
+  },
+  {
+   "id": "turkmenistan",
+   "name": "Turkmenistan",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    52.53,
+    35.13,
+    66.61,
+    42.76
+   ],
+   "hexes_r5": 861,
+   "group": "world",
+   "names": {
+    "en": "Turkmenistan",
+    "ru": "Туркменистан",
+    "tg": "Туркманистон",
+    "iso2": "TM"
+   }
+  },
+  {
+   "id": "uganda",
+   "name": "Uganda",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    29.48,
+    -1.45,
+    35.01,
+    4.23
+   ],
+   "hexes_r5": 868,
+   "group": "world",
+   "names": {
+    "en": "Uganda",
+    "ru": "Уганда",
+    "tg": "Уганда",
+    "iso2": "UG"
+   }
+  },
+  {
+   "id": "ukraine",
+   "name": "Ukraine",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    22.12,
+    44.4,
+    40.25,
+    52.44
+   ],
+   "hexes_r5": 2644,
+   "group": "world",
+   "names": {
+    "en": "Ukraine",
+    "ru": "Украина",
+    "tg": "Украина",
+    "iso2": "UA"
+   }
+  },
+  {
+   "id": "united_arab_emirates",
+   "name": "United Arab Emirates",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    51.55,
+    22.74,
+    56.4,
+    26.15
+   ],
+   "hexes_r5": 201,
+   "group": "world",
+   "names": {
+    "en": "United Arab Emirates",
+    "ru": "ОАЭ",
+    "tg": "Аморатҳои Муттаҳидаи Араб",
+    "iso2": "AE"
+   }
+  },
+  {
+   "id": "united_kingdom",
+   "name": "United Kingdom",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -8.16,
+    49.91,
+    1.75,
+    60.47
+   ],
+   "hexes_r5": 1253,
+   "group": "world",
+   "names": {
+    "en": "United Kingdom",
+    "ru": "Великобритания",
+    "tg": "Шоҳигарии Муттаҳида",
+    "iso2": "UK"
+   }
+  },
+  {
+   "id": "uruguay",
+   "name": "Uruguay",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -58.4,
+    -34.98,
+    -53.24,
+    -30.06
+   ],
+   "hexes_r5": 978,
+   "group": "world",
+   "names": {
+    "en": "Uruguay",
+    "ru": "Уругвай",
+    "tg": "Уругвай",
+    "iso2": "UY"
+   }
+  },
+  {
+   "id": "uzbekistan",
+   "name": "Uzbekistan",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    56.1,
+    37.16,
+    73.12,
+    45.5
+   ],
+   "hexes_r5": 872,
+   "group": "world",
+   "names": {
+    "en": "Uzbekistan",
+    "ru": "Узбекистан",
+    "tg": "Ӯзбекистон",
+    "iso2": "UZ"
+   }
+  },
+  {
+   "id": "vanuatu",
+   "name": "Vanuatu",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    166.51,
+    -20.22,
+    169.85,
+    -13.51
+   ],
+   "hexes_r5": 89,
+   "group": "world",
+   "names": {
+    "en": "Vanuatu",
+    "ru": "Вануату",
+    "tg": "Вануату",
+    "iso2": "VU"
+   }
+  },
+  {
+   "id": "venezuela",
+   "name": "Venezuela",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -73.44,
+    0.7,
+    -59.88,
+    12.2
+   ],
+   "hexes_r5": 3600,
+   "group": "world",
+   "names": {
+    "en": "Venezuela",
+    "ru": "Венесуэла",
+    "tg": "Венесуэла",
+    "iso2": "VE"
+   }
+  },
+  {
+   "id": "vietnam",
+   "name": "Vietnam",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    102.05,
+    8.6,
+    109.48,
+    23.45
+   ],
+   "hexes_r5": 1370,
+   "group": "world",
+   "names": {
+    "en": "Vietnam",
+    "ru": "Вьетнам",
+    "tg": "Ветнам",
+    "iso2": "VN"
+   }
+  },
+  {
+   "id": "yemen",
+   "name": "Yemen",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    42.6,
+    12.42,
+    54.18,
+    18.81
+   ],
+   "hexes_r5": 664,
+   "group": "world",
+   "names": {
+    "en": "Yemen",
+    "ru": "Йемен",
+    "tg": "Яман",
+    "iso2": "YE"
+   }
+  },
+  {
+   "id": "zimbabwe",
+   "name": "Zimbabwe",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    25.22,
+    -22.47,
+    33.11,
+    -15.62
+   ],
+   "hexes_r5": 1377,
+   "group": "world",
+   "names": {
+    "en": "Zimbabwe",
+    "ru": "Зимбабве",
+    "tg": "Зимбабве",
+    "iso2": "ZW"
+   }
+  },
+  {
+   "id": "city_dushanbe",
+   "name": "Dushanbe (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    68.2126,
+    38.1106,
+    69.3614,
+    39.009
+   ],
+   "hexes_r5": 26,
+   "group": "city",
+   "country": "tajikistan",
+   "names": {
+    "en": "Dushanbe · 50 km",
+    "ru": "Душанбе · 50 км",
+    "tg": "Душанбе · 50 км"
+   }
+  },
+  {
+   "id": "city_khujand",
+   "name": "Khujand (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    69.0334,
+    39.8334,
+    70.211,
+    40.7318
+   ],
+   "hexes_r5": 26,
+   "group": "city",
+   "country": "tajikistan",
+   "names": {
+    "en": "Khujand · 50 km",
+    "ru": "Худжанд · 50 км",
+    "tg": "Хуҷанд · 50 км"
+   }
+  },
+  {
+   "id": "city_bokhtar",
+   "name": "Bokhtar (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    68.2117,
+    37.3872,
+    69.3491,
+    38.2856
+   ],
+   "hexes_r5": 26,
+   "group": "city",
+   "country": "tajikistan",
+   "names": {
+    "en": "Bokhtar · 50 km",
+    "ru": "Бохтар · 50 км",
+    "tg": "Бохтар · 50 км"
+   }
+  },
+  {
+   "id": "city_kulob",
+   "name": "Kulob (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    69.2152,
+    37.4654,
+    70.3538,
+    38.3638
+   ],
+   "hexes_r5": 27,
+   "group": "city",
+   "country": "tajikistan",
+   "names": {
+    "en": "Kulob · 50 km",
+    "ru": "Куляб · 50 км",
+    "tg": "Кӯлоб · 50 км"
+   }
+  },
+  {
+   "id": "city_istaravshan",
+   "name": "Istaravshan (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    68.4208,
+    39.4616,
+    69.592,
+    40.36
+   ],
+   "hexes_r5": 26,
+   "group": "city",
+   "country": "tajikistan",
+   "names": {
+    "en": "Istaravshan · 50 km",
+    "ru": "Истаравшан · 50 км",
+    "tg": "Истаравшан · 50 км"
+   }
+  },
+  {
+   "id": "city_panjakent",
+   "name": "Panjakent (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    67.0273,
+    39.0458,
+    68.1913,
+    39.9442
+   ],
+   "hexes_r5": 26,
+   "group": "city",
+   "country": "tajikistan",
+   "names": {
+    "en": "Panjakent · 50 km",
+    "ru": "Пенджикент · 50 км",
+    "tg": "Панҷакент · 50 км"
+   }
+  },
+  {
+   "id": "city_khorog",
+   "name": "Khorog (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    70.9869,
+    37.0405,
+    72.1191,
+    37.9389
+   ],
+   "hexes_r5": 26,
+   "group": "city",
+   "country": "tajikistan",
+   "names": {
+    "en": "Khorog · 50 km",
+    "ru": "Хорог · 50 км",
+    "tg": "Хоруғ · 50 км"
+   }
+  },
+  {
+   "id": "city_tursunzoda",
+   "name": "Tursunzoda (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    67.656,
+    38.0608,
+    68.804,
+    38.9592
+   ],
+   "hexes_r5": 26,
+   "group": "city",
+   "country": "tajikistan",
+   "names": {
+    "en": "Tursunzoda · 50 km",
+    "ru": "Турсунзаде · 50 км",
+    "tg": "Турсунзода · 50 км"
+   }
+  },
+  {
+   "id": "city_almaty",
+   "name": "Almaty (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    76.2732,
+    42.7897,
+    77.5062,
+    43.6881
+   ],
+   "hexes_r5": 26,
+   "group": "city",
+   "country": "kazakhstan",
+   "names": {
+    "en": "Almaty · 50 km",
+    "ru": "Алматы · 50 км",
+    "tg": "Алмаато · 50 км"
+   }
+  },
+  {
+   "id": "city_astana",
+   "name": "Astana (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    70.7328,
+    50.7202,
+    72.1654,
+    51.6186
+   ],
+   "hexes_r5": 26,
+   "group": "city",
+   "country": "kazakhstan",
+   "names": {
+    "en": "Astana · 50 km",
+    "ru": "Астана · 50 км",
+    "tg": "Остона · 50 км"
+   }
+  },
+  {
+   "id": "city_shymkent",
+   "name": "Shymkent (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    68.9824,
+    41.8925,
+    70.1978,
+    42.7909
+   ],
+   "hexes_r5": 26,
+   "group": "city",
+   "country": "kazakhstan",
+   "names": {
+    "en": "Shymkent · 50 km",
+    "ru": "Шымкент · 50 км",
+    "tg": "Шимкент · 50 км"
+   }
+  },
+  {
+   "id": "city_tashkent",
+   "name": "Tashkent (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    68.6422,
+    40.8503,
+    69.838,
+    41.7487
+   ],
+   "hexes_r5": 27,
+   "group": "city",
+   "country": "uzbekistan",
+   "names": {
+    "en": "Tashkent · 50 km",
+    "ru": "Ташкент · 50 км",
+    "tg": "Тошканд · 50 км"
+   }
+  },
+  {
+   "id": "city_samarkand",
+   "name": "Samarkand (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    66.3763,
+    39.205,
+    67.5431,
+    40.1034
+   ],
+   "hexes_r5": 26,
+   "group": "city",
+   "country": "uzbekistan",
+   "names": {
+    "en": "Samarkand · 50 km",
+    "ru": "Самарканд · 50 км",
+    "tg": "Самарқанд · 50 км"
+   }
+  },
+  {
+   "id": "city_bishkek",
+   "name": "Bishkek (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    73.9569,
+    42.4254,
+    75.1827,
+    43.3238
+   ],
+   "hexes_r5": 25,
+   "group": "city",
+   "country": "kyrgyzstan",
+   "names": {
+    "en": "Bishkek · 50 km",
+    "ru": "Бишкек · 50 км",
+    "tg": "Бишкек · 50 км"
+   }
+  },
+  {
+   "id": "city_osh",
+   "name": "Osh (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    72.2076,
+    40.0791,
+    73.3894,
+    40.9775
+   ],
+   "hexes_r5": 26,
+   "group": "city",
+   "country": "kyrgyzstan",
+   "names": {
+    "en": "Osh · 50 km",
+    "ru": "Ош · 50 км",
+    "tg": "Ӯш · 50 км"
+   }
+  },
+  {
+   "id": "city_houston",
+   "name": "Houston (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -95.8872,
+    29.3112,
+    -94.8524,
+    30.2096
+   ],
+   "hexes_r5": 28,
+   "group": "city",
+   "country": "texas",
+   "names": {
+    "en": "Houston · 50 km",
+    "ru": "Хьюстон · 50 км",
+    "tg": "Хюстон · 50 км"
+   }
+  },
+  {
+   "id": "city_dallas",
+   "name": "Dallas (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -97.3312,
+    32.3275,
+    -96.2628,
+    33.2259
+   ],
+   "hexes_r5": 27,
+   "group": "city",
+   "country": "texas",
+   "names": {
+    "en": "Dallas · 50 km",
+    "ru": "Даллас · 50 км",
+    "tg": "Даллас · 50 км"
+   }
+  },
+  {
+   "id": "city_austin",
+   "name": "Austin (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -98.2631,
+    29.818,
+    -97.2231,
+    30.7164
+   ],
+   "hexes_r5": 27,
+   "group": "city",
+   "country": "texas",
+   "names": {
+    "en": "Austin · 50 km",
+    "ru": "Остин · 50 км",
+    "tg": "Остин · 50 км"
+   }
+  },
+  {
+   "id": "city_san_antonio",
+   "name": "San Antonio (50 km)",
+   "data_end": "2026-11-15",
+   "last_full_month": "2026-10",
+   "first_month": "2000-11",
+   "bbox": [
+    -99.0093,
+    28.9749,
+    -97.9779,
+    29.8733
+   ],
+   "hexes_r5": 27,
+   "group": "city",
+   "country": "texas",
+   "names": {
+    "en": "San Antonio · 50 km",
+    "ru": "Сан-Антонио · 50 км",
+    "tg": "Сан-Антонио · 50 км"
+   }
+  }
+ ]
 }

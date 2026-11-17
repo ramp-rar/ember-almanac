@@ -21,6 +21,18 @@ export function cellsOrThrow(input: Parameters<typeof aoiCells>[0]) {
   }
 }
 
+/** Closed ring of a circle on the sphere (degrees), 64 points. */
+function circleRing(lon: number, lat: number, radiusKm: number): [number, number][] {
+  const pts: [number, number][] = [];
+  for (let k = 0; k <= 64; k++) {
+    const a = (k / 64) * 2 * Math.PI;
+    const dLat = (radiusKm / 111.32) * Math.sin(a);
+    const dLon = (radiusKm / (111.32 * Math.cos((lat * Math.PI) / 180))) * Math.cos(a);
+    pts.push([Math.round((lon + dLon) * 1e4) / 1e4, Math.round((lat + dLat) * 1e4) / 1e4]);
+  }
+  return pts;
+}
+
 export function todayUtc(now: Date = new Date()): string {
   return now.toISOString().slice(0, 10);
 }
@@ -44,19 +56,23 @@ export async function getCalendar(ref: AoiRef, today: string): Promise<CalendarR
       forecastCheck = history ? corridorCoverage(history) : null;
     }
     const [w, s, e, n] = region.bbox;
+    // City areas are circles (scripts/export_cities.py): draw the circle that was counted.
+    const ring: [number, number][] = ref.iso3.startsWith('CITY_')
+      ? circleRing((w + e) / 2, (s + n) / 2, ((n - s) / 2) * 111.32)
+      : [
+          [w, s],
+          [e, s],
+          [e, n],
+          [w, n],
+          [w, s],
+        ];
     aoi = {
       kind: 'region',
       id: region.iso3,
       label: region.nameEn,
       names: region.names ?? null,
       bbox: region.bbox,
-      ring: [
-        [w, s],
-        [e, s],
-        [e, n],
-        [w, n],
-        [w, s],
-      ],
+      ring,
       cellsCount: region.cellsCount,
       areaKm2: null,
       resolution: meta.harmonization.h3_resolution,
