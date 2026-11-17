@@ -1,7 +1,10 @@
-"""Export "where it burns" map layers from the data team's serving set into public/geo/<id>.json.
+"""Export "where it burns" map layers from the data team's serving set into public/geo/<id>/.
 
 Usage (Python 3.12 venv with pandas, pyarrow, h3):
     .venv-fire-api/Scripts/python.exe scripts/export_geo.py D:/00_Inbox/fire-calendar-api-v2/data/serving
+
+Writes public/geo/<id>/index.json (typical layer + list of months) and one small file per recent
+month, public/geo/<id>/<YYYY-MM>.json, so a browser downloads only the layer it shows.
 
 Per region, two layers of H3 res-5 cells (~250 km2), as [lon, lat, value] centroids:
   typical  - average harmonized cell-days per year over full VIIRS years (TYPICAL_YEARS);
@@ -76,9 +79,17 @@ def main() -> None:
             print(f"skip {meta['id']}: no hex.parquet")
             continue
         data = export(d, meta)
-        path = OUT / f"{meta['id']}.json"
-        path.write_text(json.dumps(data, separators=(",", ":")), encoding="utf-8")
-        total += path.stat().st_size
+        folder = OUT / meta["id"]
+        folder.mkdir(parents=True, exist_ok=True)
+        for old in folder.glob("*.json"):
+            old.unlink()
+        index = {k: v for k, v in data.items() if k != "recent"}
+        index["months"] = sorted(data["recent"])
+        files = {"index.json": index, **{f"{m}.json": v for m, v in data["recent"].items()}}
+        for name, payload in files.items():
+            path = folder / name
+            path.write_text(json.dumps(payload, separators=(",", ":")), encoding="utf-8")
+            total += path.stat().st_size
     print(f"wrote {len(regions)} regions, {total / 1e6:.1f} MB")
 
 

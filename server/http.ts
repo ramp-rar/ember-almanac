@@ -67,3 +67,12 @@ export function parseYearMonth(
 
 /** Responses change when a new dataset is activated or a day passes. */
 export const CALENDAR_CACHE = 'public, s-maxage=3600, stale-while-revalidate=86400';
+
+/**
+ * Headers for public data responses. `CDN-Cache-Control` is honoured by the Vercel edge even when
+ * the framework rewrites `Cache-Control` for the browser, so repeat requests are served from the CDN.
+ */
+export const DATA_CACHE_HEADERS = {
+  'Cache-Control': CALENDAR_CACHE,
+  'CDN-Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',
+} as const;

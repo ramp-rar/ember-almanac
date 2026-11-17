@@ -1,7 +1,7 @@
 import { connection, type NextRequest } from 'next/server';
 import { todayUtc } from '@/server/services/calendar-service';
 import { getHotspots } from '@/server/services/hotspots-service';
-import { CALENDAR_CACHE, handleError, jsonError, parseYearMonth } from '@/server/http';
+import { DATA_CACHE_HEADERS, handleError, jsonError, parseYearMonth } from '@/server/http';
 
 export async function GET(
   request: NextRequest,
@@ -20,7 +20,7 @@ export async function GET(
   if (month instanceof Response) return month;
   try {
     const data = await getHotspots({ kind: 'region', iso3 }, month.y, month.m, today);
-    return Response.json(data, { headers: { 'Cache-Control': CALENDAR_CACHE } });
+    return Response.json(data, { headers: DATA_CACHE_HEADERS });
   } catch (error) {
     return handleError('region hotspots', error);
   }

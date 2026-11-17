@@ -1,7 +1,7 @@
 import { connection } from 'next/server';
 import { decodeAoi } from '@/lib/h3/aoi';
 import { getCalendar, todayUtc } from '@/server/services/calendar-service';
-import { CALENDAR_CACHE, handleError, jsonError } from '@/server/http';
+import { DATA_CACHE_HEADERS, handleError, jsonError } from '@/server/http';
 
 export async function GET(
   _request: Request,
@@ -14,7 +14,7 @@ export async function GET(
   }
   try {
     const data = await getCalendar({ kind: 'aoi', id: aoiId }, todayUtc());
-    return Response.json(data, { headers: { 'Cache-Control': CALENDAR_CACHE } });
+    return Response.json(data, { headers: DATA_CACHE_HEADERS });
   } catch (error) {
     return handleError('aoi calendar', error);
   }

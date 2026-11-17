@@ -72,33 +72,30 @@ const STYLE: StyleSpecification = {
 };
 
 /** public/geo/<id>.json written by scripts/export_geo.py. */
-interface GeoFile {
-  readonly typical: {
-    readonly from: number;
-    readonly to: number;
-    readonly pts: readonly (readonly [number, number, number])[];
-    readonly truncated: boolean;
-  };
-  readonly recent: Readonly<
-    Record<
-      string,
-      { readonly pts: readonly (readonly [number, number, number])[]; readonly truncated: boolean }
-    >
-  >;
+interface Layer {
+  readonly pts: readonly (readonly [number, number, number])[];
+  readonly truncated: boolean;
+}
+/** public/geo/<id>/index.json: the typical year and which recent months have their own file. */
+interface GeoIndex {
+  readonly typical: Layer & { readonly from: number; readonly to: number };
+  readonly months: readonly string[];
   readonly partial_month: string | null;
 }
 
-const geoCache = new Map<string, Promise<GeoFile | null>>();
-function loadGeo(id: string): Promise<GeoFile | null> {
-  let p = geoCache.get(id);
+/** Small JSON files from the CDN, fetched once per page view and shared by every map instance. */
+const cache = new Map<string, Promise<unknown>>();
+function loadJson<T>(path: string): Promise<T | null> {
+  let p = cache.get(path) as Promise<T | null> | undefined;
   if (!p) {
-    p = fetch(`/geo/${encodeURIComponent(id)}.json`)
-      .then((r) => (r.ok ? (r.json() as Promise<GeoFile>) : null))
+    p = fetch(path)
+      .then((r) => (r.ok ? (r.json() as Promise<T>) : null))
       .catch(() => null);
-    geoCache.set(id, p);
+    cache.set(path, p);
   }
   return p;
 }
+const geoBase = (id: string) => `/geo/${encodeURIComponent(id)}`;
 
 const EMPTY_FC = { type: 'FeatureCollection' as const, features: [] };
 const toFc = (pts: readonly (readonly [number, number, number])[]) => ({
@@ -166,7 +163,7 @@ export default function AoiMap({
   const map = useRef<MapLibre | null>(null);
   const setDraftPoint = useUi((s) => s.setDraftPoint);
   const [flat, setFlat] = useState(false);
-  const [loaded, setLoaded] = useState<{ id: string; file: GeoFile | null } | null>(null);
+  const [loaded, setLoaded] = useState<{ id: string; file: GeoIndex | null } | null>(null);
   const M = useI18n().t.map;
   const report = useRef(onLayer);
   const i18n = useI18n();
@@ -364,39 +361,61 @@ export default function AoiMap({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [aoi]);
 
-  // Fire layer file of the current region; "loading" is derived, not stored, while ids differ.
+  // Index of the current region, then the file of the selected month only. "Loading" is derived
+  // from which ids are loaded, not stored, so no state is set synchronously inside an effect.
   useEffect(() => {
     if (!regionId) return;
     let alive = true;
-    void loadGeo(regionId).then((file) => {
+    void loadJson<GeoIndex>(`${geoBase(regionId)}/index.json`).then((file) => {
       if (alive) setLoaded({ id: regionId, file });
     });
     return () => {
       alive = false;
     };
   }, [regionId]);
-  const geo: GeoFile | null | 'loading' = !regionId
+  const geo: GeoIndex | null | 'loading' = !regionId
     ? null
     : loaded?.id === regionId
       ? loaded.file
       : 'loading';
 
-  const layer = useMemo<{ state: FireLayerState; pts: GeoFile['typical']['pts'] }>(() => {
+  const monthKey =
+    regionId && month && geo && geo !== 'loading' && geo.months.includes(month)
+      ? `${regionId}/${month}`
+      : null;
+  const [monthLoaded, setMonthLoaded] = useState<{ key: string; file: Layer | null } | null>(null);
+  useEffect(() => {
+    if (!monthKey) return;
+    let alive = true;
+    void loadJson<Layer>(`${geoBase(monthKey.split('/')[0]!)}/${monthKey.split('/')[1]}.json`).then(
+      (file) => {
+        if (alive) setMonthLoaded({ key: monthKey, file });
+      },
+    );
+    return () => {
+      alive = false;
+    };
+  }, [monthKey]);
+
+  const layer = useMemo<{ state: FireLayerState; pts: Layer['pts'] }>(() => {
     if (geo === 'loading') return { state: { kind: 'loading' }, pts: [] };
     if (!geo) return { state: { kind: 'none' }, pts: [] };
-    const m = month ? geo.recent[month] : undefined;
-    if (m) {
-      return {
-        state: {
-          kind: 'month',
-          month: month!,
-          count: m.pts.length,
-          truncated: m.truncated,
-          partial: geo.partial_month === month,
-          top: m.pts.slice(0, 5),
-        },
-        pts: m.pts,
-      };
+    if (monthKey) {
+      if (monthLoaded?.key !== monthKey) return { state: { kind: 'loading' }, pts: [] };
+      const m = monthLoaded.file;
+      if (m) {
+        return {
+          state: {
+            kind: 'month',
+            month: month!,
+            count: m.pts.length,
+            truncated: m.truncated,
+            partial: geo.partial_month === month,
+            top: m.pts.slice(0, 5),
+          },
+          pts: m.pts,
+        };
+      }
     }
     const t = geo.typical;
     return {
@@ -410,7 +429,7 @@ export default function AoiMap({
       },
       pts: t.pts,
     };
-  }, [geo, month]);
+  }, [geo, month, monthKey, monthLoaded]);
 
   useEffect(() => {
     report.current(layer.state);
