@@ -60,6 +60,8 @@ const STYLE: StyleSpecification = {
     { id: 'imagery', type: 'raster', source: 'imagery' },
     { id: 'labels', type: 'raster', source: 'labels', paint: { 'raster-opacity': 0.9 } },
   ],
+  // Globe when zoomed out, flat map when zoomed in: MapLibre blends the two by zoom.
+  projection: { type: 'globe' },
   sky: {
     'sky-color': '#7fb2e5',
     'horizon-color': '#dfeaf5',
@@ -163,6 +165,7 @@ export default function AoiMap({
   const map = useRef<MapLibre | null>(null);
   const setDraftPoint = useUi((s) => s.setDraftPoint);
   const [flat, setFlat] = useState(false);
+  const [world, setWorld] = useState(false);
   const [loaded, setLoaded] = useState<{ id: string; file: GeoIndex | null } | null>(null);
   const M = useI18n().t.map;
   const report = useRef(onLayer);
@@ -441,6 +444,29 @@ export default function AoiMap({
     else m.once('load', apply);
   }, [layer]);
 
+  const toggleWorld = () => {
+    const m = map.current;
+    if (!m) return;
+    const next = !world;
+    setWorld(next);
+    if (next) {
+      const [w, s, e, n] = aoi.bbox;
+      m.flyTo({
+        center: [(w + e) / 2, (s + n) / 2],
+        zoom: 1.4,
+        pitch: 0,
+        bearing: 0,
+        duration: 2200,
+      });
+    } else {
+      m.fitBounds(aoi.bbox as [number, number, number, number], {
+        padding: 40,
+        pitch: flat ? 0 : PITCH,
+        duration: 2200,
+      });
+    }
+  };
+
   const toggle3d = () => {
     const next = !flat;
     setFlat(next);
@@ -456,6 +482,14 @@ export default function AoiMap({
         role="region"
         aria-label={M.aria(label)}
       />
+      <button
+        type="button"
+        onClick={toggleWorld}
+        aria-pressed={world}
+        className="bg-panel text-text border-line absolute top-3 left-3 min-h-9 rounded-full border px-3 text-xs font-medium shadow"
+      >
+        {world ? M.backToArea : M.globe}
+      </button>
       <button
         type="button"
         onClick={toggle3d}

@@ -361,6 +361,8 @@ const en = {
     aria: (label: S) =>
       `3D satellite map of ${label}. Click the map to propose a point for a custom area.`,
     to3d: 'Switch to 3D',
+    globe: 'Whole planet',
+    backToArea: 'Back to the area',
     fireMonth: (m: S) => `Where fire was detected in ${m}`,
     fireTypical: (from: number, to: number) =>
       `Where it usually burns: average year ${from}–${to} (the selected month is older than the last 12 months)`,
@@ -372,7 +374,8 @@ const en = {
     fireTruncated: 'only the strongest are shown',
     firePartial: 'this month is not over yet',
     topTitle: 'Strongest fire areas — click to fly there',
-    topItem: (lat: S, lon: S, v: S) => `${lat}° N, ${lon}° E · ${v} fire-days`,
+    topItem: (lat: S, lon: S, v: S) => `${lat}, ${lon} · ${v} fire-days`,
+    hemi: { n: 'N', s: 'S', e: 'E', w: 'W' },
     popup: (v: S) => `${v} fire-days in this hexagon (~250 km²)`,
     toFlat: '3D relief on · switch to flat',
     controls: {
@@ -740,6 +743,8 @@ const ru: Messages = {
     aria: (label) =>
       `3D-карта со спутниковым снимком: ${label}. Нажмите на карту, чтобы предложить точку для своей области.`,
     to3d: 'Включить 3D',
+    globe: 'Вся планета',
+    backToArea: 'Назад к месту',
     fireMonth: (m) => `Где замечен огонь: ${m}`,
     fireTypical: (from, to) =>
       `Где обычно горит: средний год ${from}–${to} (выбранный месяц старше последних 12 месяцев)`,
@@ -751,7 +756,8 @@ const ru: Messages = {
     fireTruncated: 'показаны только самые сильные',
     firePartial: 'месяц ещё не закончился',
     topTitle: 'Самые сильные очаги — нажмите, чтобы перелететь',
-    topItem: (lat, lon, v) => `${lat}° с. ш., ${lon}° в. д. · ${v} пожарных дней`,
+    topItem: (lat, lon, v) => `${lat}, ${lon} · ${v} пожарных дней`,
+    hemi: { n: 'с. ш.', s: 'ю. ш.', e: 'в. д.', w: 'з. д.' },
     popup: (v) => `${v} пожарных дней в этом шестиугольнике (~250 км²)`,
     toFlat: '3D-рельеф включён · сделать плоской',
     controls: {
@@ -1122,6 +1128,8 @@ const tg: Messages = {
     aria: (label) =>
       `Харитаи 3D бо тасвири моҳвораӣ: ${label}. Барои пешниҳоди нуқта барои минтақаи худ харитаро пахш кунед.`,
     to3d: 'Фаъол кардани 3D',
+    globe: 'Тамоми сайёра',
+    backToArea: 'Бозгашт ба ҷой',
     fireMonth: (m) => `Дар куҷо оташ дида шуд: ${m}`,
     fireTypical: (from, to) =>
       `Дар куҷо одатан месӯзад: соли миёна ${from}–${to} (моҳи интихобшуда аз 12 моҳи охир кӯҳнатар аст)`,
@@ -1133,7 +1141,8 @@ const tg: Messages = {
     fireTruncated: 'танҳо пурзӯртаринҳо нишон дода шудаанд',
     firePartial: 'моҳ ҳанӯз тамом нашудааст',
     topTitle: 'Пурзӯртарин минтақаҳои сӯхтор — барои парвоз пахш кунед',
-    topItem: (lat, lon, v) => `${lat}° а. ш., ${lon}° т. ш. · ${v} рӯзи сӯхтор`,
+    topItem: (lat, lon, v) => `${lat}, ${lon} · ${v} рӯзи сӯхтор`,
+    hemi: { n: 'а. ш.', s: 'а. ҷ.', e: 'т. ш.', w: 'т. ғ.' },
     popup: (v) => `${v} рӯзи сӯхтор дар ин шашкунҷа (~250 км²)`,
     toFlat: 'Релефи 3D фаъол аст · ҳамвор кардан',
     controls: {

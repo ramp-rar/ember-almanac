@@ -461,7 +461,11 @@ function FireCaption({
   const i = useI18n();
   const M = i.t.map;
   // Coordinates keep two decimals (~1 km); the generic number format would round 37.31 to 37.
-  const coord = (v: number) => (i.locale === 'en' ? v.toFixed(2) : v.toFixed(2).replace('.', ','));
+  const num = (v: number) =>
+    i.locale === 'en' ? Math.abs(v).toFixed(2) : Math.abs(v).toFixed(2).replace('.', ',');
+  // Hemisphere by sign: 3.12° S, never "-3.12° N".
+  const lat = (v: number) => `${num(v)}° ${v < 0 ? M.hemi.s : M.hemi.n}`;
+  const lon = (v: number) => `${num(v)}° ${v < 0 ? M.hemi.w : M.hemi.e}`;
   if (state.kind === 'loading') return <p className="text-muted mt-2 text-xs">{M.fireLoading}</p>;
   if (state.kind === 'none') return <p className="text-muted mt-2 text-xs">{M.fireNone}</p>;
   const title =
@@ -489,17 +493,17 @@ function FireCaption({
         <div className="mt-3">
           <p className="text-xs font-semibold">{M.topTitle}</p>
           <ol className="mt-1.5 space-y-1">
-            {state.top.map(([lon, lat, v], k) => (
-              <li key={`${lon},${lat}`}>
+            {state.top.map(([lo, la, v], k) => (
+              <li key={`${lo},${la}`}>
                 <button
                   type="button"
-                  onClick={() => onFly(lon, lat)}
+                  onClick={() => onFly(lo, la)}
                   className="hover:bg-panel-2 flex w-full items-center gap-2 rounded-lg px-2 py-1 text-left font-mono text-xs"
                 >
                   <span className="bg-ember text-on-ember grid h-5 w-5 shrink-0 place-items-center rounded-full text-[10px] font-semibold">
                     {k + 1}
                   </span>
-                  {M.topItem(coord(lat), coord(lon), i.n(v))}
+                  {M.topItem(lat(la), lon(lo), i.n(v))}
                 </button>
               </li>
             ))}
