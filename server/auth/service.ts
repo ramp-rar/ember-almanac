@@ -225,3 +225,22 @@ async function userIdOf(token: string): Promise<string | null> {
     .limit(1);
   return rows[0]?.userId ?? null;
 }
+
+/**
+ * Deletes the account and everything tied to it (sessions, e-mail tokens, saved places cascade).
+ * Requires the current password, so a stolen session alone cannot erase an account.
+ */
+export async function deleteAccount(token: string | undefined, password: string): Promise<void> {
+  const userId = token ? await userIdOf(token) : null;
+  if (!userId) throw new AuthError('invalid_credentials', 'Sign in first.');
+  const db = await requireDb();
+  const rows = await db
+    .select({ hash: appUser.passwordHash })
+    .from(appUser)
+    .where(eq(appUser.id, userId))
+    .limit(1);
+  if (!rows[0] || !(await verifyPassword(password, rows[0].hash))) {
+    throw new AuthError('invalid_credentials', 'Wrong password.');
+  }
+  await db.delete(appUser).where(eq(appUser.id, userId));
+}

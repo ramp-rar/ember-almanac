@@ -48,6 +48,24 @@ test('register, confirm by e-mail, sign in and save a place', async ({ page, req
 
   await page.goto('/account');
   await expect(page.getByRole('link', { name: /Mock Region/ })).toBeVisible();
-  await page.getByRole('button', { name: 'Sign out' }).click();
-  await expect(page.getByRole('tab', { name: 'Sign in' })).toBeVisible();
+  // The watch list shows the latest complete month of the saved place, with its status.
+  await expect(page.getByRole('heading', { name: 'Latest month in your places' })).toBeVisible();
+  await expect(page.getByText(/October 2026 · Preliminary/)).toBeVisible();
+
+  // Deleting needs the password; a wrong one is refused.
+  await page.getByRole('button', { name: 'Delete account' }).click();
+  const confirm = page.locator('form').filter({ hasText: 'Delete account' });
+  await confirm.getByLabel('Password').fill('not my password');
+  await page.getByRole('button', { name: 'Delete my account' }).click();
+  await expect(confirm.getByRole('alert')).toContainText('Wrong e-mail or password.');
+  await confirm.getByLabel('Password').fill(password);
+  await page.getByRole('button', { name: 'Delete my account' }).click();
+  await expect(page.getByText('Your account has been deleted.')).toBeVisible();
+
+  // The account is gone: signing in fails.
+  const relogin = await request.post('/api/auth/login', {
+    data: { email, password },
+    headers: { origin: new URL(page.url()).origin },
+  });
+  expect(relogin.status()).toBe(401);
 });

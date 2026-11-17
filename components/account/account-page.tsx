@@ -1,10 +1,12 @@
 'use client';
 
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQueries, useQuery, useQueryClient } from '@tanstack/react-query';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { useId, useState, type FormEvent } from 'react';
-import type { AoiRef, RegionItem } from '@/lib/api/types';
+import { useEffect, useId, useState, type FormEvent } from 'react';
+import { APP_NAME } from '@/lib/brand';
+import { aoiApiBase, type AoiRef, type CalendarResponse, type RegionItem } from '@/lib/api/types';
+import { times } from '@/lib/i18n/copy';
 import { placeName } from '@/lib/i18n/places';
 import { useI18n } from '@/lib/i18n/use-locale';
 import { AccountError, api, useMe, useSavePlace } from './use-account';
@@ -14,7 +16,12 @@ export function AccountPage() {
   const { t, locale } = useI18n();
   const A = t.account;
   const me = useMe();
-  const verified = useSearchParams().get('verified');
+  useEffect(() => {
+    document.title = `${A.title} · ${APP_NAME}`;
+  }, [A.title]);
+  const params = useSearchParams();
+  const verified = params.get('verified');
+  const deleted = params.get('deleted') === '1';
 
   return (
     <main id="main" className="mx-auto w-full max-w-xl px-4 py-10 sm:px-6">
@@ -39,6 +46,11 @@ export function AccountPage() {
       )}
       {me.data?.accounts && !me.data.user && <AuthForms locale={locale} />}
       {me.data?.user && <SignedIn email={me.data.user.email} places={me.data.user.places} />}
+      {deleted && (
+        <p role="status" className="card mt-6 p-5">
+          {A.deleted}
+        </p>
+      )}
     </main>
   );
 }
@@ -216,6 +228,140 @@ function SignedIn({ email, places }: { email: string; places: string[] }) {
           })}
         </ul>
       )}
+      {places.length > 0 && <Watch places={places} nameOf={nameOf} />}
+      <DeleteAccount />
     </section>
+  );
+}
+
+function refOf(p: string): AoiRef {
+  return p.startsWith('r:')
+    ? { kind: 'region', iso3: p.slice(2) }
+    : { kind: 'aoi', id: p.slice(2) };
+}
+
+/** The latest complete month of every saved place, flagged when it is outside the usual range. */
+function Watch({ places, nameOf }: { places: string[]; nameOf: (p: string) => string }) {
+  const i = useI18n();
+  const A = i.t.account;
+  const results = useQueries({
+    queries: places.map((p) => ({
+      queryKey: ['calendar', refOf(p)],
+      queryFn: () => api<CalendarResponse>(`${aoiApiBase(refOf(p))}/calendar`, 'GET'),
+      staleTime: 5 * 60_000,
+      retry: false,
+    })),
+  });
+  return (
+    <div className="mt-6">
+      <h2 className="text-lg font-semibold">{A.watchTitle}</h2>
+      <ul className="mt-3 space-y-2">
+        {places.map((p, k) => {
+          const data = results[k]?.data;
+          const sel = data?.calendar.selected;
+          const cell = sel ? data.calendar.cells.find((c) => c.y === sel.y && c.m === sel.m) : null;
+          const pct = cell?.r.k === 'ratio' ? cell.r.p : null;
+          const tone = pct === null ? null : pct >= 90 ? 'high' : pct <= 10 ? 'low' : 'usual';
+          return (
+            <li key={p} className="border-line rounded-lg border px-3 py-2.5 text-sm">
+              <div className="flex flex-wrap items-baseline justify-between gap-2">
+                <span className="font-medium">{nameOf(p)}</span>
+                {cell && (
+                  <span className="text-muted text-xs">
+                    {i.month(cell.m)} {cell.y} · {i.t.status.title[cell.s]}
+                  </span>
+                )}
+              </div>
+              {cell?.r.k === 'ratio' && cell.r.v !== null && (
+                <p className="mt-1">
+                  <span className="font-mono font-semibold">{times(cell.r.v, i)}</span>{' '}
+                  <span
+                    className={
+                      tone === 'high'
+                        ? 'text-ember-text font-semibold'
+                        : tone === 'low'
+                          ? 'text-cool font-semibold'
+                          : 'text-muted'
+                    }
+                  >
+                    {tone === 'high' ? A.watchHigh : tone === 'low' ? A.watchLow : A.watchUsual}
+                  </span>{' '}
+                  <span className="text-muted font-mono text-xs">(P{pct})</span>
+                </p>
+              )}
+            </li>
+          );
+        })}
+      </ul>
+      <p className="text-muted mt-2 text-xs">{A.watchNote}</p>
+    </div>
+  );
+}
+
+function DeleteAccount() {
+  const { t } = useI18n();
+  const A = t.account;
+  const qc = useQueryClient();
+  const [open, setOpen] = useState(false);
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState<string | null>(null);
+  const [busy, setBusy] = useState(false);
+  const id = useId();
+  const submit = async (e: FormEvent) => {
+    e.preventDefault();
+    setBusy(true);
+    setError(null);
+    try {
+      await api('/api/auth/delete', 'POST', { password });
+      await qc.invalidateQueries({ queryKey: ['me'] });
+      window.history.replaceState(null, '', '/account?deleted=1');
+    } catch (err) {
+      const code = err instanceof AccountError ? err.code : 'internal';
+      setError(A.errors[code] ?? A.errors.internal!);
+    } finally {
+      setBusy(false);
+    }
+  };
+  return (
+    <div className="border-line mt-8 border-t pt-5">
+      {!open ? (
+        <button
+          type="button"
+          onClick={() => setOpen(true)}
+          className="text-muted hover:text-text text-sm underline underline-offset-2"
+        >
+          {A.deleteTitle}
+        </button>
+      ) : (
+        <form onSubmit={submit} className="space-y-3">
+          <h2 className="text-base font-semibold">{A.deleteTitle}</h2>
+          <p className="text-muted text-sm">{A.deleteLead}</p>
+          <label className="block text-sm" htmlFor={`${id}-p`}>
+            <span className="text-muted">{A.password}</span>
+            <input
+              id={`${id}-p`}
+              type="password"
+              autoComplete="current-password"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="border-line bg-ink focus:border-ember mt-1 w-full rounded-lg border px-3 py-2.5 text-base outline-none"
+            />
+          </label>
+          {error && (
+            <p role="alert" className="text-warn text-sm">
+              {error}
+            </p>
+          )}
+          <button
+            type="submit"
+            disabled={busy || password.length === 0}
+            className="min-h-10 rounded-full border border-[#b42318] px-4 text-sm font-semibold text-[#b42318] disabled:opacity-60 dark:border-[#f97066] dark:text-[#f97066]"
+          >
+            {busy ? A.busy : A.deleteConfirm}
+          </button>
+        </form>
+      )}
+    </div>
   );
 }
