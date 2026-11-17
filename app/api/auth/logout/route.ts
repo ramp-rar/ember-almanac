@@ -7,7 +7,13 @@ export async function POST(request: Request): Promise<Response> {
   const refused = sameOriginJson(request);
   if (refused) return refused;
   const token = await sessionToken();
-  if (token) await logout(token);
-  await clearSessionCookie();
+  try {
+    if (token) await logout(token);
+  } catch (error) {
+    console.error('logout: failed to delete the session row', error);
+  } finally {
+    // The cookie goes in every case, so the browser is signed out even if the database is not.
+    await clearSessionCookie();
+  }
   return Response.json({ ok: true }, { headers: { 'Cache-Control': 'no-store' } });
 }

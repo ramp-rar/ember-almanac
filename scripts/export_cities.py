@@ -87,6 +87,7 @@ def layer(series: pd.Series, cap: int) -> dict:
 def main() -> None:
     serving = Path(sys.argv[1])
     index = json.loads((SNAP / "index.json").read_text(encoding="utf-8"))
+    serving_meta = {r["id"]: r for r in json.loads((serving / "regions.json").read_text(encoding="utf-8"))}
     regions = [r for r in index["regions"] if not r["id"].startswith("city_")]
     by_id = {r["id"]: r for r in regions}
     added = []
@@ -97,15 +98,19 @@ def main() -> None:
         hx = pd.read_parquet(serving / country / "hex.parquet", columns=["h3_r5", "month", "value"])
         hx["month"] = pd.to_datetime(hx["month"])
         cells = [c for c in hx["h3_r5"].unique() if km(lat, lon, *h3.cell_to_latlng(c)) <= RADIUS_KM]
-        # Cells of the circle that never had fire are not in the table; count every cell in reach.
-        reach = h3.grid_disk(h3.latlng_to_cell(lat, lon, 5), 6)
-        in_circle = [c for c in reach if km(lat, lon, *h3.cell_to_latlng(c)) <= RADIUS_KM]
         sub = hx[hx["h3_r5"].isin(cells)]
         monthly = sub.groupby(sub["month"].dt.strftime("%Y-%m"))["value"].sum()
 
         base = json.loads((SNAP / "regions" / f"{country}.json").read_text(encoding="utf-8"))
         calendar = [
-            {**row, "value": round(float(monthly.get(row["month"], 0.0)), 1)}
+            # No data for the country stays no data for the city; observed months without fire in
+            # the circle are a real 0. Same precision as the country files.
+            {
+                **row,
+                "value": None
+                if row["value"] is None
+                else round(float(monthly.get(row["month"], 0.0)), 3),
+            }
             for row in base["calendar"]
         ]
         rid = f"city_{cid}"
@@ -121,7 +126,8 @@ def main() -> None:
         folder.mkdir(parents=True, exist_ok=True)
         for old in folder.glob("*.json"):
             old.unlink()
-        last = pd.Timestamp(by_id[country]["last_month"] + "-01") if "last_month" in by_id[country] else sub["month"].max()
+        # The recent window ends where the data ends, not at the last month with fire in the circle.
+        last = pd.Timestamp(serving_meta[country]["last_month"] + "-01")
         first = last - pd.DateOffset(months=RECENT_MONTHS - 1)
         months = []
         for month, grp in sub[(sub["month"] >= first) & (sub["month"] <= last)].groupby("month"):
@@ -155,7 +161,8 @@ def main() -> None:
                 "last_full_month": by_id[country]["last_full_month"],
                 "first_month": by_id[country]["first_month"],
                 "bbox": bbox(lat, lon, RADIUS_KM),
-                "hexes_r5": len(in_circle),
+                # Only cells inside the country count (FIRMS is clipped to the border).
+                "hexes_r5": len(cells),
                 "group": "city",
                 "country": country,
                 "names": {
@@ -165,7 +172,7 @@ def main() -> None:
                 },
             }
         )
-        print(f"{rid}: {len(cells)} cells with fire of {len(in_circle)} in the circle")
+        print(f"{rid}: {len(cells)} cells of the country in the circle")
 
     index["regions"] = regions + added
     (SNAP / "index.json").write_text(json.dumps(index, ensure_ascii=False, indent=1), encoding="utf-8")

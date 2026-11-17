@@ -1,5 +1,6 @@
 import { randomUUID } from 'node:crypto';
 import { and, eq, gt, isNull } from 'drizzle-orm';
+import { after } from 'next/server';
 import { z } from 'zod';
 import { appSession, appUser, emailToken, savedPlace } from '@/db/schema';
 import { getDb, isDatabaseConfigured } from '@/server/db/client';
@@ -69,40 +70,58 @@ async function requireDb() {
 }
 
 /**
- * Creates an unverified account and sends the confirmation link. If the e-mail is already
- * registered, the response is the same (no enumeration) and no second account is made.
+ * Creates an unverified account and e-mails the confirmation link. The answer is the same whether
+ * the address is new or known, and the e-mail is sent after the response (`after`), so neither the
+ * message nor the timing reveals which addresses have accounts.
+ *
+ * Known but unconfirmed address: with mail on, the new password replaces the old one and old
+ * links and sessions are revoked — whoever controls the inbox decides (no pre-registration
+ * takeover, no lock-out after a mistyped password). With mail off nobody can prove the inbox,
+ * so an existing account is never overwritten.
  */
 export async function register(input: Credentials, appUrl: string): Promise<{ mailSent: boolean }> {
   const db = await requireDb();
-  const existing = await db
-    .select({ id: appUser.id, verified: appUser.emailVerifiedAt, locale: appUser.locale })
-    .from(appUser)
-    .where(eq(appUser.email, input.email))
-    .limit(1);
-  const found = existing[0];
-  if (found) {
-    await verifyPassword(input.password, DUMMY_HASH); // same work as the real path
-    // Not confirmed yet: send a fresh link (the route rate-limits this). Same answer either way.
-    if (!found.verified) {
-      await sendVerification(found.id, input.email, found.locale, appUrl).catch(() => false);
+  const mail = mailConfigured();
+  const passwordHash = await hashPassword(input.password);
+  const inserted = await db
+    .insert(appUser)
+    .values({ id: randomUUID(), email: input.email, passwordHash, locale: input.locale })
+    .onConflictDoNothing({ target: appUser.email })
+    .returning({ id: appUser.id });
+
+  let userId = inserted[0]?.id ?? null;
+  if (!userId) {
+    const found = (
+      await db
+        .select({ id: appUser.id, verified: appUser.emailVerifiedAt })
+        .from(appUser)
+        .where(eq(appUser.email, input.email))
+        .limit(1)
+    )[0];
+    userId = null;
+    if (found && !found.verified && mail) {
+      await db
+        .update(appUser)
+        .set({ passwordHash, locale: input.locale })
+        .where(eq(appUser.id, found.id));
+      await db.delete(emailToken).where(eq(emailToken.userId, found.id));
+      await db.delete(appSession).where(eq(appSession.userId, found.id));
+      userId = found.id;
     }
-    return { mailSent: mailConfigured() };
   }
-  const id = randomUUID();
-  await db.insert(appUser).values({
-    id,
-    email: input.email,
-    passwordHash: await hashPassword(input.password),
-    locale: input.locale,
-  });
-  try {
-    return { mailSent: await sendVerification(id, input.email, input.locale, appUrl) };
-  } catch (error) {
-    // Do not leave an account nobody can confirm: undo it and ask to retry.
-    await db.delete(appUser).where(eq(appUser.id, id));
-    console.error('register: e-mail failed', error);
-    throw new AuthError('unavailable', 'We could not send the confirmation e-mail. Please retry.');
+
+  if (userId && mail) {
+    const id = userId;
+    after(async () => {
+      try {
+        await sendVerification(id, input.email, input.locale, appUrl);
+      } catch (error) {
+        // The user can register again to get a new link.
+        console.error('register: confirmation e-mail failed', error);
+      }
+    });
   }
+  return { mailSent: mail };
 }
 
 async function sendVerification(
@@ -144,7 +163,18 @@ export async function verifyEmail(token: string): Promise<void> {
     )
     .returning({ userId: emailToken.userId });
   const row = rows[0];
-  if (!row) throw new AuthError('invalid_link', 'This link is invalid or has expired.');
+  if (!row) {
+    // Mail scanners often open links first: if this link was used and its account is confirmed,
+    // the person clicking it now is told so instead of "invalid link".
+    const used = await db
+      .select({ verified: appUser.emailVerifiedAt })
+      .from(emailToken)
+      .innerJoin(appUser, eq(appUser.id, emailToken.userId))
+      .where(and(eq(emailToken.tokenHash, tokenHash(token)), eq(emailToken.purpose, 'verify')))
+      .limit(1);
+    if (used[0]?.verified) return;
+    throw new AuthError('invalid_link', 'This link is invalid or has expired.');
+  }
   await db.update(appUser).set({ emailVerifiedAt: now }).where(eq(appUser.id, row.userId));
 }
 

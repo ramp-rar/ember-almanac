@@ -16,6 +16,7 @@ stays small enough for a CDN and nothing is silently presented as complete.
 from __future__ import annotations
 
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -78,6 +79,9 @@ def main() -> None:
         if not (d / "hex.parquet").exists():
             print(f"skip {meta['id']}: no hex.parquet")
             continue
+        # Ids name folders that are emptied below: accept only the app's id format.
+        if not re.fullmatch(r"[a-z0-9_]{1,60}", meta["id"]):
+            raise SystemExit(f"refusing unexpected region id {meta['id']!r}")
         data = export(d, meta)
         folder = OUT / meta["id"]
         folder.mkdir(parents=True, exist_ok=True)

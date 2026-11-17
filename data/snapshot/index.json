@@ -3406,7 +3406,7 @@
     69.3614,
     39.009
    ],
-   "hexes_r5": 26,
+   "hexes_r5": 23,
    "group": "city",
    "country": "tajikistan",
    "names": {
@@ -3427,7 +3427,7 @@
     70.211,
     40.7318
    ],
-   "hexes_r5": 26,
+   "hexes_r5": 19,
    "group": "city",
    "country": "tajikistan",
    "names": {
@@ -3448,7 +3448,7 @@
     69.3491,
     38.2856
    ],
-   "hexes_r5": 26,
+   "hexes_r5": 25,
    "group": "city",
    "country": "tajikistan",
    "names": {
@@ -3490,7 +3490,7 @@
     69.592,
     40.36
    ],
-   "hexes_r5": 26,
+   "hexes_r5": 17,
    "group": "city",
    "country": "tajikistan",
    "names": {
@@ -3511,7 +3511,7 @@
     68.1913,
     39.9442
    ],
-   "hexes_r5": 26,
+   "hexes_r5": 10,
    "group": "city",
    "country": "tajikistan",
    "names": {
@@ -3532,7 +3532,7 @@
     72.1191,
     37.9389
    ],
-   "hexes_r5": 26,
+   "hexes_r5": 7,
    "group": "city",
    "country": "tajikistan",
    "names": {
@@ -3553,7 +3553,7 @@
     68.804,
     38.9592
    ],
-   "hexes_r5": 26,
+   "hexes_r5": 14,
    "group": "city",
    "country": "tajikistan",
    "names": {
@@ -3574,7 +3574,7 @@
     77.5062,
     43.6881
    ],
-   "hexes_r5": 26,
+   "hexes_r5": 22,
    "group": "city",
    "country": "kazakhstan",
    "names": {
@@ -3637,7 +3637,7 @@
     69.838,
     41.7487
    ],
-   "hexes_r5": 27,
+   "hexes_r5": 21,
    "group": "city",
    "country": "uzbekistan",
    "names": {
@@ -3679,7 +3679,7 @@
     75.1827,
     43.3238
    ],
-   "hexes_r5": 25,
+   "hexes_r5": 22,
    "group": "city",
    "country": "kyrgyzstan",
    "names": {
@@ -3700,7 +3700,7 @@
     73.3894,
     40.9775
    ],
-   "hexes_r5": 26,
+   "hexes_r5": 21,
    "group": "city",
    "country": "kyrgyzstan",
    "names": {
@@ -3805,7 +3805,7 @@
     -61.06,
     11.1012
    ],
-   "hexes_r5": 38,
+   "hexes_r5": 18,
    "group": "city",
    "country": "trinidad_and_tobago",
    "names": {
@@ -3847,7 +3847,7 @@
     31.6344,
     -25.8675
    ],
-   "hexes_r5": 27,
+   "hexes_r5": 24,
    "group": "city",
    "country": "swaziland",
    "names": {
@@ -3868,7 +3868,7 @@
     17.7902,
     48.5992
    ],
-   "hexes_r5": 31,
+   "hexes_r5": 20,
    "group": "city",
    "country": "slovakia",
    "names": {
@@ -3889,7 +3889,7 @@
     52.0298,
     25.7358
    ],
-   "hexes_r5": 34,
+   "hexes_r5": 19,
    "group": "city",
    "country": "qatar",
    "names": {
@@ -3910,7 +3910,7 @@
     19.8752,
     42.9152
    ],
-   "hexes_r5": 29,
+   "hexes_r5": 24,
    "group": "city",
    "country": "montenegro",
    "names": {
@@ -3931,7 +3931,7 @@
     8.1246,
     47.3659
    ],
-   "hexes_r5": 33,
+   "hexes_r5": 32,
    "group": "city",
    "country": "switzerland",
    "names": {
@@ -3952,7 +3952,7 @@
     -16.1299,
     13.9031
    ],
-   "hexes_r5": 32,
+   "hexes_r5": 19,
    "group": "city",
    "country": "the_gambia",
    "names": {
@@ -3973,7 +3973,7 @@
     22.0379,
     42.4492
    ],
-   "hexes_r5": 28,
+   "hexes_r5": 25,
    "group": "city",
    "country": "macedonia_former_yugoslav_republic_of",
    "names": {
@@ -3994,7 +3994,7 @@
     29.8099,
     -2.9269
    ],
-   "hexes_r5": 28,
+   "hexes_r5": 20,
    "group": "city",
    "country": "burundi",
    "names": {
@@ -4015,7 +4015,7 @@
     -55.6256,
     -34.4069
    ],
-   "hexes_r5": 41,
+   "hexes_r5": 20,
    "group": "city",
    "country": "uruguay",
    "names": {
@@ -4036,7 +4036,7 @@
     1.6725,
     6.5831
    ],
-   "hexes_r5": 40,
+   "hexes_r5": 20,
    "group": "city",
    "country": "togo",
    "names": {
@@ -4057,7 +4057,7 @@
     10.7407,
     37.252
    ],
-   "hexes_r5": 28,
+   "hexes_r5": 25,
    "group": "city",
    "country": "tunisia",
    "names": {
@@ -4078,7 +4078,7 @@
     54.8601,
     24.9159
    ],
-   "hexes_r5": 36,
+   "hexes_r5": 18,
    "group": "city",
    "country": "united_arab_emirates",
    "names": {
@@ -4099,7 +4099,7 @@
     58.9529,
     38.3992
    ],
-   "hexes_r5": 27,
+   "hexes_r5": 23,
    "group": "city",
    "country": "turkmenistan",
    "names": {
@@ -4141,7 +4141,7 @@
     126.0337,
     -8.1102
    ],
-   "hexes_r5": 31,
+   "hexes_r5": 22,
    "group": "city",
    "country": "timor_leste",
    "names": {
@@ -4183,7 +4183,7 @@
     -57.7147,
     7.2512
    ],
-   "hexes_r5": 30,
+   "hexes_r5": 21,
    "group": "city",
    "country": "guyana",
    "names": {
@@ -4204,7 +4204,7 @@
     -20.9199,
     64.5992
    ],
-   "hexes_r5": 33,
+   "hexes_r5": 14,
    "group": "city",
    "country": "iceland",
    "names": {
@@ -4225,7 +4225,7 @@
     -71.8642,
     18.9922
    ],
-   "hexes_r5": 40,
+   "hexes_r5": 35,
    "group": "city",
    "country": "haiti",
    "names": {
@@ -4246,7 +4246,7 @@
     33.0306,
     0.7678
    ],
-   "hexes_r5": 27,
+   "hexes_r5": 26,
    "group": "city",
    "country": "uganda",
    "names": {
@@ -4267,7 +4267,7 @@
     -54.7155,
     6.2842
    ],
-   "hexes_r5": 30,
+   "hexes_r5": 23,
    "group": "city",
    "country": "suriname",
    "names": {
@@ -4288,7 +4288,7 @@
     2.5767,
     13.9679
    ],
-   "hexes_r5": 32,
+   "hexes_r5": 29,
    "group": "city",
    "country": "niger",
    "names": {
@@ -4309,7 +4309,7 @@
     -57.1467,
     -24.8453
    ],
-   "hexes_r5": 34,
+   "hexes_r5": 26,
    "group": "city",
    "country": "paraguay",
    "names": {
@@ -4330,7 +4330,7 @@
     -85.8109,
     12.6042
    ],
-   "hexes_r5": 33,
+   "hexes_r5": 32,
    "group": "city",
    "country": "nicaragua",
    "names": {
@@ -4351,7 +4351,7 @@
     -12.7821,
     8.9212
    ],
-   "hexes_r5": 38,
+   "hexes_r5": 20,
    "group": "city",
    "country": "sierra_leone",
    "names": {
@@ -4456,7 +4456,7 @@
     147.6479,
     -9.0155
    ],
-   "hexes_r5": 29,
+   "hexes_r5": 19,
    "group": "city",
    "country": "papua_new_guinea",
    "names": {
@@ -4477,7 +4477,7 @@
     -79.0803,
     9.4192
    ],
-   "hexes_r5": 32,
+   "hexes_r5": 22,
    "group": "city",
    "country": "panama",
    "names": {
@@ -4498,7 +4498,7 @@
     -6.2945,
     34.4745
    ],
-   "hexes_r5": 28,
+   "hexes_r5": 20,
    "group": "city",
    "country": "morocco",
    "names": {
@@ -4540,7 +4540,7 @@
     33.0867,
     -25.5041
    ],
-   "hexes_r5": 27,
+   "hexes_r5": 24,
    "group": "city",
    "country": "mozambique",
    "names": {
@@ -4561,7 +4561,7 @@
     45.8141,
     2.5178
    ],
-   "hexes_r5": 35,
+   "hexes_r5": 19,
    "group": "city",
    "country": "somalia",
    "names": {
@@ -4582,7 +4582,7 @@
     59.0835,
     24.0625
    ],
-   "hexes_r5": 33,
+   "hexes_r5": 12,
    "group": "city",
    "country": "oman",
    "names": {
@@ -4603,7 +4603,7 @@
     80.3103,
     7.3812
    ],
-   "hexes_r5": 29,
+   "hexes_r5": 17,
    "group": "city",
    "country": "sri_lanka",
    "names": {
@@ -4624,7 +4624,7 @@
     107.5849,
     48.3678
    ],
-   "hexes_r5": 33,
+   "hexes_r5": 31,
    "group": "city",
    "country": "mongolia",
    "names": {
@@ -4687,7 +4687,7 @@
     -15.1394,
     12.3142
    ],
-   "hexes_r5": 34,
+   "hexes_r5": 32,
    "group": "city",
    "country": "guinea_bissau",
    "names": {
@@ -4708,7 +4708,7 @@
     26.0936,
     55.1326
    ],
-   "hexes_r5": 34,
+   "hexes_r5": 32,
    "group": "city",
    "country": "lithuania",
    "names": {
@@ -4729,7 +4729,7 @@
     24.9236,
     57.3992
    ],
-   "hexes_r5": 37,
+   "hexes_r5": 29,
    "group": "city",
    "country": "latvia",
    "names": {
@@ -4750,7 +4750,7 @@
     27.9984,
     -28.8675
    ],
-   "hexes_r5": 28,
+   "hexes_r5": 20,
    "group": "city",
    "country": "lesotho",
    "names": {
@@ -4792,7 +4792,7 @@
     -78.0528,
     0.2362
    ],
-   "hexes_r5": 28,
+   "hexes_r5": 27,
    "group": "city",
    "country": "ecuador",
    "names": {
@@ -4834,7 +4834,7 @@
     -88.7427,
     14.1611
    ],
-   "hexes_r5": 31,
+   "hexes_r5": 28,
    "group": "city",
    "country": "el_salvador",
    "names": {
@@ -4855,7 +4855,7 @@
     -76.2952,
     18.4263
    ],
-   "hexes_r5": 39,
+   "hexes_r5": 24,
    "group": "city",
    "country": "jamaica",
    "names": {
@@ -4876,7 +4876,7 @@
     15.5066,
     12.5642
    ],
-   "hexes_r5": 30,
+   "hexes_r5": 24,
    "group": "city",
    "country": "chad",
    "names": {
@@ -4897,7 +4897,7 @@
     9.2334,
     4.1992
    ],
-   "hexes_r5": 36,
+   "hexes_r5": 9,
    "group": "city",
    "country": "equatorial_guinea",
    "names": {
@@ -4918,7 +4918,7 @@
     39.399,
     15.7825
    ],
-   "hexes_r5": 31,
+   "hexes_r5": 18,
    "group": "city",
    "country": "eritrea",
    "names": {
@@ -4939,7 +4939,7 @@
     16.6443,
     46.2492
    ],
-   "hexes_r5": 32,
+   "hexes_r5": 31,
    "group": "city",
    "country": "croatia",
    "names": {
@@ -5002,7 +5002,7 @@
     9.9072,
     0.8346
    ],
-   "hexes_r5": 32,
+   "hexes_r5": 20,
    "group": "city",
    "country": "gabon",
    "names": {
@@ -5023,7 +5023,7 @@
     178.9143,
     -17.6838
    ],
-   "hexes_r5": 36,
+   "hexes_r5": 19,
    "group": "city",
    "country": "fiji",
    "names": {
@@ -5044,7 +5044,7 @@
     -15.5028,
     18.5356
    ],
-   "hexes_r5": 28,
+   "hexes_r5": 10,
    "group": "city",
    "country": "mauritania",
    "names": {
@@ -5086,7 +5086,7 @@
     36.0488,
     34.3231
    ],
-   "hexes_r5": 27,
+   "hexes_r5": 16,
    "group": "city",
    "country": "lebanon",
    "names": {
@@ -5128,7 +5128,7 @@
     103.0722,
     18.4159
    ],
-   "hexes_r5": 28,
+   "hexes_r5": 16,
    "group": "city",
    "country": "lao_pdr",
    "names": {
@@ -5149,7 +5149,7 @@
     15.7331,
     -3.808
    ],
-   "hexes_r5": 28,
+   "hexes_r5": 21,
    "group": "city",
    "country": "republic_of_congo",
    "names": {
@@ -5170,7 +5170,7 @@
     -13.2268,
     9.9827
    ],
-   "hexes_r5": 37,
+   "hexes_r5": 17,
    "group": "city",
    "country": "guinea",
    "names": {
@@ -5275,7 +5275,7 @@
     -88.2968,
     17.7012
    ],
-   "hexes_r5": 30,
+   "hexes_r5": 29,
    "group": "city",
    "country": "belize",
    "names": {
@@ -5296,7 +5296,7 @@
     19.0088,
     4.8158
    ],
-   "hexes_r5": 29,
+   "hexes_r5": 24,
    "group": "city",
    "country": "central_african_republic",
    "names": {
@@ -5338,7 +5338,7 @@
     20.417,
     41.7767
    ],
-   "hexes_r5": 28,
+   "hexes_r5": 26,
    "group": "city",
    "country": "albania",
    "names": {
@@ -5359,7 +5359,7 @@
     45.0995,
     40.6323
    ],
-   "hexes_r5": 30,
+   "hexes_r5": 29,
    "group": "city",
    "country": "armenia",
    "names": {
@@ -5380,7 +5380,7 @@
     50.4501,
     40.8464
    ],
-   "hexes_r5": 30,
+   "hexes_r5": 18,
    "group": "city",
    "country": "azerbaijan",
    "names": {
@@ -5443,7 +5443,7 @@
     2.97,
     6.8512
    ],
-   "hexes_r5": 39,
+   "hexes_r5": 20,
    "group": "city",
    "country": "benin",
    "names": {
@@ -5506,7 +5506,7 @@
     90.1452,
     27.9222
    ],
-   "hexes_r5": 33,
+   "hexes_r5": 32,
    "group": "city",
    "country": "bhutan",
    "names": {
@@ -5527,7 +5527,7 @@
     26.4061,
     -24.1971
    ],
-   "hexes_r5": 27,
+   "hexes_r5": 22,
    "group": "city",
    "country": "botswana",
    "names": {
@@ -5632,7 +5632,7 @@
     35.735,
     32.2276
    ],
-   "hexes_r5": 27,
+   "hexes_r5": 13,
    "group": "city",
    "country": "israel",
    "names": {
@@ -5653,7 +5653,7 @@
     -76.8541,
     25.5326
    ],
-   "hexes_r5": 37,
+   "hexes_r5": 5,
    "group": "city",
    "country": "bahamas",
    "names": {
@@ -5674,7 +5674,7 @@
     33.916,
     35.6159
    ],
-   "hexes_r5": 27,
+   "hexes_r5": 18,
    "group": "city",
    "country": "cyprus",
    "names": {
@@ -5695,7 +5695,7 @@
     175.3812,
     -40.8508
    ],
-   "hexes_r5": 29,
+   "hexes_r5": 13,
    "group": "city",
    "country": "new_zealand",
    "names": {
@@ -5779,7 +5779,7 @@
     44.6704,
     15.8059
    ],
-   "hexes_r5": 35,
+   "hexes_r5": 27,
    "group": "city",
    "country": "yemen",
    "names": {
@@ -5821,7 +5821,7 @@
     36.8367,
     33.9512
    ],
-   "hexes_r5": 27,
+   "hexes_r5": 24,
    "group": "city",
    "country": "syria",
    "names": {
@@ -5842,7 +5842,7 @@
     -8.5711,
     39.1739
    ],
-   "hexes_r5": 27,
+   "hexes_r5": 24,
    "group": "city",
    "country": "portugal",
    "names": {
@@ -5884,7 +5884,7 @@
     11.6441,
     60.3678
    ],
-   "hexes_r5": 42,
+   "hexes_r5": 38,
    "group": "city",
    "country": "norway",
    "names": {
@@ -5926,7 +5926,7 @@
     126.3308,
     39.4706
    ],
-   "hexes_r5": 49,
+   "hexes_r5": 48,
    "group": "city",
    "country": "dem_rep_korea",
    "names": {
@@ -5947,7 +5947,7 @@
     -5.4987,
     53.7842
    ],
-   "hexes_r5": 32,
+   "hexes_r5": 22,
    "group": "city",
    "country": "ireland",
    "names": {
@@ -5968,7 +5968,7 @@
     -10.3478,
     6.7638
    ],
-   "hexes_r5": 42,
+   "hexes_r5": 20,
    "group": "city",
    "country": "liberia",
    "names": {
@@ -6010,7 +6010,7 @@
     -81.8777,
     23.5831
    ],
-   "hexes_r5": 30,
+   "hexes_r5": 16,
    "group": "city",
    "country": "cuba",
    "names": {
@@ -6052,7 +6052,7 @@
     48.4918,
     29.8209
    ],
-   "hexes_r5": 35,
+   "hexes_r5": 23,
    "group": "city",
    "country": "kuwait",
    "names": {
@@ -6073,7 +6073,7 @@
     -69.4284,
     18.9212
    ],
-   "hexes_r5": 41,
+   "hexes_r5": 32,
    "group": "city",
    "country": "dominican_republic",
    "names": {
@@ -6094,7 +6094,7 @@
     0.2326,
     6.0012
    ],
-   "hexes_r5": 39,
+   "hexes_r5": 24,
    "group": "city",
    "country": "ghana",
    "names": {
@@ -6115,7 +6115,7 @@
     13.7149,
     33.3417
    ],
-   "hexes_r5": 27,
+   "hexes_r5": 16,
    "group": "city",
    "country": "libya",
    "names": {
@@ -6136,7 +6136,7 @@
     25.8354,
     60.6267
    ],
-   "hexes_r5": 40,
+   "hexes_r5": 25,
    "group": "city",
    "country": "finland",
    "names": {
@@ -6157,7 +6157,7 @@
     13.3581,
     56.1297
    ],
-   "hexes_r5": 40,
+   "hexes_r5": 22,
    "group": "city",
    "country": "denmark",
    "names": {
@@ -6178,7 +6178,7 @@
     -3.5909,
     5.7711
    ],
-   "hexes_r5": 45,
+   "hexes_r5": 33,
    "group": "city",
    "country": "cote_d_ivoire",
    "names": {
@@ -6262,7 +6262,7 @@
     13.6871,
     -8.3871
    ],
-   "hexes_r5": 31,
+   "hexes_r5": 21,
    "group": "city",
    "country": "angola",
    "names": {
@@ -6283,7 +6283,7 @@
     3.6093,
     37.2142
    ],
-   "hexes_r5": 31,
+   "hexes_r5": 19,
    "group": "city",
    "country": "algeria",
    "names": {
@@ -6304,7 +6304,7 @@
     -66.4622,
     10.9521
    ],
-   "hexes_r5": 36,
+   "hexes_r5": 27,
    "group": "city",
    "country": "venezuela",
    "names": {
@@ -6367,7 +6367,7 @@
     18.9765,
     59.8019
    ],
-   "hexes_r5": 44,
+   "hexes_r5": 37,
    "group": "city",
    "country": "sweden",
    "names": {
@@ -6388,7 +6388,7 @@
     100.9771,
     14.2011
    ],
-   "hexes_r5": 26,
+   "hexes_r5": 24,
    "group": "city",
    "country": "thailand",
    "names": {
@@ -6409,7 +6409,7 @@
     -76.5927,
     -11.5969
    ],
-   "hexes_r5": 26,
+   "hexes_r5": 16,
    "group": "city",
    "country": "peru",
    "names": {
@@ -6430,7 +6430,7 @@
     -17.0107,
     15.167
    ],
-   "hexes_r5": 34,
+   "hexes_r5": 9,
    "group": "city",
    "country": "senegal",
    "names": {
@@ -6451,7 +6451,7 @@
     5.65,
     52.8011
    ],
-   "hexes_r5": 37,
+   "hexes_r5": 32,
    "group": "city",
    "country": "netherlands",
    "names": {
@@ -6493,7 +6493,7 @@
     121.4445,
     15.0553
    ],
-   "hexes_r5": 33,
+   "hexes_r5": 29,
    "group": "city",
    "country": "philippines",
    "names": {
@@ -6514,7 +6514,7 @@
     14.1378,
     52.973
    ],
-   "hexes_r5": 33,
+   "hexes_r5": 32,
    "group": "city",
    "country": "germany",
    "names": {
@@ -6556,7 +6556,7 @@
     24.3013,
     38.4345
    ],
-   "hexes_r5": 27,
+   "hexes_r5": 20,
    "group": "city",
    "country": "greece",
    "names": {
@@ -6619,7 +6619,7 @@
     51.9753,
     36.1231
    ],
-   "hexes_r5": 31,
+   "hexes_r5": 30,
    "group": "city",
    "country": "iran",
    "names": {
@@ -6640,7 +6640,7 @@
     -57.8538,
     -34.1514
    ],
-   "hexes_r5": 43,
+   "hexes_r5": 31,
    "group": "city",
    "country": "argentina",
    "names": {
@@ -6661,7 +6661,7 @@
     69.7264,
     34.9678
    ],
-   "hexes_r5": 28,
+   "hexes_r5": 26,
    "group": "city",
    "country": "afghanistan",
    "names": {
@@ -6682,7 +6682,7 @@
     17.0386,
     48.6512
    ],
-   "hexes_r5": 33,
+   "hexes_r5": 31,
    "group": "city",
    "country": "austria",
    "names": {
@@ -6703,7 +6703,7 @@
     122.064,
     25.485
    ],
-   "hexes_r5": 36,
+   "hexes_r5": 25,
    "group": "city",
    "country": "taiwan",
    "names": {
@@ -6745,7 +6745,7 @@
     47.265,
     25.092
    ],
-   "hexes_r5": 33,
+   "hexes_r5": 28,
    "group": "city",
    "country": "saudi_arabia",
    "names": {
@@ -6766,7 +6766,7 @@
     18.9743,
     -33.4689
    ],
-   "hexes_r5": 34,
+   "hexes_r5": 20,
    "group": "city",
    "country": "south_africa",
    "names": {
@@ -6808,7 +6808,7 @@
     13.0847,
     42.3471
    ],
-   "hexes_r5": 29,
+   "hexes_r5": 26,
    "group": "city",
    "country": "italy",
    "names": {
@@ -6871,7 +6871,7 @@
     107.2793,
     -5.7233
    ],
-   "hexes_r5": 29,
+   "hexes_r5": 23,
    "group": "city",
    "country": "indonesia",
    "names": {
@@ -6913,7 +6913,7 @@
     31.7669,
     30.5011
    ],
-   "hexes_r5": 27,
+   "hexes_r5": 26,
    "group": "city",
    "country": "egypt",
    "names": {
@@ -6934,7 +6934,7 @@
     140.3025,
     36.1362
    ],
-   "hexes_r5": 32,
+   "hexes_r5": 31,
    "group": "city",
    "country": "japan",
    "names": {
@@ -6976,7 +6976,7 @@
     -70.1307,
     -32.9989
    ],
-   "hexes_r5": 36,
+   "hexes_r5": 35,
    "group": "city",
    "country": "chile",
    "names": {
@@ -6997,7 +6997,7 @@
     69.5934,
     39.0052
    ],
-   "hexes_r5": 26,
+   "hexes_r5": 25,
    "group": "city",
    "country": "tajikistan",
    "names": {
@@ -7018,7 +7018,7 @@
     69.1251,
     38.9752
    ],
-   "hexes_r5": 26,
+   "hexes_r5": 23,
    "group": "city",
    "country": "tajikistan",
    "names": {
@@ -7039,7 +7039,7 @@
     71.0149,
     40.7432
    ],
-   "hexes_r5": 27,
+   "hexes_r5": 13,
    "group": "city",
    "country": "tajikistan",
    "names": {
@@ -7060,7 +7060,7 @@
     71.2124,
     40.5752
    ],
-   "hexes_r5": 26,
+   "hexes_r5": 8,
    "group": "city",
    "country": "tajikistan",
    "names": {
@@ -7102,7 +7102,7 @@
     70.9583,
     39.4892
    ],
-   "hexes_r5": 26,
+   "hexes_r5": 18,
    "group": "city",
    "country": "tajikistan",
    "names": {
@@ -7123,7 +7123,7 @@
     74.5353,
     38.6192
    ],
-   "hexes_r5": 26,
+   "hexes_r5": 1,
    "group": "city",
    "country": "tajikistan",
    "names": {
@@ -7144,7 +7144,7 @@
     68.7023,
     37.7102
    ],
-   "hexes_r5": 27,
+   "hexes_r5": 24,
    "group": "city",
    "country": "tajikistan",
    "names": {

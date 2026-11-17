@@ -94,10 +94,24 @@ function loadJson<T>(path: string): Promise<T | null> {
       .then((r) => (r.ok ? (r.json() as Promise<T>) : null))
       .catch(() => null);
     cache.set(path, p);
+    // A failed or missing file is retried on the next request instead of staying hidden.
+    void p.then((v) => {
+      if (v === null) cache.delete(path);
+    });
   }
   return p;
 }
 const geoBase = (id: string) => `/geo/${encodeURIComponent(id)}`;
+
+/**
+ * Run once our sources exist. `isStyleLoaded()` is false whenever tiles are loading and 'load'
+ * fires only once, so checking it could silently drop an update (a month change during panning
+ * would keep the previous month's points under the new caption).
+ */
+function whenReady(m: MapLibre, apply: () => void): void {
+  if (m.getSource('fire')) apply();
+  else m.once('load', apply);
+}
 
 const EMPTY_FC = { type: 'FeatureCollection' as const, features: [] };
 const toFc = (pts: readonly (readonly [number, number, number])[]) => ({
@@ -352,6 +366,7 @@ export default function AoiMap({
     const m = map.current;
     if (!m) return;
     const apply = () => {
+      marker.current?.remove();
       (m.getSource('aoi') as GeoJSONSource | undefined)?.setData(outline(aoi));
       m.fitBounds(aoi.bbox as [number, number, number, number], {
         padding: 40,
@@ -359,8 +374,7 @@ export default function AoiMap({
         pitch: flat ? 0 : PITCH,
       });
     };
-    if (m.isStyleLoaded()) apply();
-    else m.once('load', apply);
+    whenReady(m, apply);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [aoi]);
 
@@ -440,8 +454,7 @@ export default function AoiMap({
     if (!m) return;
     const apply = () =>
       (m.getSource('fire') as GeoJSONSource | undefined)?.setData(toFc(layer.pts));
-    if (m.isStyleLoaded()) apply();
-    else m.once('load', apply);
+    whenReady(m, apply);
   }, [layer]);
 
   const toggleWorld = () => {

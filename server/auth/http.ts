@@ -30,12 +30,25 @@ function safeHost(origin: string): string | null {
   }
 }
 
+/**
+ * Client address for rate limits. `x-forwarded-for` is trusted only behind a proxy that rewrites
+ * it (Vercel, or TRUST_PROXY=1); elsewhere a client could rotate it to dodge the limit.
+ */
 export function clientKey(request: Request, scope: string): string {
-  const ip =
-    request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ??
-    request.headers.get('x-real-ip') ??
-    'local';
+  const trusted = Boolean(process.env.VERCEL) || process.env.TRUST_PROXY === '1';
+  const ip = trusted
+    ? (request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ??
+      request.headers.get('x-real-ip') ??
+      'unknown')
+    : 'direct';
   return `${scope}:${ip}`;
+}
+
+/** Per-account limit on top of the per-address one: 10 sign-in attempts per hour per e-mail. */
+export function limitedAccount(scope: string, email: string): Response | null {
+  return allow(`${scope}:${email}`, 10, 60 * 60_000)
+    ? null
+    : jsonError(429, 'rate_limited', 'Too many attempts. Wait a few minutes and try again.');
 }
 
 /** 10 attempts per 10 minutes per IP and action. */

@@ -185,8 +185,13 @@ function SignedIn({ email, places }: { email: string; places: string[] }) {
   const A = t.account;
   const qc = useQueryClient();
   const save = useSavePlace();
+  const [signOutError, setSignOutError] = useState(false);
   const signOut = async () => {
-    await api('/api/auth/logout', 'POST', {});
+    try {
+      await api('/api/auth/logout', 'POST', {});
+    } catch {
+      setSignOutError(true);
+    }
     await qc.invalidateQueries({ queryKey: ['me'] });
   };
   return (
@@ -201,6 +206,11 @@ function SignedIn({ email, places }: { email: string; places: string[] }) {
           {A.signOut}
         </button>
       </div>
+      {signOutError && (
+        <p role="alert" className="text-warn mt-2 text-sm">
+          {A.errors.internal}
+        </p>
+      )}
       <h2 className="mt-6 text-lg font-semibold">{A.myPlaces}</h2>
       {places.length === 0 ? (
         <p className="text-muted mt-2 text-sm">{A.noPlaces}</p>

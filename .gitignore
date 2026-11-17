@@ -34,4 +34,5 @@ next-env.d.ts
 .venv-fire-api/
 
 .vercel
-
+__pycache__/
+.migrate.log
